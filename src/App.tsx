@@ -3,10 +3,21 @@ import { ReadingBox } from "./components/reagindBox"
 
 export function App() {
   return( 
-    <div className="max-w-[1216px] mx-auto py-2 flex flex-col gap-5 items-center">
+    <div className="max-w-[1216px] mx-auto py-20">
       <Header />
-      <ReadingBox />
+      <div className=" w-full">
+        <div className="h-96 bg-green-500">
+
+            </div>
+
+            <ReadingBox />
+
+            <div className="h-96 bg-green-500">
+
+            </div>
+        </div>
     </div>
+    
   )
 }
 

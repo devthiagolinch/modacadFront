@@ -3,7 +3,7 @@ import setaCurvaIcon from "../assets/icons/seta-curva.svg"
 export function ReadingBox() {
 
     return (
-        <div className="flex items-center gap-24 border-2 border-zinc-950 w-10/12 p-10 py-5" >
+        <div className="flex items-center gap-24 border-2 border-zinc-950 p-10 py-5" >
 
             <div className="grid gap-2">
                 <p className="text-5xl">Planos de leitura</p>
@@ -20,9 +20,9 @@ export function ReadingBox() {
                 invalid:border-pink-500 invalid:text-pink-600
                 focus:invalid:border-pink-500 focus:invalid:ring-pink-500
             "/>
-                <button type="submit" className="item-center border-2 border-zinc-900 p-5">
+                <button type="submit" className=" border-2 border-zinc-900 p-5">
                     Criar Perfil
-                    <div className="w-48 h-7 bg-yellow-400/65 bottom-5 relative
+                    <div className="w-48 h-7 bg-yellow-500/50 bottom-3 relative
                     "></div>
                 </button>
             </div>
