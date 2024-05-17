@@ -5,10 +5,10 @@ import pesquisaicon from "../assets/icons/pesquisa.svg"
 
 export function Header() {
     return (
-        <div className=" flex items-center w-full top-0 left-0 fixed border-b-2 border-zinc-950">
-            <div className="flex items-center gap-40  left-60 relative ">
+        <div className=" flex items-center w-full top-0 left-0 right-5 fixed border-b-2 border-zinc-950 bg-neutral-200">
+            <div className="flex items-center left-16 gap-28 relative ">
 
-                <img className="h-12" src={telmaLogo}/>
+                <img className="h-16" src={telmaLogo}/>
 
                 <nav className="flex items-center">
                     <a href="" className="font-medium text-sm border-2 border-r-0 border-b-0 border-zinc-950 w-50 h-20 px-10 py-7 ">Meu Perfil</a>

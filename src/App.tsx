@@ -3,9 +3,9 @@ import { ReadingBox } from "./components/reagindBox"
 
 export function App() {
   return( 
-    <div className="max-w-[1216px] mx-auto py-20">
+    <div className="max-w-[1216px] mx-auto">
       <Header />
-      <div className=" w-full">
+      <div className="">
         <div className="h-96 bg-green-500">
 
             </div>
