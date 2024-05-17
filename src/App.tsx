@@ -6,15 +6,17 @@ export function App() {
     <div className="max-w-[1216px] mx-auto">
       <Header />
       <div className="">
-        <div className="h-96 bg-green-500">
+        <div className="h-96">
 
             </div>
 
             <ReadingBox />
 
-            <div className="h-96 bg-green-500">
-
+            <div className="h-96">
+    
             </div>
+
+            <ReadingBox />
         </div>
     </div>
     
