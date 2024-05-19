@@ -1,3 +1,4 @@
+import { Footer } from "./components/footer"
 import { Header } from "./components/header"
 import { ReadingBox } from "./components/reagindBox"
 import { Subjects } from "./components/subjects"
@@ -18,6 +19,8 @@ export function App() {
             </div>
 
             <ReadingBox />
+
+            <Footer />
         </div>
     </div>
     
