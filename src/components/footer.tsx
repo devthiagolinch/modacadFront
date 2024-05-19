@@ -10,7 +10,7 @@ import youtubeIcon from "../assets/icons/social  media/youtube.svg"
 export function Footer() {
 
     return (
-        <div className="w-ful border-2 border-t-0 border-zinc-900 flex items-center p-10 gap-5 align-middle">
+        <div className="justify-around w-ful border-2 border-t-0 border-zinc-900 flex items-center p-10">
 
             <div>
                 <p className="text-7xl">Nossas <br /> redes <br /> sociais</p>
