@@ -5,7 +5,13 @@ export default {
       "./src/**/*.{js,ts,jsx,tsx}"
     ],
     theme: {
-      extend: {},
+      extend: {
+        textDecorationThickness: {
+          10: '25px',
+          "pad": 'p-5'
+        }
+  
+      },
     },
     plugins: [],
   }

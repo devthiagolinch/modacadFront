@@ -20,12 +20,9 @@ export function ReadingBox() {
                 invalid:border-pink-500 invalid:text-pink-600
                 focus:invalid:border-pink-500 focus:invalid:ring-pink-500
             "/>
-                <button type="submit" className=" border-2 border-zinc-900 h-16  p-4 ">
-                    <p>Criar Perfil</p>
-                    <div className="w-48 h-8 disable
-                    hover:bg-yellow-500/50 relative bottom-3
-
-                    "></div>
+                <button type="submit" className=" border-2 border-zinc-900 h-16  p-4">
+                    <p className="hover:decoration-yellow-400/40 hover:line-through hover:decoration-10">Criar Perfil</p>
+                    
                 </button>
             </div>
         </div>
