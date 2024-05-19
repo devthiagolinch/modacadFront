@@ -1,5 +1,6 @@
 import { Header } from "./components/header"
 import { ReadingBox } from "./components/reagindBox"
+import { Subjects } from "./components/subjects"
 
 export function App() {
   return( 
@@ -11,7 +12,7 @@ export function App() {
             </div>
 
             <ReadingBox />
-
+            <Subjects />
             <div className="h-96">
     
             </div>
