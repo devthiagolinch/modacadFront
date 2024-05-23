@@ -1,33 +1,35 @@
-import postBanner from "../assets/imgs/unsplash.jpg"
+import postBanner from "../assets/imgs/model.jpg"
 
 export function LastPost() {
 
     return(
-        <div className="flex w-full h-96 p-10">
+        <div className="flex justify-around">
 
-            <div className="flex h-full items-center justify-center align-middle">
-                <p className="transform: -rotate-90">Último Texo</p>
+            <div className="flex items-center">
+                <p className="transform: -rotate-90 font-medium text-xs">Último Texto</p>
             </div>
 
-            <div className="grid w-[35%] ">
+            <div className="grid w-[44%] p-10 gap-10">
                 <span>
-                    sfkljfklasjfklaj <br />
+
+                    Eventos <br />
                     asflkasjfksaljf <br />
                     asflasfljk <br />
 
 
                 </span>
 
-                <h2>
+                <h1 className="text-6xl">
                     Estilismo pelo mundo TOKIO Outono inverno 2024 2025
-                </h2>
+                </h1>
 
-                <p>
-                    Estilismo pelo mundo é uma série de textos do blogModaCad sobre a criação e comercialização da moda fiel às raizes culturais de povos...
+                <p className="text-lg text-justify w-[90%]">
+                    Estilismo pelo mundo é uma série de textos do blogModaCad sobre a criação e
+                    comercialização da moda fiel às raízes culturais de povos fora...
                 </p>
             </div>
 
-            <div className="flex-1 bg-gray-400">
+            <div className="flex-1 max-h-auto w-full">
                 <img src={postBanner} className="h-full w-full object-cover object-top" />
             </div>
             
