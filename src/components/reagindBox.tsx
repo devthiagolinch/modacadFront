@@ -3,7 +3,7 @@ import setaCurvaIcon from "../assets/icons/seta-curva.svg"
 export function ReadingBox() {
 
     return (
-        <div className="flex items-center justify-center gap-24 border-2 border-zinc-950 p-10 py-5" >
+        <div className="flex items-center justify-center gap-24 border-2 border-zinc-950 p-10 py-5 shadow-[0_20px_20px_15px] shadow-gray-400" >
 
             <div className="grid gap-2">
                 <p className="text-5xl">Planos de leitura</p>
