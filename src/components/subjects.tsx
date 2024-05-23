@@ -3,7 +3,7 @@
 export function Subjects() {
 
     return (
-        <main className="flex items-center gap-5 p-10" >
+        <main className="flex items-center gap-5 p-10 border-2 border-zinc-950" >
             <div className="transform: -rotate-90 ">
                 <p className="font-medium text-xs">ASSUNTOS</p>
             </div >
