@@ -3,18 +3,18 @@ import setaCurvaIcon from "../assets/icons/seta-curva.svg"
 export function ReadingBox() {
 
     return (
-        <div className="flex items-center justify-center gap-24 border-2 border-zinc-950 p-10 py-5 
+        <div className="hidden lg:flex lg:items-center lg:justify-center lg:gap-24 lg:border-2 lg:border-zinc-950 lg:p-10 lg:py-5 w-full
         shadow-[0_10px_10px_0] shadow-gray-400" >
 
-            <div className="grid gap-2">
-                <p className="text-5xl">Planos de leitura</p>
+            <div className="lg:grid lg:gap-2">
+                <p className=" lg:text-5xl">Planos de leitura</p>
                 <span>Plano basico de leitura</span>
             </div>
 
-            <img src={setaCurvaIcon} className="w-10" />
+            <img src={setaCurvaIcon} className="lg:w-10" />
 
-            <div className="grid gap-4">
-            <input type="email" placeholder="Coloque seu e-mail aqui..." className="mt-1  w-full px-3 py-2 bg-transparent 
+            <div className="lg:grid lg:gap-4">
+            <input type="email" placeholder="Coloque seu e-mail aqui..." className="mt-1  lg:w-full lg:px-3 lg:py-2 bg-transparent 
                 border-b-2 border-slate-900 text-sm shadow-sm placeholder-slate-700 text-center
                 focus:outline-none
                 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none

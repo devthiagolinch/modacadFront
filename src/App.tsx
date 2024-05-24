@@ -11,18 +11,18 @@ export function App() {
       <div className="">
         <div className="h-96">
 
-            </div>
+        </div>
 
-            <ReadingBox />
-            <LastPost />
-            <Subjects />
-            <div className="h-96">
-    
-            </div>
+        <ReadingBox />
+        <LastPost />
+        <Subjects />
+        <div className="h-96">
 
-            <ReadingBox />
+        </div>
 
-            <Footer />
+        <ReadingBox />
+
+        <Footer />
         </div>
     </div>
     
