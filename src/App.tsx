@@ -1,3 +1,4 @@
+import { ArticlesScroll } from "./components/articlesScroll"
 import { Footer } from "./components/footer"
 import { Header } from "./components/header"
 import { LastPost } from "./components/last-post"
@@ -6,7 +7,7 @@ import { Subjects } from "./components/subjects"
 
 export function App() {
   return( 
-    <div className=" mx-auto">
+    <div className="md:px-5 mx-auto">
       <Header />
       <div className="">
         <div className="h-96">
@@ -16,6 +17,7 @@ export function App() {
         <ReadingBox />
         <LastPost />
         <Subjects />
+        <ArticlesScroll />
         <div className="h-96">
 
         </div>
