@@ -1,41 +1,69 @@
+import { Swiper, SwiperSlide } from "swiper/react";
 
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/free-mode";
+
+import { FreeMode, Pagination } from "swiper/modules";
+
+/* import { RxArrowTopRight } from "react-icons/rx"; */
+import { ServiceData } from "../assets/utils/constants.index";
 
 export function ArticlesScroll() {
+  
+  return (
+    
+    <div className="flex flex-row" >
+      <div className="grid items-center bg-gray-500">
+        <p className="
+        bg-green-400 w-[100%] transform: -rotate-90 ">Textos mais lidos</p>
+      </div>
 
-    return (
+      <div className="flex items-center flex-col h-auto w-[95%]">
+        <Swiper
+          breakpoints={{
+            340: {
+              slidesPerView: 2,
+              spaceBetween: 0,
+            },
+            700: {
+              slidesPerView: 4,
+              spaceBetween: 168,
+            },
+          }}
+          freeMode={true}
+          pagination={{
+            clickable: true,
+          }}
+          modules={[FreeMode, Pagination]}
+          className="max-w-[100%] lg:max-w-[100%]"
+        >
+          {ServiceData.map((item) => (
+            <SwiperSlide key={item.title}>
+              <div className="flex flex-col mb-10 group shadow-lg border border-gray-950 text-black px-6 py-8 h-[350px] w-full lg:h-[500px] lg:w-[350px] overflow-hidden cursor-pointer">
+                <div
+                  className=" "
+                />
+                <div className=" " />
+                  <div className=" grid gap-3 p-0">
+                    <div>
 
-        <div>
+                    </div>
+                    <img src={item.backgroundImage} className=" max-h-[100%]" />
+                    <ul>
+                      <li className="text-xs font-normal">Tendências</li>
+                      <li className="text-xs font-normal">Indígena</li>
+                      <li className="text-xs font-normal">Outono</li>
+                    </ul>
+                    <h1 className="text-xl lg:text-2xl">{item.title} </h1>
+                    <p className=" text-sm lg:text-[14px]">{item.content} </p>
+                  </div>
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+    </div>
 
-            <div>
-                <h1>Textos mais lidos</h1>
-            </div>
-
-            <div>
-                <ul>
-                    <li>
-                        <div>
-                            <img src="https://images.unsplash.com/photo-1604999565976-8913ad2ddb7c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=320&h=160&q=80" alt="" />
-                            <div>
-                                <ul>
-                                    <li>Tendencias</li>
-                                    <li>Tendencias</li>
-                                    <li>Tendencias</li>                            
-                                </ul>
-                            </div>
-                            <h1>
-                                The art of creative problem-solving
-                            </h1>
-
-                            <span>
-                                Estilismo pelo mundo é uma série de textos do blogModaCad sobre a criação e
-                                comercialização da moda fiel às raízes culturais de povos fora...
-                            </span>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-
-        </div>
-
-    )
-}
+  );
+};

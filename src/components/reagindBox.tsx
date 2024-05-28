@@ -4,7 +4,7 @@ export function ReadingBox() {
 
     return (
         <div className="hidden lg:flex lg:items-center lg:justify-center lg:gap-24 lg:border-2 lg:border-zinc-950 lg:p-10 lg:py-5 w-full
-        shadow-[0_10px_10px_0] shadow-gray-400" >
+        shadow-[0_10px_10px_0] shadow-slate-950/50" >
 
             <div className="lg:grid lg:gap-2">
                 <p className=" lg:text-5xl">Planos de leitura</p>

@@ -7,7 +7,7 @@ import { Subjects } from "./components/subjects"
 
 export function App() {
   return( 
-    <div className="md:px-5 mx-auto">
+    <div className=" mx-auto">
       <Header />
       <div className="">
         <div className="h-96">
