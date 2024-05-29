@@ -18,6 +18,7 @@ export function App() {
         <LastPost />
         <Subjects />
         <ArticlesScroll />
+        <ArticlesScroll />
         <div className="h-96">
 
         </div>
