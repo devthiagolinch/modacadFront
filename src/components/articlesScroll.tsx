@@ -8,7 +8,6 @@ import { A11y, FreeMode, Pagination } from "swiper/modules";
 
 /* import { RxArrowTopRight } from "react-icons/rx"; */
 import { ServiceData } from "../assets/utils/constants.index";
-import { SwiperNavButtons } from "./SwiperNavButton";
 
 export function ArticlesScroll() {
   
