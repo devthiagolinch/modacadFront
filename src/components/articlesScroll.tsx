@@ -61,8 +61,6 @@ export function ArticlesScroll() {
         </Swiper>
 
       </div>
-
-      <SwiperNavButtons />
     </div>
 
   );
