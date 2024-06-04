@@ -9,6 +9,9 @@ export default {
         textDecorationThickness: {
           10: '25px',
           "pad": 'p-5'
+        },
+        fontFamily: {
+          'title': ['Title']
         }
   
       },

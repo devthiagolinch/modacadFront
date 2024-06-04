@@ -9,8 +9,8 @@ export function TextosModacad() {
         <div className="mx-auto">
             <Header />
 
-            <div className=" pt-28 pb-5 w-full px-5">
-                <h1 className="text-3xl font-serif">
+            <div className=" pt-28 pb-5 w-full px-5 grid gap-5">
+                <h1 className="text-3xl font-title">
                     Estilismo pelo mundo Tokio
                     Outono Inverno 2024 2025
                 </h1>
@@ -24,18 +24,19 @@ export function TextosModacad() {
 
             <div>
                 <img src={banner} alt="" className="w-full h-auto" />
-                <div className="flex p-5 gap-5">
-                    <img src={banner} alt="" className="w-10 h-10 rounded-full flex items-center justify-center bg-black" />
+
+                <div className="flex p-5 gap-5 items-center">
+                    <img src={banner} alt="" className="w-14 h-14 rounded-full flex items-center justify-center bg-black" />
                     <p>Telma Barcellos</p>
                 </div>
 
-                <div className="flex gap-10 bg-blue-400">
+                <div className="flex justify-between items-center gap-10 px-5 text-zinc-800">
                     <div className="flex flex-col">
                         <span>tags</span>
                         <span>tags</span>
                         <span>tags</span>
                     </div>
-                    <div className="flex-1 flex-col bg-red-400">
+                    <div className="grid">
                         <p className="text-left">4/04/2025</p>
                         <span>10 min de leitura</span>
                     </div>
@@ -44,7 +45,7 @@ export function TextosModacad() {
             </div>
 
             <div>
-                <p className="text-justify px-5">
+                <p className="text-justify px-5 text-zinc-700">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam et vestibulum lacus. Donec sed convallis ipsum. Praesent rhoncus mattis gravida. Aenean nec lacus et leo tristique pellentesque at ac metus. In vehicula lectus erat, congue ultrices mi pulvinar a. Nulla placerat, arcu vitae bibendum fringilla, ante nulla semper quam, eu blandit nunc dolor id lorem. Praesent euismod commodo urna. Nunc vehicula odio massa, volutpat feugiat mi interdum vitae. Nulla nec purus ultrices mauris dignissim feugiat quis et lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Ut in gravida urna. Nullam at auctor felis. Proin quis mi libero. Praesent porta tempor porttitor.
 
                 Curabitur facilisis tellus a sapien condimentum accumsan. Suspendisse id ultrices metus. Fusce massa nulla, suscipit vulputate nulla sit amet, ornare accumsan lorem. Nullam sed convallis tortor, eget efficitur mauris. Nam porta ex non massa vestibulum, convallis sodales urna pellentesque. In hac habitasse platea dictumst. Praesent at viverra velit. Fusce luctus consectetur sem quis dignissim.
