@@ -19,6 +19,8 @@ export function App() {
         <Subjects />
         <ArticlesScroll />
         <ArticlesScroll />
+        <ReadingBox />
+        <ArticlesScroll />
         <div className="h-96">
 
         </div>
