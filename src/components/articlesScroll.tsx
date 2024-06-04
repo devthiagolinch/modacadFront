@@ -14,22 +14,22 @@ export function ArticlesScroll() {
   return (
     
     <div className="flex flex-row" >
-      <div className="flex items-center border border-gray-950
+      <div className="grid items-center border border-gray-950
       shadow">
         <p className="
-        text-nowrap transform: -rotate-90">Textos mais lidos</p>
+        text-nowrap transform: -rotate-90 w-8 p-4 lg:w-20">Textos mais lidos</p>
       </div>
 
-      <div className="flex items-center flex-col h-auto w-[90%]">
+      <div className="flex items-center flex-col h-auto w-[91.9%] lg:w-[100%]">
         <Swiper
           breakpoints={{
             340: {
-              slidesPerView: 4,
+              slidesPerView: 2,
               spaceBetween: 0,
             },
             700: {
               slidesPerView: 3,
-              spaceBetween: 480,
+              spaceBetween: 352,
             },
           }}
           freeMode={true}
@@ -37,7 +37,7 @@ export function ArticlesScroll() {
             clickable: false,
           }} */
           modules={[FreeMode, Pagination, A11y]}
-          className="max-w-[100%] lg:max-w-[100%] h-auto mySwiper gap-10"
+          className="max-w-[100%] lg:max-w-[100%] h-auto "
         >
           {ServiceData.map((item) => (
             <SwiperSlide key={item.title}>
