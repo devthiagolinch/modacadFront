@@ -5,7 +5,7 @@ import { LastPost } from "../components/last-post"
 import { ReadingBox } from "../components/reagindBox"
 import { Subjects } from "../components/subjects"
 
-export function App() {
+export function Home() {
   return( 
     <div className=" mx-auto">
       <Header />
@@ -33,5 +33,3 @@ export function App() {
     
   )
 }
-
-export default App
