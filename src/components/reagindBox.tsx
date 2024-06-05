@@ -7,7 +7,7 @@ export function ReadingBox() {
         shadow-[0_10px_10px_0] shadow-slate-950/50" >
 
             <div className="lg:grid w-[30%] lg:gap-2">
-                <p className=" lg:text-6xl font-serif">Planos de leitura</p>
+                <p className=" lg:text-7xl font-title">Planos de leitura</p>
                 <span className="lg:text-2xl font-serif font-light">Plano basico de leitura</span>
             </div>
 

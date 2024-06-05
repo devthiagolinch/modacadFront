@@ -3,7 +3,7 @@ import { Header } from "../components/header";
 
 import banner from "../assets/imgs/camila.jpg"
 
-export function TextosModacad() {
+export function PilulasMCD() {
 
     return(
         <div className="mx-auto">
@@ -49,7 +49,7 @@ export function TextosModacad() {
                 </div>
 
                 <div className="lg:flex lg:flex-col lg:w-full lg:justify-center lg:items-center">
-                    <img src={banner} alt="" className="w-[90%] h-[500px] bg-contain" />
+                    <img src={banner} alt="" className="w-[70%] h-[500px] bg-contain" />
 
                     
                 </div>

@@ -6,15 +6,23 @@ import './index.css'
 
 import { TextosModacad } from './pages/TextosModacad.tsx'
 import { Home } from './pages/Home.tsx'
+import { PilulasMCD } from './pages/PilulasMCD.tsx'
 
 const router = createBrowserRouter([
   {
-    path: '/home',
-    element: <Home />
+    path: '/',
+    element: <Home />,
+    errorElement: <div>404 NOT FOUND</div>
   },
   {
-    path: "textos-modacad",
-    element: <TextosModacad />
+    path: "/textomodacad",
+    element: <TextosModacad />,
+    errorElement: <div>404 NOT FOUND</div>
+  },
+  {
+    path: "/pilula",
+    element: <PilulasMCD />,
+    errorElement: <div>404 NOT FOUND</div>
   }
 ])
 
