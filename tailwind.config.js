@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 export default {
     content: [
+      "./src/index.css",
       "./index.html",
       "./src/**/*.{js,ts,jsx,tsx}"
     ],
@@ -11,7 +12,7 @@ export default {
           "pad": 'p-5'
         },
         fontFamily: {
-          'title': ['Title']
+          title: ["Title", "title"]
         }
   
       },

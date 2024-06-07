@@ -2,6 +2,7 @@ import telmaLogo from "../assets/svg/HOME logo TELMA BARCELLOS modacad.svg"
 import shopIcon from "../assets/icons/icone compras site modacad SVG.svg"
 import menuIcon from "../assets/icons/menu.svg"
 import pesquisaicon from "../assets/icons/pesquisa.svg"
+import { Link } from "react-router-dom"
 
 export function Header() {
     return (
@@ -12,11 +13,10 @@ export function Header() {
             <div className="flex w-full justify-between relative">
 
                 <div className=" md:flex-1 justify-center items-center flex w-[60%]" >
-                    <img className="w-40 md:w-80" src={telmaLogo}/>
+                    <Link to={"/"} className="w-40 md:w-[23%]"><img src={telmaLogo}/></Link>
                 </div>
                 
-
-                <nav className="flex items-center">
+                <nav className=" hidden items-center">
                     <a href="" className="hidden lg:flex font-medium text-sm border border-r-0 border-b-0 border-t-0 border-zinc-950 w-50 h-20 px-5 py-7 ">Meu Perfil</a>
                     <a href="" className="hidden lg:flex font-normal border-l-2 lg:font-medium lg:text-sm lg:border lg:border-r-0 lg:border-b-0 lg:border-t-0 lg:border-zinc-950 md:w-50 md:h-20 lg:px-5 lg:py-7 ">Criar Perfil</a>
                     <a href="" className="font-medium text-sm border border-r-0 border-b-0 border-t-0 border-zinc-950 w-50 h-20 px-6 py-6 ">
@@ -28,6 +28,26 @@ export function Header() {
                     <a href="" className="font-medium text-sm border border-r-0 border-b-0 border-t-0 border-zinc-950 w-50 h-20 px-6 py-8 ">
                         <img src={menuIcon} className="h-2 lg:h-4 stroke-1" />
                     </a>
+                </nav>
+
+                <nav className="flex items-center">
+                    <a href="/" className="
+                        lg:flex font-medium text-sm border border-r-0 border-b-0 border-t-0 
+                        border-zinc-950 w-50 h-20 px-5 py-7 "
+                    >Home</a>
+                    <a href="/textomodacad" className=" 
+                        lg:flex font-normal border-l-2 lg:font-medium lg:text-sm lg:border lg:border-r-0
+                        lg:border-b-0 lg:border-t-0 lg:border-zinc-950 md:w-50 md:h-20 lg:px-5 lg:py-7 "
+                    >Textos MDC</a>
+                    <a href="/pilula" className=" 
+                        lg:flex font-normal border-l-2 lg:font-medium lg:text-sm lg:border lg:border-r-0
+                        lg:border-b-0 lg:border-t-0 lg:border-zinc-950 md:w-50 md:h-20 lg:px-5 lg:py-7 "
+                    >Pilulas MDC</a>
+                    <a href="/planos" className=" 
+                        lg:flex font-normal border-l-2 lg:font-medium lg:text-sm lg:border lg:border-r-0 lg:border-b-0
+                        lg:border-t-0 lg:border-zinc-950 md:w-50 md:h-20 lg:px-5 lg:py-7 "
+                    >Planos MDC</a>
+                    
                 </nav>
             </div>
 

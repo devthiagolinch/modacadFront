@@ -2,6 +2,6 @@
 @tailwind components;
 @font-face {
     font-family: "Title";
-    src: url("./assets/fonts/Autography.otf") format("ttf");
+    src: url("./src/assets/fonts/Butler_Ultra_Light.otf") format("otf");
 }
 @tailwind utilities;
