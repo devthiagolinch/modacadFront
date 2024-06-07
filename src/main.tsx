@@ -7,8 +7,9 @@ import './index.css'
 import { TextosModacad } from './pages/TextosModacad.tsx'
 import { Home } from './pages/Home.tsx'
 import { PilulasMCD } from './pages/PilulasMCD.tsx'
+import { PlanosMDC } from './pages/Planos.tsx'
 
-const router = createBrowserRouter([
+const routes = createBrowserRouter([
   {
     path: '/',
     element: <Home />,
@@ -23,12 +24,17 @@ const router = createBrowserRouter([
     path: "/pilula",
     element: <PilulasMCD />,
     errorElement: <div>404 NOT FOUND</div>
+  },
+  {
+    path: "/planos",
+    element: <PlanosMDC />,
+    errorElement: <div>404 NOT FOUND</div>
   }
 ])
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <RouterProvider router={routes} />
   </React.StrictMode>,
 )
