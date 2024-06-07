@@ -8,9 +8,11 @@ import youtubeIcon from "../assets/icons/social  media/youtube.svg"
 
 
 export function Footer() {
+    // ícones 29x29px
+    // box 90xz60px
 
     return (
-        <div className="grid md:flex md:justify-around md:w-full border-2 border-zinc-900 md:items-center md:p-10">
+        <div className="grid md:flex md:justify-around md:w-full border-[1px] border-zinc-900 md:items-center md:p-10">
 
             <div>
                 <p className="text-xl md:text-7xl">Nossas <br /> redes <br /> sociais</p>
@@ -19,14 +21,40 @@ export function Footer() {
 
             <img src={setaCurvaIcon} alt="" />
             
-            <div className="grid grid-cols-3 md:gap-x-5 md:gap-y-5">
+            <div className="grid grid-cols-3 md:gap-x-10 md:gap-y-10 md:my-10">
 
-                <img src={linkedinIcon} className="border-2 border-zinc-900 md:p-7 hover:bg-yellow-400 h-12 md:h-24" />
-                <img src={pinterestIcon} className="border-2 border-zinc-900 md:p-7 hover:bg-yellow-400 h-12 md:h-24" />
-                <img src={instaIcon} className="border-2 border-zinc-900 md:p-7 hover:bg-yellow-400 h-12 md:h-24" />
-                <img src={tiktokIcon} className="border-2 border-zinc-900 md:p-7 hover:bg-yellow-400 h-12 md:h-24" />
-                <img src={youtubeIcon} className="border-2 border-zinc-900 md:p-7 hover:bg-yellow-400 h-12 md:h-24" />
-                <img src={facebookicon} className="border-2 border-zinc-900 md:p-7 hover:bg-yellow-400 h-12 md:h-24" />
+                <div className="md:w-[130px] md:h-[100px] grid justify-center items-center w-[90px] h-[60px]
+                    border-[1px] border-zinc-900 hover:bg-yellow-400
+                ">
+                    <img src={linkedinIcon} className=" md:h-[50px]" />
+                </div>
+                <div className="md:w-[130px] md:h-[100px] grid justify-center items-center w-[90px] h-[60px]
+                    border-[1px] border-zinc-900 hover:bg-yellow-400
+                ">
+                     <img src={pinterestIcon} className="md:h-[50px] " />
+                </div>
+                <div className="md:w-[130px] md:h-[100px] grid justify-center items-center w-[90px] h-[60px]
+                    border-[1px] border-zinc-900 hover:bg-yellow-400
+                ">
+                    
+                <img src={instaIcon} className="md:h-[50px] " />
+                </div>
+                <div className="md:w-[130px] md:h-[100px] grid justify-center items-center w-[90px] h-[60px]
+                    border-[1px] border-zinc-900 hover:bg-yellow-400
+                ">
+                <img src={tiktokIcon} className="md:h-[50px]" />
+                </div>
+                <div className="md:w-[130px] md:h-[100px] grid justify-center items-center w-[90px] h-[60px]
+                    border-[1px] border-zinc-900 hover:bg-yellow-400
+                ">
+                <img src={youtubeIcon} className="md:h-[50px] " />
+                </div>
+                <div className="md:w-[130px] md:h-[100px] grid justify-center items-center w-[90px] h-[60px]
+                    border-[1px] border-zinc-900 hover:bg-yellow-400
+                ">
+                <img src={facebookicon} className="md:h-[50px] " />
+                </div>
+               
 
             </div>
         </div>

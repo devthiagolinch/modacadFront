@@ -3,7 +3,7 @@ import setaCurvaIcon from "../assets/icons/seta-curva.svg"
 export function ReadingBox() {
 
     return (
-        <div className="hidden lg:flex lg:items-center lg:justify-center lg:gap-40 lg:border-2 lg:border-zinc-950 px-20 p-10 w-full
+        <div className="hidden lg:flex lg:items-center lg:justify-center lg:gap-40 lg:border-[1px] lg:border-zinc-950 px-20 p-10 w-full
         shadow-[0_10px_10px_0] shadow-slate-950/50" >
 
             <div className="lg:grid w-[30%] lg:gap-2">
@@ -21,7 +21,7 @@ export function ReadingBox() {
                     invalid:border-pink-500 invalid:text-pink-600
                     focus:invalid:border-pink-500 focus:invalid:ring-pink-500
                 "/>
-                <button type="submit" className=" border-2 border-zinc-900 h-16 w-64 p-4">
+                <button type="submit" className=" border-[1px] border-zinc-900 h-16 w-64 p-4">
                     <p className="hover:decoration-yellow-400/40 hover:line-through hover:decoration-10">Criar Perfil</p>
                     
                 </button>
