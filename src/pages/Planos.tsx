@@ -1,3 +1,4 @@
+
 import { Footer } from "../components/footer";
 import { Header } from "../components/header";
 import { Button } from "../components/Button";
@@ -6,7 +7,7 @@ import checkListIcon from "../assets/icons/check-mark.svg";
 
 
 export function PlanosMDC() {
-    // melhor plano: montserrat medium
+    
     return(
         <div>
             <Header />
@@ -60,7 +61,7 @@ export function PlanosMDC() {
                         </ul>
                     </div>
 
-                    <Button title="Quero este" />
+                    <Button title="Quero este" key={3}/>
 
                 </div>
 
@@ -98,7 +99,7 @@ export function PlanosMDC() {
                         </ul>
                     </div>
 
-                    <Button title="Quero este" />
+                    <Button title="Quero este" key={2}/>
 
                 </div>
 
@@ -129,7 +130,7 @@ export function PlanosMDC() {
                         </ul>
                     </div>
 
-                    <Button title="Quero este" />
+                    <Button title="Quero este" key={1}/>
 
                 </div>
             </div>
