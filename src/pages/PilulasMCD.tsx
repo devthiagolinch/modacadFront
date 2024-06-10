@@ -3,6 +3,8 @@ import { Header } from "../components/header";
 
 import banner from "../assets/imgs/africa.jpg"
 import telma from "../assets/imgs/telma.jpeg"
+import { BlockText } from "../components/blocktext";
+import { TextoPremium } from "../components/textoPremium";
 
 export function PilulasMCD() {
 
@@ -55,6 +57,7 @@ export function PilulasMCD() {
                 
             </div>
 
+            {/* mobile top page*/}
             <div className="lg:hidden">
                 <div className=" pt-28 pb-5 w-full px-5 grid gap-5">
                     <h1 className="text-3xl font-title">
@@ -71,32 +74,37 @@ export function PilulasMCD() {
 
                 <div className="flex flex-col ">
 
+                    {/* borda sera interna - com espaco de 10px entre a borda real da imagem e a desenhada */}
                     <div className="flex justify-center items-center">
-                        <img src={banner} alt="" className=" max-h-60 " />
+                        <img src={banner} alt="" className="min-h-60 max-h-60 max-w-60
+                            border-[1px] border-inherit border-white
+                        " />
                     </div>
 
                     <div className="flex p-5 gap-5 items-center">
-                        <img src={telma} alt="" className="w-14 h-14 rounded-full flex items-center justify-center bg-black" />
-                        <p>Telma Barcellos</p>
+                        <img src={telma} alt="" className="w-[50px] h-[50px] rounded-full flex items-center justify-center bg-black" />
+                        <p className="text-[22px]">Telma Barcellos</p>
                     </div>
 
-                    <div className="flex justify-between items-center gap-10 px-5 text-zinc-800">
+                    <div className="flex justify-between items-start align-top gap-10 px-5 mb-[30px] text-zinc-800">
                         <div className="flex flex-col">
-                            <span>tags</span>
-                            <span>tags</span>
-                            <span>tags</span>
+                            <span className="-mb-[5px]">Historia da Moda</span>
+                            <span className="-mb-[5px]">Novos Materiais</span>
+                            <span>Moda Urbana</span>
                         </div>
+
                         <div className="flex flex-col justify-between items-end">
-                            <p className="text-left">4/04/2025</p>
+                            <p className="text-left -mb-[5px]">4/04/2025</p>
                             <span>10 min de leitura</span>
                         </div>
 
                     </div>
+
                 </div>
                 
             </div>
 
-            <div className="lg:pt-12 lg:px-[20%] md:mb-[40px] mx-[20px]">
+            <div className="lg:pt-12 lg:px-[20%] mb-[40px] mx-[20px]">
                 <p className="text-justify text-zinc-700  lg:text-lg">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam et vestibulum lacus. Donec sed convallis ipsum. Praesent rhoncus mattis gravida. Aenean nec lacus et leo tristique pellentesque at ac metus. In vehicula lectus erat, congue ultrices mi pulvinar a. Nulla placerat, arcu vitae bibendum fringilla, ante nulla semper quam, eu blandit nunc dolor id lorem. Praesent euismod commodo urna. Nunc vehicula odio massa, volutpat feugiat mi interdum vitae. Nulla nec purus ultrices mauris dignissim feugiat quis et lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Ut in gravida urna. Nullam at auctor felis. Proin quis mi libero. Praesent porta tempor porttitor.
 
@@ -107,7 +115,11 @@ export function PilulasMCD() {
                 Nunc nulla lacus, scelerisque ut ipsum nec, ullamcorper sollicitudin ante. Curabitur finibus neque sit amet diam sollicitudin accumsan.
 
                 Pellentesque faucibus velit maximus erat condimentum vestibulum.
-                <br />
+
+                <div className="flex justify-center items-center">
+                    <img src={banner} alt="" className="max-h-60 my-[20px]" />
+                </div>
+
                 Integer quis blandit metus. In id velit sit amet neque consectetur porta. Ut mattis lorem in commodo semper. Sed id arcu sit amet ipsum consequat viverra eget at libero. Donec pharetra, lorem aliquet imperdiet posuere, nunc purus dignissim nisl, sit amet semper urna est aliquam diam. Cras vel varius diam. Nam commodo scelerisque tristique. Vestibulum efficitur justo magna, ut vestibulum tortor consequat varius. Morbi fringilla sollicitudin lacus, vitae imperdiet nisl dapibus at.
 
                 Morbi a libero eget nisl venenatis pharetra. Aenean nec ante tristique, congue neque sed, luctus dolor. 
@@ -116,7 +128,7 @@ export function PilulasMCD() {
                 </p>
 
             </div>
-
+            <TextoPremium />
 
             <Footer />
         </div>

@@ -9,7 +9,7 @@ export function TextosModacad() {
     return(
         <div className="mx-auto">
             <Header />
-
+            {/* DESKTOP */}
             <div className="hidden lg:flex lg:flex-col  lg:w-full lg:pt-28">
                 <div className="lg:flex lg:ml-10 lg:pb-5 lg:gap-[10%] lg:justify-between">
                     <div className="lg:flex lg:items-center">
@@ -54,7 +54,7 @@ export function TextosModacad() {
                 </div>
                 
             </div>
-
+             {/* MOBILE */}
             <div className="lg:hidden">
                 <div className=" pt-28 pb-5 w-full px-5 grid gap-5">
                     <h1 className="text-3xl font-title">
@@ -95,7 +95,7 @@ export function TextosModacad() {
                 
             </div>
 
-            <div className="lg:pt-12 lg:px-[20%]">
+            <div className="lg:pt-12 lg:px-[20%] ">
                 <p className="text-justify text-zinc-700  lg:text-lg">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam et vestibulum lacus. Donec sed convallis ipsum. Praesent rhoncus mattis gravida. Aenean nec lacus et leo tristique pellentesque at ac metus. In vehicula lectus erat, congue ultrices mi pulvinar a. Nulla placerat, arcu vitae bibendum fringilla, ante nulla semper quam, eu blandit nunc dolor id lorem. Praesent euismod commodo urna. Nunc vehicula odio massa, volutpat feugiat mi interdum vitae. Nulla nec purus ultrices mauris dignissim feugiat quis et lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Ut in gravida urna. Nullam at auctor felis. Proin quis mi libero. Praesent porta tempor porttitor.
 
