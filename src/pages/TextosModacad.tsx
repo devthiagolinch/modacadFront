@@ -1,7 +1,7 @@
 import { Footer } from "../components/footer";
 import { Header } from "../components/header";
 
-import banner from "../assets/imgs/semana_da_moda.jpg"
+import banner from "../assets/imgs/cores.jpg"
 import telma from "../assets/imgs/telma.jpeg"
 
 export function TextosModacad() {
@@ -49,10 +49,8 @@ export function TextosModacad() {
                     </div>
                 </div>
 
-                <div className="lg:flex lg:flex-col lg:w-full lg:justify-center lg:items-center lg:px-[10%]">
-                    <img src={banner} alt="" className="w-full h-[500px] bg-contain" />
-
-                    
+                <div className="lg:flex lg:w-full lg:justify-center lg:items-center">
+                    <img src={banner} alt="" className="lg:h-[50%] lg:max-w-[60%]" />
                 </div>
                 
             </div>
@@ -72,10 +70,12 @@ export function TextosModacad() {
                 </div>
 
                 <div>
-                    <img src={banner} alt="" className="h-auto" />
+                    <div className="flex w-full justify-center items-center">
+                        <img src={banner} alt="" className="h-[50%] max-w-[100%]" />
+                    </div>
 
                     <div className="flex p-5 gap-5 items-center">
-                        <img src={banner} alt="" className="w-14 h-14 rounded-full flex items-center justify-center bg-black" />
+                        <img src={telma} alt="" className="w-14 h-14 rounded-full flex items-center justify-center bg-black" />
                         <p>Telma Barcellos</p>
                     </div>
 

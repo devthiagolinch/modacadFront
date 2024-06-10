@@ -24,33 +24,33 @@ export function Footer() {
             <div className="grid grid-cols-3 md:gap-x-10 md:gap-y-10 md:my-10">
 
                 <div className="md:w-[130px] md:h-[100px] grid justify-center items-center w-[90px] h-[60px]
-                    border-[1px] border-zinc-900 hover:bg-yellow-400
+                    border-[1px] border-zinc-900 hover:bg-[#dcdf1e]
                 ">
                     <img src={linkedinIcon} className=" md:h-[50px]" />
                 </div>
                 <div className="md:w-[130px] md:h-[100px] grid justify-center items-center w-[90px] h-[60px]
-                    border-[1px] border-zinc-900 hover:bg-yellow-400
+                    border-[1px] border-zinc-900 hover:bg-[#dcdf1e]
                 ">
                      <img src={pinterestIcon} className="md:h-[50px] " />
                 </div>
                 <div className="md:w-[130px] md:h-[100px] grid justify-center items-center w-[90px] h-[60px]
-                    border-[1px] border-zinc-900 hover:bg-yellow-400
+                    border-[1px] border-zinc-900 hover:bg-[#dcdf1e]
                 ">
                     
                 <img src={instaIcon} className="md:h-[50px] " />
                 </div>
                 <div className="md:w-[130px] md:h-[100px] grid justify-center items-center w-[90px] h-[60px]
-                    border-[1px] border-zinc-900 hover:bg-yellow-400
+                    border-[1px] border-zinc-900 hover:bg-[#dcdf1e]
                 ">
-                <img src={tiktokIcon} className="md:h-[50px]" />
+                <img src={tiktokIcon} className="md:h-[50px] h-[30px]" />
                 </div>
                 <div className="md:w-[130px] md:h-[100px] grid justify-center items-center w-[90px] h-[60px]
-                    border-[1px] border-zinc-900 hover:bg-yellow-400
+                    border-[1px] border-zinc-900 hover:bg-[#dcdf1e]
                 ">
                 <img src={youtubeIcon} className="md:h-[50px] " />
                 </div>
                 <div className="md:w-[130px] md:h-[100px] grid justify-center items-center w-[90px] h-[60px]
-                    border-[1px] border-zinc-900 hover:bg-yellow-400
+                    border-[1px] border-zinc-900 hover:bg-[#dcdf1e]
                 ">
                 <img src={facebookicon} className="md:h-[50px] " />
                 </div>

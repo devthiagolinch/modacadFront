@@ -37,7 +37,7 @@ export function PlanosMDC() {
                     border-[1px] border-b-0 md:border-b-[1px] md:border-r-0 border-zinc-950"
                 >
                     <div className="flex items-center justify-center ">
-                        <p className="font-title text-[30px]">Premium Trimêstal</p>
+                        <p className="font-title text-[30px]">Premium Trimestral</p>
                     </div>
                     <div className="flex justify-center items-end">
                         <div className="flex -mb-12">

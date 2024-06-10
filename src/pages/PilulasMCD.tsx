@@ -1,7 +1,8 @@
 import { Footer } from "../components/footer";
 import { Header } from "../components/header";
 
-import banner from "../assets/imgs/camila.jpg"
+import banner from "../assets/imgs/africa.jpg"
+import telma from "../assets/imgs/telma.jpeg"
 
 export function PilulasMCD() {
 
@@ -10,19 +11,19 @@ export function PilulasMCD() {
             <Header />
 
             <div className="hidden lg:flex lg:flex-col  lg:w-full lg:pt-28">
-                <div className="lg:flex lg:ml-10 lg:pb-5 lg:w-full lg:gap-10 lg:px-2 lg:justify-center">
+                <div className="lg:flex lg:ml-10 lg:pb-5 lg:gap-[10%] lg:justify-between">
                     <div className="lg:flex lg:items-center">
                         <span className="lg:transform: -rotate-90 text-nowrap w-4">Historia da Moda</span>
                         <span className="lg:transform: -rotate-90 text-nowrap w-4">Novos Materiais</span>
-                        <span className="lg:transform: -rotate-90 text-nowrap w-4">Cidadania</span>
+                        <span className="lg:transform: -rotate-90 text-nowrap w-4">Moda Urbana</span>
                     </div>
-                   <div className="lg:flex-1 pl-5">
-                        <h1 className="lg:text-8xl lg:font-title">
-                            Estilismo pelo mundo Tokio
-                            Outono Inverno 2024 2025
+                   <div className="lg:flex lg:flex-col lg:pr-[20%] lg:ml-20">
+                        <h1 className="lg:text-7xl lg:font-title lg:my-14 ">
+                        Semana de Moda Indígena DIA 05
+
                         </h1>
 
-                        <p className="lg:text-left lg:text-2xl w-[90%]">
+                        <p className="lg:text-left lg:text-2xl w-[100%]">
                         Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, 
                         e vem sendo utilizado desde o século XVI, quando um impressor desconhecido pegou uma bandeja 
                         de tipos e os embaralhou para fazer um livro de modelos de tipos. 
@@ -32,9 +33,9 @@ export function PilulasMCD() {
                    
                 </div>
 
-                <div className="lg:flex lg:w-full lg:justify-between lg:px-24">
-                    <div className="lg:flex lg:p-5 lg:gap-5 lg:items-center">
-                        <img src={banner} alt="" className="w-14 h-14 rounded-full flex items-center justify-center bg-black" />
+                <div className="lg:flex lg:w-full lg:justify-between lg:px-[20%]">
+                    <div className="lg:flex lg:p-5 lg:gap-5 lg:items-center lg:justify-start">
+                        <img src={telma} alt="" className="w-14 h-14 rounded-full flex items-center justify-center bg-black" />
                         <p>Telma Barcellos</p>
                     </div>
 
@@ -48,10 +49,8 @@ export function PilulasMCD() {
                     </div>
                 </div>
 
-                <div className="lg:flex lg:flex-col lg:w-full lg:justify-center lg:items-center">
-                    <img src={banner} alt="" className="w-[70%] h-[500px] bg-contain" />
-
-                    
+                <div className="flex w-full justify-center items-center">
+                    <img src={banner} alt="" className="w-[300px] h-[300px] " />
                 </div>
                 
             </div>
@@ -71,12 +70,13 @@ export function PilulasMCD() {
                 </div>
 
                 <div className="flex flex-col ">
-                    <div className="flex w-full justify-center items-center">
-                        <img src={banner} alt="" className="w-[198px] h-[198px] " />
+
+                    <div className="flex justify-center items-center">
+                        <img src={banner} alt="" className=" max-h-60 " />
                     </div>
 
                     <div className="flex p-5 gap-5 items-center">
-                        <img src={banner} alt="" className="w-14 h-14 rounded-full flex items-center justify-center bg-black" />
+                        <img src={telma} alt="" className="w-14 h-14 rounded-full flex items-center justify-center bg-black" />
                         <p>Telma Barcellos</p>
                     </div>
 
@@ -96,8 +96,8 @@ export function PilulasMCD() {
                 
             </div>
 
-            <div className="lg:pt-12">
-                <p className="text-justify px-5 text-zinc-700 lg:px-48 lg:text-lg">
+            <div className="lg:pt-12 lg:px-[20%] md:mb-[40px] mx-[20px]">
+                <p className="text-justify text-zinc-700  lg:text-lg">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam et vestibulum lacus. Donec sed convallis ipsum. Praesent rhoncus mattis gravida. Aenean nec lacus et leo tristique pellentesque at ac metus. In vehicula lectus erat, congue ultrices mi pulvinar a. Nulla placerat, arcu vitae bibendum fringilla, ante nulla semper quam, eu blandit nunc dolor id lorem. Praesent euismod commodo urna. Nunc vehicula odio massa, volutpat feugiat mi interdum vitae. Nulla nec purus ultrices mauris dignissim feugiat quis et lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Ut in gravida urna. Nullam at auctor felis. Proin quis mi libero. Praesent porta tempor porttitor.
 
                 Curabitur facilisis tellus a sapien condimentum accumsan. Suspendisse id ultrices metus. <br /> <br /> Fusce massa nulla, suscipit vulputate nulla sit amet, ornare accumsan lorem. Nullam sed convallis tortor, eget efficitur mauris. Nam porta ex non massa vestibulum, convallis sodales urna pellentesque. In hac habitasse platea dictumst. Praesent at viverra velit. Fusce luctus consectetur sem quis dignissim.
