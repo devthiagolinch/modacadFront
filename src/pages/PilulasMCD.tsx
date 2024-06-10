@@ -3,6 +3,7 @@ import { Header } from "../components/header";
 
 import banner from "../assets/imgs/africa.jpg"
 import telma from "../assets/imgs/telma.jpeg"
+
 import { BlockText } from "../components/blocktext";
 import { TextoPremium } from "../components/textoPremium";
 
@@ -65,7 +66,7 @@ export function PilulasMCD() {
                         Outono Inverno 2024 2025
                     </h1>
 
-                    <p className="text-left">
+                    <p className="text-left leading-[20px]">
                     Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, 
                     e vem sendo utilizado desde o século XVI, quando um impressor desconhecido pegou uma bandeja 
                     de tipos e os embaralhou para fazer um livro de modelos de tipos. 
@@ -74,19 +75,23 @@ export function PilulasMCD() {
 
                 <div className="flex flex-col ">
 
-                    {/* borda sera interna - com espaco de 10px entre a borda real da imagem e a desenhada */}
-                    <div className="flex justify-center items-center">
+                    {/* borda sera interna - com espaço de 10px entre a borda real da imagem e a desenhada
+                        ajustar para a imagem do banner mesmo sendo retangular ficar com altura maxima e cortada
+                        para o centro
+                    */}
+                    <div className="flex justify-center">
                         <img src={banner} alt="" className="min-h-60 max-h-60 max-w-60
                             border-[1px] border-inherit border-white
+                            object-cover
                         " />
                     </div>
 
-                    <div className="flex p-5 gap-5 items-center">
+                    <div className="flex p-5 gap-[10px] items-center">
                         <img src={telma} alt="" className="w-[50px] h-[50px] rounded-full flex items-center justify-center bg-black" />
-                        <p className="text-[22px]">Telma Barcellos</p>
+                        <p className="text-[20px]">Telma Barcellos</p>
                     </div>
 
-                    <div className="flex justify-between items-start align-top gap-10 px-5 mb-[30px] text-zinc-800">
+                    <div className="flex justify-between items-start align-top gap-10 px-5 mb-[20px] text-zinc-800">
                         <div className="flex flex-col">
                             <span className="-mb-[5px]">Historia da Moda</span>
                             <span className="-mb-[5px]">Novos Materiais</span>

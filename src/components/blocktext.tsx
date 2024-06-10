@@ -5,12 +5,12 @@ export function BlockText() {
 
     return (
 
-        <div className=" flex flex-col justify-center items-center w-full h-auto border-[1px]
-            border-[#202020}
+        <div className=" flex flex-col justify-center items-center w-full h-auto
+            mb-[40px]
         ">
             <h1 className="text-[22px] ">Para continuar a ler</h1>
-            <input type="email" placeholder="Coloque seu e-mail aqui..." className="mt-[20px] w-[90%] mb-10 lg:px-3 lg:py-2 bg-transparent 
-                border-b-[1px] border-slate-900 text-[22px] shadow-sm placeholder-slate-700 text-center
+            <input type="email" placeholder="Coloque seu e-mail aqui..." className="mt-[20px] w-[90%] mb-10 lg:px-3 lg:py-2 bg-transparent
+                border-b-[1px] border-slate-900 text-[18px] shadow-sm placeholder-slate-700 text-center
                 focus:outline-none
                 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none
                 invalid:border-pink-500 invalid:text-pink-600

@@ -3,29 +3,33 @@ import setaCurvaIcon from "../assets/icons/seta-curva.svg"
 export function ReadingBox() {
 
     return (
-        <div className="hidden lg:flex lg:items-center lg:justify-center lg:gap-40 lg:border-[1px] lg:border-zinc-950 px-20 p-10 w-full
-        shadow-[0_10px_10px_0] shadow-slate-950/50" >
+        <div className="flex flex-col items-center justify-center py-[20px]
+            border-l-[1px]border-r-[1px] border-[#202020] w-full
+            shadow-[0_0px_30px_0]
+            shadow-[#33333381]
+        " >
 
-            <div className="lg:grid w-[30%] lg:gap-2">
-                <p className=" lg:text-7xl font-title">Planos de leitura</p>
-                <span className="lg:text-2xl font-serif font-light">Plano basico de leitura</span>
+            <div className="flex flex-col justify-center items-center mb-[20px]">
+                <p className=" text-[40px] font-title leading-[40px]">Planos de leitura</p>
+                <span className="text-[20px] font-light">Plano básico gratuito</span>
             </div>
 
-            <img src={setaCurvaIcon} className=" w-20 lg:w-20" />
+            <img src={setaCurvaIcon} alt="" className="hidden max-h-[40px]" />
 
-            <div className="lg:flex-1 flex-col-reverse justify-center">
-                <input type="email" placeholder="Coloque seu e-mail aqui..." className="mt-1  lg:w-full mb-5 lg:px-3 lg:py-2 bg-transparent 
-                    border-b-2 border-slate-900 text-sm shadow-sm placeholder-slate-700 text-center
+            <div className="lg:flex-1 flex flex-col-reverse justify-center w-full px-[20px]">
+                <input type="email" placeholder="Coloque seu e-mail aqui" className="w-full mb-[20px] bg-transparent
+                    text-[20px] font-thin
+                    border-b-[1px] border-slate-900 shadow-sm placeholder-slate-700 text-center
                     focus:outline-none
                     disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none
                     invalid:border-pink-500 invalid:text-pink-600
                     focus:invalid:border-pink-500 focus:invalid:ring-pink-500
                 "/>
-                <button type="submit" className=" border-[1px] border-zinc-900 h-16 w-64 p-4">
-                    <p className="hover:decoration-yellow-400/40 hover:line-through hover:decoration-10">Criar Perfil</p>
-                    
-                </button>
             </div>
+
+            <button className="h-[40px] w-[170px] border-[1px] border-[#202020] font-normal text-[18px]">
+            Criar perfil
+            </button>
         </div>
     )
 }

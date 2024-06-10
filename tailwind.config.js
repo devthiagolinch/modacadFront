@@ -12,7 +12,7 @@ export default {
           "pad": 'p-5'
         },
         fontFamily: {
-          title: ["Title", "title"]
+          title: ["Title", "Butler_Ultra_Light"]
         }
   
       },
