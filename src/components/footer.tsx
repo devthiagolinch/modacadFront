@@ -24,20 +24,19 @@ export function Footer() {
 
                 {/** MOBILE */}
                 <div className="flex justify-start items-center px-[20px] mt-[30px] mb-[35px] lg:hidden">
-                    <p className="text-[40px] font-title md:text-7xl leading-[40px]">Nossas <br /> redes sociais</p>
+                    <p className="text-[40px] font-butler_ultra_light md:text-7xl leading-[40px]">Nossas <br /> redes sociais</p>
                     <img src={setaCurvaIcon} alt="" className=" max-h-[40px] transform: -scale-x-90 rotate-[216deg]" />
                 </div>
 
+                {/** DESKTOP */}
                 <div className="hidden lg:flex justify-start items-center px-[20px] mt-[30px] mb-[35px] ">
                     <div>
-                        <p className="text-[40px] font-title md:text-7xl leading-[40px]">Nossas <br /> redes sociais</p>
-                        <span>Plano básico de leitura</span>
+                        <p className="text-[40px] font-butler_ultra_light md:text-7xl leading-[40px]">Nossas <br /> redes sociais</p>
                     </div>
                     <img src={setaCurvaIcon} alt="" className=" max-h-[40px]" />
                 </div>
                 
                 <div className="grid grid-cols-3 gap-x-4 gap-y-4 md:my-10 h-auto px-[20px] mb-[40px]
-                    sm:```
                 ">
 
                     <div className="md:w-[130px] md:h-[100px] grid justify-center items-center w-full h-[60px]
@@ -85,7 +84,7 @@ export function Footer() {
                 px-[20px] py-[30px]
                 border-t-[1px] border-b-[1px] border-[#202020]
             ">
-                <h1 className="font-title text-[40px] mb-[30px] leading-[40px]">Quer falar comigo?</h1>
+                <h1 className="font-butler_ultra_light text-[40px] mb-[30px] leading-[40px]">Quer falar comigo?</h1>
 
                 <ul className="flex flex-col gap-7">
                     <li className="flex gap-2 font-medium">

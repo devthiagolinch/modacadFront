@@ -21,7 +21,7 @@ export function PilulasMCD() {
                         <span className="lg:transform: -rotate-90 text-nowrap w-4">Moda Urbana</span>
                     </div>
                    <div className="lg:flex lg:flex-col lg:pr-[20%] lg:ml-20">
-                        <h1 className="lg:text-7xl lg:font-title lg:my-14 ">
+                        <h1 className="lg:text-7xl lg:font-butler_ultra_light lg:my-14 ">
                         Semana de Moda Indígena DIA 05
 
                         </h1>
@@ -61,7 +61,7 @@ export function PilulasMCD() {
             {/* mobile top page*/}
             <div className="lg:hidden">
                 <div className=" pt-28 pb-5 w-full px-5 grid gap-5">
-                    <h1 className="text-3xl font-title">
+                    <h1 className="text-3xl font-butler_ultra_light">
                         Estilismo pelo mundo Tokio
                         Outono Inverno 2024 2025
                     </h1>

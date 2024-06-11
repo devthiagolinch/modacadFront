@@ -17,7 +17,7 @@ export function PlanosMDC() {
                 pt-32 pb-10 md:ml-32 md:w-auto ml-[5%]
                 "
             >
-                <h1 className="font-title md:text-[80px] text-[50px] leading-none
+                <h1 className="font-butler_ultra_light md:text-[80px] text-[50px] leading-none
                 -mb-3 md:-mb-0"
                 >
                     Planos de Leitura
@@ -38,17 +38,17 @@ export function PlanosMDC() {
                     border-[1px] border-b-0 md:border-b-[1px] md:border-r-0 border-zinc-950"
                 >
                     <div className="flex items-center justify-center ">
-                        <p className="font-title text-[30px]">Premium Trimestral</p>
+                        <p className="font-butler_ultra_light text-[30px]">Premium Trimestral</p>
                     </div>
                     <div className="flex justify-center items-end">
                         <div className="flex -mb-12">
-                            <span className="text-[50px] font-title">R$</span>
-                            <p className="text-[150px] font-title">8</p>
+                            <span className="text-[50px] font-butler_ultra_light">R$</span>
+                            <p className="text-[150px] font-butler_ultra_light">8</p>
                         </div>
-                        <p className="justify-self-end text-[50px] font-title">/mês</p>
+                        <p className="justify-self-end text-[50px] font-butler_ultra_light">/mês</p>
                     </div>
 
-                    <p className="text-[25px] font-title mt-[30px] mb-[40px]">Escolha flexível</p>
+                    <p className="text-[25px] font-butler_ultra_light mt-[30px] mb-[40px]">Escolha flexível</p>
                 
 
                     <div className="mb-[40px] px-5">
@@ -77,17 +77,17 @@ export function PlanosMDC() {
                         <p className="text-[16px] font-medium">MELHOR PLANO</p>
                     </div>
                     <div className="flex items-center justify-center ">
-                        <p className="font-title text-[30px]">Premium Anual</p>
+                        <p className="font-butler_ultra_light text-[30px]">Premium Anual</p>
                     </div>
                     <div className="flex justify-center items-end">
                         <div className="flex -mb-12">
-                            <span className="text-[50px] font-title">R$</span>
-                            <p className="text-[150px] font-title">8</p>
+                            <span className="text-[50px] font-butler_ultra_light">R$</span>
+                            <p className="text-[150px] font-butler_ultra_light">8</p>
                         </div>
-                        <p className="justify-self-end text-[50px] font-title">/mês</p>
+                        <p className="justify-self-end text-[50px] font-butler_ultra_light">/mês</p>
                     </div>
 
-                    <p className="text-[25px] font-title mt-[30px] mb-[40px]">Acesso descomplicado</p>
+                    <p className="text-[25px] font-butler_ultra_light mt-[30px] mb-[40px]">Acesso descomplicado</p>
                     
                     <div className="mb-[40px] px-5">
                         <ul className="flex flex-col gap-[15px]">
@@ -108,17 +108,17 @@ export function PlanosMDC() {
                     border-[1px] border-t-0 md:border-t-[1px] md:border-l-0 border-zinc-950"
                 >
                     <div className="flex items-center justify-center ">
-                        <p className="font-title text-[30px]">Básico</p>
+                        <p className="font-butler_ultra_light text-[30px]">Básico</p>
                     </div>
                     <div className="flex justify-center items-end">
                         <div className="flex -mb-12">
-                            <span className="text-[50px] font-title">R$</span>
-                            <p className="text-[150px] font-title">8</p>
+                            <span className="text-[50px] font-butler_ultra_light">R$</span>
+                            <p className="text-[150px] font-butler_ultra_light">8</p>
                         </div>
-                        <p className="justify-self-end text-[50px] font-title">/mês</p>
+                        <p className="justify-self-end text-[50px] font-butler_ultra_light">/mês</p>
                     </div>
 
-                    <p className="text-[25px] font-title mt-[30px] mb-[40px]">Garanta essas vantagens</p>
+                    <p className="text-[25px] font-butler_ultra_light mt-[30px] mb-[40px]">Garanta essas vantagens</p>
                     
                     <div className="mb-[40px] px-5">
                         <ul className="flex flex-col gap-[15px]">
@@ -140,12 +140,12 @@ export function PlanosMDC() {
                 md:px-32 md:mx-0 md:pb-[70px]
                 md:border-l-[1px] md:border-r-[1px] border-zinc-950
             ">
-                    <p className="text-[35px] font-title lg:text-[45px] md:my-[40px]">Perguntas frequentes</p>
+                    <p className="text-[35px] font-butler_ultra_light lg:text-[45px] md:my-[40px]">Perguntas frequentes</p>
 
                     <div className="md:w-[100%]">
                         <div className="md:flex md:flex-col py-[30px] border-t-[1px] border-zinc-950 md:w-[100%]"
                         >
-                            <h1 className="font-title text-[30px]">Como recebo meu comprovante de pagamento e minha nota fiscal?
+                            <h1 className="font-butler_ultra_light text-[30px]">Como recebo meu comprovante de pagamento e minha nota fiscal?
                             </h1>
                             <p className="text-[20px] font-regular">
                                 Você pode pagar via PIX, boleto ou cartão de crédito.
@@ -156,7 +156,7 @@ export function PlanosMDC() {
                     <div className="md:w-[100%]">
                         <div className="md:flex md:flex-col py-[30px] border-t-[1px] border-zinc-950 md:w-[100%]"
                         >
-                            <h1 className="font-title text-[30px]">Como recebo meu comprovante de pagamento e minha nota fiscal?
+                            <h1 className="font-butler_ultra_light text-[30px]">Como recebo meu comprovante de pagamento e minha nota fiscal?
                             </h1>
                             <p className="text-[20px] font-regular">
                                 Você pode pagar via PIX, boleto ou cartão de crédito.
@@ -167,7 +167,7 @@ export function PlanosMDC() {
                     <div className="md:w-[100%]">
                         <div className="md:flex md:flex-col py-[30px] border-t-[1px] border-zinc-950 md:w-[100%]"
                         >
-                            <h1 className="font-title text-[30px]">Como recebo meu comprovante de pagamento e minha nota fiscal?
+                            <h1 className="font-butler_ultra_light text-[30px]">Como recebo meu comprovante de pagamento e minha nota fiscal?
                             </h1>
                             <p className="text-[20px] font-regular">
                                 Você pode pagar via PIX, boleto ou cartão de crédito.
