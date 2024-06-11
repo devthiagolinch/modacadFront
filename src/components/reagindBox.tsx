@@ -43,7 +43,7 @@ export function ReadingBox() {
 
                 {/** DESKTOP */}
 
-                <div className="lg:flex lg:flex-col lg:justify-center lg:items-center md:my-10  px-[20px] mb-[40px h-[100%] w-[30%]">
+                <div className="lg:flex lg:flex-col lg:justify-center lg:items-center md:my-10  px-[20px] mb-[40px h-[100%] w-[29%]">
                     <input type="email" placeholder="Coloque seu e-mail aqui" className="w-full mb-[20px] bg-transparent
                         text-[20px] font-montserrat_light_italic
                         border-b-[1px] border-slate-900 shadow-sm placeholder-slate-700 text-center

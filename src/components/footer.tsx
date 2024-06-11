@@ -76,8 +76,9 @@ export function Footer() {
 
                         
             </div>
-
-            <ReadingBox />
+            <div className="lg:hidden">
+                <ReadingBox />
+            </div>
 
             <div className="
                 w-full  px-[20px] py-[30px] lg:flex lg:flex-col lg:justify-center lg:items-start lg:px-[10%]
