@@ -39,7 +39,7 @@
 @font-face {
     font-family: "montserrat_medium";
     src: url("./src/assets/fonts/Montserrat-Medium.otf") format("opentype");
-    font-style: normal;
+    font-style: medium;
     font-display: swap
 },
 @font-face {

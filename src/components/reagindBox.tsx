@@ -4,22 +4,22 @@ export function ReadingBox() {
 
     return (
         <div className="grid">
-            <div className="flex flex-col lg:flex-row md:justify-around md:w-full 
+            <div className="flex flex-col lg:flex-row md:justify-center gap-x-[350px] md:w-full 
                     border-[1px] border-zinc-900 md:items-center
             " >
                 {/** MOBILE */}
                 <div className="lg:hidden flex flex-col justify-center items-center mb-[20px]">
                     <p className=" text-[40px] font-butler_ultra_light leading-[40px]">Planos de leitura</p>
-                    <span className="text-[20px] font-light">Plano básico gratuito</span>
+                    <span className="text-[20px] font-montserrat_light_italic">Plano básico gratuito</span>
                 </div>
 
                 <img src={setaCurvaIcon} alt="" className="hidden max-h-[40px]" />
 
                 {/** DESKTOP */}
-                <div className="hidden lg:flex lg:justify-around lg:items-center px-[20px] mt-[30px] mb-[35px] ">
+                <div className="hidden lg:flex lg:items-center lg:justify-between  pt-[30px] pb-[35px]">
                     <div className="mr-[20px]">
                         <p className="text-[40px] font-butler_ultra_light md:text-7xl leading-[40px]">Planos <br /> de leitura</p>
-                        <span>Plano básico de leitura</span>
+                        <span className="font-montserrat_light_italic">Plano básico de leitura</span>
                     </div>
                     <img src={setaCurvaIcon} alt="" className=" max-h-[40px]" />
                 </div>
@@ -43,9 +43,9 @@ export function ReadingBox() {
 
                 {/** DESKTOP */}
 
-                <div className="lg:flex lg:flex-col lg:justify-center lg:items-center md:my-10 h-auto px-[20px] mb-[40px]">
+                <div className="lg:flex lg:flex-col lg:justify-center lg:items-center md:my-10  px-[20px] mb-[40px h-[100%] w-[30%]">
                     <input type="email" placeholder="Coloque seu e-mail aqui" className="w-full mb-[20px] bg-transparent
-                        text-[20px] font-thin
+                        text-[20px] font-montserrat_light_italic
                         border-b-[1px] border-slate-900 shadow-sm placeholder-slate-700 text-center
                         focus:outline-none
                         disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none
@@ -53,7 +53,7 @@ export function ReadingBox() {
                         focus:invalid:border-pink-500 focus:invalid:ring-pink-500
                     "/>
 
-                    <button className=" h-[40px] w-[170px] border-[1px] border-[#202020] font-normal text-[18px]">
+                    <button className=" h-[40px] w-[170px] border-[1px] border-[#202020] font-montserrat_medium text-[18px]">
                         Criar perfil
                     </button>
                 </div>

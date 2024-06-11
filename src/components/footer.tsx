@@ -16,7 +16,7 @@ export function Footer() {
 
     return (
         <div className="grid">
-            {/** MUDAR A COR DOS ICONES PARA #202020 */}
+            {/** MUDAR A COR DOS ÍCONES PARA #202020 */}
             <div className="
                 flex flex-col lg:flex-row md:justify-around md:w-full 
                 border-[1px] border-zinc-900 md:items-center
@@ -80,18 +80,17 @@ export function Footer() {
             <ReadingBox />
 
             <div className="
-                w-full
-                px-[20px] py-[30px]
+                w-full  px-[20px] py-[30px] lg:flex lg:flex-col lg:justify-center lg:items-start lg:px-[10%]
                 border-t-[1px] border-b-[1px] border-[#202020]
             ">
                 <h1 className="font-butler_ultra_light text-[40px] mb-[30px] leading-[40px]">Quer falar comigo?</h1>
 
                 <ul className="flex flex-col gap-7">
-                    <li className="flex gap-2 font-medium">
+                    <li className="flex gap-2 font-montserrat_medium">
                         <img src={emailIcon} alt="" className="max-w-[24px] " />
                         telmabarcellos@modacad.com.br
                     </li>
-                    <li className="flex gap-2 font-medium">
+                    <li className="flex gap-2 font-montserrat_medium">
                         <img src={wppIcon} alt="" className="max-h-[24px]" />
                         31 99616 7573
                     </li>
