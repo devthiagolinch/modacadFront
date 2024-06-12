@@ -4,7 +4,7 @@ import { Header } from "../components/header";
 import banner from "../assets/imgs/africa.jpg"
 import telma from "../assets/imgs/telma.jpeg"
 
-import { BlockText } from "../components/blocktext";
+{/** import { BlockText } from "../components/blocktext"; */}
 import { TextoPremium } from "../components/textoPremium";
 
 export function PilulasMCD() {
