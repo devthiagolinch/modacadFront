@@ -16,17 +16,17 @@ const routes = createBrowserRouter([
     errorElement: <div>404 NOT FOUND</div>,
     children: [
       {
-        path: "/modacadFront/textomodacad",
+        path: "/modacadFront/textomodacad/",
         element: <TextosModacad />,
         errorElement: <div>404 NOT FOUND</div>
       },
       {
-        path: "/modacadFront/pilula",
+        path: "/modacadFront/pilula/",
         element: <PilulasMCD />,
         errorElement: <div>404 NOT FOUND</div>
       },
       {
-        path: "/modacadFront/planos",
+        path: "/modacadFront/planos/",
         element: <PlanosMDC />,
         errorElement: <div>404 NOT FOUND</div>
       }
