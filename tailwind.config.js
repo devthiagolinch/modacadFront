@@ -12,15 +12,16 @@ export default {
           "pad": 'p-5'
         },
         fontFamily: {
-          butler_ultra_light: ['butler_ultra_light', "sans-serif"],
-          butler_bold: ['butler_bold', 'sans-serif'],
-          butler_extra_bold: ['butler_extra_bold', 'sans-serif'],
-          butler_regular: ['butler_regular', 'sans-serif'],
+          butler_ultra_light: ['butler-ultra-light', "sans-serif"],
+          butler_bold: ['butler-bold', 'sans-serif'],
+          butler_extra_bold: ['butler-extra-bold', 'sans-serif'],
+          butler_regular: ['butler-regular', 'sans-serif'],
           autography: ['autography', 'sans-serif'],
-          montserrat_light_italic: ['montserrat_light_italic', 'sans-serif'],
-          montserrat_medium: ['montserrat_medium', 'sans-serif'],
-          montserrat_medium_italic: ['montserrat_medium_italic', 'sans-serif'],
-          montserrat_regular: ['montserrat_regular', 'sans-serif']
+          montserrat_light_italic: ['montserrat-light-italic', 'sans-serif'],
+          montserratMedium: ['montserrat-medium', 'sans-serif'],
+          montserrat_medium_italic: ['montserrat-medium-italic', 'sans-serif'],
+          montserratRegular: ['montserrat-regular', 'sans-serif'],
+          montserratLight: ['montserrat-light', 'sans-serif']
         }
   
       },

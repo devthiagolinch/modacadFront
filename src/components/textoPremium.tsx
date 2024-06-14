@@ -9,11 +9,11 @@ export function TextoPremium() {
             mb-[40px]
         ">
             <h1 className="text-[22px] text-center leading-[25px] mb-[20px]">
-                Texto exclusivo <br />
+                Texto exclusivo
                 comunidadeModacad.
             </h1> 
 
-            <Button title="Planos de leitura" />
+            <Button title="Conheça os Planos de Leitura" />
         </div>
     )
 }
