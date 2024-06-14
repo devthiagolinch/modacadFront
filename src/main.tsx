@@ -11,26 +11,24 @@ import { PlanosMDC } from './pages/Planos.tsx'
 
 const routes = createBrowserRouter([
   {
-    path: "/modacadFront/",
+    path: "/",
     element: <Home />,
-    errorElement: <div>404 NOT FOUND</div>,
-    children: [
-      {
-        path: "/modacadFront/textomodacad/",
-        element: <TextosModacad />,
-        errorElement: <div>404 NOT FOUND</div>
-      },
-      {
-        path: "/modacadFront/pilula/",
-        element: <PilulasMCD />,
-        errorElement: <div>404 NOT FOUND</div>
-      },
-      {
-        path: "/modacadFront/planos/",
-        element: <PlanosMDC />,
-        errorElement: <div>404 NOT FOUND</div>
-      }
-    ]
+    errorElement: <div>404 NOT FOUND</div>
+  },
+  {
+    path: "/textomodacad",
+    element: <TextosModacad />,
+    errorElement: <div>404 NOT FOUND</div>
+  },
+  {
+    path: "/pilula",
+    element: <PilulasMCD />,
+    errorElement: <div>404 NOT FOUND</div>
+  },
+  {
+    path: "/planos",
+    element: <PlanosMDC />,
+    errorElement: <div>404 NOT FOUND</div>
   }
 ])
 
