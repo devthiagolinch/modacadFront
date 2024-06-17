@@ -40,7 +40,7 @@ export function Header() {
                         lg:flex font-normal border-l-2 lg:font-medium lg:text-sm lg:border lg:border-r-0
                         lg:border-b-0 lg:border-t-0 lg:border-zinc-950 md:w-50 md:h-20 lg:px-5 lg:py-7 "
                     >Textos MDC</a>
-                    <a href="/pilula" className=" 
+                    <a href="/pilulas" className=" 
                         lg:flex font-normal border-l-2 lg:font-medium lg:text-sm lg:border lg:border-r-0
                         lg:border-b-0 lg:border-t-0 lg:border-zinc-950 md:w-50 md:h-20 lg:px-5 lg:py-7 "
                     >Pilulas MDC</a>

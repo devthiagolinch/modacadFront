@@ -25,7 +25,7 @@ export function PilulasMCD() {
                     </div>
                    <div className="lg:flex lg:flex-col lg:pr-[20%] lg:ml-[94px]">
                         <h1 className="lg:text-7xl lg:font-butler_ultra_light lg:my-14 lg:mb-[30px] lg:leading-[80px]  ">
-                        Segmana de Moda Indígena DIA 05
+                        Semana de Moda Indígena DIA 05
 
                         </h1>
 

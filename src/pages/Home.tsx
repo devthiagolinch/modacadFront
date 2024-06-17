@@ -5,6 +5,7 @@ import { LastPost } from "../components/last-post"
 import { ReadingBox } from "../components/reagindBox"
 import { Subjects } from "../components/subjects"
 
+
 export function Home() {
   return( 
     <div className=" mx-auto">
