@@ -11,7 +11,6 @@ function Routes() {
       <Route path="/" exact component={Home} />
       <Route path="/pilulas" component={PilulasMCD} />
       <Route path="/textomodacad" component={TextosModacad} />
-      
       <Route path="/planos" component={PlanosMDC} />
     </BrowserRouter>
   );

@@ -18,7 +18,7 @@ export function Header() {
                 </div>
                 
                 <nav className=" hidden items-center">
-                    <a href="" className="hidden lg:flex font-medium text-sm border border-r-0 border-b-0 border-t-0 border-zinc-950 w-50 h-20 px-5 py-7 ">Meu Perfil</a>
+                    <a href="/" className="hidden lg:flex font-medium text-sm border border-r-0 border-b-0 border-t-0 border-zinc-950 w-50 h-20 px-5 py-7 ">Meu Perfil</a>
                     <a href="" className="hidden lg:flex font-normal border-l-2 lg:font-medium lg:text-sm lg:border lg:border-r-0 lg:border-b-0 lg:border-t-0 lg:border-zinc-950 md:w-50 md:h-20 lg:px-5 lg:py-7 ">Criar Perfil</a>
                     <a href="" className="font-medium text-sm border border-r-0 border-b-0 border-t-0 border-zinc-950 w-50 h-20 px-6 py-6 ">
                         <img src={shopIcon} alt=""  className="h-5 lg:h-7 lg:stroke-2" />
@@ -32,22 +32,22 @@ export function Header() {
                 </nav>
 
                 <nav className="flex items-center">
-                    <a href="/" className="
+                    <Link to={"/"} className="
                         lg:flex font-medium text-sm border border-r-0 border-b-0 border-t-0 
                         border-zinc-950 w-50 h-20 px-5 py-7 "
-                    >Home</a>
-                    <a href="/textomodacad" className=" 
+                    >Home</Link>
+                    <Link to={"/textomodacad"} className=" 
                         lg:flex font-normal border-l-2 lg:font-medium lg:text-sm lg:border lg:border-r-0
                         lg:border-b-0 lg:border-t-0 lg:border-zinc-950 md:w-50 md:h-20 lg:px-5 lg:py-7 "
-                    >Textos MDC</a>
-                    <a href="/pilulas" className=" 
+                    >Textos MDC</Link>
+                    <Link to={"/pilulas"} className=" 
                         lg:flex font-normal border-l-2 lg:font-medium lg:text-sm lg:border lg:border-r-0
                         lg:border-b-0 lg:border-t-0 lg:border-zinc-950 md:w-50 md:h-20 lg:px-5 lg:py-7 "
-                    >Pilulas MDC</a>
-                    <a href="/planos" className=" 
+                    >Pilulas MDC</Link>
+                    <Link to={"/planos"} className=" 
                         lg:flex font-normal border-l-2 lg:font-medium lg:text-sm lg:border lg:border-r-0 lg:border-b-0
                         lg:border-t-0 lg:border-zinc-950 md:w-50 md:h-20 lg:px-5 lg:py-7 "
-                    >Planos MDC</a>
+                    >Planos MDC</Link>
                     
                 </nav>
             </div>
