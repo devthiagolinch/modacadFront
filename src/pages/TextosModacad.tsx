@@ -3,6 +3,7 @@ import { Header } from "../components/header";
 
 import banner from "../assets/imgs/cores.jpg"
 import telma from "../assets/imgs/telma.jpeg"
+import { TextoPremium } from "../components/textoPremium";
 
 export function TextosModacad() {
 
@@ -10,38 +11,38 @@ export function TextosModacad() {
         <div className="mx-auto">
             <Header />
             {/* DESKTOP */}
-            <div className="hidden lg:flex lg:flex-col  lg:w-full lg:pt-28">
-                <div className="lg:flex lg:ml-10 lg:pb-5 lg:gap-[10%] lg:justify-between">
-                    <div className="lg:flex lg:items-center">
-                        <span className="lg:transform: -rotate-90 text-nowrap w-4">Historia da Moda</span>
-                        <span className="lg:transform: -rotate-90 text-nowrap w-4">Novos Materiais</span>
-                        <span className="lg:transform: -rotate-90 text-nowrap w-4">Moda Urbana</span>
+            <div className="hidden lg:flex lg:flex-col  lg:w-full lg:pt-[60px]">
+                <div className="lg:flex  lg:pb-5 lg:gap-[3%] lg:justify-between">
+                    {/** tentar subir um pouco as tags para ficar alinhado com a descrição */}
+                    <div className="lg:flex lg:pl-[55px] lg:flex-row lg:align-middle lg:items-end lg:w-auto">
+                        <span className=" w-[22px] lg:transform: -rotate-90 text-nowrap">HISTORIO DA MODA</span>
+                        <span className=" w-[22px] lg:transform: -rotate-90 text-nowrap">NOVOS MATERIAIS</span>
+                        <span className=" w-[22px] lg:transform: -rotate-90 text-nowrap">MODA URBANA</span>
                     </div>
-                   <div className="lg:flex lg:flex-col lg:pr-[20%] lg:ml-20">
-                        <h1 className="lg:text-7xl lg:font-butler_ultra_light lg:my-14 ">
+                   <div className="lg:flex lg:flex-col lg:pr-[20%] lg:ml-[94px]">
+                        <h1 className="lg:text-7xl lg:font-butler_ultra_light lg:my-14 lg:mb-[30px] lg:leading-[80px]  ">
                         Semana de Moda Indígena DIA 05
 
                         </h1>
 
-                        <p className="lg:text-left lg:text-2xl w-[100%]">
+                        <p className="lg:text-left lg:text-[20px] w-[100%] lg:font-montserrat_regular">
                         Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, 
                         e vem sendo utilizado desde o século XVI, quando um impressor desconhecido pegou uma bandeja 
                         de tipos e os embaralhou para fazer um livro de modelos de tipos. 
                         </p>
                    </div>
-
-                   
                 </div>
 
                 <div className="lg:flex lg:w-full lg:justify-between lg:px-[20%]">
                     <div className="lg:flex lg:p-5 lg:gap-5 lg:items-center lg:justify-start">
                         <img src={telma} alt="" className="w-14 h-14 rounded-full flex items-center justify-center bg-black" />
-                        <p>Telma Barcellos</p>
+                        <p className="lg:-ml-3 lg:text-[20px] lg:font-montserratMedium tracking-[0.05em]">Telma Barcellos</p>
                     </div>
 
-                    <div className="lg:flex lg:flex-col lg:justify-center lg:items-end text-zinc-800">
-                            <p className="text-left">4/04/2025</p>
-                            <span>10 min de leitura</span>
+                    <div className="lg:flex lg:flex-row lg:justify-center lg:items-center text-zinc-800">
+                            <p className="text-left lg:mr-2">4/04/2025</p>
+                            <span>•</span>
+                            <span className="lg:ml-2">  10 min de leitura</span>
                         
                         <div className="lg:grid lg:items-end">
                         </div>
@@ -95,8 +96,8 @@ export function TextosModacad() {
                 
             </div>
 
-            <div className="lg:pt-12 lg:px-[20%] ">
-                <p className="text-justify text-zinc-700  lg:text-lg">
+            <div className="lg:pt-12 lg:px-[20%] mb-[40px] mx-[20px]">
+                <p className="text-justify  lg:text-lg font-montserrat_regular">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam et vestibulum lacus. Donec sed convallis ipsum. Praesent rhoncus mattis gravida. Aenean nec lacus et leo tristique pellentesque at ac metus. In vehicula lectus erat, congue ultrices mi pulvinar a. Nulla placerat, arcu vitae bibendum fringilla, ante nulla semper quam, eu blandit nunc dolor id lorem. Praesent euismod commodo urna. Nunc vehicula odio massa, volutpat feugiat mi interdum vitae. Nulla nec purus ultrices mauris dignissim feugiat quis et lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Ut in gravida urna. Nullam at auctor felis. Proin quis mi libero. Praesent porta tempor porttitor.
 
                 Curabitur facilisis tellus a sapien condimentum accumsan. Suspendisse id ultrices metus. <br /> <br /> Fusce massa nulla, suscipit vulputate nulla sit amet, ornare accumsan lorem. Nullam sed convallis tortor, eget efficitur mauris. Nam porta ex non massa vestibulum, convallis sodales urna pellentesque. In hac habitasse platea dictumst. Praesent at viverra velit. Fusce luctus consectetur sem quis dignissim.
@@ -106,7 +107,11 @@ export function TextosModacad() {
                 Nunc nulla lacus, scelerisque ut ipsum nec, ullamcorper sollicitudin ante. Curabitur finibus neque sit amet diam sollicitudin accumsan.
 
                 Pellentesque faucibus velit maximus erat condimentum vestibulum.
-                <br />
+
+                <div className="flex justify-center items-center">
+                    <img src={banner} alt="" className="max-h-60 my-[20px]" />
+                </div>
+
                 Integer quis blandit metus. In id velit sit amet neque consectetur porta. Ut mattis lorem in commodo semper. Sed id arcu sit amet ipsum consequat viverra eget at libero. Donec pharetra, lorem aliquet imperdiet posuere, nunc purus dignissim nisl, sit amet semper urna est aliquam diam. Cras vel varius diam. Nam commodo scelerisque tristique. Vestibulum efficitur justo magna, ut vestibulum tortor consequat varius. Morbi fringilla sollicitudin lacus, vitae imperdiet nisl dapibus at.
 
                 Morbi a libero eget nisl venenatis pharetra. Aenean nec ante tristique, congue neque sed, luctus dolor. 
@@ -115,7 +120,7 @@ export function TextosModacad() {
                 </p>
 
             </div>
-
+            <TextoPremium />
 
             <Footer />
         </div>
