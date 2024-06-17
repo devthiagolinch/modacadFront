@@ -6,7 +6,7 @@ import telma from "../assets/imgs/telma.jpeg"
 
 {/** import { BlockText } from "../components/blocktext"; */}
 import { TextoPremium } from "../components/textoPremium";
-import { BlockText } from "../components/blocktext";
+{/** import { BlockText } from "../components/blocktext"; */}
 
 export function PilulasMCD() {
 
