@@ -156,25 +156,26 @@ export function PilulasMCD() {
     
                 {/** DESKTOP TOP PAGE */}
                 <div className="hidden lg:flex lg:flex-col  lg:w-full lg:pt-[60px]">
-                    <div className="lg:flex  lg:pb-5 lg:justify-between">
+
+                    <div className="lg:flex  lg:pb-5 2xl:gap-[14.5%] lg:gap-[12%] lg:justify-between">
                         {/** tentar subir um pouco as tags para ficar alinhado com a descrição */}
-                        <div className="lg:flex lg:pl-[55px] lg:flex-row lg:align-middle lg:items-end lg:w-auto lg:mr-[105px]">
+                        <div className="lg:flex lg:pl-[55px] lg:flex-row lg:align-middle lg:items-end lg:w-auto">
                             <span className=" w-[22px] lg:transform: -rotate-90 text-nowrap">HISTORIO DA MODA</span>
                             <span className=" w-[22px] lg:transform: -rotate-90 text-nowrap">NOVOS MATERIAIS</span>
                             <span className=" w-[22px] lg:transform: -rotate-90 text-nowrap">MODA URBANA</span>
                         </div>
-                    <div className="lg:flex lg:flex-col lg:pr-[20%] lg:ml-[94px]">
-                            <h1 className="lg:text-7xl lg:font-butler_ultra_light lg:my-14 lg:mb-[30px] lg:leading-[80px]  ">
-                            Semana de Moda Indígena DIA 05
+                        <div className="lg:flex lg:flex-col lg:pr-[20%] ">
+                                <h1 className="lg:text-7xl lg:font-butler_ultra_light lg:my-14 lg:mb-[30px] lg:leading-[80px]  ">
+                                Semana de Moda Indígena DIA 05
 
-                            </h1>
+                                </h1>
 
-                            <p className="lg:text-left lg:text-[20px] w-[100%] lg:font-montserrat_regular">
-                            Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, 
-                            e vem sendo utilizado desde o século XVI, quando um impressor desconhecido pegou uma bandeja 
-                            de tipos e os embaralhou para fazer um livro de modelos de tipos. 
-                            </p>
-                    </div>
+                                <p className="lg:text-left lg:text-[20px] w-[100%] lg:font-montserrat_regular">
+                                Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, 
+                                e vem sendo utilizado desde o século XVI, quando um impressor desconhecido pegou uma bandeja 
+                                de tipos e os embaralhou para fazer um livro de modelos de tipos. 
+                                </p>
+                        </div>
 
                     
                     </div>
@@ -259,7 +260,7 @@ export function PilulasMCD() {
                 </div>
 
                 <div className="lg:pt-12 lg:px-[20%] mb-[40px] mx-[20px]  ">
-                    <p className="text-justify  lg:text-lg font-montserrat_regular">
+                    <p className="text-justify  lg:text-lg font-montserrat_regular truncate ">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam et vestibulum lacus. Donec sed convallis ipsum. Praesent rhoncus mattis gravida. Aenean nec lacus et leo tristique pellentesque at ac metus. In vehicula lectus erat, congue ultrices mi pulvinar a. Nulla placerat, arcu vitae bibendum fringilla, ante nulla semper quam, eu blandit nunc dolor id lorem. Praesent euismod commodo urna. Nunc vehicula odio massa, volutpat feugiat mi interdum vitae. Nulla nec purus ultrices mauris dignissim feugiat quis et lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Ut in gravida urna. Nullam at auctor felis. Proin quis mi libero. Praesent porta tempor porttitor.
 
                     Curabitur facilisis tellus a sapien condimentum accumsan. Suspendisse id ultrices metus. <br /> <br /> Fusce massa nulla, suscipit vulputate nulla sit amet, ornare accumsan lorem. Nullam sed convallis tortor, eget efficitur mauris. Nam porta ex non massa vestibulum, convallis sodales urna pellentesque. In hac habitasse platea dictumst. Praesent at viverra velit. Fusce luctus consectetur sem quis dignissim.
