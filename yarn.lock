@@ -2223,6 +2223,11 @@ synckit@^0.8.6:
     "@pkgr/core" "^0.1.0"
     tslib "^2.6.2"
 
+tailwindcss-inner-border@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/tailwindcss-inner-border/-/tailwindcss-inner-border-0.2.0.tgz#83eb899e4bf9cee4291398cb38098f3d06f75af3"
+  integrity sha512-IrKWoSHMisGY1FGfwD3+5nzPu1N9gWqUopqma72rS/5wp+DGxUltXhMm84TLpUeaUJyW6NDSHUO/qWh/+puZvg==
+
 tailwindcss@^3.4.3:
   version "3.4.4"
   resolved "https://registry.yarnpkg.com/tailwindcss/-/tailwindcss-3.4.4.tgz#351d932273e6abfa75ce7d226b5bf3a6cb257c05"
