@@ -4,8 +4,10 @@ export function ReadingBox() {
 
     return (
         <div className="grid">
-            <div className="flex flex-col lg:flex-row md:justify-center gap-x-[350px] md:w-full 
-                    border-[1px] border-zinc-900 md:items-center
+            <div className="flex flex-col lg:flex-row justify-center gap-x-[350px] w-full 
+                pt-[20px] pb-[20px]
+                shadow-read
+                md:border-[1px] md:border-[#202020] items-center
             " >
                 {/** MOBILE */}
                 <div className="lg:hidden flex flex-col justify-center items-center mb-[20px]">
@@ -26,7 +28,7 @@ export function ReadingBox() {
 
 
                 {/** MOBILE */}
-                <div className="lg:hidden flex flex-col-reverse justify-center w-full px-[20px]">
+                <div className="lg:hidden flex flex-col-reverse justify-center items-center w-full px-[20px]">
                     <input type="email" placeholder="Coloque seu e-mail aqui" className="w-full mb-[20px] bg-transparent
                         text-[20px] font-thin
                         border-b-[1px] border-slate-900 shadow-sm placeholder-slate-700 text-center
@@ -37,13 +39,17 @@ export function ReadingBox() {
                     "/>
                 </div>
 
-                <button className="lg:hidden h-[40px] w-[170px] border-[1px] border-[#202020] font-normal text-[18px]">
-                Criar perfil
+                <button className="lg:hidden flex flex-col h-[40px] w-[170px] border-[1px] border-[#202020] font-montserrat_light_italic text-[18px]
+                    justify-center items-center
+                ">
+                    <p className="sticky">Criar perfil</p>
+                    <div className="w-[90%] h-[19px] bg-[#dcdf1e] -mt-[14px]  ">
+                    </div>
                 </button>
 
                 {/** DESKTOP */}
 
-                <div className="lg:flex lg:flex-col lg:justify-center lg:items-center md:my-10  px-[20px] mb-[40px h-[100%] w-[29%]">
+                <div className="lg:flex hidden lg:flex-col lg:justify-center lg:items-center md:my-10  px-[20px] mb-[40px h-[100%] w-[29%]">
                     <input type="email" placeholder="Coloque seu e-mail aqui" className="w-full mb-[20px] bg-transparent
                         text-[20px] font-montserrat_light_italic
                         border-b-[1px] border-slate-900 shadow-sm placeholder-slate-700 text-center
@@ -53,7 +59,7 @@ export function ReadingBox() {
                         focus:invalid:border-pink-500 focus:invalid:ring-pink-500
                     "/>
 
-                    <button className=" h-[40px] w-[170px] border-[1px] border-[#202020] font-montserrat_medium text-[18px]">
+                    <button className=" hidden lg:flex lg:justify-center lg:items-center h-[40px] w-[170px] border-[1px] border-[#202020] font-montserrat_medium text-[18px]">
                         Criar perfil
                     </button>
                 </div>

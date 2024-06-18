@@ -6,6 +6,9 @@ export default {
       "./src/**/*.{js,ts,jsx,tsx}"
     ],
     theme: {
+      boxShadow:{
+        read:  "0 0px 30px 1px rgba(32,32,32,0.84)"
+      },
       extend: {
         textDecorationThickness: {
           10: '25px',

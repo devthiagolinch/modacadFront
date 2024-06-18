@@ -4,18 +4,16 @@ import { Header } from "../components/header";
 import banner from "../assets/imgs/africa.jpg"
 import telma from "../assets/imgs/telma.jpeg"
 
-import { TextoPremium } from "../components/textoPremium";
 import { BlockText } from "../components/blocktext";
 
-interface PilulasDT {
+{/** interface PilulasDT {
     mostrarTexto: boolean;
-}
+} */}
 
 export function PilulasMCD() {
+    const show = "true"
 
-    let mostrarTexto = true
-
-    if(mostrarTexto = false) {
+    if(!show) {
         return(
             <div className="mx-auto">
                 <Header />

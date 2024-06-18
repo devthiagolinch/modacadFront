@@ -6,9 +6,8 @@ import { Link } from "react-router-dom"
 
 export function Header() {
     return (
-        <div className="flex fixed  lg:items-center w-[100%] border-b-[1px] border-l-[1px] border-r-[1px] border-zinc-950 bg-neutral-200
-            shadow-[0_0px_30px_0]
-            shadow-[#33333381]
+        <div className="flex fixed  lg:items-center w-[100%] border-b-[1px] border-l-[1px] border-r-[1px] border-[#202020] bg-[#f1ece8]
+            shadow-read
         ">
             
             <div className="flex w-full justify-between relative">
