@@ -87,11 +87,12 @@ export function Footer() {
                 <h1 className="font-butler_ultra_light text-[40px] mb-[30px] leading-[40px]">Quer falar comigo?</h1>
 
                 <ul className="flex flex-col gap-7 md:w-full">
-                    <li className="flex gap-3 font-montserrat_medium sm:items-center ">
+                    <li className="flex gap-3 font-montserrat_medium sm:items-center
+                        bg-gradient-to-t from-[#dcdf1e] to-[#dcdf1e] bg-[length:245px_.90em] bg-no-repeat bg-[position:52%_150%]
+                        md:bg-[position:5.5%_150%] xl:bg-[position:4%_150%] 
+                    ">
                         <img src={emailIcon} alt="" className="max-w-[24px]" />
                         <p className="sticky">telmabarcellos@modacad.com.br</p>
-                        <div className="w-[83%] md:w-[24%] h-[15px] bg-[#dcdf1e] -ml-[255px] md:-ml-[252px] mt-[12px] lg:mt-[15px]">
-                        </div>
                     </li>
                     <li className="flex gap-2 font-montserrat_medium">
                         <img src={wppIcon} alt="" className="max-h-[24px]" />

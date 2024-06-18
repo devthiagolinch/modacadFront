@@ -260,7 +260,7 @@ export function PilulasMCD() {
                 </div>
 
                 <div className="lg:pt-12 lg:px-[20%] mb-[40px] mx-[20px]  ">
-                    <p className="text-justify  lg:text-lg font-montserrat_regular truncate ">
+                    <p className="text-justify  lg:text-lg font-montserrat_light truncate ">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam et vestibulum lacus. Donec sed convallis ipsum. Praesent rhoncus mattis gravida. Aenean nec lacus et leo tristique pellentesque at ac metus. In vehicula lectus erat, congue ultrices mi pulvinar a. Nulla placerat, arcu vitae bibendum fringilla, ante nulla semper quam, eu blandit nunc dolor id lorem. Praesent euismod commodo urna. Nunc vehicula odio massa, volutpat feugiat mi interdum vitae. Nulla nec purus ultrices mauris dignissim feugiat quis et lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Ut in gravida urna. Nullam at auctor felis. Proin quis mi libero. Praesent porta tempor porttitor.
 
                     Curabitur facilisis tellus a sapien condimentum accumsan. Suspendisse id ultrices metus. <br /> <br /> Fusce massa nulla, suscipit vulputate nulla sit amet, ornare accumsan lorem. Nullam sed convallis tortor, eget efficitur mauris. Nam porta ex non massa vestibulum, convallis sodales urna pellentesque. In hac habitasse platea dictumst. Praesent at viverra velit. Fusce luctus consectetur sem quis dignissim.

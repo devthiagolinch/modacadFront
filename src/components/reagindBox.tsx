@@ -1,4 +1,5 @@
 import setaCurvaIcon from "../assets/icons/seta-curva.svg"
+import { Button } from "./Button"
 
 export function ReadingBox() {
 
@@ -59,9 +60,7 @@ export function ReadingBox() {
                         focus:invalid:border-pink-500 focus:invalid:ring-pink-500
                     "/>
 
-                    <button className=" hidden lg:flex lg:justify-center lg:items-center h-[40px] w-[170px] border-[1px] border-[#202020] font-montserrat_medium text-[18px]">
-                        Criar perfil
-                    </button>
+                    <Button title="Criar Perfil" />
                 </div>
 
             </div>
