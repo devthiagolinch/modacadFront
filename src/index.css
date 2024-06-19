@@ -10,14 +10,14 @@
     },
     @font-face {
         font-family: "autography";
-        src: url("./src/assets/fonts/autography.otf") format("opentype");
+        src: url("./src/assets/fonts/Autography.otf") format("opentype");
         font-style: normal;
         font-display: swap
     },
     @font-face {
         font-family: "butler-bold";
-        src: url("./src/assets/fonts/butler_bold.otf") format("opentype");
-        font-style: normal;
+        src: url("./src/assets/fonts/Butler_bold.otf") format("opentype");
+        font-style: bold;
         font-display: swap
     },
     @font-face {

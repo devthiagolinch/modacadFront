@@ -1,4 +1,5 @@
-import { ArticlesScroll } from "../components/articlesScroll"
+import { ScrollPilulasMDC } from "../components/ScrollPilulasMDC"
+import { TextoMCD } from "../components/TextoMDC"
 import { Footer } from "../components/footer"
 import { Header } from "../components/header"
 import { LastPost } from "../components/last-post"
@@ -8,7 +9,7 @@ import { Subjects } from "../components/subjects"
 
 export function Home() {
   return( 
-    <div className=" mx-auto">
+    <div className="mx-auto">
       <Header />
       <div className="">
         <div className="h-96">
@@ -18,10 +19,10 @@ export function Home() {
         <ReadingBox />
         <LastPost />
         <Subjects />
-        <ArticlesScroll />
-        <ArticlesScroll />
+        <TextoMCD />
+        <TextoMCD />
         <ReadingBox />
-        <ArticlesScroll />
+        <ScrollPilulasMDC />
         <div className="h-96">
 
         </div>

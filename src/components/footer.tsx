@@ -81,20 +81,23 @@ export function Footer() {
             </div>
 
             <div className="
-                w-full  px-[20px] py-[30px] lg:flex lg:flex-col lg:justify-center lg:items-start lg:px-[10%]
+                w-full  px-[20px] py-[30px] lg:flex lg:flex-row lg:justify-center lg:items-center lg:px-[10%]
                 border-t-[1px] border-b-[1px] border-[#202020]
             ">
-                <h1 className="font-butler_ultra_light text-[40px] mb-[30px] leading-[40px]">Quer falar comigo?</h1>
+                <h1 className="font-butler_ultra_light text-[40px] lg:text-[72px] mb-[30px] leading-[40px] lg:leading-[70px]">Quer falar comigo?</h1>
 
                 <ul className="flex flex-col gap-7 md:w-full">
                     <li className="flex gap-3 font-montserrat_medium sm:items-center
-                        bg-gradient-to-t from-[#dcdf1e] to-[#dcdf1e] bg-[length:245px_.90em] bg-no-repeat bg-[position:52%_150%]
-                        md:bg-[position:5.5%_150%] xl:bg-[position:4%_150%] 
+                        bg-gradient-to-t from-[#dcdf1e] to-[#dcdf1e] bg-[length:36%_.90em] bg-no-repeat bg-[position:calc(90%_-_var(--p,0%))_900%] 
+                        hover:md:bg-[position:5.5%_150%] hover:xl:bg-[position:7%_150%] 
                     ">
                         <img src={emailIcon} alt="" className="max-w-[24px]" />
                         <p className="sticky">telmabarcellos@modacad.com.br</p>
                     </li>
-                    <li className="flex gap-2 font-montserrat_medium">
+                    <li className="flex gap-2 font-montserrat_medium
+                        bg-gradient-to-t from-[#dcdf1e] to-[#dcdf1e] bg-[length:16%_.90em] bg-no-repeat bg-[position:calc(90%_-_var(--p,0%))_900%]
+                        hover:md:bg-[position:5.5%_150%] hover:xl:bg-[position:5%_150%]
+                    ">
                         <img src={wppIcon} alt="" className="max-h-[24px]" />
                         31 99616 7573
                     </li>

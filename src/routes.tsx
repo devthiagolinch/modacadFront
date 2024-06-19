@@ -4,6 +4,7 @@ import {Home} from './pages/Home';
 import {PilulasMCD} from './pages/PilulasMCD';
 import {TextosModacad} from './pages/TextosModacad';
 import {PlanosMDC} from './pages/Planos';
+import Dashboard from "./pages/Dashboard";
 
 function Routes() {
   return (
@@ -12,6 +13,7 @@ function Routes() {
       <Route path="/pilulas" component={PilulasMCD} />
       <Route path="/textomodacad" component={TextosModacad} />
       <Route path="/planos" component={PlanosMDC} />
+      <Route path="/dash" component={Dashboard} />
     </BrowserRouter>
   );
 }

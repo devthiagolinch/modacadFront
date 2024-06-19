@@ -8,8 +8,9 @@ import { A11y, FreeMode, Pagination } from "swiper/modules";
 
 /* import { RxArrowTopRight } from "react-icons/rx"; */
 import { ServiceData } from "../assets/utils/constants.index";
+import { Link } from "react-router-dom";
 
-export function ArticlesScroll() {
+export function TextoMCD() {
   
   return (
     
@@ -33,28 +34,33 @@ export function ArticlesScroll() {
             },
           }}
           freeMode={true}
-          /* pagination={{
-            clickable: false,
-          }} */
+          pagination={{
+            clickable: true,
+          }}
           modules={[FreeMode, Pagination, A11y]}
           className="max-w-[100%] lg:max-w-[100%] h-auto "
         >
           {ServiceData.map((item) => (
-            <SwiperSlide key={item.title}>
-              <div className="flex flex-col group shadow-lg border border-gray-950 text-black h-[350px] w-full lg:h-[500px] lg:w-[550px] overflow-hidden cursor-pointer">
-                <div
-                  className=" "
-                />
-                <div className=" " />
-                  <div className=" grid gap-4">
-                    <div className="bg-pink-500 w-full h-60">
-                      <img src={item.backgroundImage} className="h-full w-full object-cover object-top" />
+              
+            <SwiperSlide key={item.id}>
+
+              <Link to={"/textomodacad"} >
+                <div className="flex flex-col group shadow-lg border border-gray-950 text-black h-[350px] w-full lg:h-[500px] lg:w-[550px] overflow-hidden cursor-pointer">
+                  <div
+                    className=" "
+                  />
+                  <div className=" " />
+                    <div className=" grid gap-4">
+                      <div className="bg-pink-500 w-full h-60">
+                        <img src={item.backgroundImage} className="h-full w-full object-cover object-top" />
+                      </div>
+                      <span>{item.tag.sort()}</span>
+                      <h1 className="text-xl lg:text-2xl">{item.title} </h1>
+                      <p className=" text-sm lg:text-[14px]">{item.description} </p>
                     </div>
-                    <span>{item.tag.sort()}</span>
-                    <h1 className="text-xl lg:text-2xl">{item.title} </h1>
-                    <p className=" text-sm lg:text-[14px]">{item.content} </p>
-                  </div>
-              </div>
+                </div>
+              </Link>
+
             </SwiperSlide>
           ))}
         </Swiper>
