@@ -10,7 +10,7 @@ import { A11y, FreeMode, Pagination } from "swiper/modules";
 import { ServiceData } from "../assets/utils/constants.index";
 import { Link } from "react-router-dom";
 
-export function TextoMCD() {
+export function ScrollTextoMCD() {
   
   return (
     
@@ -29,8 +29,8 @@ export function TextoMCD() {
               spaceBetween: 0,
             },
             700: {
-              slidesPerView: 3,
-              spaceBetween: 352,
+              slidesPerView: 2,
+              spaceBetween: -200,
             },
           }}
           freeMode={true}
@@ -44,19 +44,25 @@ export function TextoMCD() {
               
             <SwiperSlide key={item.id}>
 
-              <Link to={"/textomodacad"} >
-                <div className="flex flex-col group shadow-lg border border-gray-950 text-black h-[350px] w-full lg:h-[500px] lg:w-[550px] overflow-hidden cursor-pointer">
+              <Link to={`/textomodacad/${item.id}`} >
+                <div className="flex flex-col group shadow-lg border-[1px] border-[#202020] text-black h-[350px] w-full lg:h-[500px] lg:w-[550px] overflow-hidden cursor-pointer">
                   <div
                     className=" "
                   />
                   <div className=" " />
                     <div className=" grid gap-4">
-                      <div className="bg-pink-500 w-full h-60">
+                      <div className="w-full h-60">
                         <img src={item.backgroundImage} className="h-full w-full object-cover object-top" />
                       </div>
-                      <span>{item.tag.sort()}</span>
-                      <h1 className="text-xl lg:text-2xl">{item.title} </h1>
-                      <p className=" text-sm lg:text-[14px]">{item.description} </p>
+                      <div className=" p-3">
+
+                        {item.tag.map(tag => (
+                          <span>• {tag} </span>
+                        ))}
+                        <h1 className="font-butler_ultra_light text-[30px] lg:text-[40px] lg:leading-[43px] mb-[20px]">{item.title} </h1>
+                        <p className=" text-sm lg:text-[14px]">{item.description} </p>
+
+                      </div>
                     </div>
                 </div>
               </Link>

@@ -1,5 +1,5 @@
 import { ScrollPilulasMDC } from "../components/ScrollPilulasMDC"
-import { TextoMCD } from "../components/TextoMDC"
+import { ScrollTextoMCD } from "../components/ScrollTextoMDC"
 import { Footer } from "../components/footer"
 import { Header } from "../components/header"
 import { LastPost } from "../components/last-post"
@@ -19,8 +19,8 @@ export function Home() {
         <ReadingBox />
         <LastPost />
         <Subjects />
-        <TextoMCD />
-        <TextoMCD />
+        <ScrollTextoMCD />
+        <ScrollTextoMCD />
         <ReadingBox />
         <ScrollPilulasMDC />
         <div className="h-96">
