@@ -11,7 +11,6 @@ export function Home() {
   return( 
     <div className="mx-auto">
       <Header />
-      <div className="">
         <div className="h-96">
 
         </div>
@@ -26,10 +25,7 @@ export function Home() {
 
         </div>
 
-        <ReadingBox />
-
         <Footer />
-        </div>
     </div>
     
   )
