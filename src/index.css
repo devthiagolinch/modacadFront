@@ -52,8 +52,8 @@
     },
     @font-face {
         font-family: "montserrat-regular";
-        src: url("./assets/fonts/Montserrat-Regular.ttf") format("ttf");
-        font-style: normal;
+        src: url("./assets/fonts/Montserrat-Regular.ttf") format("opentype");
+        font-style: regular;
         font-display: swap
     },
     @font-face {

@@ -10,7 +10,11 @@ import { A11y, FreeMode, Pagination } from "swiper/modules";
 import { ServiceData } from "../assets/utils/constants.index";
 import { Link } from "react-router-dom";
 
-export function ScrollTextoMCD() {
+interface TextScrollInterface {
+  title: string
+}
+
+export function ScrollTextoMCD({title}: TextScrollInterface) {
   
   return (
     
@@ -18,7 +22,7 @@ export function ScrollTextoMCD() {
       <div className="grid items-center border border-gray-950
       shadow">
         <p className="
-        text-nowrap transform: -rotate-90 w-8 p-4 lg:w-20">Textos mais lidos</p>
+        text-nowrap transform: -rotate-90 w-8 p-4 lg:w-20">{title}</p>
       </div>
 
       <div className="flex items-center flex-col h-auto w-[91.9%] lg:w-[100%]">
@@ -45,9 +49,9 @@ export function ScrollTextoMCD() {
             <SwiperSlide key={item.id}>
 
               <Link to={`/textomodacad/${item.id}`} >
-                <div className="flex flex-col group shadow-lg border-[1px] border-[#202020] text-black h-[350px] w-full lg:h-[500px] lg:w-[550px] overflow-hidden cursor-pointer">
+                <div className="flex flex-col group shadow-lg border-[1px] border-[#202020] text-black h-[350px] w-full lg:h-[500px] lg:w-[550px] overflow-hidden cursor-pointer" key={item.id}>
                   <div
-                    className=" "
+                    key={item.id}
                   />
                   <div className=" " />
                     <div className=" grid gap-4">

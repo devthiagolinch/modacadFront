@@ -1,5 +1,5 @@
-import { ScrollPilulasMDC } from "../components/ScrollPilulasMDC"
 import { ScrollTextoMCD } from "../components/ScrollTextoMDC"
+import { ScrollPiluaMCD } from "../components/ScrollPilulasMDC"
 import { Footer } from "../components/footer"
 import { Header } from "../components/header"
 import { LastPost } from "../components/last-post"
@@ -19,10 +19,9 @@ export function Home() {
         <ReadingBox />
         <LastPost />
         <Subjects />
-        <ScrollTextoMCD />
-        <ScrollTextoMCD />
+        <ScrollTextoMCD title="TEXTOS MODACAD" />
         <ReadingBox />
-        <ScrollPilulasMDC />
+        <ScrollPiluaMCD title={"PILULAS MODACAD"} />
         <div className="h-96">
 
         </div>

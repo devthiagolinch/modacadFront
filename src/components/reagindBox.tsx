@@ -40,13 +40,7 @@ export function ReadingBox() {
                     "/>
                 </div>
 
-                <button className="lg:hidden flex flex-col h-[40px] w-[170px] border-[1px] border-[#202020] font-montserrat_light_italic text-[18px]
-                    justify-center items-center
-                ">
-                    <p className="sticky">Criar perfil</p>
-                    <div className="w-[90%] h-[19px] bg-[#dcdf1e] -mt-[14px]  ">
-                    </div>
-                </button>
+                <Button title="CRIAR PERFIL" />
 
                 {/** DESKTOP */}
 
@@ -60,7 +54,7 @@ export function ReadingBox() {
                         focus:invalid:border-pink-500 focus:invalid:ring-pink-500
                     "/>
 
-                    <Button title="Criar Perfil" />
+                    <Button title="CRIAR PERFIL" />
                 </div>
 
             </div>

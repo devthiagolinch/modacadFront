@@ -7,7 +7,7 @@ export default {
     ],
     theme: {
       boxShadow:{
-        read:  "0 0px 30px 1px rgba(32,32,32,0.84)",
+        read:  "0 0px 50px 1px rgba(32,32,32,0.3)",
         whiteBlur: "-0px -86px 50px 0 rgba(241,236,232, 0.90)"
       },
       fontFamily: {

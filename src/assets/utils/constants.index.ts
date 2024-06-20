@@ -20,7 +20,7 @@ import {
     {
       icon: RxCrop,
       id: "1",
-      author: "Thelma",
+      author: "Thelma Barcellos",
       authorAvatar: Thelma,
       title: "Semana de Moda Indígena DIA 05",
       tag: ["tendencias", "outono", "indígena"],
@@ -30,7 +30,7 @@ import {
     {
       icon: RxPencil2,
       id: "2",
-      author: "Thiago",
+      author: "Thiago Linchin",
       authorAvatar: Thelma,
       title: "Semana de Moda Indígena DIA",
       tag: ["tendencias"] ,
@@ -50,7 +50,7 @@ import {
     {
       icon: RxReader,
       id: "4",
-      author: "Henrique",
+      author: "Luiz Henrique",
       authorAvatar: Thelma,
       title: "Semana de Moda Indígena DIA 05",
       tag: ["tendencias", "outono", "indígena"] ,

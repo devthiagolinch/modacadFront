@@ -1,4 +1,3 @@
-import { Button } from "./Button";
 
 
 export function BlockText() {
@@ -11,7 +10,7 @@ export function BlockText() {
             shadow-whiteBlur
         ">
             <h1 className="text-[22px] ">Para continuar a ler</h1>
-            <input type="email" placeholder="Coloque seu e-mail aqui..." className="mt-[20px] w-[80%] mb-10 lg:px-3 lg:py-2 bg-transparent
+            <input type="email" placeholder="Coloque seu e-mail aqui..." className="mt-[20px] w-[40%] mb-10 lg:px-3 lg:py-2 bg-transparent
                 border-b-[1px] border-slate-900 text-[18px] shadow-sm placeholder-slate-700 text-center
                 focus:outline-none
                 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none
@@ -19,7 +18,14 @@ export function BlockText() {
                 focus:invalid:border-pink-500 focus:invalid:ring-pink-500
             "/>
 
-            <Button title="Enviar" />
+        <button className="min-h-[60px] w-auto min-w-[210px] p-2 px-[25px]
+            border-[1px] border-[#202020]
+            font-montserrat_medium text-[22px]
+            flex flex-col justify-center items-center
+            bg-gradient-to-t from-[#dcdf1e] to-[#dcdf1e] bg-[length:90%_.90em] bg-no-repeat hover:bg-[length:100%_100%]  bg-[position:50%_75%]
+        ">
+            ENVIAR
+        </button>
         </div>
     )
 }
