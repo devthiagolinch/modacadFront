@@ -9,6 +9,7 @@ import { A11y, FreeMode, Pagination } from "swiper/modules";
 /* import { RxArrowTopRight } from "react-icons/rx"; */
 import { ServiceData } from "../assets/utils/constants.index";
 import { Link } from "react-router-dom";
+import { TextoMocadCard } from "./cards/textoModacadCard";
 
 interface TextScrollInterface {
   title: string
@@ -25,50 +26,31 @@ export function ScrollTextoMCD({title}: TextScrollInterface) {
         text-nowrap transform: -rotate-90 w-8 p-4 lg:w-20">{title}</p>
       </div>
 
-      <div className="flex items-center flex-col h-auto w-[91.9%] lg:w-[100%]">
+      <div className="flex items-center flex-col h-auto w-[99%]">
         <Swiper
           breakpoints={{
             340: {
-              slidesPerView: 2,
+              slidesPerView: 1.2,
+              spaceBetween: 3,
+            },
+            750: {
+              slidesPerView: 3,
               spaceBetween: 0,
             },
-            700: {
-              slidesPerView: 2,
-              spaceBetween: -200,
-            },
           }}
-          freeMode={true}
+          freeMode={false}
           pagination={{
             clickable: true,
           }}
           modules={[FreeMode, Pagination, A11y]}
-          className="max-w-[100%] lg:max-w-[100%] h-auto "
+          className="w-full "
         >
           {ServiceData.map((item) => (
               
             <SwiperSlide key={item.id}>
 
               <Link to={`/textomodacad/${item.id}`} >
-                <div className="flex flex-col group shadow-lg border-[1px] border-[#202020] text-black h-[350px] w-full lg:h-[500px] lg:w-[550px] overflow-hidden cursor-pointer" key={item.id}>
-                  <div
-                    key={item.id}
-                  />
-                  <div className=" " />
-                    <div className=" grid gap-4">
-                      <div className="w-full h-60">
-                        <img src={item.backgroundImage} className="h-full w-full object-cover object-top" />
-                      </div>
-                      <div className=" p-3">
-
-                        {item.tag.map(tag => (
-                          <span>• {tag} </span>
-                        ))}
-                        <h1 className="font-butler_ultra_light text-[30px] lg:text-[40px] lg:leading-[43px] mb-[20px]">{item.title} </h1>
-                        <p className=" text-sm lg:text-[14px]">{item.description} </p>
-
-                      </div>
-                    </div>
-                </div>
+                <TextoMocadCard id={item.id} banner={item.backgroundImage} title={item.title} description={item.description} tags={item.tag}  />
               </Link>
 
             </SwiperSlide>

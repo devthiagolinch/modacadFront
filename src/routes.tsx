@@ -5,6 +5,7 @@ import {PilulasMCD} from './pages/PilulasMCD';
 import {TextosModacad} from './pages/TextosModacad';
 import {PlanosMDC} from './pages/Planos';
 import Dashboard from "./pages/Dashboard";
+import { BlanckPage } from "./pages/blank";
 
 function Routes() {
   return (
@@ -14,6 +15,7 @@ function Routes() {
       <Route path="/textomodacad/:textId" component={TextosModacad} />
       <Route path="/planos" component={PlanosMDC} />
       <Route path="/dash" component={Dashboard} />
+      <Route path="/blanck" exact component={BlanckPage} />
     </BrowserRouter>
   );
 }

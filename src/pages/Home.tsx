@@ -17,8 +17,8 @@ export function Home() {
 
         <ReadingBox />
         <LastPost />
-        <Subjects />
-        <ScrollTextoMCD title="TEXTOS MODACAD" />
+        <Subjects /> 
+        <ScrollTextoMCD title={"TEXTO PUBLICADOS"} />
         <ReadingBox />
         <ScrollPiluaMCD title={"PILULAS MODACAD"} />
         <div className="h-96">

@@ -1,0 +1,40 @@
+import { ServiceData } from "../../assets/utils/constants.index"
+
+interface PilulaCardDTO {
+    id: string
+    banner: string,
+    title: string,
+    description: string,
+    tags: string[]
+}
+
+export function PilulaModacadCard({id}: PilulaCardDTO) {
+    const pilula = ServiceData.find((pilula) => pilula.id == id);
+
+    return (
+
+        <div className="w-[172px] border-[1px] border-[#202020] min-h-full
+        ">
+            <div>
+                <img src={pilula?.backgroundImage} alt="" className="h-[150px] object-cover" />
+            </div>
+
+            <div className="p-[10px]">
+                <div className="grid">
+                    {pilula?.tag.map((t) => (
+                        <span className="font-montserratLight text-[12px] -mt-[5px]">{t}</span>
+                    ))}
+                </div>
+
+                <h1 className="text-[16px] font-butler_bold leading-[20px] mb-[10px] mt-[8px]">
+                    {pilula?.title}
+                </h1>
+
+                <p className="text-[14px] font-montserratRegular leading-[15px]">
+                    {pilula?.description}
+                </p>
+            </div>
+        </div>
+
+    )
+}
