@@ -12,10 +12,10 @@ export function TextoMocadCard({id}: TextosCardDTO) {
     const texto = ServiceData.find((text) => text.id == id);
 
     return (
-        <div className="border-t-[0px] border-[1px] border-[#202020] min-h-full">
+        <div className="border-t-[0px] border-[1px] border-[#202020] min-h-full w-[500px]">
             {/** texto modacad card */}
                 <div className="border-[1px] border-[#202020]">
-                    <img src={texto?.backgroundImage} alt="" className="h-[150px] w-full object-cover" />
+                    <img src={texto?.backgroundImage} alt="" className="h-[250px] w-full object-cover" />
                 </div>
 
                 <div className="

@@ -34,8 +34,12 @@ export function ScrollPiluaMCD({title}: TextScrollInterface) {
               spaceBetween: 10,
             },
             750: {
-              slidesPerView: 7,
+              slidesPerView: 6,
               spaceBetween: 0,
+            },
+            1080: {
+              slidesPerView: 9,
+              spaceBetween: 240,
             },
           }}
           freeMode={true}

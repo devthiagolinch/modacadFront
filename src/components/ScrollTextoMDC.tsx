@@ -37,6 +37,10 @@ export function ScrollTextoMCD({title}: TextScrollInterface) {
               slidesPerView: 3,
               spaceBetween: 0,
             },
+            1080: {
+              slidesPerView: 5,
+              spaceBetween: 390,
+            },
           }}
           freeMode={false}
           pagination={{
