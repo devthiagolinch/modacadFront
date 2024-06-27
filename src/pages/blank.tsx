@@ -2,7 +2,7 @@
 import { ServiceData } from "../assets/utils/constants.index";
 import banner from "../assets/imgs/camila.jpg"
 
-export function BlanckPage(id: string) {
+export function BlanckPage() {
     const texto = ServiceData.find((text) => text.id == "1");
     console.log(texto)
 

@@ -8,12 +8,10 @@ import {
     MenuItems,
     Transition,
   } from '@headlessui/react'
-  import { Bars3Icon, BellIcon, PhotoIcon, UserCircleIcon, XMarkIcon } from '@heroicons/react/24/outline'
+  import { Bars3Icon, BellIcon, PhotoIcon, XMarkIcon } from '@heroicons/react/24/outline'
 
-  import { ServiceData } from '../assets/utils/constants.index'
   import { UsersData } from '../assets/utils/usersData.index';
 
-  const data = ServiceData;
   const users = UsersData;
   
   const user = {

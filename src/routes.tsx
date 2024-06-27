@@ -13,7 +13,7 @@ function Routes() {
       <Route path="/" exact component={Home} />
       <Route path="/pilulas/:pilulaId" component={PilulasMCD} />
       <Route path="/textomodacad/:textId" component={TextosModacad} />
-      <Route path="/planos" component={PlanosMDC} />
+      <Route path="/planos/" component={PlanosMDC} />
       <Route path="/dash" component={Dashboard} />
       <Route path="/blanck" exact component={BlanckPage} />
     </BrowserRouter>
