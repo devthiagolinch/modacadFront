@@ -6,15 +6,13 @@ import { LastPost } from "../components/last-post"
 import { ReadingBox } from "../components/reagindBox"
 import { Subjects } from "../components/subjects"
 
+import banner from "../assets/imgs/Banner-home.jpg"
 
 export function Home() {
   return( 
     <div className="mx-auto">
       <Header />
-        <div className="h-96">
-
-        </div>
-
+        <img src={banner} alt="" className="min-w-full max-h-[650px] object-cover" />
         <ReadingBox />
         <LastPost />
         <Subjects /> 

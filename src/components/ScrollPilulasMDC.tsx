@@ -19,41 +19,35 @@ export function ScrollPiluaMCD({title}: TextScrollInterface) {
   
   return (
     
-    <div className="flex flex-row" >
-      <div className="grid items-center border border-gray-950
-        shadow">
-        <p className="
-        text-nowrap transform: -rotate-90 w-8 p-4 lg:w-20">{title}</p>
+    <div className="flex flex-row -mt-[1px]" >
+      <div className="flex justify-center items-center border-[1px] border-[#202020] -mr-[1px]">
+        <p className="text-nowrap transform: -rotate-90 w-8 lg:w-[22px] lg:p-5">{title}</p>
       </div>
 
-      <div className="flex items-center flex-col w-full">
+      <div className="flex-1 items-center flex-col  h-auto w-[90%] -ml-[1px]">
         <Swiper
           breakpoints={{
             340: {
               slidesPerView: 2,
-              spaceBetween: 10,
+              spaceBetween: 154,
             },
             750: {
-              slidesPerView: 6,
-              spaceBetween: 0,
-            },
-            1080: {
-              slidesPerView: 9,
-              spaceBetween: 240,
+              slidesPerView: 5,
+              spaceBetween: -8,
             },
           }}
-          freeMode={true}
+          freeMode={false}
           pagination={{
             clickable: true,
           }}
           modules={[FreeMode, Pagination, A11y]}
-          className="w-[100%] "
+          className="lg:w-[1255px] -ml-[1px] h-[100%]"
         >
           {ServiceData.map((item) => (
               
             <SwiperSlide key={item.id}>
 
-              <Link to={`/textomodacad/${item.id}`} >
+              <Link to={`/pilulas/${item.id}`} >
                 <PilulaModacadCard banner={item.backgroundImage} description={item.description} tags={item.tag} title={item.title} id={item.id} />
               </Link>
 
