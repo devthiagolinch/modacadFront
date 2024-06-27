@@ -22,19 +22,19 @@ export function ScrollTextoMCD({title}: TextScrollInterface) {
     <div className="flex flex-row -mt-[1px]" >
       <div className="flex justify-center items-center border-[1px] border-[#202020] -mr-[1px]">
         <p className="
-        text-nowrap transform: -rotate-90 w-full">{title}</p>
+        text-nowrap transform: -rotate-90 w-8 lg:w-[22px] lg:p-5">{title}</p>
       </div>
 
-      <div className="flex-1 items-center flex-col h-[100%] -ml-[1px]">
+      <div className="flex-1 items-center flex-col  h-auto w-[90%]">
         <Swiper
           breakpoints={{
             340: {
-              slidesPerView: 1.2,
-              spaceBetween: 3,
+              slidesPerView: 2,
+              spaceBetween: 287,
             },
             750: {
-              slidesPerView: 2,
-              spaceBetween: -154,
+              slidesPerView: 3,
+              spaceBetween: 244,
             },
           }}
           freeMode={false}
@@ -42,7 +42,7 @@ export function ScrollTextoMCD({title}: TextScrollInterface) {
             clickable: true,
           }}
           modules={[FreeMode, Pagination, A11y]}
-          className="w-[1152px] -ml-[1px] h-[100%]"
+          className="lg:w-[1255px] -ml-[1px] h-[100%]"
         >
           {ServiceData.map((item) => (
               
@@ -51,7 +51,6 @@ export function ScrollTextoMCD({title}: TextScrollInterface) {
               <Link to={`/textomodacad/${item.id}`} >
                 <TextoMocadCard id={item.id} banner={item.backgroundImage} title={item.title} description={item.description} tags={item.tag}  />
               </Link>
-
             </SwiperSlide>
           ))}
         </Swiper>

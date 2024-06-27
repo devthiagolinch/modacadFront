@@ -1,28 +1,32 @@
 
+import { ServiceData } from "../assets/utils/constants.index";
 import banner from "../assets/imgs/camila.jpg"
 
-export function BlanckPage() {
+export function BlanckPage(id: string) {
+    const texto = ServiceData.find((text) => text.id == "1");
+    console.log(texto)
 
     return(
         <div className="flex flex-col gap-10 px-[5px] justify-center items-center">
             {/** texto modacad card */}
             <div className="">
                 <div className=" border-[1px] border-[#202020]">
-                    <img src={banner} alt="" className="h-[150px] w-full object-cover" />
+                    <img src={texto?.backgroundImage} alt="" className="h-[150px] w-full object-cover" />
                 </div>
 
                 <div className="border-t-0 border-[1px] border-[#202020]
                     p-[10px]
                 ">
-                    <span className="font-montserratMedium text-[15px]">Tendencias</span>
+                    {texto?.tag.map((t) => (
+                            <span className="font-montserratLight text-[12px] -mt-[5px]">{t}</span>
+                        ))}
 
                     <h1 className="font-butler_regular text-[25px] leading-[30px] mb-[13px] mt-[5px]">
-                        The art g of creative problem-solving
-                        The art of creative
+                        {texto?.title}
                     </h1>
 
                     <p className="font-montserratRegular text-[17px] leading-[20px]">
-                    Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado.
+                        {texto?.description}
                     </p>
                 </div>
             </div>
