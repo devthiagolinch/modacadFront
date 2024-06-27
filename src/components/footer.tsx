@@ -30,15 +30,14 @@ export function Footer() {
                 </div>
 
                 {/** DESKTOP */}
-                <div className="hidden lg:flex justify-start items-center px-[20px] mt-[30px] mb-[35px] ">
+                <div className="hidden lg:flex justify-start items-center mt-[30px] mb-[35px] ">
                     <div>
                         <p className="text-[40px] font-butler_ultra_light md:text-7xl leading-[40px]">Nossas <br /> redes sociais</p>
                     </div>
                 </div>
-                <img src={setaCurvaIcon} alt="" className="hidden max-h-[40px]" />
+                <img src={setaCurvaIcon} alt="" className="hidden lg:flex lg:max-h-[40px]" />
                 
-                <div className="grid grid-cols-3 gap-x-4 gap-y-4 md:my-10 h-auto px-[20px] mb-[40px]
-                ">
+                <div className="grid grid-cols-3 gap-x-4 gap-y-4 md:my-10 h-auto px-[20px] mb-[40px]">
 
                     <div className="md:w-[130px] md:h-[100px] grid justify-center items-center w-full h-[60px]
                         border-[1px] border-zinc-900 hover:bg-[#dcdf1e]
@@ -77,13 +76,13 @@ export function Footer() {
 
                         
             </div>
-            <div className="lg:hidden">
+            <div className="lg:hidden mb-[1px]">
                 <ReadingBox />
             </div>
 
             <div className="
-                px-[20px] py-[30px] lg:flex lg:flex-row lg:justify-between lg:items-center lg:px-[10%] -mt-[1px]
-                border-t-[1px] border-b-[1px] border-[#202020]
+                px-[20px] py-[30px] lg:flex lg:flex-row lg:justify-between lg:items-center lg:px-[9%] -mt-[1px]
+                border-t-[1px] border-[1px] border-[#202020]
             ">
                 <h1 className=" font-butler_ultra_light text-[40px] lg:text-[72px] mb-[30px] leading-[40px] lg:leading-[70px] lg:w-[40%]
                 ">Quer falar comigo?</h1>
@@ -91,15 +90,15 @@ export function Footer() {
                 <div className="lg:flex-1 lg:ml-[200px]">
                     <ul className="flex flex-col gap-7 md:w-full">
                         <li className="flex gap-3 font-montserrat_medium sm:items-center
-                            bg-gradient-to-t from-[#dcdf1e] to-[#dcdf1e] bg-[length:90%_.90em] bg-no-repeat bg-[position:calc(90%_-_var(--p,0%))_900%] 
-                            hover:md:bg-[position:10%_150%] hover:xl:bg-[position:10%_150%]  lg:text-[24px]
+                            bg-gradient-to-t from-[#dcdf1e] to-[#dcdf1e] bg-[length:85%_.90em] bg-no-repeat bg-[position:calc(90%_-_var(--p,0%))_900%] 
+                            hover:md:bg-[position:10%_150%] hover:lg:bg-[position:40%_150%]  lg:text-[24px]
                         ">
                             <img src={emailIcon} alt="" className="max-w-[24px]" />
                             <p className="sticky">telmabarcellos@modacad.com.br</p>
                         </li>
                         <li className="flex gap-2 font-montserrat_medium lg:text-[24px] items-center
-                            bg-gradient-to-t from-[#dcdf1e] to-[#dcdf1e] bg-[length:16%_.90em] bg-no-repeat bg-[position:calc(90%_-_var(--p,0%))_900%]
-                            hover:md:bg-[position:5.5%_150%] hover:xl:bg-[position:5%_150%]
+                            bg-gradient-to-t from-[#dcdf1e] to-[#dcdf1e] bg-[length:37%_.90em] bg-no-repeat bg-[position:calc(90%_-_var(--p,0%))_900%]
+                            hover:md:bg-[position:5.5%_150%] hover:xl:bg-[position:10%_150%]
                         ">
                             <img src={wppIcon} alt="" className="max-h-[24px]" />
                             31 99616 7573

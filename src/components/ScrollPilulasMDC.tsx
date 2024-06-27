@@ -29,7 +29,7 @@ export function ScrollPiluaMCD({title}: TextScrollInterface) {
           breakpoints={{
             340: {
               slidesPerView: 2,
-              spaceBetween: 154,
+              spaceBetween: 186,
             },
             750: {
               slidesPerView: 5,
