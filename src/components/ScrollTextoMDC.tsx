@@ -19,14 +19,13 @@ export function ScrollTextoMCD({title}: TextScrollInterface) {
   
   return (
     
-    <div className="flex flex-row" >
-      <div className="grid items-center border border-gray-950
-      shadow">
+    <div className="flex flex-row -mt-[1px]" >
+      <div className="flex justify-center items-center border-[1px] border-[#202020] -mr-[1px]">
         <p className="
-        text-nowrap transform: -rotate-90 w-8 p-4 lg:w-20">{title}</p>
+        text-nowrap transform: -rotate-90 w-full">{title}</p>
       </div>
 
-      <div className="flex items-center flex-col h-auto w-[99%]">
+      <div className="flex-1 items-center flex-col h-[100%] -ml-[1px]">
         <Swiper
           breakpoints={{
             340: {
@@ -34,12 +33,8 @@ export function ScrollTextoMCD({title}: TextScrollInterface) {
               spaceBetween: 3,
             },
             750: {
-              slidesPerView: 3,
-              spaceBetween: 0,
-            },
-            1080: {
-              slidesPerView: 5,
-              spaceBetween: 390,
+              slidesPerView: 2,
+              spaceBetween: -154,
             },
           }}
           freeMode={false}
@@ -47,7 +42,7 @@ export function ScrollTextoMCD({title}: TextScrollInterface) {
             clickable: true,
           }}
           modules={[FreeMode, Pagination, A11y]}
-          className="w-full "
+          className="w-[1152px] -ml-[1px] h-[100%]"
         >
           {ServiceData.map((item) => (
               

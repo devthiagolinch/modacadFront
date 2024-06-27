@@ -8,7 +8,7 @@ export function ReadingBox() {
             <div className="flex flex-col lg:flex-row justify-center gap-x-[350px] w-full -my-[1px]
                 pt-[20px] pb-[20px]
                 shadow-read
-                md:border-[1px] md:border-[#202020] items-center
+                border-[1px] border-[#202020] items-center
                 " >
                 {/** MOBILE */}
                 <div className="lg:hidden flex flex-col justify-center items-center mb-[20px]">
