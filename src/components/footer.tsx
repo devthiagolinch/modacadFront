@@ -35,7 +35,7 @@ export function Footer() {
                         <p className="text-[40px] font-butler_ultra_light md:text-7xl leading-[40px]">Nossas <br /> redes sociais</p>
                     </div>
                 </div>
-                <img src={setaCurvaIcon} alt="" className=" max-h-[40px]" />
+                <img src={setaCurvaIcon} alt="" className="hidden max-h-[40px]" />
                 
                 <div className="grid grid-cols-3 gap-x-4 gap-y-4 md:my-10 h-auto px-[20px] mb-[40px]
                 ">
@@ -82,7 +82,7 @@ export function Footer() {
             </div>
 
             <div className="
-                px-[20px] py-[30px] lg:flex lg:flex-row lg:justify-between lg:items-center lg:px-[10%]
+                px-[20px] py-[30px] lg:flex lg:flex-row lg:justify-between lg:items-center lg:px-[10%] -mt-[1px]
                 border-t-[1px] border-b-[1px] border-[#202020]
             ">
                 <h1 className=" font-butler_ultra_light text-[40px] lg:text-[72px] mb-[30px] leading-[40px] lg:leading-[70px] lg:w-[40%]
