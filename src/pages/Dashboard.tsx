@@ -273,7 +273,7 @@ import {
                 <div className="border-b border-gray-900/10 pb-12">
                   <div className="mt-10 space-y-10">
                     <fieldset>
-                      <legend className="text-sm font-semibold leading-6 text-gray-900">Push Notifications</legend>
+                      <legend className="text-sm font-semibold leading-6 text-gray-900">Tipo de Texto</legend>
                       <p className="mt-1 text-sm leading-6 text-gray-600">These are delivered via SMS to your mobile phone.</p>
                       <div className="mt-6 space-y-6">
                         <div className="flex items-center gap-x-3">
@@ -284,7 +284,7 @@ import {
                             className="h-4 w-4 border-gray-300 text-[#dcdf1e] focus:ring-[#dcdf1e]"
                           />
                           <label htmlFor="push-everything" className="block text-sm font-medium leading-6 text-gray-900">
-                            Everything
+                            Texto Modacad - free
                           </label>
                         </div>
                         <div className="flex items-center gap-x-3">
@@ -295,7 +295,7 @@ import {
                             className="h-4 w-4 border-gray-300 text-[#dcdf1e] focus:ring-[#dcdf1e]"
                           />
                           <label htmlFor="push-email" className="block text-sm font-medium leading-6 text-gray-900">
-                            Same as email
+                            Pilulas Modacad - free
                           </label>
                         </div>
                         <div className="flex items-center gap-x-3">
@@ -306,7 +306,18 @@ import {
                             className="h-4 w-4 border-gray-300 text-[#dcdf1e] focus:ring-[#dcdf1e]"
                           />
                           <label htmlFor="push-nothing" className="block text-sm font-medium leading-6 text-gray-900">
-                            No push notifications
+                            TEXTO MODACAD - MEMBROS
+                          </label>
+                        </div>
+                        <div className="flex items-center gap-x-3">
+                          <input
+                            id="push-nothing"
+                            name="push-notifications"
+                            type="radio"
+                            className="h-4 w-4 border-gray-300 text-[#dcdf1e] focus:ring-[#dcdf1e]"
+                          />
+                          <label htmlFor="push-nothing" className="block text-sm font-medium leading-6 text-gray-900">
+                            PILULAS MODACAD - MEMBROS
                           </label>
                         </div>
                       </div>
