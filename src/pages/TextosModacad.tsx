@@ -194,9 +194,9 @@ export function TextosModacad() {
 
                     <div className="flex flex-col ">
                         <div className="flex w-full justify-center items-center">
-                            <div className="w-[90%] h-[20%] border-[1px] border-[#f1ece8] absolute ">
+                            <div className="w-[95%] h-[180px] border-[1px] border-[#f1ece8] absolute ">
                             </div>
-                            <img src={text?.backgroundImage} alt="" className="h-[50%] max-w-[100%]
+                            <img src={text?.backgroundImage} alt="" className="max-h-[200px] w-[100%]
                                 border-[1px] border-inherit border-white
                                 object-cover
                             " />

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import { ServiceData } from "../assets/utils/constants.index"
 
 export function LastPost() {
@@ -10,7 +11,7 @@ export function LastPost() {
             </div>
 
             {/** DESKTOP */}
-            <div className="hidden lg:flex lg:gap-10">
+            <Link to={`/textomodacad/${lastPost?.id}`} className="hidden lg:flex lg:gap-10">
                 <div className="flex flex-col w-full gap-4 lg:w-[44%] lg:p-10">
                     {lastPost?.tag.map((t) => (
                         <span className="font-montserratLight text-[12px] -mt-[15px] ">{t}</span>
@@ -28,9 +29,9 @@ export function LastPost() {
                 <div className=" lg:w-[60%] shadow-inner bg-green-400">
                     <img src={lastPost?.backgroundImage} className="h-full object-cover object-top sm:h-full" />
                 </div>
-            </div>
+            </Link>
             {/** MOBILE */}
-            <div className="flex flex-col lg:hidden ">
+            <Link to={`/textomodacad/${lastPost?.id}`} className="flex flex-col lg:hidden ">
                 <div className="shadow-inner bg-green-400">
                     <img src={lastPost?.backgroundImage} className="h-full object-cover object-top sm:h-full" />
                 </div>
@@ -47,7 +48,7 @@ export function LastPost() {
                         {lastPost?.description}
                     </p>
                 </div>
-            </div>            
+            </Link>            
         </div>
     )
 }
