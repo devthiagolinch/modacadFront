@@ -10,7 +10,7 @@ export function Header() {
             <div className="flex w-full justify-between relative">
 
                 <div className=" md:flex-1 justify-center items-center flex w-[60%]" >
-                    <Link to={"#"} className="w-40 md:w-[23%]"><img src={telmaLogo}/></Link>
+                    <Link to={"/"} className="w-40 md:w-[23%]"><img src={telmaLogo}/></Link>
                 </div>
                 
                 <nav className="flex items-center">

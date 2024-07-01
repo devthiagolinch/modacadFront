@@ -7,6 +7,7 @@ import { ReadingBox } from "../components/reagindBox"
 import { Subjects } from "../components/subjects"
 
 import banner from "../assets/imgs/Banner-home.jpg"
+import { ScrollTextosMaisLidos } from "../components/ScrollTextoMaisLidos"
 
 export function Home() {
   return( 
@@ -16,6 +17,7 @@ export function Home() {
         <ReadingBox />
         <LastPost />
         <Subjects /> 
+        <ScrollTextosMaisLidos title={"TEXTOS MAIS LIDOS"} />
         <ScrollTextoMCD title={"TEXTO PUBLICADOS"} />
         <ReadingBox />
         <ScrollPiluaMCD title={"PILULAS MODACAD"} />

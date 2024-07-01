@@ -5,7 +5,9 @@ import {PilulasMCD} from './pages/PilulasMCD';
 import {TextosModacad} from './pages/TextosModacad';
 import {PlanosMDC} from './pages/Planos';
 import Dashboard from "./pages/Dashboard";
-import { BlanckPage } from "./pages/blank";
+import { PublishText } from "./pages/TextosPublicados";
+import { TextosMaisLidos } from "./pages/TextosMaisLidos";
+import { PilulasPublicadas } from "./pages/PilulasPublicadas"
 
 function Routes() {
   return (
@@ -15,7 +17,9 @@ function Routes() {
       <Route path="/textomodacad/:textId" component={TextosModacad} />
       <Route path="/planos/" component={PlanosMDC} />
       <Route path="/dash/" component={Dashboard} />
-      <Route path="/blanck" exact component={BlanckPage} />
+      <Route path="/textospublicados" exact component={PublishText} />
+      <Route path="/maislidos" exact component={TextosMaisLidos} />
+      <Route path="/pilulas" exact component={PilulasPublicadas} />
     </BrowserRouter>
   );
 }

@@ -113,7 +113,7 @@ export function TextosModacad() {
                 </div>
 
                 <div className="lg:pt-12 lg:px-[20%] mb-[40px] mx-[20px]">
-                <p className="lg:text-justify lg:text-lg font-montserrat_light">
+                <p className="text-justify lg:text-lg font-montserrat_light">
                 {text?.text}
                 </p>
 

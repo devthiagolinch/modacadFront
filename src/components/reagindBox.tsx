@@ -19,12 +19,12 @@ export function ReadingBox() {
                 {/** DESKTOP */}
                 <div className="hidden lg:w-full lg:flex lg:justify-around lg:items-center
                     lg:pt-[30px] lg:pb-[35px]
-                    lg:px-[90px]
+                    lg:px-[55px]
                     ">
 
-                    <div className="lg:mr-16">
+                    <div className="lg:mr-10">
                         <p className="text-[40px] font-butler_ultra_light md:text-7xl leading-[40px]">Planos <br /> de leitura</p>
-                        <span className="font-montserratLight">Plano básico de leitura</span>
+                        <span className="font-montserratLight lg:ml-1">Plano básico de leitura</span>
                     </div>
 
                     <img src={setaCurvaIcon} alt="" className="max-h-[40px]" />

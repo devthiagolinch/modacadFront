@@ -16,14 +16,13 @@ interface TextScrollInterface {
   title: string
 }
 
-export function ScrollTextoMCD({title}: TextScrollInterface) {
-  const card = ServiceData.filter((texto) => texto.type == "textos");
+export function ScrollTextosMaisLidos({title}: TextScrollInterface) {
   
   return (
     
     <div className="flex flex-row -mt-[1px]" >
       <div className="flex justify-center items-center border-[1px] border-[#202020] -mr-[1px]">
-        <Link to={`/textospublicados/`}>
+        <Link to={`/maislidos`}>
           <p className="
           text-nowrap transform: -rotate-90 w-8 lg:w-[22px] lg:p-5">{title}</p>
         </Link>
@@ -48,7 +47,7 @@ export function ScrollTextoMCD({title}: TextScrollInterface) {
           modules={[FreeMode, Pagination, A11y]}
           className="lg:w-[1255px] -ml-[1px] h-[100%]"
         >
-          {card.map((item) => (
+          {ServiceData.map((item) => (
               
             <SwiperSlide key={item.id}>
 

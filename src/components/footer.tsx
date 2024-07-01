@@ -81,7 +81,7 @@ export function Footer() {
             </div>
 
             <div className="
-                px-[20px] py-[30px] lg:flex lg:flex-row lg:justify-between lg:items-center lg:px-[9%] -mt-[1px]
+                px-[20px] py-[30px] lg:flex lg:flex-row lg:justify-between lg:items-center lg:px-[9.4%] -mt-[1px]
                 border-t-[1px] border-[1px] border-[#202020]
             ">
                 <h1 className=" font-butler_ultra_light text-[40px] lg:text-[72px] mb-[30px] leading-[40px] lg:leading-[70px] lg:w-[40%]
@@ -107,7 +107,7 @@ export function Footer() {
                 </div>
 
             </div>
-            <span className="px-[20px] py-1 text-[14px]">Copyright 2024 Modacad</span>
+            <span className="lg:px-[125px] px-[25px] py-1 text-[14px]">Copyright 2024 Modacad</span>
 
         </div>
        

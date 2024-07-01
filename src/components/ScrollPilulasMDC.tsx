@@ -16,12 +16,15 @@ interface TextScrollInterface {
 }
 
 export function ScrollPiluaMCD({title}: TextScrollInterface) {
+  const cards = ServiceData.filter((t) => t.type == "pilulas")
   
   return (
     
     <div className="flex flex-row -mt-[1px]" >
       <div className="flex justify-center items-center border-[1px] border-[#202020] -mr-[1px]">
-        <p className="text-nowrap transform: -rotate-90 w-8 lg:w-[22px] lg:p-5">{title}</p>
+        <Link to={"/pilulas"}>
+          <p className="text-nowrap transform: -rotate-90 w-8 lg:w-[22px] lg:p-5">{title}</p>  
+        </Link>
       </div>
 
       <div className="flex-1 items-center flex-col  h-auto w-[90%] -ml-[1px]">
@@ -29,7 +32,7 @@ export function ScrollPiluaMCD({title}: TextScrollInterface) {
           breakpoints={{
             340: {
               slidesPerView: 2,
-              spaceBetween: 186,
+              spaceBetween:0,
             },
             750: {
               slidesPerView: 5,
@@ -43,7 +46,7 @@ export function ScrollPiluaMCD({title}: TextScrollInterface) {
           modules={[FreeMode, Pagination, A11y]}
           className="lg:w-[1255px] -ml-[1px] h-[100%]"
         >
-          {ServiceData.map((item) => (
+          {cards.map((item) => (
               
             <SwiperSlide key={item.id}>
 

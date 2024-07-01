@@ -13,7 +13,7 @@ export function PilulaModacadCard({id}: PilulaCardDTO) {
 
     return (
 
-        <div className="w-[250px] border-[1px] border-[#202020] min-h-full
+        <div className="min-2-[150px] lg:w-[250px] border-[1px] border-[#202020] h-[100%]
         ">
             <div>
                 <img src={pilula?.backgroundImage} alt="" className="h-[250px] object-cover" />
@@ -30,7 +30,7 @@ export function PilulaModacadCard({id}: PilulaCardDTO) {
                     {pilula?.title}
                 </h1>
 
-                <p className="text-[14px] font-montserratRegular leading-[15px]">
+                <p className="text-[14px] font-montserratRegular leading-[15px] h-[45px] overflow-hidden mb-[10px]">
                     {pilula?.description}
                 </p>
             </div>
