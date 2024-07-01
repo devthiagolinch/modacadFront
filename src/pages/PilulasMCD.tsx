@@ -69,7 +69,7 @@ export function PilulasMCD() {
                 {/* mobile top page*/}
                 <div className="lg:hidden">
                     <div className=" pt-7 pb-5 w-full px-5 grid gap-5">
-                        <h1 className="text-3xl font-butler_ultra_light">
+                        <h1 className="text-[40px] lg:text-[30px] leading-[40px] font-butler_ultra_light">
                             {text?.title}
                         </h1>
 
