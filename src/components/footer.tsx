@@ -87,18 +87,18 @@ export function Footer() {
                 <h1 className=" font-butler_ultra_light text-[40px] lg:text-[72px] mb-[30px] leading-[40px] lg:leading-[70px] lg:w-[40%]
                 ">Quer falar comigo?</h1>
 
-                <div className="lg:flex-1 lg:ml-[200px]">
+                <div className="lg:flex-1 lg:ml-[194px]">
                     <ul className="flex flex-col gap-7 md:w-full">
-                        <li className="flex gap-3 font-montserrat_medium sm:items-center
-                            bg-gradient-to-t from-[#dcdf1e] to-[#dcdf1e] bg-[length:85%_.90em] bg-no-repeat bg-[position:calc(90%_-_var(--p,0%))_900%] 
-                            hover:md:bg-[position:10%_150%] hover:lg:bg-[position:40%_150%]  lg:text-[24px]
+                        <li className="flex gap-2 font-montserrat_medium lg:text-[24px] items-center
+                            bg-gradient-to-t from-[#dcdf1e] to-[#dcdf1e] bg-[length:83%_.90em] bg-no-repeat bg-[position:calc(90%_-_var(--p,0%))_900%]
+                            lg:hover:bg-[position:38%_150%] xll:hover:bg-[position:38%_150%]
                         ">
                             <img src={emailIcon} alt="" className="max-w-[24px]" />
-                            <p className="sticky">telmabarcellos@modacad.com.br</p>
+                            <p className="">telmabarcellos@modacad.com.br</p>
                         </li>
                         <li className="flex gap-2 font-montserrat_medium lg:text-[24px] items-center
                             bg-gradient-to-t from-[#dcdf1e] to-[#dcdf1e] bg-[length:37%_.90em] bg-no-repeat bg-[position:calc(90%_-_var(--p,0%))_900%]
-                            hover:md:bg-[position:5.5%_150%] hover:xl:bg-[position:10%_150%]
+                            lg:hover:bg-[position:10%_150%] xll:hover:bg-[position:10%_150%]
                         ">
                             <img src={wppIcon} alt="" className="max-h-[24px]" />
                             31 99616 7573

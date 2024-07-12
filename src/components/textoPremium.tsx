@@ -13,7 +13,7 @@ export function TextoPremium() {
                 comunidadeModacad.
             </h1> 
 
-            <Button title="Conheça os Planos de Leitura" />
+            <Button title="Conheça os Planos de Leitura" active={true} />
         </div>
     )
 }

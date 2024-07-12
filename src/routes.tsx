@@ -8,6 +8,7 @@ import Dashboard from "./pages/Dashboard";
 import { PublishText } from "./pages/TextosPublicados";
 import { TextosMaisLidos } from "./pages/TextosMaisLidos";
 import { PilulasPublicadas } from "./pages/PilulasPublicadas"
+import { BlanckPage } from "./pages/blank";
 
 function Routes() {
   return (
@@ -20,6 +21,7 @@ function Routes() {
       <Route path="/textospublicados" exact component={PublishText} />
       <Route path="/maislidos" exact component={TextosMaisLidos} />
       <Route path="/pilulas" exact component={PilulasPublicadas} />
+      <Route path="/blank" exact component={BlanckPage} />
     </BrowserRouter>
   );
 }

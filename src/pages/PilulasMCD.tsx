@@ -3,8 +3,9 @@ import { Header } from "../components/header";
 
 
 import { BlockText } from "../components/blocktext";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { ServiceData } from "../assets/utils/constants.index";
+import { CriarPerfil } from "../components/criarPerfil";
 
 
 export function PilulasMCD() {
@@ -17,6 +18,7 @@ export function PilulasMCD() {
         return(
             <div className="mx-auto">
                 <Header />
+                <CriarPerfil />
     
                 {/** DESKTOP TOP PAGE */}
                 <div className="hidden lg:flex lg:flex-col  lg:w-full">
@@ -25,7 +27,9 @@ export function PilulasMCD() {
                         {/** tentar subir um pouco as tags para ficar alinhado com a descrição */}
                         <div className="lg:flex lg:pl-[55px] lg:flex-row lg:align-middle lg:items-end lg:w-auto">
                             {text?.tag.map((tag) => (
-                                <span className=" w-[22px] lg:transform: -rotate-90 text-nowrap">{tag.toUpperCase()}</span>
+                                <span className=" w-[22px] lg:transform: -rotate-90 text-nowrap
+                                    bg-gradient-to-t from-[#dcdf1e] to-[#dcdf1e] bg-[length:100%_1em] bg-no-repeat bg-[position:calc(100%_-_var(--p,0%))_900%]  hover:bg-[position:100%_100%]
+                                ">{tag.toUpperCase()}</span>
                             ))}
                         </div>
                         <div className="lg:flex lg:flex-col lg:pr-[20%] ">
@@ -96,9 +100,9 @@ export function PilulasMCD() {
 
                         <div className="flex justify-between items-start align-top gap-10 px-5 mb-[20px] text-zinc-800">
                             <div className="flex flex-col font-montserrat_light_italic">
-                                <span className="-mb-[5px]">Historia da Moda</span>
-                                <span className="-mb-[5px]">Novos Materiais</span>
-                                <span>Moda Urbana</span>
+                                {text?.tag.map((tag) => (
+                                    <Link to={"/"} className="-mb-[5px]">{tag.toUpperCase()}</Link>
+                                ))}
                             </div>
 
                             <div className="flex flex-col justify-between items-end">
@@ -123,7 +127,8 @@ export function PilulasMCD() {
         )
     }else{
         return(
-            <div className="mx-auto">
+            <div className="mx-auto h-screen">
+                <CriarPerfil />
                 <Header />
     
                 {/** DESKTOP TOP PAGE */}
@@ -204,9 +209,9 @@ export function PilulasMCD() {
 
                         <div className="flex justify-between items-start align-top gap-10 px-5 mb-[20px] text-zinc-800">
                             <div className="flex flex-col font-montserrat_light_italic">
-                                <span className="-mb-[5px]">Historia da Moda</span>
-                                <span className="-mb-[5px]">Novos Materiais</span>
-                                <span>Moda Urbana</span>
+                                {text?.tag.map((tag) => (
+                                    <Link to={"/"} className="-mb-[5px]">{tag.toUpperCase()}</Link>
+                                ))}
                             </div>
 
                             <div className="flex flex-col justify-between items-end">

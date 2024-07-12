@@ -14,7 +14,7 @@ export function PlanosMDC() {
 
             <div className="
                 flex flex-col justify-center align-center
-                pt-32 pb-10 md:ml-32 md:w-auto ml-[5%]
+                pt-28 pb-10 md:ml-32 md:w-auto ml-[5%]
                 "
             >
                 <h1 className="font-butler_ultra_light md:text-[80px] text-[50px] leading-none
@@ -23,13 +23,15 @@ export function PlanosMDC() {
                     Planos de Leitura
                 </h1>
                 <span className="md:text-[30px] text-[32px]  text-[#202020] font-extralight ">
-                    Plano básico gratuito.
+                    Plano básico gratuito
                 </span>
             </div>
 
             
-            <div className="hidden lg:flex lg:w-full lg:justify-center lg:items-center lg:my-5">
-                <p className="lg:text-[18px] lg:font-medium">MELHOR PLANO</p>
+            <div className="hidden lg:flex lg:w-full lg:justify-center lg:items-center lg:my-">
+                <p className="lg:text-[18px] lg:font-medium lg:flex items-center justify-center gap-2 w-full">
+                    <div className="border-t-[1px] border-[#202020] w-[10.5%]"></div>MELHOR PLANO<div className="border-t-[1px] border-[#202020] w-[10.5%]"></div>
+                </p>
             </div>
 
             <div className="lg:flex lg:justify-center">
@@ -61,20 +63,19 @@ export function PlanosMDC() {
                         </ul>
                     </div>
 
-                    <Button title="Quero este" key={3}/>
+                    <Button title="Quero este" key={3} active={false} />
 
                 </div>
 
                 <div className="w-full h-auto flex flex-col justify-center items-center
                     pt-[30px] pb-[40px]
-
-                    shadow-[0_0px_30px_0]
-                    shadow-[#33333381]
-
+                    shadow-read
                     border-[1px] border-zinc-950"
                 >
-                    <div className="md:hidden">
-                        <p className="text-[16px] font-medium">MELHOR PLANO</p>
+                    <div className="md:hidden w-full">
+                        <p className="text-[16px] font-medium items-center justify-center gap-2 flex w-full">
+                            <div className="border-t-[1px] border-[#202020] w-[25%]"></div>MELHOR PLANO<div className="border-t-[1px] border-[#202020] w-[25%]"></div>
+                        </p>
                     </div>
                     <div className="flex items-center justify-center ">
                         <p className="font-butler_ultra_light text-[30px]">Premium Anual</p>
@@ -99,7 +100,7 @@ export function PlanosMDC() {
                         </ul>
                     </div>
 
-                    <Button title="Quero este" key={2}/>
+                    <Button title="Quero este" key={2} active={true}/>
 
                 </div>
 
@@ -113,7 +114,7 @@ export function PlanosMDC() {
                     <div className="flex justify-center items-end">
                         <div className="flex -mb-12">
                             <span className="text-[50px] font-butler_ultra_light">R$</span>
-                            <p className="text-[150px] font-butler_ultra_light">8</p>
+                            <p className="text-[150px] font-butler_ultra_light">0</p>
                         </div>
                         <p className="justify-self-end text-[50px] font-butler_ultra_light">/mês</p>
                     </div>
@@ -122,15 +123,15 @@ export function PlanosMDC() {
                     
                     <div className="mb-[40px] px-5">
                         <ul className="flex flex-col gap-[15px]">
-                            <li className="flex gap-4 text-[22px] items-stretch align-middle leading-tight"><img src={checkListIcon} alt="" className="h-[30px]" />Todas as vantagens do plano Todas as vantagens do plano</li>
+                            <li className="flex gap-4 text-[22px] items-stretch align-middle leading-tight"><img src={checkListIcon} alt="" className="h-[30px]" />Leitura completa dos textos publicados</li>
                             
-                            <li className="flex gap-4 text-[22px] items-stretch align-middle leading-tight"><img src={checkListIcon} alt="" className="h-[30px]" />Todas as vantagens do plano </li>
+                            <li className="flex gap-4 text-[22px] items-stretch align-middle leading-tight"><img src={checkListIcon} alt="" className="h-[30px]" />Opção de receber os textos no seu e-mail </li>
                             
-                            <li className="flex gap-4 text-[22px] items-stretch align-middle leading-tight"><img src={checkListIcon} alt="" className="h-[30px]" /> Todas as vantagens do plano</li>
+                            <li className="flex gap-4 text-[22px] items-stretch align-middle leading-tight"><img src={checkListIcon} alt="" className="h-[30px]" /> Opção de notificação de novos textos no seu e-mail</li>
                         </ul>
                     </div>
 
-                    <Button title="Quero este" key={1}/>
+                    <Button title="Quero este" key={1} active={false}/>
 
                 </div>
             </div>

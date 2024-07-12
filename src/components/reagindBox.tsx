@@ -4,16 +4,16 @@ import { Button } from "./Button"
 export function ReadingBox() {
 
     return (
-        <div className="grid">
-            <div className="flex flex-col lg:flex-row justify-center gap-x-[350px] w-full -my-[1px]
-                pt-[20px] pb-[20px]
+        <div className="mx-auto">
+            <div className="flex flex-col lg:flex-row justify-center gap-x-[350px] w-full -mb-[1px]
+                py-[60px]
                 shadow-read
                 border-[1px] border-[#202020] items-center
                 " >
                 {/** MOBILE */}
-                <div className="lg:hidden flex flex-col justify-center items-center mb-[20px]">
-                    <p className=" text-[40px] font-butler_ultra_light leading-[40px]">Planos de leitura</p>
-                    <span className="text-[20px] font-montserrat_light_italic">Plano básico gratuito</span>
+                <div className="lg:hidden flex flex-col justify-center items-center mb-[35px]">
+                    <p className=" text-[40px] font-butler_ultra_light leading-[40px] mb-[20px]">Planos de leitura</p>
+                    <span className="text-[20px] leading-5 font-montserrat_light_italic max-w-[80%] text-center md:text-left">para conteúdos exclusivos modacad</span>
                 </div>
 
                 {/** DESKTOP */}
@@ -23,23 +23,15 @@ export function ReadingBox() {
                     ">
 
                     <div className="lg:mr-10">
-                        <p className="text-[40px] font-butler_ultra_light md:text-7xl leading-[40px]">Planos <br /> de leitura</p>
-                        <span className="font-montserratLight lg:ml-1">Plano básico de leitura</span>
+                        <p className="md:text-[70px] text-[50px] font-butler_ultra_light leading-[65px]">Planos de leitura</p>
+                        <span className="font-montserratLight md:text-[30px] text-[25px]">para conteúdos exclusivos modacad</span>
                     </div>
 
                     <img src={setaCurvaIcon} alt="" className="max-h-[40px]" />
 
                     <div className="hidden lg:flex  lg:flex-col lg:justify-center lg:items-center md:my-10  px-[20px] lg:mr-12 mb-[40px] h-[100%] w-[29%]">
-                        <input type="email" placeholder="Coloque seu e-mail aqui" className="w-full mb-[20px] bg-transparent
-                            text-[20px] font-montserrat_light_italic
-                            border-b-[1px] border-slate-900 shadow-sm placeholder-slate-700 text-center
-                            focus:outline-none
-                            disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none
-                            invalid:border-pink-500 invalid:text-pink-600
-                            focus:invalid:border-pink-500 focus:invalid:ring-pink-500
-                        "/>
 
-                        <Button title="CRIAR PERFIL" />
+                        <Button title="Conheça os planos" active={false} link="planos" />
                     </div>
                 </div>
 
@@ -47,15 +39,7 @@ export function ReadingBox() {
 
                 {/** MOBILE */}
                 <div className="lg:hidden flex flex-col justify-center items-center w-full px-[20px]">
-                    <input type="email" placeholder="Coloque seu e-mail aqui" className="w-full mb-[20px] bg-transparent
-                        text-[20px] font-thin
-                        border-b-[1px] border-slate-900 shadow-sm placeholder-slate-700 text-center
-                        focus:outline-none
-                        disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none
-                        invalid:border-pink-500 invalid:text-pink-600
-                        focus:invalid:border-pink-500 focus:invalid:ring-pink-500
-                    "/>
-                    <Button title="CRIAR PERFIL" />
+                    <Button title="Conheça os planos" active={false} />
                 </div>
 
                 

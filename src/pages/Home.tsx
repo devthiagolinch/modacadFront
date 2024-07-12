@@ -11,21 +11,21 @@ import { ScrollTextosMaisLidos } from "../components/ScrollTextoMaisLidos"
 
 export function Home() {
   return( 
-    <div className="mx-auto">
+    <div className="mx-auto h-screen">
       <Header />
-        <img src={banner} alt="" className="min-w-full max-h-[650px] object-cover" />
-        <ReadingBox />
-        <LastPost />
-        <Subjects /> 
-        <ScrollTextosMaisLidos title={"TEXTOS MAIS LIDOS"} />
-        <ScrollTextoMCD title={"TEXTO PUBLICADOS"} />
-        <ReadingBox />
-        <ScrollPiluaMCD title={"PILULAS MODACAD"} />
-        <div className="h-96">
+      <img src={banner} alt="" className="min-w-full max-h-[650px] object-cover" />
+      <ReadingBox />
+      <LastPost />
+      <Subjects /> 
+      <ScrollTextosMaisLidos title={"TEXTOS MAIS LIDOS"} />
+      <ScrollTextoMCD title={"TEXTO PUBLICADOS"} />
+      <ReadingBox />
+      <ScrollPiluaMCD title={"PILULAS MODACAD"} />
+      <div className="h-96">
 
-        </div>
+      </div>
 
-        <Footer />
+      <Footer />
     </div>
     
   )

@@ -15,19 +15,21 @@ interface TextScrollInterface {
   title: string
 }
 
+// ARRUMAR AS TAGS DOS CARDS PARA TER MAIS DISTANCIA ENTRE ELES
+
 export function ScrollPiluaMCD({title}: TextScrollInterface) {
   const cards = ServiceData.filter((t) => t.type == "pilulas")
   
   return (
     
-    <div className="flex flex-row -mt-[1px]" >
+    <div className="flex flex-row -mt-[1px] z-0" >
       <div className="flex justify-center items-center border-[1px] border-[#202020] -mr-[1px]">
         <Link to={"/pilulas"}>
           <p className="text-nowrap transform: -rotate-90 w-8 lg:w-[22px] lg:p-5">{title}</p>  
         </Link>
       </div>
 
-      <div className="flex-1 items-center flex-col  h-auto w-[90%] -ml-[1px]">
+      <div className="flex-1 items-center flex-col  h-auto w-[90%] -ml-[1px] ">
         <Swiper
           breakpoints={{
             340: {

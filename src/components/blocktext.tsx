@@ -1,3 +1,4 @@
+import { Button } from "./Button";
 
 
 export function BlockText() {
@@ -18,14 +19,7 @@ export function BlockText() {
                 focus:invalid:border-pink-500 focus:invalid:ring-pink-500
             "/>
 
-        <button className="min-h-[60px] w-auto min-w-[210px] p-2 px-[25px]
-            border-[1px] border-[#202020]
-            font-montserrat_medium text-[22px]
-            flex flex-col justify-center items-center
-            bg-gradient-to-t from-[#dcdf1e] to-[#dcdf1e] bg-[length:90%_.90em] bg-no-repeat hover:bg-[length:100%_100%]  bg-[position:50%_75%]
-        ">
-            ENVIAR
-        </button>
+            <Button title={"Continuar"} active={true} />
         </div>
     )
 }

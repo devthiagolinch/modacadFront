@@ -26,13 +26,13 @@ export function LastPost() {
                     </p>
                 </div>
 
-                <div className=" lg:w-[60%] shadow-inner bg-green-400">
+                <div className=" lg:w-[60%] shadow-inner">
                     <img src={lastPost?.backgroundImage} className="h-full object-cover object-top sm:h-full" />
                 </div>
             </Link>
             {/** MOBILE */}
             <Link to={`/textomodacad/${lastPost?.id}`} className="flex flex-col lg:hidden ">
-                <div className="shadow-inner bg-green-400">
+                <div className="shadow-inner">
                     <img src={lastPost?.backgroundImage} className="h-full object-cover object-top sm:h-full" />
                 </div>
                 <div className="flex flex-col w-full p-3">

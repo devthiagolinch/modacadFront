@@ -30,7 +30,7 @@ export function PublishText() {
                     ))}
                 </div>
                 <div className="lg:mb-[80px] lg:mt-[60px] mt-[25px] mb-[50px] justify-center items-center flex">
-                    <Button title={"Carregar mais"} />
+                    <Button title={"Carregar mais"} active={false} />
                 </div>
             </div>
 
