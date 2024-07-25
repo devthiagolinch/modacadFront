@@ -12,6 +12,7 @@ import {
   
 import { useEffect, useState } from 'react';
 import { newBlogAPI } from '../lib/axios';
+import { UsersData } from 'src/assets/utils/usersData.index';
 
   const navigation = [
     { name: 'Dashboard', href: '#', current: true },
@@ -37,12 +38,7 @@ import { newBlogAPI } from '../lib/axios';
   }
   
   export default function Dashboard() {
-    const [user, setUser] = useState<Admin>()
-
-    useEffect(() => {
-      newBlogAPI.get("/admins/profile").then(response => setUser(response.data))
-    }, [])
-    console.log(user)
+    const user = UsersData
 
     return (
       <>
@@ -105,7 +101,7 @@ import { newBlogAPI } from '../lib/axios';
                             <MenuButton className="relative flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                               <span className="absolute -inset-1.5" />
                               <span className="sr-only">Open user menu</span>
-                              <img className="h-8 w-8 rounded-full" src={user.name} alt="" />
+                              <img className="h-8 w-8 rounded-full" src={user.authorAvatar} alt="" />
                             </MenuButton>
                           </div>
                           <Transition
@@ -172,7 +168,7 @@ import { newBlogAPI } from '../lib/axios';
                   <div className="border-t border-gray-700 pb-3 pt-4">
                     <div className="flex items-center px-5">
                       <div className="flex-shrink-0">
-                        <img className="h-10 w-10 rounded-full" src={user.name} alt="" />
+                        <img className="h-10 w-10 rounded-full" src={user.authorAvatar} alt="" />
                       </div>
                       <div className="ml-3">
                         <div className="text-base font-medium leading-none text-white">{user.name}</div>

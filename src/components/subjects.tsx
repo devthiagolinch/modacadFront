@@ -28,10 +28,10 @@ export function Subjects() {
                         subjects.map(sub => {
                             return (
                                 <>
-                                        <a href="" key={sub.id} className="px-2 lg:px-3 font-butler_ultra_light lg:text-[40px] leading-[60px]
-                                            bg-gradient-to-t from-[#dcdf1e] to-[#dcdf1e] bg-[length:120%_.60em] bg-no-repeat bg-[position:calc(90%_-_var(--p,0%))_900%]  hover:bg-[position:50%_95%]
-                                        ">{sub.name}</a>
-                                        <span className="text-2xl">•</span>
+                                    <a href="" key={sub.id} className="px-2 lg:px-3 font-butler_ultra_light lg:text-[40px] leading-[60px]
+                                        bg-gradient-to-t from-[#dcdf1e] to-[#dcdf1e] bg-[length:120%_.60em] bg-no-repeat bg-[position:calc(90%_-_var(--p,0%))_900%]  hover:bg-[position:50%_95%]
+                                    ">{sub.name}</a>
+                                    <span className="text-2xl">•</span>
                                 </>
                             )
                         })
