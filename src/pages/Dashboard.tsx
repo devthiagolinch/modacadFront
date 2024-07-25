@@ -11,6 +11,8 @@ import {
   import { Bars3Icon, BellIcon, PhotoIcon, XMarkIcon } from '@heroicons/react/24/outline'
 
   import { UsersData } from '../assets/utils/usersData.index';
+import { useEffect, useState } from 'react';
+import { newBlogAPI } from '../lib/axios';
 
   const users = UsersData;
   
@@ -34,8 +36,22 @@ import {
   function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
   }
+
+  interface Admin {
+    id: string,
+    name: string,
+    cellphone: string,
+    adminPro: boolean
+  }
   
   export default function Dashboard() {
+    const [user, setUser] = useState<Admin>()
+
+    useEffect(() => {
+      newBlogAPI.get("/admins/profile").then(response => setUser(response.data))
+    }, [])
+    console.log(user)
+
     return (
       <>
         {/*
@@ -338,6 +354,8 @@ import {
                 </button>
               </div>
             </form>
+
+
             </div>
           </main>
         </div>

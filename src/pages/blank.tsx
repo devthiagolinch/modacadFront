@@ -2,10 +2,25 @@
 import { ServiceData } from "../assets/utils/constants.index";
 import banner from "../assets/imgs/camila.jpg"
 import { Button } from "../components/Button";
+import { useEffect, useState } from "react";
+
+import { newBlogAPI } from "../lib/axios";
+
+interface Subjects {
+    id: string,
+    name: string
+}
 
 export function BlanckPage() {
     const texto = ServiceData.find((text) => text.id == "1");
-    console.log(texto)
+
+    
+    const [subjects, setSubjects] = useState<Subjects[]>([])
+    
+
+    useEffect(() => {
+      newBlogAPI.get('/subjects').then(response => setSubjects(response.data))
+    }, [])
 
     return(
         <div className="flex flex-col gap-10 px-[5px] py-[10px] justify-center items-center bg-gray-700">
@@ -148,6 +163,15 @@ export function BlanckPage() {
                         </div>
                 </div>
             </div>
+
+            <ul>
+                {subjects.map((sub) => {
+                    return (
+                        <li key={sub.id}>{sub.name}</li>
+                    )
+                })
+                }
+            </ul>
             
         </div>
     )

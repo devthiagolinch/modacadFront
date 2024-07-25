@@ -15,7 +15,7 @@ export function Button(props: buttonInterface) {
                     border-[1px] border-[#202020]
                     font-montserrat_medium text-[22px]
                     flex flex-col justify-center items-center
-                    bg-gradient-to-t from-[#dcdf1e] to-[#dcdf1e] bg-[length:90%_.90em] bg-no-repeat bg-[position:50%_75%]
+                    bg-gradient-to-t from-[#dcdf1e] to-[#dcdf1e] bg-[length:90%_.90em] bg-no-repeat bg-[position:50%_75%] hover:bg-[#dcdf1e]
                 ">
                     {props.title}
                 </button>
