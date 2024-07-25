@@ -9,9 +9,7 @@ import {
     Transition,
   } from '@headlessui/react'
   import { Bars3Icon, BellIcon, PhotoIcon, XMarkIcon } from '@heroicons/react/24/outline'
-  
-import { useEffect, useState } from 'react';
-import { newBlogAPI } from '../lib/axios';
+
 import { UsersData } from "../assets/utils/usersData.index";
 
   const navigation = [
@@ -28,13 +26,6 @@ import { UsersData } from "../assets/utils/usersData.index";
   
   function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
-  }
-
-  interface Admin {
-    id: string,
-    name: string,
-    cellphone: string,
-    adminPro: boolean
   }
   
   export default function Dashboard() {
