@@ -15,7 +15,7 @@ export function Subjects() {
     }, [])
 
     return (
-        <main className="flex lg:justify-between border-[1px] border-[#202020] -mb-[1px]" >
+        <div className="flex lg:justify-between border-[1px] border-[#202020] -mb-[1px]" >
             <div className="flex justify-start items-center border-[1px] px-[8.3px] border-[#202020] -mr-[1px] -mt-[1px] -mb-[1px] align-middle">
                 <p className="
                 transform: -rotate-90 lg:w-[22px]">ASSUNTOS</p>
@@ -28,8 +28,8 @@ export function Subjects() {
                         subjects.map(sub => {
                             return (
                                 <>
-                                    <a href="" key={sub.id} className="px-2 lg:px-3 font-butler_ultra_light lg:text-[40px] leading-[60px]
-                                        bg-gradient-to-t from-[#dcdf1e] to-[#dcdf1e] bg-[length:120%_.60em] bg-no-repeat bg-[position:calc(90%_-_var(--p,0%))_900%]  hover:bg-[position:50%_95%]
+                                    <a href="" key={sub.id} className="
+                    bg-gradient-to-t from-[#dcdf1e] to-[#dcdf1e] bg-[length:120%_.70em] bg-no-repeat bg-[position:calc(90%_-_var(--p,0%))_900%]  hover:bg-[position:50%_75%]
                                     ">{sub.name}</a>
                                     <span className="text-2xl">•</span>
                                 </>
@@ -38,6 +38,6 @@ export function Subjects() {
                     }
 
             </div>
-        </main>
+        </div>
     )
 }
