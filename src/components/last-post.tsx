@@ -6,8 +6,9 @@ export function LastPost() {
 
     return(
         <div className="flex lg:justify-between border-[1px] border-[#202020] -mb-[1px]">
-            <div className="flex items-center border-r-[1px] border-[#202020]">
-                <p className="transform: -rotate-90 font-medium text-xs text-nowrap w-8 p-4 lg:w-20">Último Texto</p>
+           <div className="flex justify-start items-center border-[1px] px-[8.3px] border-[#202020] -mr-[1px] -mt-[1px] -mb-[1px] align-middle">
+                <p className="
+                transform: -rotate-90 lg:w-[22px] text-nowrap">ULTIMO POST</p>
             </div>
 
             {/** DESKTOP */}

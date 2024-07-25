@@ -13,9 +13,8 @@ import { CriarPerfilCard } from "../components/cards/criarPerfilCard"
 
 export function Home() {
   return( 
-    <div className="mx-auto h-screen overflow-hidden">
+    <div className="mx-auto h-screen">
       <Header />
-      <CriarPerfilCard />
       <img src={banner} alt="" className="min-w-full max-h-[650px] object-cover" />
       <ReadingBox />
       <LastPost />

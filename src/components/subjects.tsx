@@ -15,21 +15,22 @@ export function Subjects() {
     }, [])
 
     return (
-        <main className="flex items-center lg:gap-5 lg:p-10 border-[1px] border-zinc-950" >
-            <div className="transform: -rotate-90 ">
-                <p className="font-light text-sm lg:font-medium lg:text-xs">ASSUNTOS</p>
-            </div >
+        <main className="flex lg:justify-between border-[1px] border-[#202020] -mb-[1px]" >
+            <div className="flex justify-start items-center border-[1px] px-[8.3px] border-[#202020] -mr-[1px] -mt-[1px] -mb-[1px] align-middle">
+                <p className="
+                transform: -rotate-90 lg:w-[22px]">ASSUNTOS</p>
+            </div>
 
-            <div className=" text-sm h-auto  lg:gap-4 lg:w-full lg:text-4xl items-center align-middle text-left font-butler_ultra_light" >
+            <div className="h-auto lg:w-full items-center align-middle p-[60px] pr-0" >
 
                 {
                     subjects.map(sub => {
                         return (
                             <>
-                                <a href="" className="px-2 lg:px-5
+                                <a href="" className="px-2 lg:px-3 font-butler_ultra_light lg:text-[40px] leading-[60px]
                                     bg-gradient-to-t from-[#dcdf1e] to-[#dcdf1e] bg-[length:120%_.60em] bg-no-repeat bg-[position:calc(90%_-_var(--p,0%))_900%]  hover:bg-[position:50%_95%]
                                 ">{sub.name}</a>
-                                <span>•</span>
+                                <span className="text-2xl">•</span>
                             </>
                         )
                     })
