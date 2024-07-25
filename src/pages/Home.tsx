@@ -17,7 +17,7 @@ export function Home() {
   return( 
     <div className="mx-auto h-screen overflow-hidden">
       <Header />
-      <UserProfileCard />
+      <CriarPerfilCard />
       <img src={banner} alt="" className="min-w-full max-h-[650px] object-cover" />
       <ReadingBox />
       <LastPost />
