@@ -9,8 +9,6 @@ import { Subjects } from "../components/subjects"
 import banner from "../assets/imgs/Banner-home.jpg"
 import { ScrollTextosMaisLidos } from "../components/ScrollTextoMaisLidos"
 
-import { CriarPerfilCard } from "../components/cards/criarPerfilCard"
-
 export function Home() {
   return( 
     <div className="mx-auto h-screen">
