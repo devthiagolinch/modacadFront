@@ -9,9 +9,7 @@ import { Subjects } from "../components/subjects"
 import banner from "../assets/imgs/Banner-home.jpg"
 import { ScrollTextosMaisLidos } from "../components/ScrollTextoMaisLidos"
 
-import { UserProfileCard } from "../components/cards/renovarPlano"
 import { CriarPerfilCard } from "../components/cards/criarPerfilCard"
-import { LoginCard } from "../components/cards/loginCard"
 
 export function Home() {
   return( 

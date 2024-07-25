@@ -9,18 +9,10 @@ import {
     Transition,
   } from '@headlessui/react'
   import { Bars3Icon, BellIcon, PhotoIcon, XMarkIcon } from '@heroicons/react/24/outline'
-
-  import { UsersData } from '../assets/utils/usersData.index';
+  
 import { useEffect, useState } from 'react';
 import { newBlogAPI } from '../lib/axios';
 
-  const users = UsersData;
-  
-  const user = {
-    name: users.name,
-    email: users.email,
-    imageUrl: users.authorAvatar
-  }
   const navigation = [
     { name: 'Dashboard', href: '#', current: true },
     { name: 'Blog', href: '/', current: false },
@@ -113,7 +105,7 @@ import { newBlogAPI } from '../lib/axios';
                             <MenuButton className="relative flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                               <span className="absolute -inset-1.5" />
                               <span className="sr-only">Open user menu</span>
-                              <img className="h-8 w-8 rounded-full" src={user.imageUrl} alt="" />
+                              <img className="h-8 w-8 rounded-full" src={user.name} alt="" />
                             </MenuButton>
                           </div>
                           <Transition
@@ -180,11 +172,11 @@ import { newBlogAPI } from '../lib/axios';
                   <div className="border-t border-gray-700 pb-3 pt-4">
                     <div className="flex items-center px-5">
                       <div className="flex-shrink-0">
-                        <img className="h-10 w-10 rounded-full" src={user.imageUrl} alt="" />
+                        <img className="h-10 w-10 rounded-full" src={user.name} alt="" />
                       </div>
                       <div className="ml-3">
                         <div className="text-base font-medium leading-none text-white">{user.name}</div>
-                        <div className="text-sm font-medium leading-none text-gray-400">{user.email}</div>
+                        <div className="text-sm font-medium leading-none text-gray-400">{user.name}</div>
                       </div>
                       <button
                         type="button"
