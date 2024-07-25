@@ -12,7 +12,7 @@ import {
   
 import { useEffect, useState } from 'react';
 import { newBlogAPI } from '../lib/axios';
-import { UsersData } from 'src/assets/utils/usersData.index';
+import { UsersData } from "../assets/utils/usersData.index";
 
   const navigation = [
     { name: 'Dashboard', href: '#', current: true },
