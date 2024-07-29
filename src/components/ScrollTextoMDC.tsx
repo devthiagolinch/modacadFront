@@ -1,5 +1,6 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Link } from "react-router-dom"
+import SetaEsquerda from "../assets/icons/seta-esquerda.svg"
 
 
 import "swiper/css";
@@ -41,11 +42,8 @@ export function ScrollTextoMCD({title}: TextScrollInterface) {
               spaceBetween: 243,
             },
           }}
-          freeMode={false}
-          pagination={{
-            clickable: true,
-          }}
-          modules={[FreeMode, Pagination, A11y]}
+          freeMode={true}
+          modules={[FreeMode,Pagination, A11y]}
           className="lg:w-[1255px] -ml-[1px] h-[100%]"
         >
           {card.map((item) => (
@@ -57,30 +55,11 @@ export function ScrollTextoMCD({title}: TextScrollInterface) {
               </Link>
             </SwiperSlide>
           ))}
-          <SwiperSlide key={"01940914"}>
-            <Link to={`/textospublicados/`} >
 
-              <div className="w-[300px] lg:w-[500px] h-full border-[1px] border-[#202020]">
-                <div className=" border-b-[1px] border-[#202020]">
-                  <img src="src\assets\imgs\unsplash.jpg" alt="" className="h-[150px] lg:h-[250px] w-full object-cover object-top" />
-                </div>
-
-                <div className="p-[10px]">
-
-                  <h1 className="font-butler_regular text-[25px] leading-[30px] mb-[13px] mt-[5px]">
-                    TODOS OS TEXTOS PUBLICADOS
-                  </h1>
-
-                  <p className="font-montserratRegular text-[17px] leading-[20px]">
-                    VEJA AQUI TODOS OS TEXTOS PUBLICADOS E DIVIRTA-SE COM VÁRIOS CONTEÚDOS INCRÍVEIS
-                  </p>
-                </div>
-              </div>
-
-            </Link>
-          </SwiperSlide>
-        </Swiper>
-
+          <div className="flex h-[70px]">
+            <img src={SetaEsquerda} />
+          </div>
+        </Swiper>       
       </div>
     </div>
 

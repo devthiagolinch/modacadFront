@@ -17,14 +17,14 @@ export function TextoMocadCard({id}: TextosCardDTO) {
                 <img src={texto?.backgroundImage} alt="" className="h-[150px] lg:h-[250px] w-full object-cover" />
             </div>
 
-            <div className="p-[10px] gap-2">
+            <div className="pt-[40px] pl-[40px] pr-[20px] pb-[40px]">
                 <ul className="flex flex-col">
                     {texto?.tag.map((t) => (
                         <li className="font-montserratLight text-[12px] -mt-[4px]">{t}</li>
                     ))}
                 </ul>
 
-                <h1 className="font-butler_regular text-[25px] leading-[30px] mb-[13px] mt-[5px]">
+                <h1 className="font-butler_regular text-[25px] leading-[30px] mb-[13px] mt-[12px]">
                     {texto?.title}
                 </h1>
 

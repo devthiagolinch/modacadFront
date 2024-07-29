@@ -35,7 +35,7 @@ export function Home() {
             transform: -rotate-90 lg:w-[22px]">ASSUNTOS</p>
         </div>
 
-        <div className="font-butler_ultra_light lg:text-[40px] leading-[60px]
+        <div className="font-butler_ultra_light  lg:text-[40px] leading-[60px]
         w-full items-center align-middle p-[60px]" >
             {
                   subjects.map(sub => {

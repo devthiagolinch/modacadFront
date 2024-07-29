@@ -9,8 +9,8 @@ import {
     Transition,
   } from '@headlessui/react'
   import { Bars3Icon, BellIcon, PhotoIcon, XMarkIcon } from '@heroicons/react/24/outline'
-
-import { UsersData } from "../assets/utils/usersData.index";
+import { useEffect, useState } from 'react'
+import { newBlogAPI } from '../lib/axios'
 
   const navigation = [
     { name: 'Dashboard', href: '#', current: true },
@@ -18,7 +18,7 @@ import { UsersData } from "../assets/utils/usersData.index";
     { name: 'Posts', href: '/dash/posts', current: false },
     { name: 'Membros', href: '/dash/members', current: false },
   ]
-  const userNavigation = [
+  const adminProfileNavigation = [
     { name: 'Your Profile', href: '#' },
     { name: 'Settings', href: '#' },
     { name: 'Sign out', href: '#' },
@@ -27,9 +27,22 @@ import { UsersData } from "../assets/utils/usersData.index";
   function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
   }
+
+  interface AdminProfile {
+    id: string,
+    name: string,
+    email: string,
+    admin_role: string,
+  }
   
   export default function Dashboard() {
-    const user = UsersData
+    const [adminProfile, setAdminProfile] = useState<AdminProfile>()
+
+    useEffect(() => {
+      newBlogAPI.get("/admins/profile").then(response => setAdminProfile(response.data))
+    }, [])
+
+    console.log(adminProfile)
 
     return (
       <>
@@ -91,8 +104,8 @@ import { UsersData } from "../assets/utils/usersData.index";
                           <div>
                             <MenuButton className="relative flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                               <span className="absolute -inset-1.5" />
-                              <span className="sr-only">Open user menu</span>
-                              <img className="h-8 w-8 rounded-full" src={user.authorAvatar} alt="" />
+                              <span className="sr-only">Open adminProfile menu</span>
+                              <img className="h-8 w-8 rounded-full" alt="" />
                             </MenuButton>
                           </div>
                           <Transition
@@ -104,7 +117,7 @@ import { UsersData } from "../assets/utils/usersData.index";
                             leaveTo="transform opacity-0 scale-95"
                           >
                             <MenuItems className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                              {userNavigation.map((item) => (
+                              {adminProfileNavigation.map((item) => (
                                 <MenuItem key={item.name}>
                                   {({ focus }) => (
                                     <a
@@ -159,11 +172,11 @@ import { UsersData } from "../assets/utils/usersData.index";
                   <div className="border-t border-gray-700 pb-3 pt-4">
                     <div className="flex items-center px-5">
                       <div className="flex-shrink-0">
-                        <img className="h-10 w-10 rounded-full" src={user.authorAvatar} alt="" />
+                        <img className="h-10 w-10 rounded-full" alt="" />
                       </div>
                       <div className="ml-3">
-                        <div className="text-base font-medium leading-none text-white">{user.name}</div>
-                        <div className="text-sm font-medium leading-none text-gray-400">{user.name}</div>
+                        <div className="text-base font-medium leading-none text-white">{adminProfile?.name}</div>
+                        <div className="text-sm font-medium leading-none text-gray-400">{adminProfile?.name}</div>
                       </div>
                       <button
                         type="button"
@@ -175,7 +188,7 @@ import { UsersData } from "../assets/utils/usersData.index";
                       </button>
                     </div>
                     <div className="mt-3 space-y-1 px-2">
-                      {userNavigation.map((item) => (
+                      {adminProfileNavigation.map((item) => (
                         <DisclosureButton
                           key={item.name}
                           as="a"
@@ -204,21 +217,21 @@ import { UsersData } from "../assets/utils/usersData.index";
                 <div className="border-b border-gray-900/10 pb-12">
                   <h2 className="text-base font-semibold leading-7 text-gray-900">Texto Modacad</h2>
                   <p className="mt-1 text-sm leading-6 text-gray-600">
-                    Escrito por {user.name} 
+                    Escrito por {adminProfile?.name} 
                   </p>
 
                   <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                     <div className="sm:col-span-4">
-                      <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
+                      <label htmlFor="adminProfilename" className="block text-sm font-medium leading-6 text-gray-900">
                         Titulo
                       </label>
                       <div className="mt-2">
                         <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-[#dcdf1e] sm:max-w-md">
                           <input
                             type="text"
-                            name="username"
-                            id="username"
-                            autoComplete="username"
+                            name="adminProfilename"
+                            id="adminProfilename"
+                            autoComplete="adminProfilename"
                             className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                             placeholder="Titulo"
                           />

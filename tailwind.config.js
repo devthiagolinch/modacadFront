@@ -14,7 +14,7 @@ export default {
         butler_ultra_light: ['butler-ultra-light', "sans-serif"],
         butler_bold: ['butler-bold', 'sans-serif'],
         butler_extra_bold: ['butler-extra-bold', 'sans-serif'],
-        butler_regular: ['butler-regular', 'sans-serif'],
+        butler_regular: ['butler_regular', 'sans-serif'],
         autography: ['autography', 'sans-serif'],
         montserrat_light_italic: ['montserrat-light-italic', 'sans-serif'],
         montserratMedium: ['montserrat-medium', 'sans-serif'],
