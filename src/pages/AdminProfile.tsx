@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router";
 
-import { Link } from "react-router-dom";
 import { Header } from "../components/header";
 import { newBlogAPI } from "../lib/axios";
 

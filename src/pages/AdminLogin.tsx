@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Link } from "react-router-dom";
@@ -12,16 +12,11 @@ export type Admin = {
 }
 
 export function AdminLoginPage() {
-    const [admin, setAdmin] = useState<Admin>();
 
     let history = useNavigate();
 
     const [adminEmail, setUserEmail] = useState("")
     const [adminPassword, setUserPassword] = useState("")
-
-    function createUserPath() {
-        history("/signup")
-    }
 
     async function handleLogin(event: FormEvent) {
         event.preventDefault();
