@@ -26,7 +26,7 @@ export function Home() {
     }, [])
   return( 
     <div className="mx-auto h-screen">
-      <div className="flex lg:items-center w-[100%] h-[90px] border-b-[1px] border-l-[1px] border-r-[1px] border-[#202020] bg-[#f1ece8] relative
+      <div className="flex fixed lg:items-center w-[100%] h-[90px] border-b-[1px] border-l-[1px] border-r-[1px] border-[#202020] bg-[#f1ece8]
           shadow-read
       ">
           <div className="flex w-screen justify-between ">
@@ -73,8 +73,11 @@ export function Home() {
           </div>
 
       </div>
+
       <img src={banner} alt="" className="min-w-full max-h-[650px] object-cover" />
+
       <ReadingBox />
+      
       <LastPost />
 
       <div className="flex lg:justify-between border-[1px] border-[#202020] -mb-[1px]" >

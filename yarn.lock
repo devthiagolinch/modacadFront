@@ -692,6 +692,18 @@
   resolved "https://registry.yarnpkg.com/@tanstack/virtual-core/-/virtual-core-3.5.0.tgz#108208d0f1d75271300bc5560cf9a85a1fa01e89"
   integrity sha512-KnPRCkQTyqhanNC0K63GBG3wA8I+D1fQuVnAvcBF8f13akOKeQp1gSbu6f77zCxhEk727iV5oQnbHLYzHrECLg==
 
+"@tiptap-pro/extension-file-handler@^2.10.9":
+  version "2.10.9"
+  resolved "https://registry.tiptap.dev/@tiptap-pro%2fextension-file-handler/-/extension-file-handler-2.10.9.tgz#908c77274fb30cc0174f3c71446dfe7252ed4dc8"
+  integrity sha512-JmWPG+M6I1Lj96b3vUQ1rY80PUQAUwinwA9VivyPVYFCrVML6Yi+Oc0FhZyiSHSs6ep2cEAlAQjScdYfF06ckg==
+
+"@tiptap-pro/extension-unique-id@^2.10.9":
+  version "2.10.9"
+  resolved "https://registry.tiptap.dev/@tiptap-pro%2fextension-unique-id/-/extension-unique-id-2.10.9.tgz#4f80e1bb250c9d158a34eac68e916ab1a19eb955"
+  integrity sha512-HHBC2ZuYI32QxexhnPFR1Jma7exJhVdPwQ6NARMzlu9Skurdi6Ac1gdAaZnJ9naZ7tmD9yD9bHPmXasjhmY+cg==
+  dependencies:
+    uuid "^10.0.0"
+
 "@tiptap/core@^2.5.8":
   version "2.5.8"
   resolved "https://registry.yarnpkg.com/@tiptap/core/-/core-2.5.8.tgz#58de366b0d2acb0a6e67a4780de64d619ebd90fa"
@@ -718,6 +730,11 @@
   version "2.5.8"
   resolved "https://registry.yarnpkg.com/@tiptap/extension-bullet-list/-/extension-bullet-list-2.5.8.tgz#fddb0d96ce7902214a1f2cb22f03ebbaae028ce8"
   integrity sha512-Wvf0HWBI0ulssoCsCOguxJB1Ntmj9PtE8b/ieFwFvrNptP+sf25XiWgjMs7H1KQrtmpngBu/Bhh5jJRgAmAgeQ==
+
+"@tiptap/extension-character-count@^2.5.9":
+  version "2.5.9"
+  resolved "https://registry.yarnpkg.com/@tiptap/extension-character-count/-/extension-character-count-2.5.9.tgz#607b62ca42e01ddcba05aa24ab7d4737e070d67d"
+  integrity sha512-9eGL5u0szvhMsbuZDu2HVP4gIojf2MHLVHXhA/O7jKZXinyF1m8XP8SaYGgE3KOAojytjI6rb44hG0LfCRKIqw==
 
 "@tiptap/extension-code-block@^2.5.8":
   version "2.5.8"
@@ -2848,6 +2865,11 @@ util-deprecate@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
   integrity sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==
+
+uuid@^10.0.0:
+  version "10.0.0"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-10.0.0.tgz#5a95aa454e6e002725c79055fd42aaba30ca6294"
+  integrity sha512-8XkAphELsDnEGrDxUOHB3RGvXz6TeuYSGEZBOjtTtPm2lwhGBjLgOzLHB63IUWfBpNucQjND6d3AOudO+H3RWQ==
 
 vite-plugin-eslint@^1.8.1:
   version "1.8.1"

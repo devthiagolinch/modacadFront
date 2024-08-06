@@ -8,6 +8,10 @@ export const InitialContent =
         <h2>What is Tailwind CSS?</h2>
         <p>Tailwind CSS is a utility-first CSS framework that provides a wide array of pre-defined classes to help you style your web applications directly in your HTML. Unlike traditional CSS frameworks that come with pre-designed components, Tailwind allows you to build custom designs without writing any CSS from scratch.</p>
         
+        <p>This is a basic example of implementing images. Drag to re-order.</p>
+        <img src="./src/assets/imgs/africa.jpg" />
+        <img src="https://placehold.co/800x400/6A00F5/white" />
+        
         <h2>Advantages of Tailwind CSS</h2>
         <h3>1. Control Over Styling</h3>
         <p>Tailwind CSS gives developers complete control over the styling of their web applications. Unlike other frameworks that impose a default theme, Tailwind lets you create unique designs by combining utility classes. This flexibility allows for a more personalized and distinctive look for each project.</p>
