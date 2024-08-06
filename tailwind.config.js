@@ -42,6 +42,7 @@ export default {
       },
     },
     plugins: [
-      require("tailwindcss-inner-border")
+      require("tailwindcss-inner-border"),
+      require('@tailwindcss/typography')
     ],
   }
