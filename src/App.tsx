@@ -11,11 +11,12 @@ import { PublishText } from "./pages/TextosPublicados";
 import { PlanosMDC } from "./pages/Planos";
 
 import { AdminLoginPage } from "./pages/AdminLogin";
-import Dashboard from "./pages/Dashboard";
+import Dashboard from "./pages/Dashboard/Dashboard";
 
-import { NewPost } from "./pages/NewPost";
+import { NewPost } from "./pages/Dashboard/NewPost";
 
 import { BlanckPage } from "./pages/blank";
+import MembersDashboard from "./pages/Dashboard/MembersDash";
 
 function App() {
   return (
@@ -28,8 +29,9 @@ function App() {
       <Route path="/textosmodacad" element={<PublishText/>} />
       <Route path="/texto/:textId" element={<TextosModacad/>} />
       <Route path="/planos/" element={<PlanosMDC/>} />
-      <Route path="/admin-login/dash/:id" element={<Dashboard/>} />
-      <Route path="/new-post" element={<NewPost/>}/>
+      <Route path="/dash" element={<Dashboard/>} />
+      <Route path="/dash/members" element={<MembersDashboard />} />
+      <Route path="/dash/new-post" element={<NewPost/>}/>
       <Route path="/admin-login" element={<AdminLoginPage />} />
       
       <Route path="/blank" element={<BlanckPage/>} />
