@@ -8,8 +8,8 @@ import {
     MenuItems,
     Transition,
   } from '@headlessui/react'
-  import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import { useState } from 'react'
+  import { Bars3Icon, BellIcon, PhotoIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { useEffect, useState } from 'react'
 // import { newBlogAPI } from '../lib/axios'
 
   const navigation = [
@@ -34,8 +34,8 @@ import { useState } from 'react'
     admin_role: string,
   }
   
-  export default function MembersDashboard() {
-    const [adminProfile] = useState<AdminProfile>()
+function Dashboard() {
+    const [adminProfile, setAdminProfile] = useState<AdminProfile>()
 
     // useEffect(() => {
     //   newBlogAPI.get("/admins/profile").then(response => setAdminProfile(response.data))
@@ -204,7 +204,7 @@ import { useState } from 'react'
   
           <header className="bg-white shadow">
             <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-              <h1 className="text-3xl font-bold tracking-tight text-gray-900">Modacad Members</h1>
+              <h1 className="text-3xl font-bold tracking-tight text-gray-900">MODACAD</h1>
             </div>
           </header>
           <main>
@@ -214,3 +214,4 @@ import { useState } from 'react'
     )
   }
   
+  export { Dashboard }

@@ -13,20 +13,12 @@ import "../../assets/css/tiptap.css"
 
 import { FaBold, FaItalic, FaStrikethrough  } from "react-icons/fa";
 import { MdKeyboardArrowLeft } from "react-icons/md";
-import {  useNavigate } from 'react-router-dom'
+
 import { LuPanelRightOpen } from 'react-icons/lu'
-import { CursorArrowRaysIcon } from '@heroicons/react/24/outline'
 
-
-
-// import { InitialContent } from "../assets/utils/content";
 
 function NewPost() {
-    let history = useNavigate()
 
-    async function handleReturnDash() {
-        history('/dash')
-    }
     const limit = 2000
 
     const editor = useEditor({
@@ -40,7 +32,7 @@ function NewPost() {
                       return 'What’s the title?'
                     }
                 
-                    return 'Can you add some further context?'
+                    return 'Escreva aqui a proxima canetada da Thelma Barcellos.... (ksksksks)'
                   },                
                 emptyEditorClass: 'is-editor-empty',
 
@@ -107,7 +99,9 @@ function NewPost() {
     return(
         <>          
             <header className='flex items-center justify-between p-10'>
-                <MdKeyboardArrowLeft className='w-8 h-8 ml-16' onClick={handleReturnDash} />
+                <a href="/dash">
+                    <MdKeyboardArrowLeft className='w-8 h-8 ml-16' />
+                </a>
                 
                 <LuPanelRightOpen />
 
