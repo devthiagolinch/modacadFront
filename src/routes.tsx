@@ -4,29 +4,31 @@ import {Home} from './pages/Home';
 import {PilulasMCD} from './pages/PilulasMCD';
 import {TextosModacad} from './pages/TextosModacad';
 import {PlanosMDC} from './pages/Planos';
-import Dashboard from "./pages/Dashboard";
+import { Dashboard } from "./pages/dashboard/Dashboard";
 import { PublishText } from "./pages/TextosPublicados";
 import { TextosMaisLidos } from "./pages/TextosMaisLidos";
 import { PilulasPublicadas } from "./pages/PilulasPublicadas"
 import { BlanckPage } from "./pages/blank";
-import { AdminProfile } from "./pages/AdminProfile";
 import { AdminLoginPage } from "./pages/AdminLogin";
+import MembersDashboard from "./pages/dashboard/MembersDash";
+import { NewPost } from "./pages/dashboard/NewPost";
 
 function Routes() {
   return (
     <BrowserRouter>
       <Route path="/" element={<Home />} />
-      <Route path="/pilulas/:pilulaId" element={<PilulasMCD />} />
-      <Route path="/textomodacad/:textId" element={<TextosModacad/>} />
-      <Route path="/planos/" element={<PlanosMDC/>} />
-      <Route path="/dash/" element={<Dashboard/>} />
-      <Route path="/textospublicados" element={<PublishText/>} />
       <Route path="/maislidos" element={<TextosMaisLidos/>} />
       <Route path="/pilulas" element={<PilulasPublicadas/>} />
-      <Route path="/blank" element={<BlanckPage/>} />
-
+      <Route path="/pilulas/:id" element={<PilulasMCD />} />
+      <Route path="/textosmodacad" element={<PublishText/>} />
+      <Route path="/texto/:textId" element={<TextosModacad/>} />
+      <Route path="/planos/" element={<PlanosMDC/>} />
+      <Route path="/dash" element={<Dashboard/>} />
+      <Route path="/dashboard/members" element={<MembersDashboard/>} />
+      <Route path="/dashboard/new-post" element={<NewPost/>}/>
       <Route path="/admin-login" element={<AdminLoginPage />} />
-      <Route path="/adminprofile/:id" element={<AdminProfile/>} />
+      
+      <Route path="/blank" element={<BlanckPage/>} />
     </BrowserRouter>
   );
 }

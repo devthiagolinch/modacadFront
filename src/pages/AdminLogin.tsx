@@ -1,8 +1,7 @@
 import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Link } from "react-router-dom";
-import { newBlogAPI, oldBlogAPI } from "../lib/axios";
+import { newBlogAPI } from "../lib/axios";
 
 export type Admin = {
     name: string;
@@ -26,7 +25,7 @@ export function AdminLoginPage() {
             password: adminPassword
         }
 
-        await oldBlogAPI.post('/admin-session/sessions', admin).then(response => {
+        await newBlogAPI.post('/admin-session/sessions', admin).then(response => {
             if(!response) {
                 throw new Error("Not Allowed")   
             }
