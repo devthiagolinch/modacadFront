@@ -11,12 +11,12 @@ import { PublishText } from "./pages/TextosPublicados";
 import { PlanosMDC } from "./pages/Planos";
 
 import { AdminLoginPage } from "./pages/AdminLogin";
-import { Dashboard } from "./pages/dashboard/Dashboard";
+import { Dashboard } from "./pages/Dashboard";
 
-import { NewPost } from "./pages/dashboard/NewPost";
+import { NewPost } from "./pages/NewPost";
 
 import { BlanckPage } from "./pages/blank";
-import MembersDashboard from "./pages/dashboard/MembersDash";
+import MembersDashboard from "./pages/MembersDash";
 
 function App() {
   return (
