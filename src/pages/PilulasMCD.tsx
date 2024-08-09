@@ -12,13 +12,13 @@ export function PilulasMCD() {
     const params = useParams<{pilulaId: string}>();
     const text = ServiceData.find((text) => text.id == params.pilulaId);
     
-    const show = "true"
+    const show = ""
 
     if(!show) {
         return(
-            <div className="mx-auto">
-                <Header />
+            <div className="overflow-hidden block">
                 <CriarPerfil />
+                <Header />
     
                 {/** DESKTOP TOP PAGE */}
                 <div className="hidden lg:flex lg:flex-col  lg:w-full">
@@ -27,7 +27,7 @@ export function PilulasMCD() {
                         {/** tentar subir um pouco as tags para ficar alinhado com a descrição */}
                         <div className="lg:flex lg:pl-[55px] lg:flex-row lg:align-middle lg:items-end lg:w-auto">
                             {text?.tag.map((tag) => (
-                                <span className=" w-[22px] lg:transform: -rotate-90 text-nowrap
+                                <span className=" w-[22px] lg:transform: -rotate-90 text-nowrap 
                                     bg-gradient-to-t from-[#dcdf1e] to-[#dcdf1e] bg-[length:100%_1em] bg-no-repeat bg-[position:calc(100%_-_var(--p,0%))_900%]  hover:bg-[position:100%_100%]
                                 ">{tag.toUpperCase()}</span>
                             ))}
@@ -128,7 +128,6 @@ export function PilulasMCD() {
     }else{
         return(
             <div className="mx-auto h-screen">
-                <CriarPerfil />
                 <Header />
     
                 {/** DESKTOP TOP PAGE */}

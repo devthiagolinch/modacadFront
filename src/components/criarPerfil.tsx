@@ -1,13 +1,11 @@
-import { Button } from "./Button";
-
 
 export function CriarPerfil() {
 
     return(
-        <div className="w-[100%] h-screen justify-center fixed flex  backdrop-blur-sm">
-            <div className="bg-[#f1ece8] p-[10px] h-[385px] w-[80%] min-w-[320px] max-w-[500px] justify-self-center items-center mt-[8%]">
+        <div className="w-[100%] h-screen justify-center items-center fixed flex bg-[#f1ece8]/30 backdrop-blur-sm overflow-y-hidden">
+            <div className="bg-[#f1ece8] p-[20px] h-auto w-[80%] min-w-[320px] max-w-[500px] justify-self-center items-center mt-[8%] shadow-modal">
                 <div className="border-[1px] border-[#202020] flex flex-col justify-center items-center p-[20px]">
-                    <div className="font-butler_ultra_light text-[25px] w-full min-h-[30px] flex justify-center items-center mb-[20px]">
+                    <div className="font-butler_ultra_light text-[40px] w-full min-h-[30px] flex justify-center items-center mb-[20px]">
                         Seu Perfil
                     </div>
                     <div className="flex flex-col justify-center items-center">
@@ -39,7 +37,14 @@ export function CriarPerfil() {
                                 disabled:bg-slate-50 disabled:text-[#202020] disabled:border-slate-200 disabled:shadow-none
                             "/>
                         </form>
-                        <Button title={"Enviar"} active={true} link="planos" />
+                        <button className="min-h-[60px] w-auto min-w-[210px] p-2 px-[25px] mb-[10px]
+                            border-[1px] border-[#202020]
+                            font-montserrat_medium text-[22px]
+                            flex flex-col justify-center items-center
+                            bg-gradient-to-t from-[#dcdf1e] to-[#dcdf1e] bg-[length:90%_.90em] bg-no-repeat bg-[position:50%_75%] hover:bg-[#dcdf1e]
+                        ">
+                            Enviar
+                        </button>
                     </div>
                 </div>
             </div>

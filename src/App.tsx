@@ -11,7 +11,7 @@ import { PublishText } from "./pages/TextosPublicados";
 import { PlanosMDC } from "./pages/Planos";
 
 import { AdminLoginPage } from "./pages/AdminLogin";
-import { Dashboard } from "./pages/Dashboard";
+import { Dashboard } from "./pages/dashboard/Dashboard";
 
 import { NewPost } from "./pages/dashboard/NewPost";
 

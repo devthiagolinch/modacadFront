@@ -8,8 +8,8 @@ import {
     MenuItems,
     Transition,
   } from '@headlessui/react'
-  import { Bars3Icon, BellIcon, PhotoIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import { useEffect, useState } from 'react'
+  import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { useState } from 'react'
 // import { newBlogAPI } from '../lib/axios'
 
   const navigation = [
@@ -34,8 +34,8 @@ import { useEffect, useState } from 'react'
     admin_role: string,
   }
   
-  export default function Dashboard() {
-    const [adminProfile, setAdminProfile] = useState<AdminProfile>()
+function Dashboard() {
+    const [adminProfile] = useState<AdminProfile>()
 
     // useEffect(() => {
     //   newBlogAPI.get("/admins/profile").then(response => setAdminProfile(response.data))
@@ -214,3 +214,4 @@ import { useEffect, useState } from 'react'
     )
   }
   
+export { Dashboard }

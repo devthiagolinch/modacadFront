@@ -6,7 +6,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/free-mode";
 
-import { A11y, FreeMode, Pagination } from "swiper/modules";
+import { A11y, Navigation, Pagination, Scrollbar } from "swiper/modules";
 
 /* import { RxArrowTopRight } from "react-icons/rx"; */
 import { ServiceData } from "../assets/utils/constants.index";
@@ -21,31 +21,23 @@ export function ScrollTextosMaisLidos({title}: TextScrollInterface) {
   return (
     
     <div className="flex flex-row -mt-[1px]" >
-      <div className="flex justify-center items-center border-[1px] border-[#202020] -mr-[1px]">
+      <div className="flex justify-center items-center border-[1px] border-[#202020] -mr-[1px] pt-24">
         <Link to={`/maislidos`}>
           <p className="
           text-nowrap transform: -rotate-90 w-8 lg:w-[22px] lg:p-5">{title}</p>
         </Link>
       </div>
 
-      <div className="flex-1 items-center flex-col  h-auto w-[90%]">
+      <div className="flex items-center flex-col  h-auto w-auto">
         <Swiper
-          breakpoints={{
-            340: {
-              slidesPerView: 2,
-              spaceBetween: 305,
-            },
-            750: {
-              slidesPerView: 3,
-              spaceBetween: 243,
-            },
-          }}
-          freeMode={false}
-          pagination={{
-            clickable: true,
-          }}
-          modules={[FreeMode, Pagination, A11y]}
-          className="lg:w-[1255px] -ml-[1px] h-[100%]"
+          modules={[Navigation, Pagination, Scrollbar, A11y]}
+          spaceBetween={97}
+          slidesPerView={3}
+          navigation  
+          scrollbar={{ draggable: true }}
+          onSwiper={(swiper) => console.log(swiper)}
+          onSlideChange={() => console.log('slide change')}
+          className="lg:max-w-[1400px] -ml-[1px] h-[100%]"
         >
           {ServiceData.map((item) => (
               
@@ -79,7 +71,6 @@ export function ScrollTextosMaisLidos({title}: TextScrollInterface) {
             </Link>
           </SwiperSlide>
         </Swiper>
-
       </div>
     </div>
 

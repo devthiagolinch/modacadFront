@@ -26,7 +26,7 @@ export function Home() {
     }, [])
   return( 
     <div className="mx-auto h-screen">
-      <div className="flex fixed lg:items-center w-[100%] h-[90px] border-b-[1px] border-l-[1px] border-r-[1px] border-[#202020] bg-[#f1ece8]
+      <div className="flex lg:items-center w-[100%] h-[90px] border-b-[1px] border-l-[1px] border-r-[1px] border-[#202020] bg-[#f1ece8]
           shadow-read
       ">
           <div className="flex w-screen justify-between ">
@@ -80,8 +80,8 @@ export function Home() {
       
       <LastPost />
 
-      <div className="flex lg:justify-between border-[1px] border-[#202020] -mb-[1px]" >
-        <div className="flex justify-start items-center border-[1px] px-[8.3px] border-[#202020] -mr-[1px] -mt-[1px] -mb-[1px] align-middle">
+      <div className="flex lg:justify-between border-[1px] border-[#202020] -mb-[1px] min-h-[300px]" >
+        <div className="flex justify-start items-center border-[1px] px-[8.3px] pt-16 border-[#202020] -mr-[1px] -mt-[1px] -mb-[1px] align-middle">
             <p className="
             transform: -rotate-90 lg:w-[22px]">ASSUNTOS</p>
         </div>

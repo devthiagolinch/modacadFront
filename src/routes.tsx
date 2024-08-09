@@ -4,7 +4,7 @@ import {Home} from './pages/Home';
 import {PilulasMCD} from './pages/PilulasMCD';
 import {TextosModacad} from './pages/TextosModacad';
 import {PlanosMDC} from './pages/Planos';
-import { Dashboard } from "./pages/Dashboard";
+import { Dashboard } from "./pages/dashboard/Dashboard";
 import { PublishText } from "./pages/TextosPublicados";
 import { TextosMaisLidos } from "./pages/TextosMaisLidos";
 import { PilulasPublicadas } from "./pages/PilulasPublicadas"

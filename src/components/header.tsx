@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 
 export function Header() {
     return (
-        <div className="flex lg:items-center w-[100%] h-[90px] border-b-[1px] border-l-[1px] border-r-[1px] border-[#202020] bg-[#f1ece8] relative
+        <div className="flex lg:items-center w-[100%] h-[90px] border-b-[1px] border-l-[1px] border-r-[1px] border-[#202020] bg-[#f1ece8]
             shadow-read
         ">
             <div className="flex w-screen justify-between ">
