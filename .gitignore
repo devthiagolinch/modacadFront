@@ -11,6 +11,8 @@ node_modules
 dist
 dist-ssr
 *.local
+*.npmrc
+tiptap.yarnrc.yml
 
 # Editor directories and files
 .vscode/*
