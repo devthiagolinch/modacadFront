@@ -9,7 +9,7 @@ import {
     Transition,
   } from '@headlessui/react'
   import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import { useState } from 'react'
+// import { useState } from 'react'
 // import { newBlogAPI } from '../lib/axios'
 
   const navigation = [
@@ -27,15 +27,15 @@ import { useState } from 'react'
     return classes.filter(Boolean).join(' ')
   }
 
-  interface AdminProfile {
-    id: string,
-    name: string,
-    email: string,
-    admin_role: string,
-  }
+  // interface AdminProfile {
+  //   id: string,
+  //   name: string,
+  //   email: string,
+  //   admin_role: string,
+  // }
   
-function Dashboard() {
-    const [adminProfile] = useState<AdminProfile>()
+  function Dashboard() {
+    // const [adminProfile] = useState<AdminProfile>()
 
     // useEffect(() => {
     //   newBlogAPI.get("/admins/profile").then(response => setAdminProfile(response.data))
@@ -172,8 +172,8 @@ function Dashboard() {
                         <img className="h-10 w-10 rounded-full" alt="" />
                       </div>
                       <div className="ml-3">
-                        <div className="text-base font-medium leading-none text-white">{adminProfile?.name}</div>
-                        <div className="text-sm font-medium leading-none text-gray-400">{adminProfile?.name}</div>
+                        {/* <div className="text-base font-medium leading-none text-white">{adminProfile?.name}</div>
+                        <div className="text-sm font-medium leading-none text-gray-400">{adminProfile?.name}</div> */}
                       </div>
                       <button
                         type="button"
