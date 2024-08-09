@@ -9,7 +9,7 @@ import Text from '@tiptap/extension-text'
 import { EditorContent, useEditor, BubbleMenu, FloatingMenu } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 
-import "../assets/css/tiptap.css"
+import "../../assets/css/tiptap.css"
 
 import { FaBold, FaItalic, FaStrikethrough  } from "react-icons/fa";
 import { MdKeyboardArrowLeft } from "react-icons/md";
