@@ -10,5 +10,8 @@ export default defineConfig({
     alias: {
       $fonts: resolve('./src/assets/fonts')
     }
+  },
+  build: {
+    chunkSizeWarningLimit: 2000
   }
 })
