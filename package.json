@@ -12,8 +12,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@tiptap-pro/extension-file-handler": "^2.10.9",
-    "@tiptap-pro/extension-unique-id": "^2.10.9",
     "@tiptap/extension-character-count": "^2.5.9",
     "@tiptap/extension-floating-menu": "^2.5.9",
     "@tiptap/extension-image": "^2.5.8",
@@ -26,6 +24,7 @@
     "prettier": "^3.2.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-horizontal-scrolling-menu": "^7.1.1",
     "react-icons": "^5.2.1",
     "react-router-dom": "^6.2.1",
     "swiper": "^11.1.3",

@@ -1,5 +1,0 @@
-npmScopes:
- "@tiptap-pro":
-   npmAlwaysAuth: true
-   npmRegistryServer: "https://registry.tiptap.dev/"
-   npmAuthToken: "OeyEVyygtNnjmAq4eK9GBZFCaNmvaEWwlhYLihe9lAzp+QVLcyaVfdtgp8UvnE1F"
