@@ -5,7 +5,7 @@ const oldBlogAPI = axios.create({
 })
 
 const newBlogAPI = axios.create({
-    baseURL: "https://jellyfish-app-jfntd.ondigitalocean.app/modacad-back-end2"
+    baseURL: "https://api-modacad-72uqj.ondigitalocean.app/"
 })
 
 export  {newBlogAPI, oldBlogAPI}
