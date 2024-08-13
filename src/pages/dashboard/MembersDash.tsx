@@ -10,7 +10,7 @@ import {
   } from '@headlessui/react'
   import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useState } from 'react'
-// import { newBlogAPI } from '../lib/axios'
+// import { api } from '../lib/axios'
 
   const navigation = [
     { name: 'Dashboard', href: '/dash', current: true },
@@ -38,7 +38,7 @@ import { useState } from 'react'
     const [adminProfile] = useState<AdminProfile>()
 
     // useEffect(() => {
-    //   newBlogAPI.get("/admins/profile").then(response => setAdminProfile(response.data))
+    //   api.get("/admins/profile").then(response => setAdminProfile(response.data))
     // }, [])
 
     return (

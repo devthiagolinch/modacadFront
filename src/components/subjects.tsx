@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { newBlogAPI } from "../lib/axios"
+import { api } from "../lib/axios"
 
 interface Subjects {
     id: string,
@@ -11,7 +11,7 @@ export function Subjects() {
     
 
     useEffect(() => {
-      newBlogAPI.get('/subjects').then(response => setSubjects(response.data))
+      api.get('/subjects').then(response => setSubjects(response.data))
     }, [])
 
     return (

@@ -4,7 +4,7 @@ import banner from "../assets/imgs/camila.jpg"
 import { Button } from "../components/Button";
 import { useEffect, useState } from "react";
 
-import { newBlogAPI } from "../lib/axios";
+import { api } from "../lib/axios";
 
 interface Subjects {
     id: string,
@@ -19,7 +19,7 @@ export function BlanckPage() {
     
 
     useEffect(() => {
-      newBlogAPI.get('/subjects').then(response => setSubjects(response.data))
+      api.get('/subjects').then(response => setSubjects(response.data))
     }, [])
 
     return(

@@ -11,12 +11,27 @@ import { A11y, Navigation, Pagination, Scrollbar } from "swiper/modules";
 /* import { RxArrowTopRight } from "react-icons/rx"; */
 import { ServiceData } from "../assets/utils/constants.index";
 import { TextoMocadCard } from "./cards/textoModacadCard";
+import { useEffect, useState } from "react";
+import { api } from "../lib/axios";
 
 interface TextScrollInterface {
   title: string
 }
 
+interface Post {
+  id: string,
+  backgroundImage: string,
+  title: string,
+  description: string,
+  tags: string[]
+}
+
 export function ScrollTextosMaisLidos({title}: TextScrollInterface) {
+  const [cards, setCards] = useState<Post[]>([]);
+
+  useEffect(() => {
+    api.get("/textos").then(response => setCards(response.data))
+  }, [])
   
   return (
     
@@ -28,7 +43,7 @@ export function ScrollTextosMaisLidos({title}: TextScrollInterface) {
         </Link>
       </div>
 
-      <div className="flex items-center flex-col  h-auto w-auto">
+      <div className="flex items-center flex-col  h-auto w-auto lg:min-w-[97.1%]">
         <Swiper
           modules={[Navigation, Pagination, Scrollbar, A11y]}
           spaceBetween={97}
@@ -39,19 +54,19 @@ export function ScrollTextosMaisLidos({title}: TextScrollInterface) {
           onSlideChange={() => console.log('slide change')}
           className="lg:max-w-[1400px] -ml-[1px] h-[100%]"
         >
-          {ServiceData.map((item) => (
+          {cards.map((item) => (
               
             <SwiperSlide key={item.id}>
 
               <Link to={`/texto/${item.id}`} >
-                <TextoMocadCard id={item.id} banner={item.backgroundImage} title={item.title} description={item.description} tags={item.tag}  />
+                <TextoMocadCard id={item.id} banner={item.backgroundImage} title={item.title} description={item.description} tags={item.tags}  />
               </Link>
             </SwiperSlide>
           ))}
           <SwiperSlide key={"01940914"}>
             <Link to={`/textospublicados/`} >
 
-              <div className="w-[300px] lg:w-[500px] h-full border-[1px] border-[#202020]">
+              <div className="w-[350px] lg:w-[550px] h-full border-[1px] border-[#202020]">
                 <div className=" border-b-[1px] border-[#202020]">
                   <img src="src\assets\imgs\unsplash.jpg" alt="" className="h-[150px] lg:h-[250px] w-full object-cover object-top" />
                 </div>
