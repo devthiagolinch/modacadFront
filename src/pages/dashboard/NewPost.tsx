@@ -1,38 +1,63 @@
 import CharacterCount from '@tiptap/extension-character-count'
+import Blockquote from '@tiptap/extension-blockquote'
 import Placeholder from '@tiptap/extension-placeholder'
 import Document from '@tiptap/extension-document'
 import Dropcursor from '@tiptap/extension-dropcursor'
-// import FileHandler from '@tiptap-pro/extension-file-handler'
 import Image from '@tiptap/extension-image'
+import Heading from '@tiptap/extension-heading'
 import Paragraph from '@tiptap/extension-paragraph'
+import Table from '@tiptap/extension-table'
+import TableCell from '@tiptap/extension-table-cell'
+import TableHeader from '@tiptap/extension-table-header'
+import TableRow from '@tiptap/extension-table-row'
 import Text from '@tiptap/extension-text'
 import { EditorContent, useEditor, BubbleMenu, FloatingMenu } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 
-import "../../assets/css/tiptap.css"
+import "../../assets/css/tiptap.css";
+import imageBanner from "../../assets/imgs/model.jpg"
 
 import { FaBold, FaItalic, FaStrikethrough  } from "react-icons/fa";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 
 import { LuPanelRightOpen } from 'react-icons/lu'
+import { useState } from 'react'
 
 
 function NewPost() {
+    const [editorContent, setEditorContent] = useState("");
+
+    
 
     const limit = 2000
 
     const editor = useEditor({
-        extensions: [StarterKit, Document, Paragraph, Text, Image, Dropcursor,
+        extensions: [StarterKit, Document, Paragraph, Text, Image, Dropcursor, Blockquote, TableRow,
+            TableHeader,
+            TableCell,
             CharacterCount.configure({
                 limit,
             }),
+            Blockquote.configure({
+                HTMLAttributes: {
+                  class: 'blockquote',
+                },
+              }),
+              Heading.configure({
+                levels: [1, 2, 3],
+              }),
+              Heading.configure({
+                HTMLAttributes: {
+                  class: 'my-custom-class',
+                },
+              }),              
             Placeholder.configure({
                 placeholder: ({ node }) => {
                     if (node.type.name === 'heading') {
                       return 'What’s the title?'
                     }
                 
-                    return 'Escreva aqui a proxima canetada da Thelma Barcellos.... (ksksksks)'
+                    return 'Escreva aqui a proxima canetada da Thelma Barcellos...'
                   },                
                 emptyEditorClass: 'is-editor-empty',
 
@@ -41,49 +66,20 @@ function NewPost() {
                 inline: true,
                 allowBase64: true,
             }),
-            // FileHandler.configure({
-            //     allowedMimeTypes: ['image/png', 'image/jpeg', 'image/gif', 'image/webp'],
-            //     onDrop: (currentEditor, files, pos) => {
-            //       files.forEach(file => {
-            //         const fileReader = new FileReader()
-        
-            //         fileReader.readAsDataURL(file)
-            //         fileReader.onload = () => {
-            //           currentEditor.chain().insertContentAt(pos, {
-            //             type: 'image',
-            //             attrs: {
-            //               src: fileReader.result,
-            //             },
-            //           }).focus().run()
-            //         }
-            //       })
-            //     },
-            //     onPaste: (currentEditor, files, htmlContent) => {
-            //       files.forEach(file => {
-            //         if (htmlContent) {
-            //           // if there is htmlContent, stop manual insertion & let other extensions handle insertion via inputRule
-            //           // you could extract the pasted file from this url string and upload it to a server for example
-            //           console.log(htmlContent) // eslint-disable-line no-console
-            //           return false
-            //         }
-        
-            //         const fileReader = new FileReader()
-        
-            //         fileReader.readAsDataURL(file)
-            //         fileReader.onload = () => {
-            //           currentEditor.chain().insertContentAt(currentEditor.state.selection.anchor, {
-            //             type: 'image',
-            //             attrs: {
-            //               src: fileReader.result,
-            //             },
-            //           }).focus().run()
-            //         }
-            //       })
-            //     },                   
-            // })
+            Table.configure({
+                HTMLAttributes: {
+                  class: 'table',
+                  resizable: true,
+                },
+              }),
+            
                       
         ],
         content: '',
+        onUpdate({ editor }) {
+            setEditorContent(editor.getHTML());
+            console.log(editorContent)
+          },
         editorProps: {
             attributes: {
                 class: 'outline-none'
@@ -97,9 +93,9 @@ function NewPost() {
 
     
     return(
-        <>          
+        <div>          
             <header className='flex items-center justify-between p-10'>
-                <a href="/dashboard">
+                <a href="/">
                     <MdKeyboardArrowLeft className='w-8 h-8 ml-16' />
                 </a>
                 
@@ -108,7 +104,31 @@ function NewPost() {
             </header>
             
 
-                
+            <div className='flex flex-col gap-5 ml-[215px]'>
+                <div className='flex items-center'>
+                    <img src={imageBanner} alt="" className='h-[500px] object-cover' />
+                </div>
+
+                <div className='w-[70%]'>
+                    <input type="text" placeholder='Digite aqui o titulo dessa canetada'
+                        className='w-full mb-[20px] bg-transparent
+                                text-[36px] font-montserratRegular
+                                shadow-sm placeholder-[#7d7d7d] text-left
+                                focus:outline-none
+                                disabled:bg-slate-50 disabled:text-[#202020] disabled:border-slate-200 disabled:shadow-none'
+                    />
+                </div>
+
+                <div>
+                    <input type="text" placeholder='Descrição descreva seu texto em poucas palavras...'
+                        className='w-full mb-[20px] bg-transparent
+                        text-[16px] font-montserratLight
+                        shadow-sm placeholder-[#7d7d7d] text-left
+                        focus:outline-none
+                        disabled:bg-slate-50 disabled:text-[#202020] disabled:border-slate-200 disabled:shadow-none'
+                    />
+                </div>
+            </div>
 
             {editor && 
                 <FloatingMenu 
@@ -163,11 +183,30 @@ function NewPost() {
                     >
                         <FaStrikethrough />
                     </button>
+                    
+                    <button
+                            onClick={() => editor.chain().focus().toggleBlockquote().run()}
+                            className={editor.isActive('blockquote') ? 'is-active' : ''}
+                        >
+                            Toggle blockquote
+                        </button>
+                        <button
+                            onClick={() => editor.chain().focus().setBlockquote().run()}
+                            disabled={!editor.can().setBlockquote()}
+                        >
+                            Set blockquote
+                        </button>
+                        <button
+                            onClick={() => editor.chain().focus().unsetBlockquote().run()}
+                            disabled={!editor.can().unsetBlockquote()}
+                        >
+                            Unset blockquote
+                        </button>
                 </div>
             </BubbleMenu>}
             
             <EditorContent
-                className="max-w-[700px] mx-auto pt-16 prose prose-violet"
+                className="max-w-[70%] mx-auto pt-16 prose"
                 editor={editor}
             />
 
@@ -211,7 +250,7 @@ function NewPost() {
                 </div>
             </div>
             
-        </>
+        </div>
     )
 }
 
