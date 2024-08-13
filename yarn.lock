@@ -661,6 +661,11 @@
   resolved "https://registry.npmjs.org/@tanstack/virtual-core/-/virtual-core-3.8.4.tgz#0ff84b6a0e4b394335cf7ccf759c36b58cbd02eb"
   integrity sha512-iO5Ujgw3O1yIxWDe9FgUPNkGjyT657b1WNX52u+Wv1DyBFEpdCdGkuVaky0M3hHFqNWjAmHWTn4wgj9rTr7ZQg==
 
+"@tiptap-pro/extension-file-handler@^2.10.11":
+  version "2.10.11"
+  resolved "https://registry.tiptap.dev/@tiptap-pro%2fextension-file-handler/-/extension-file-handler-2.10.11.tgz#e45f63094b045f7048c5e31d1f0e96bc595133de"
+  integrity sha512-r1mvAhS1+lOkF2gg9YWNsJTU2cx1Ul8If3f/mhPo+d1k90EYLqns3tlrtM5YF89pYpMeqHeUSgcli9ObzmrwqQ==
+
 "@tiptap/core@^2.5.9":
   version "2.5.9"
   resolved "https://registry.npmjs.org/@tiptap/core/-/core-2.5.9.tgz#1deb0b7c748e24ec32613263e0af8d55a3b3c2ca"
@@ -779,6 +784,26 @@
   version "2.5.9"
   resolved "https://registry.npmjs.org/@tiptap/extension-strike/-/extension-strike-2.5.9.tgz#f2d54161d24ee37dc8a41b5077c553048ed69f99"
   integrity sha512-QezkOZpczpl09S8lp5JL7sRkwREoPY16Y/lTvBcFKm3TZbVzYZZ/KwS0zpwK9HXTfXr8os4L9AGjQf0tHonX+w==
+
+"@tiptap/extension-table-cell@^2.5.9":
+  version "2.5.9"
+  resolved "https://registry.npmjs.org/@tiptap/extension-table-cell/-/extension-table-cell-2.5.9.tgz#dffcd23cb11d3ca1239c7290297c9caf0d3b8434"
+  integrity sha512-83zg+d8iY7FLZDC2qJVvHFEIwqB9e/zGPyfRMglYH7YxHeJSycG2K969DQhwkSq+z0PhHEO2XHDcD9aFnXRQNQ==
+
+"@tiptap/extension-table-header@^2.5.9":
+  version "2.5.9"
+  resolved "https://registry.npmjs.org/@tiptap/extension-table-header/-/extension-table-header-2.5.9.tgz#405da76163ec4899b1d6b81f2fbbdb7c0f71bf59"
+  integrity sha512-+FKfxpEO8RnsHUhcWFeSpsI3ZRaDtgcX2c4kBBXZGJBMWHxw71VK9gkRM+JtxCl70hNyZR13qpOw1RmByf2kdw==
+
+"@tiptap/extension-table-row@^2.5.9":
+  version "2.5.9"
+  resolved "https://registry.npmjs.org/@tiptap/extension-table-row/-/extension-table-row-2.5.9.tgz#62e5e329b38daf6142b39d7c17de045dfc6918be"
+  integrity sha512-VPmkzraT9m7g2/88qsTF9EQdFvkcwhvOD+WWZTflN92LMsRHddJt3peJ/fpuf0QKnwwn5qIB3fXWja4VcZe3wQ==
+
+"@tiptap/extension-table@^2.5.9":
+  version "2.5.9"
+  resolved "https://registry.npmjs.org/@tiptap/extension-table/-/extension-table-2.5.9.tgz#a7b80a668a683c3abe59725812091123b2c12b88"
+  integrity sha512-kLZdYBO0Ug4sNjzyDfa3W29qL4HdRK/IaMxcmcEbyKSt42qiMJlIelbGzVENzxe9AbcNTeiWje70Nhk4dbb8Ag==
 
 "@tiptap/extension-text@^2.5.9":
   version "2.5.9"
