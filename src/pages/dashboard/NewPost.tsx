@@ -206,7 +206,7 @@ function NewPost() {
             </BubbleMenu>}
             
             <EditorContent
-                className="max-w-[70%] mx-auto pt-16 prose"
+                className="xl:min-w-[70%] xl:max-w-[80%] mx-auto pt-16 prose"
                 editor={editor}
             />
 
