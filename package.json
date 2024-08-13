@@ -12,7 +12,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@tiptap-pro/extension-file-handler": "^2.10.11",
     "@tiptap/extension-blockquote": "^2.5.9",
     "@tiptap/extension-character-count": "^2.5.9",
     "@tiptap/extension-floating-menu": "^2.5.9",
