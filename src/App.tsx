@@ -28,10 +28,10 @@ function App() {
       <Route path="/pilulas/:pilulaId" element={<PilulasMCD />} />
       <Route path="/textosmodacad" element={<PublishText/>} />
       <Route path="/texto/:textId" element={<TextosModacad/>} />
-      <Route path="/planos/" element={<PlanosMDC/>} />
-      <Route path="/dashboard/" element={<Dashboard/>} />
-      <Route path="/dashboard/members/" element={<MembersDashboard />} />
-      <Route path="/dashboard/new-post/" element={<NewPost/>}/>
+      <Route path="/planos" element={<PlanosMDC/>} />
+      <Route path="/dashboard" element={<Dashboard/>} />
+      <Route path="/dashboard/members" element={<MembersDashboard />} />
+      <Route path="/dashboard/new-post" element={<NewPost/>}/>
       <Route path="/admin-login" element={<AdminLoginPage />} />
       
       <Route path="/blank" element={<BlanckPage/>} />

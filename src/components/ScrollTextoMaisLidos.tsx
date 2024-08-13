@@ -43,7 +43,7 @@ export function ScrollTextosMaisLidos({title}: TextScrollInterface) {
               
             <SwiperSlide key={item.id}>
 
-              <Link to={`/textomodacad/${item.id}`} >
+              <Link to={`/texto/${item.id}`} >
                 <TextoMocadCard id={item.id} banner={item.backgroundImage} title={item.title} description={item.description} tags={item.tag}  />
               </Link>
             </SwiperSlide>
