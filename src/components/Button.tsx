@@ -5,14 +5,14 @@ interface buttonInterface {
     title: string
     active: Boolean
     link?: string
-    ga_label: string
+    // ga_label: string
 }
 // fonte sera montserrat
 export function Button(props: buttonInterface) {
     ReactGA.event({
         category: 'Button',
         action: 'Click',
-        label: props.ga_label
+        // label: props.ga_label
       });
 
     if(props.active === true){
