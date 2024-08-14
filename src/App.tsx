@@ -1,7 +1,7 @@
 
 import "./index.css"
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import ReactGA from 'react-ga';
+// import ReactGA from 'react-ga';
 
 import { Home } from "./pages/Home";
 import { PilulasMCD } from "./pages/PilulasMCD";
@@ -21,9 +21,9 @@ import MembersDashboard from "./pages/dashboard/MembersDash";
 
 function App() {
 
-  ReactGA.initialize('G-EJFW6WVLHJ', { debug: true });
+  // ReactGA.initialize('G-EJFW6WVLHJ', { debug: true });
 
-  ReactGA.pageview(window.location.pathname + window.location.search);
+  // ReactGA.pageview(window.location.pathname + window.location.search);
 
   return (
     <BrowserRouter>

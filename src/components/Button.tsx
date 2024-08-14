@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import ReactGA from 'react-ga';
+// import ReactGA from 'react-ga';
 
 interface buttonInterface {
     title: string
@@ -9,11 +9,11 @@ interface buttonInterface {
 }
 // fonte sera montserrat
 export function Button(props: buttonInterface) {
-    ReactGA.event({
-        category: 'Button',
-        action: 'Click',
-        // label: props.ga_label
-      });
+    // ReactGA.event({
+    //     category: 'Button',
+    //     action: 'Click',
+    //     // label: props.ga_label
+    //   });
 
     if(props.active === true){
         return (
