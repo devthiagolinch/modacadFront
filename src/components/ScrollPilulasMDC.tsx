@@ -7,18 +7,31 @@ import "swiper/css/free-mode";
 import { A11y, Navigation, Pagination, Scrollbar } from "swiper/modules";
 
 /* import { RxArrowTopRight } from "react-icons/rx"; */
-import { ServiceData } from "../assets/utils/constants.index";
 import { Link } from "react-router-dom";
 import { PilulaModacadCard } from "./cards/pilulasModacadCard";
+import { useEffect, useState } from "react";
+import { api } from "../lib/axios";
 
 interface TextScrollInterface {
   title: string
 }
 
+interface Post {
+  id: string,
+  backgroundImage: string,
+  title: string,
+  description: string,
+  tags: string[]
+}
+
 // ARRUMAR AS TAGS DOS CARDS PARA TER MAIS DISTANCIA ENTRE ELES
 
 export function ScrollPiluaMCD({title}: TextScrollInterface) {
-  const cards = ServiceData.filter((t) => t.type == "pilulas")
+  const [cards, setCards] = useState<Post[]>([]);
+
+  useEffect(() => {
+    api.get("/textos").then(response => setCards(response.data))
+  }, [])
   
   return (
     
@@ -46,7 +59,7 @@ export function ScrollPiluaMCD({title}: TextScrollInterface) {
             <SwiperSlide key={item.id}>
 
               <Link to={`/pilulas/${item.id}`} >
-                <PilulaModacadCard banner={item.backgroundImage} description={item.description} tags={item.tag} title={item.title} id={item.id} />
+                <PilulaModacadCard banner={item.backgroundImage} description={item.description} tags={item.tags} title={item.title} id={item.id} />
               </Link>
 
             </SwiperSlide>

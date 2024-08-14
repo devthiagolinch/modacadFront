@@ -4,9 +4,25 @@ import { Header } from "../components/header";
 import { Button } from "../components/Button";
 
 import checkListIcon from "../assets/icons/check-mark.svg";
+import { useEffect, useState } from "react";
+import { api } from "../lib/axios";
 
+interface Planos {
+    id: string;
+    title: string;
+    description: string;
+    topics: string[];
+    price: string;
+
+}
 
 export function PlanosMDC() {
+    const [plan, setPlan] = useState<Planos>();
+
+    useEffect(() => {
+        api.get("/planos").then(response => setPlan(response.data))
+    })
+    console.log(plan)
     
     return(
         <div>

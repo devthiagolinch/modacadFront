@@ -9,7 +9,6 @@ import "swiper/css/free-mode";
 import { A11y, Navigation, Pagination, Scrollbar } from "swiper/modules";
 
 /* import { RxArrowTopRight } from "react-icons/rx"; */
-import { ServiceData } from "../assets/utils/constants.index";
 import { TextoMocadCard } from "./cards/textoModacadCard";
 import { useEffect, useState } from "react";
 import { api } from "../lib/axios";
