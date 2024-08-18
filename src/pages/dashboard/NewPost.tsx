@@ -95,7 +95,7 @@ function NewPost() {
     return(
         <div>          
             <header className='flex items-center justify-between p-10'>
-                <a href="/">
+                <a href="/dashboard/profile">
                     <MdKeyboardArrowLeft className='w-8 h-8 ml-16' />
                 </a>
                 

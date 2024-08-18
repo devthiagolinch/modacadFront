@@ -2,6 +2,7 @@ import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { api } from "../lib/axios";
+import { login } from "../lib/auth";
 
 export type Admin = {
     name: string;
@@ -11,29 +12,30 @@ export type Admin = {
 }
 
 export function AdminLoginPage() {
-
-    let history = useNavigate();
-
-    const [adminEmail, setUserEmail] = useState("")
-    const [adminPassword, setUserPassword] = useState("")
-
-    async function handleLogin(event: FormEvent) {
+   // SETTING API
+   const [adminEmail, setAdminEmail] = useState<Admin | string>()
+   const [adminPassword, setAdminPassword] = useState<Admin | string>()
+    //const [adminId, setAdminId] = useState()
+ 
+   let history = useNavigate()
+ 
+   async function handleLogin(event: FormEvent) {
         event.preventDefault();
-
         const admin = {
-            email: adminEmail,
-            password: adminPassword
+        email: adminEmail,
+        password: adminPassword,
+        }
+    
+        await api.post('/admin-session/sessions', admin).then((response) => {
+        if (!response) {
+            throw new Error('Not Allowed')
         }
 
-        await api.post('/admin-session/sessions', admin).then(response => {
-            if(!response) {
-                throw new Error("Not Allowed")   
-            }
-        
+        login(response.data.token)
 
-            history(`/adminprofile/${response.data}`)
+        history(`/dashboard/profile`)
         })
-    }
+   }
 
 
     return (
@@ -49,8 +51,7 @@ export function AdminLoginPage() {
                         <form action="" method="post" className=" mb-[20px] px-3 min-w-[100%] md:min-w-[50%] md:max-w-[70%]">
                             <input type="email"
                                 placeholder="E-mail"
-                                onChange={event => setUserEmail(event.target.value)} 
-                                value={adminEmail} 
+                                onChange={event => setAdminEmail(event.target.value)}
                                 className="w-full mb-[20px] bg-transparent
                                 text-[16px] font-montserratLight
                                 border-b-[1px] border-slate-900 shadow-sm placeholder-[#202020] text-center
@@ -60,8 +61,8 @@ export function AdminLoginPage() {
                                 focus:invalid:border-pink-500 focus:invalid:ring-pink-500
                             "/>
                             <input type="password"
-                                onChange={event => setUserPassword(event.target.value)}
-                                value={adminPassword} placeholder="Senha" className="w-full mb-[20px] bg-transparent
+                                onChange={event => setAdminPassword(event.target.value)}
+                                placeholder="Senha" className="w-full mb-[20px] bg-transparent
                                 text-[16px] font-montserratLight
                                 border-b-[1px] border-slate-900 shadow-sm placeholder-[#202020] text-center
                                 focus:outline-none

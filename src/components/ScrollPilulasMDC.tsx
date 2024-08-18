@@ -30,8 +30,10 @@ export function ScrollPiluaMCD({title}: TextScrollInterface) {
   const [cards, setCards] = useState<Post[]>([]);
 
   useEffect(() => {
-    api.get("/textos").then(response => setCards(response.data))
+    api.get("/subjects").then((response) => setCards(response.data))
   }, [])
+
+  console.log(cards)
   
   return (
     
