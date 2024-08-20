@@ -9,14 +9,13 @@ import {
     Transition,
   } from '@headlessui/react'
   import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
 import { api } from '../../lib/axios'
+import { useEffect, useState } from 'react'
 
   const navigation = [
     { name: 'Dashboard', href: '/dashboard', current: true },
     { name: 'New Post', href: '/dashboard/new-post', current: false },
-    { name: 'Membros', href: '/dashboard/members', current: false },
+    // { name: 'Membros', href: '/dashboard/members', current: false },
   ]
   const adminNavigation = [
     { name: 'Your Profile', href: '#' },
@@ -34,17 +33,40 @@ import { api } from '../../lib/axios'
     email: string,
     admin_role: string,
   }
+
+  interface Users {
+    name: string,
+    email: string,
+    admin_role: string
+  }
+
+  interface Post {
+    id: string,
+    title: string,
+    slug: string,
+    admin_id: string,
+    status: string,
+    visibility: string
+  }
   
-  export default function Dashboard() {
-    const {id} = useParams()
+function Dashboard() {
+    //const {id} = useParams()
     const [admin, setAdmin] = useState<Admin>();
+    const [users, setUsers] = useState<Users[]>([])
+    const [listAdmin, setListAdmin] = useState<Admin[]>([])
+    const [textos, setTextos] = useState<Post[]>([])
   
     useEffect(() => {
-          api.get(`/admins/profile`).then(({data}) => {
-            setAdmin(data)
-          });
+      api.get(`/admins/profile`).then(({data}) => {
+        setAdmin(data)
+      })      
+      api.get("/post/textos").then(response => setTextos(response.data))
+      
+      api.get("/admins/members").then(response => setUsers(response.data))
+      
+      api.get("/admins/admins-list").then(({data}) => setListAdmin(data))
   
-    }, [id])
+    }, [])
 
     return (
       <>
@@ -97,7 +119,7 @@ import { api } from '../../lib/axios'
                           className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                         >
                           <span className="absolute -inset-1.5" />
-                          <span className="sr-only">View notifications</span>
+                          <span className="sr-only">{admin?.name}</span>
                           <BellIcon className="h-6 w-6" aria-hidden="true" />
                         </button>
   
@@ -209,13 +231,68 @@ import { api } from '../../lib/axios'
   
           <header className="bg-white shadow">
             <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-              <h1 className="text-3xl font-bold tracking-tight text-gray-900">Modacad {admin?.name}</h1>
+              <h1 className="text-3xl font-bold tracking-tight text-gray-900">Olá, {admin?.name}</h1>
             </div>
           </header>
-          <main>
+          <main className='flex gap-2 justify-center p-5'>
+
+            <div className='flex flex-col gap-5 justify-center items-center'>
+              <div className='border-[1px] border-zinc-400 rounded-md'>
+                <div className='bg-zinc-400 p-1'>
+                  <p className='text-[24px] leading-none'>Membros Totais</p>
+                </div>
+                <div className='flex justify-center items-center'>
+                  <span>{users.length}</span>
+                </div>
+              </div>
+
+              <div className='border-[1px] border-zinc-400 rounded-md'>
+                <div className='bg-zinc-400 p-1'>
+                  <p className='text-[24px] leading-none'>Membros Totais</p>
+                </div>
+                <div className='flex justify-center items-center'>
+                  <span>{listAdmin.length}</span>
+                </div>
+              </div>
+
+              <div className='border-[1px] border-zinc-400 rounded-md'>
+                <div className='bg-zinc-400 p-1'>
+                  <p className='text-[24px] leading-none'>Membros Totais</p>
+                </div>
+                <div className='flex justify-center items-center'>
+                  <span>{textos.length}</span>
+                </div>
+              </div>
+            </div>
+
+            <div className='w-[30%] justify-center p-2 flex'>
+              <div>
+                <h1 className='font-montserratMedium'> Textos Publicados</h1>
+                <ul className='flex flex-col'>
+                  {
+                    textos.map(t => {
+                      return (
+                        <li >
+                          <a rel="stylesheet" href={`/dashboard/profile/post-editor/${t.id}`} className='flex gap-5  text-zinc-950 cursor-pointer '>
+                            <div>
+                              {t.title}
+                            </div>
+                            <div className=''>
+                              {t.visibility}
+                            </div>
+                          </a>
+                        </li>
+                      )
+                    })
+                  }
+                </ul>
+              </div>
+            </div>
+
           </main>
         </div>
       </>
     )
   }
   
+  export { Dashboard }

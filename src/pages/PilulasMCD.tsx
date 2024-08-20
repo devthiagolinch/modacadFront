@@ -3,14 +3,16 @@ import { Header } from "../components/header";
 
 
 import { BlockText } from "../components/blocktext";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { CriarPerfil } from "../components/criarPerfil";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { api } from "../lib/axios";
 
-interface Pilula {
+interface Post {
     id: string;
+    html: string;
     title: string;
-    description: string;
+    slug: string;
     tags: string[];
     feature_image: string;
     visibility: string;
@@ -20,12 +22,17 @@ interface Pilula {
 }
 
 export function PilulasMCD() {
-    const params = useParams<{pilulaId: string}>();
-    const [pilula, setPilula] = useState<Pilula>();
-    
-    const show = ""
+    const id = useParams<{id: string}>()
+    const [pilula, setPilula] = useState<Post>();
 
-    if(!show) {
+    useEffect(() => {
+        ;(async () => {
+            await api.get(`/admins/texto/${id.id}`).then(({data}) => setPilula(data))
+        })()
+    }, [pilula]);
+    console.log(pilula?.title)
+
+    if(pilula?.visibility == "Pro") {
         return(
             <div className="overflow-hidden block">
                 <CriarPerfil />
@@ -49,7 +56,7 @@ export function PilulasMCD() {
                                 </h1>
 
                                 <p className="lg:text-left lg:text-[20px] w-[100%] font-montserratLight">
-                                    {pilula?.description}
+                                    {pilula?.slug}
                                 </p>
                         </div>
 
@@ -58,8 +65,8 @@ export function PilulasMCD() {
 
                     <div className="lg:flex lg:w-full lg:justify-between lg:px-[20%]">
                         <div className="lg:flex lg:p-5 lg:gap-5 lg:items-center lg:justify-start">
-                            <img src={pilula?.authorAvatar} alt="" className="w-14 h-14 rounded-full flex items-center justify-center bg-black" />
-                            <p className="lg:-ml-3 lg:text-[20px] lg:font-montserratMedium tracking-[0.05em]">{pilula?.author}</p>
+                            <img src={pilula?.admin_id} alt="" className="w-14 h-14 rounded-full flex items-center justify-center bg-black" />
+                            <p className="lg:-ml-3 lg:text-[20px] lg:font-montserratMedium tracking-[0.05em]">{pilula?.admin_id}</p>
                         </div>
 
                         <div className="lg:flex lg:flex-row lg:justify-center lg:items-center text-zinc-800">
@@ -76,7 +83,7 @@ export function PilulasMCD() {
                     <div className="flex w-full justify-center items-center bg-contain bg-center">
                         <div className="w-[280px] h-[280px] border-[1px] border-[#f1ece8] absolute ">
                         </div>
-                        <img src={pilula?.backgroundImage}    className="w-[300px] h-[300px] object-cover " />
+                        <img src={''}    className="w-[300px] h-[300px] object-cover " />
                     </div>
                     
                 </div>
@@ -89,7 +96,7 @@ export function PilulasMCD() {
                         </h1>
 
                         <p className="text-left leading-[20px] font-montserratLight">
-                            {pilula?.description}
+                            {pilula?.slug}
                         </p>
                     </div>
 
@@ -98,23 +105,23 @@ export function PilulasMCD() {
                         <div className="flex justify-center items-center">
                             <div className="w-[220px] h-[220px] border-[1px] border-[#f1ece8] absolute ">
                             </div>
-                            <img src={pilula?.backgroundImage} alt="" className="min-h-60 max-h-60 max-w-60
+                            <img src={''} alt="" className="min-h-60 max-h-60 max-w-60
                                 border-[1px] border-inherit border-white
                                 object-cover
                             " />
                         </div>
 
                         <div className="flex p-5 gap-[10px] items-center">
-                            <img src={pilula?.authorAvatar} alt="" className="w-[50px] h-[50px] rounded-full flex items-center justify-center bg-black" />
-                            <p className="text-[20px]">{pilula?.author}</p>
+                            <img src={pilula?.admin_id} alt="" className="w-[50px] h-[50px] rounded-full flex items-center justify-center bg-black" />
+                            <p className="text-[20px]">{pilula?.admin_id}</p>
                         </div>
 
                         <div className="flex justify-between items-start align-top gap-10 px-5 mb-[20px] text-zinc-800">
-                            <div className="flex flex-col font-montserrat_light_italic">
+                            {/* <div className="flex flex-col font-montserrat_light_italic">
                                 {pilula?.tags.map((tag) => (
                                     <Link to={"/"} className="-mb-[5px]">{tags.toUpperCase()}</Link>
                                 ))}
-                            </div>
+                            </div> */}
 
                             <div className="flex flex-col justify-between items-end">
                                 <p className="text-left -mb-[5px]">4/04/2025</p>
@@ -129,7 +136,7 @@ export function PilulasMCD() {
 
                 <div className="lg:pt-12 lg:px-[20%] mb-[40px] mx-[20px]  ">
                     <p className="lg:text-justify lg:text-lg font-montserrat_light">
-                        {pilula?.text}
+                        {pilula?.html}
                     </p>
 
                 </div>
@@ -147,9 +154,9 @@ export function PilulasMCD() {
                     <div className="lg:flex  lg:pb-5 2xl:gap-[14.5%] lg:gap-[12%] lg:justify-between">
                         {/** tentar subir um pouco as tags para ficar alinhado com a descrição */}
                         <div className="lg:flex lg:pl-[55px] lg:flex-row lg:align-middle lg:items-end lg:w-auto">
-                            {pilula?.tags.map((tag) => (
+                            {/* {pilula?.tags.map((tag) => (
                                 <span className=" w-[22px] lg:transform: -rotate-90 text-nowrap">{tags.toUpperCase()}</span>
-                            ))}
+                            ))} */}
                         </div>
                         <div className="lg:flex lg:flex-col lg:pr-[20%] ">
                                 <h1 className="lg:text-7xl lg:font-butler_ultra_light lg:my-14 lg:mb-[30px] lg:leading-[80px]  ">
@@ -157,7 +164,7 @@ export function PilulasMCD() {
                                 </h1>
 
                                 <p className="lg:text-left lg:text-[20px] w-[100%] font-montserratLight">
-                                    {pilula?.description}
+                                    {pilula?.slug}
                                 </p>
                         </div>
 
@@ -166,8 +173,8 @@ export function PilulasMCD() {
 
                     <div className="lg:flex lg:w-full lg:justify-between lg:px-[20%]">
                         <div className="lg:flex lg:p-5 lg:gap-5 lg:items-center lg:justify-start">
-                            <img src={pilula?.authorAvatar} alt="" className="w-14 h-14 rounded-full flex items-center justify-center bg-black" />
-                            <p className="lg:-ml-3 lg:text-[20px] lg:font-montserratMedium tracking-[0.05em]">{pilula?.author}</p>
+                            <img src={pilula?.admin_id} alt="" className="w-14 h-14 rounded-full flex items-center justify-center bg-black" />
+                            <p className="lg:-ml-3 lg:text-[20px] lg:font-montserratMedium tracking-[0.05em]">{pilula?.admin_id}</p>
                         </div>
 
                         <div className="lg:flex lg:flex-row lg:justify-center lg:items-center text-zinc-800">
@@ -184,7 +191,7 @@ export function PilulasMCD() {
                     <div className="flex w-full justify-center items-center bg-contain bg-center">
                         <div className="w-[280px] h-[280px] border-[1px] border-[#f1ece8] absolute ">
                         </div>
-                        <img src={pilula?.backgroundImage}    className="w-[300px] h-[300px] object-cover " />
+                        <img src={''}    className="w-[300px] h-[300px] object-cover " />
                     </div>
                     
                 </div>
@@ -197,7 +204,7 @@ export function PilulasMCD() {
                         </h1>
 
                         <p className="text-left leading-[20px] font-montserratLight">
-                            {pilula?.description}
+                            {pilula?.slug}
                         </p>
                     </div>
 
@@ -206,22 +213,22 @@ export function PilulasMCD() {
                         <div className="flex justify-center items-center">
                             <div className="w-[220px] h-[220px] border-[1px] border-[#f1ece8] absolute ">
                             </div>
-                            <img src={pilula?.backgroundImage} alt="" className="min-h-60 max-h-60 max-w-60
+                            <img src={''} alt="" className="min-h-60 max-h-60 max-w-60
                                 border-[1px] border-inherit border-white
                                 object-cover
                             " />
                         </div>
 
                         <div className="flex p-5 gap-[10px] items-center">
-                            <img src={pilula?.authorAvatar} alt="" className="w-[50px] h-[50px] rounded-full flex items-center justify-center bg-black" />
-                            <p className="text-[20px]">{pilula?.author}</p>
+                            <img src={pilula?.admin_id} alt="" className="w-[50px] h-[50px] rounded-full flex items-center justify-center bg-black" />
+                            <p className="text-[20px]">{pilula?.admin_id}</p>
                         </div>
 
                         <div className="flex justify-between items-start align-top gap-10 px-5 mb-[20px] text-zinc-800">
                             <div className="flex flex-col font-montserrat_light_italic">
-                                {pilula?.tags.map((tag) => (
+                                {/* {pilula?.tags.map((tag) => (
                                     <Link to={"/"} className="-mb-[5px]">{tags.toUpperCase()}</Link>
-                                ))}
+                                ))} */}
                             </div>
 
                             <div className="flex flex-col justify-between items-end">
@@ -237,7 +244,7 @@ export function PilulasMCD() {
 
                 <div className="lg:pt-12 lg:px-[20%] mb-[40px] mx-[20px]  ">
                     <p className="lg:text-justify lg:text-lg font-montserrat_light lg:h-40 h-48 overflow-hidden">
-                        {pilula?.text}
+                        {pilula?.html}
                     </p>
 
                 </div>

@@ -19,11 +19,11 @@ interface Subjects {
 }
 export function Home() {
   const [subjects, setSubjects] = useState<Subjects[]>([])
-    
 
     useEffect(() => {
       api.get('/subjects').then(response => setSubjects(response.data))
     }, [])
+    
   return( 
     <div className="mx-auto h-screen">
       <div className="flex lg:items-center w-[100%] h-[90px] border-b-[1px] border-l-[1px] border-r-[1px] border-[#202020] bg-[#f1ece8]

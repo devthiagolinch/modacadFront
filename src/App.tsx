@@ -16,8 +16,8 @@ import { AdminLoginPage } from "./pages/AdminLogin";
 import { NewPost } from "./pages/dashboard/NewPost";
 
 import { BlanckPage } from "./pages/blank";
-import MembersDashboard from "./pages/dashboard/Dashboard";
-import Dashboard from "./pages/dashboard/Dashboard";
+import {Dashboard} from "./pages/dashboard/Dashboard";
+import { UpdatePost } from "./pages/dashboard/AtualizarPost";
 
 function App() {
 
@@ -36,7 +36,7 @@ function App() {
       <Route path="/texto/:textId" element={<TextosModacad/>} />
       <Route path="/planos" element={<PlanosMDC/>} />
       <Route path="/dashboard/profile" element={<Dashboard/>} />
-      <Route path="/dashboard/members" element={<MembersDashboard />} />
+      <Route path="/dashboard/profile/post-editor/:id" element={<UpdatePost />} />
       <Route path="/dashboard/new-post" element={<NewPost/>}/>
       <Route path="/admin-login" element={<AdminLoginPage />} />
       

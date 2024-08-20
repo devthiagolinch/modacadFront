@@ -17,11 +17,16 @@ interface TextScrollInterface {
 }
 
 interface Post {
-  id: string,
-  backgroundImage: string,
-  title: string,
-  description: string,
-  tags: string[]
+  id: string;
+  html: string;
+  title: string;
+  slug: string;
+  tags: string[];
+  feature_image: string;
+  visibility: string;
+  type: string;
+  plaintext: string;
+  admin_id: string
 }
 
 // ARRUMAR AS TAGS DOS CARDS PARA TER MAIS DISTANCIA ENTRE ELES
@@ -30,10 +35,8 @@ export function ScrollPiluaMCD({title}: TextScrollInterface) {
   const [cards, setCards] = useState<Post[]>([]);
 
   useEffect(() => {
-    api.get("/subjects").then((response) => setCards(response.data))
+    api.get("/post/pilulas").then((response) => setCards(response.data))
   }, [])
-
-  console.log(cards)
   
   return (
     
@@ -61,7 +64,7 @@ export function ScrollPiluaMCD({title}: TextScrollInterface) {
             <SwiperSlide key={item.id}>
 
               <Link to={`/pilulas/${item.id}`} >
-                <PilulaModacadCard banner={item.backgroundImage} description={item.description} tags={item.tags} title={item.title} id={item.id} />
+                <PilulaModacadCard banner={item.id} description={item.slug} tags={item.tags} title={item.title} id={item.id} />
               </Link>
 
             </SwiperSlide>

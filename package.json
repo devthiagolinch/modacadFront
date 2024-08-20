@@ -12,6 +12,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ffmpeg/ffmpeg": "^0.12.10",
     "@tiptap/extension-blockquote": "^2.5.9",
     "@tiptap/extension-character-count": "^2.5.9",
     "@tiptap/extension-floating-menu": "^2.5.9",
@@ -26,6 +27,7 @@
     "@tiptap/react": "^2.5.8",
     "@tiptap/starter-kit": "^2.5.8",
     "axios": "^1.7.2",
+    "bootstrap": "4.6.2",
     "lucide-react": "^0.364.0",
     "prettier": "^3.2.5",
     "react": "^18.2.0",

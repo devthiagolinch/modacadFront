@@ -4,7 +4,8 @@ import { LOCAL_STORAGE_KEY__ACCESS_TOKEN } from './auth'
 const api = axios.create({
     baseURL: "https://api-modacad-72uqj.ondigitalocean.app/",
     headers: {
-        Authorization: `Bearer ${JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY__ACCESS_TOKEN) || '""')}`
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY__ACCESS_TOKEN) || '""')}`,
+        "Content-type": "application/json",
     }
 
     // salvar o token no localStorage,
