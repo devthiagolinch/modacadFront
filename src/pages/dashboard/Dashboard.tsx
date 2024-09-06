@@ -11,6 +11,7 @@ import {
   import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { api } from '../../lib/axios'
 import { useEffect, useState } from 'react'
+import { logout } from '../../lib/auth'
 
   const navigation = [
     { name: 'Dashboard', href: '/dashboard', current: true },
@@ -18,9 +19,7 @@ import { useEffect, useState } from 'react'
     // { name: 'Membros', href: '/dashboard/members', current: false },
   ]
   const adminNavigation = [
-    { name: 'Your Profile', href: '#' },
-    { name: 'Settings', href: '#' },
-    { name: 'Sign out', href: '#' },
+    { name: 'Sair', onClick: () => logout()},
   ]
   
   function classNames(...classes: string[]) {
@@ -141,21 +140,21 @@ function Dashboard() {
                             leaveTo="transform opacity-0 scale-95"
                           >
                             <MenuItems className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                              {adminNavigation.map((item) => (
-                                <MenuItem key={item.name}>
-                                  {({ focus }) => (
-                                    <a
-                                      href={item.href}
+                                {adminNavigation.map((item) => (
+                                  <MenuItem key={item.name}>
+                                    {({ active }) => (
+                                    <button
+                                      onClick={item.onClick}
                                       className={classNames(
-                                        focus ? 'bg-gray-100' : '',
-                                        'block px-4 py-2 text-sm text-gray-700',
+                                      active ? 'bg-gray-100' : '',
+                                      'block px-4 py-2 text-sm text-gray-700',
                                       )}
                                     >
                                       {item.name}
-                                    </a>
-                                  )}
-                                </MenuItem>
-                              ))}
+                                    </button>
+                                    )}
+                                  </MenuItem>
+                                ))}
                             </MenuItems>
                           </Transition>
                         </Menu>
@@ -215,8 +214,7 @@ function Dashboard() {
                       {adminNavigation.map((item) => (
                         <DisclosureButton
                           key={item.name}
-                          as="a"
-                          href={item.href}
+                          onClick={item.onClick}
                           className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
                         >
                           {item.name}
