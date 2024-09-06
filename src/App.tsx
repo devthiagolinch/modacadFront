@@ -1,6 +1,6 @@
 
 import "./index.css"
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, RouteProps, Routes } from 'react-router-dom';
 // import ReactGA from 'react-ga';
 
 import { Home } from "./pages/Home";
@@ -19,6 +19,20 @@ import { BlanckPage } from "./pages/blank";
 import {Dashboard} from "./pages/dashboard/Dashboard";
 import { UpdatePost } from "./pages/dashboard/AtualizarPost";
 
+type TPrivateRouteProps = RouteProps & {
+  element: React.ReactNode;
+};
+
+const PrivateRoute: React.FC<TPrivateRouteProps> = ({ element }) => {
+  const isAuthenticated = true;
+
+  return isAuthenticated ? (
+    element
+  ) : (
+    <Navigate to="/admin-login" />
+  )
+}
+
 function App() {
 
   // ReactGA.initialize('G-EJFW6WVLHJ', { debug: true });
@@ -28,19 +42,21 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/maislidos" element={<TextosMaisLidos/>} />
-      <Route path="/pilulas" element={<PilulasPublicadas/>} />
-      <Route path="/pilulas/:pilulaId" element={<PilulasMCD />} />
-      <Route path="/textosmodacad" element={<PublishText/>} />
-      <Route path="/texto/:textId" element={<TextosModacad/>} />
-      <Route path="/planos" element={<PlanosMDC/>} />
-      <Route path="/dashboard/profile" element={<Dashboard/>} />
-      <Route path="/dashboard/profile/post-editor/:id" element={<UpdatePost />} />
-      <Route path="/dashboard/new-post" element={<NewPost/>}/>
-      <Route path="/admin-login" element={<AdminLoginPage />} />
-      
-      <Route path="/blank" element={<BlanckPage/>} />
+        <Route path="/" element={<Home />} />
+        <Route path="/maislidos" element={<TextosMaisLidos/>} />
+        <Route path="/pilulas" element={<PilulasPublicadas/>} />
+        <Route path="/pilulas/:pilulaId" element={<PilulasMCD />} />
+        <Route path="/textosmodacad" element={<PublishText/>} />
+        <Route path="/texto/:textId" element={<TextosModacad/>} />
+        <Route path="/planos" element={<PlanosMDC/>} />
+        
+        <Route path="/dashboard/new-post" element={<PrivateRoute element={<NewPost/>} />} />
+        <Route path="dashboard/profile/post-editor/:id" element={<PrivateRoute element={<UpdatePost/>} />} />
+        <Route path="/dashboard/profile" element={<PrivateRoute element={<Dashboard/>} />} />
+        
+        <Route path="/admin-login" element={<AdminLoginPage />} />
+        
+        <Route path="/blank" element={<BlanckPage/>} />
       </Routes>
   </BrowserRouter>
   );
