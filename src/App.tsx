@@ -18,13 +18,14 @@ import { NewPost } from "./pages/dashboard/NewPost";
 import { BlanckPage } from "./pages/blank";
 import {Dashboard} from "./pages/dashboard/Dashboard";
 import { UpdatePost } from "./pages/dashboard/AtualizarPost";
+import { LOCAL_STORAGE_KEY__ACCESS_TOKEN } from "./lib/auth";
 
 type TPrivateRouteProps = RouteProps & {
   element: React.ReactNode;
 };
 
 const PrivateRoute: React.FC<TPrivateRouteProps> = ({ element }) => {
-  const isAuthenticated = true;
+  const isAuthenticated = !!localStorage.getItem(LOCAL_STORAGE_KEY__ACCESS_TOKEN);
 
   return isAuthenticated ? (
     element
