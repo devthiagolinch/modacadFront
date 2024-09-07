@@ -2,7 +2,7 @@ import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { api } from "../lib/axios";
-import { login } from "../lib/auth";
+import { useUser } from "../shared/contexts/UserContext";
 
 export type Admin = {
     name: string;
@@ -12,6 +12,9 @@ export type Admin = {
 }
 
 export function AdminLoginPage() {
+
+    const { login } = useUser();
+
    // SETTING API
    const [adminEmail, setAdminEmail] = useState<Admin | string>()
    const [adminPassword, setAdminPassword] = useState<Admin | string>()
@@ -31,7 +34,9 @@ export function AdminLoginPage() {
             throw new Error('Not Allowed')
         }
 
-        login(response.data.token)
+        const { token, admin } = response.data;
+
+        login(token, admin);
 
         history(`/dashboard/profile`)
         })

@@ -11,50 +11,52 @@ import {
   import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { api } from '../../lib/axios'
 import { useEffect, useState } from 'react'
-
-  const navigation = [
-    { name: 'Dashboard', href: '/dashboard', current: true },
-    { name: 'New Post', href: '/dashboard/new-post', current: false },
-    // { name: 'Membros', href: '/dashboard/members', current: false },
-  ]
-  const adminNavigation = [
-    { name: 'Your Profile', href: '#' },
-    { name: 'Settings', href: '#' },
-    { name: 'Sign out', href: '#' },
-  ]
+import { useUser } from '../../shared/contexts/UserContext';
   
-  function classNames(...classes: string[]) {
-    return classes.filter(Boolean).join(' ')
-  }
+function classNames(...classes: string[]) {
+  return classes.filter(Boolean).join(' ')
+}
 
-  interface Admin {
-    id: string,
-    name: string,
-    email: string,
-    admin_role: string,
-  }
+interface Admin {
+  id: string,
+  name: string,
+  email: string,
+  admin_role: string,
+}
 
-  interface Users {
-    name: string,
-    email: string,
-    admin_role: string
-  }
+interface Users {
+  name: string,
+  email: string,
+  admin_role: string
+}
 
-  interface Post {
-    id: string,
-    title: string,
-    slug: string,
-    admin_id: string,
-    status: string,
-    visibility: string
-  }
+interface Post {
+  id: string,
+  title: string,
+  slug: string,
+  admin_id: string,
+  status: string,
+  visibility: string
+}
   
 function Dashboard() {
+
+    const { user, logout } = useUser();
+
     //const {id} = useParams()
     const [admin, setAdmin] = useState<Admin>();
     const [users, setUsers] = useState<Users[]>([])
     const [listAdmin, setListAdmin] = useState<Admin[]>([])
     const [textos, setTextos] = useState<Post[]>([])
+
+    const navigation = [
+      { name: 'Dashboard', href: '/dashboard', current: true },
+      { name: 'New Post', href: '/dashboard/new-post', current: false },
+      // { name: 'Membros', href: '/dashboard/members', current: false },
+    ]
+    const adminNavigation = [
+      { name: 'Sair', onClick: () => logout()},
+    ]
   
     useEffect(() => {
       api.get(`/admins/profile`).then(({data}) => {
@@ -141,21 +143,21 @@ function Dashboard() {
                             leaveTo="transform opacity-0 scale-95"
                           >
                             <MenuItems className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                              {adminNavigation.map((item) => (
-                                <MenuItem key={item.name}>
-                                  {({ focus }) => (
-                                    <a
-                                      href={item.href}
+                                {adminNavigation.map((item) => (
+                                  <MenuItem key={item.name}>
+                                    {({ active }) => (
+                                    <button
+                                      onClick={item.onClick}
                                       className={classNames(
-                                        focus ? 'bg-gray-100' : '',
-                                        'block px-4 py-2 text-sm text-gray-700',
+                                      active ? 'bg-gray-100' : '',
+                                      'block px-4 py-2 text-sm text-gray-700',
                                       )}
                                     >
                                       {item.name}
-                                    </a>
-                                  )}
-                                </MenuItem>
-                              ))}
+                                    </button>
+                                    )}
+                                  </MenuItem>
+                                ))}
                             </MenuItems>
                           </Transition>
                         </Menu>
@@ -215,8 +217,7 @@ function Dashboard() {
                       {adminNavigation.map((item) => (
                         <DisclosureButton
                           key={item.name}
-                          as="a"
-                          href={item.href}
+                          onClick={item.onClick}
                           className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
                         >
                           {item.name}
@@ -231,7 +232,7 @@ function Dashboard() {
   
           <header className="bg-white shadow">
             <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-              <h1 className="text-3xl font-bold tracking-tight text-gray-900">Olá, {admin?.name}</h1>
+              <h1 className="text-3xl font-bold tracking-tight text-gray-900">Olá, {user?.role}</h1>
             </div>
           </header>
           <main className='flex gap-2 justify-center p-5'>
