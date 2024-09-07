@@ -1,14 +1,17 @@
 import { BrowserRouter } from 'react-router-dom';
 
+import { UserProvider } from './shared/contexts';
 import { AppRoutes } from "./routes/index";
 import "./index.css"
 
 function App() {
 
   return (
-    <BrowserRouter>
-      <AppRoutes />
-    </BrowserRouter>
+    <UserProvider>
+      <BrowserRouter>
+        <AppRoutes />
+      </BrowserRouter>
+    </UserProvider>
   );
 }
 

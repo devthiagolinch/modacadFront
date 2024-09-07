@@ -31,7 +31,9 @@ export function AdminLoginPage() {
             throw new Error('Not Allowed')
         }
 
-        login(response.data.token)
+        const { token, admin } = response.data;
+
+        login({ token, admin });
 
         history(`/dashboard/profile`)
         })
