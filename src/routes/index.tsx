@@ -26,7 +26,7 @@ export const AppRoutes = () => {
   const PrivateRoute: React.FC<TPrivateRouteProps> = ({ element }) => {
 
     if (loading) {
-      return;
+      return <div>Carregando...</div>;
     }
 
     const isAuthenticated = !!user;
