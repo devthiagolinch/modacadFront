@@ -1,5 +1,3 @@
-import { ServiceData } from "../../assets/utils/constants.index"
-
 interface PilulaCardDTO {
     id: string
     banner: string,
@@ -13,7 +11,7 @@ export function PilulaModacadCard({id, banner, title, description, tags}: Pilula
     return (
 
         <div className="min-2-[150px] lg:w-[250px] border-[1px] border-[#202020] h-[100%]
-        ">
+        " key={id}>
             <div>
                 <img src={banner} alt="" className="h-[250px] object-cover" />
             </div>
@@ -31,6 +29,10 @@ export function PilulaModacadCard({id, banner, title, description, tags}: Pilula
 
                 <p className="text-[14px] font-montserratRegular leading-[15px] h-[45px] overflow-hidden mb-[10px]">
                     {description}
+                </p>
+
+                <p className="text-[14px] font-montserratRegular leading-[15px] h-[45px] overflow-hidden mb-[10px]">
+                    {tags}
                 </p>
             </div>
         </div>

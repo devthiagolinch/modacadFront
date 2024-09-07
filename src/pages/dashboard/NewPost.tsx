@@ -21,22 +21,13 @@ import "../../assets/css/tiptap.css";
 import { FaBold, FaItalic, FaStrikethrough  } from "react-icons/fa";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 
-import { FormEvent, useEffect, useState } from 'react'
-import { api } from '../../lib/axios'
+import { FormEvent, useState } from 'react'
 
 
 function NewPost() {
     const [editorContent, setEditorContent] = useState("");
-    const [image, setImage] = useState({ preview: '', data: '' })
+    const image = { preview: '', data: '' }
     const [status, setStatus] = useState('')
-
-    function handleSendTexto(event: FormEvent) {
-        event.preventDefault
-        useEffect(() => {
-            api.post(`/admins/texto/`, editorContent)
-          }, []
-        )
-    }
 
     const handleSubmitImage = async (e: FormEvent) => {
       e.preventDefault()
@@ -49,13 +40,13 @@ function NewPost() {
       if (response) setStatus(response.statusText)
     }
 
-    const handleFileChange = (e: FormEvent) => {
-        const img = {
-          preview: URL.createObjectURL(e.target.files[0]),
-          data: e.target.files[0],
-        }
-        setImage(img)
-      }
+    // const handleFileChange = (e: FormEvent) => {
+    //     const img = {
+    //       preview: URL.createObjectURL(e.target.files[0]),
+    //       data: e.target.files[0],
+    //     }
+    //     setImage(img)
+    //   }
     
 
     const limit = 2000
@@ -136,7 +127,7 @@ function NewPost() {
                     {image.preview && <img src={image.preview} width='100' height='100' />}
                     <hr></hr>
                     <form onSubmit={handleSubmitImage} className='w-10 border-none shadow-transparent'>
-                        <input type='file' name='file' onChange={handleFileChange}></input>
+                        <input type='file' name='file'></input>
                         <button type='submit'>Submit</button>
                     </form>
                     {status && <h4>{status}</h4>}
