@@ -21,9 +21,14 @@ type TPrivateRouteProps = RouteProps & {
 
 export const AppRoutes = () => {
 
-  const { user } = useUser();
+  const { user, loading } = useUser();
 
   const PrivateRoute: React.FC<TPrivateRouteProps> = ({ element }) => {
+
+    if (loading) {
+      return;
+    }
+
     const isAuthenticated = !!user;
   
     return isAuthenticated ? (

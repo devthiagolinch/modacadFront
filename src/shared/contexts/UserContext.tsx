@@ -3,6 +3,7 @@ import { LOCAL_STORAGE_USER_DATA, login as authLogin, logout as authLogout } fro
 
 interface IUserContextData {
     user: IUserData | null;
+    loading: boolean;
     login: (token: string, userData: IUserData) => void;
     logout: () => void;
 }
@@ -25,12 +26,15 @@ export const useUser = () => {
 
 export const UserProvider: React.FC<IUserProviderProps> = ({ children }) => {
     const [user, setUser] = useState<IUserData | null>(null);
+    const [loading, isLoading] = useState(true);
 
     useEffect(() => {
+        isLoading(true);
         const storedUserData = localStorage.getItem(LOCAL_STORAGE_USER_DATA);
         if (storedUserData) {
             setUser(JSON.parse(storedUserData));
         }
+        isLoading(false);
     }, []);
 
     const handleLogin = (token: string, userData: IUserData) => {
@@ -44,7 +48,7 @@ export const UserProvider: React.FC<IUserProviderProps> = ({ children }) => {
     }
 
     return (
-        <UserContext.Provider value={{ user, login: handleLogin, logout: handleLogout }}>
+        <UserContext.Provider value={{ user, loading, login: handleLogin, logout: handleLogout }}>
             {children}
         </UserContext.Provider>
     )
