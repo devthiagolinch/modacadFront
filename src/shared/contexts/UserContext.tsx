@@ -1,9 +1,10 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { LOCAL_STORAGE_USER_DATA } from "../../lib/auth";
+import { LOCAL_STORAGE_USER_DATA, login as authLogin, logout as authLogout } from "../../lib/auth";
 
 interface IUserContextData {
     user: IUserData | null;
-    setUser: React.Dispatch<React.SetStateAction<IUserData | null>>;
+    login: (token: string, userData: IUserData) => void;
+    logout: () => void;
 }
 
 interface IUserProviderProps {
@@ -11,6 +12,7 @@ interface IUserProviderProps {
 }
 
 interface IUserData {
+    id: string;
     name: string;
     role: string;
 }
@@ -31,8 +33,18 @@ export const UserProvider: React.FC<IUserProviderProps> = ({ children }) => {
         }
     }, []);
 
+    const handleLogin = (token: string, userData: IUserData) => {
+        authLogin({ token, admin: userData });
+        setUser(userData);
+    }
+
+    const handleLogout = () => {
+        authLogout();
+        setUser(null);
+    }
+
     return (
-        <UserContext.Provider value={{ user, setUser }}>
+        <UserContext.Provider value={{ user, login: handleLogin, logout: handleLogout }}>
             {children}
         </UserContext.Provider>
     )

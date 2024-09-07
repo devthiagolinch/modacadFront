@@ -11,53 +11,52 @@ import {
   import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { api } from '../../lib/axios'
 import { useEffect, useState } from 'react'
-import { logout } from '../../lib/auth'
 import { useUser } from '../../shared/contexts/UserContext';
-
-  const navigation = [
-    { name: 'Dashboard', href: '/dashboard', current: true },
-    { name: 'New Post', href: '/dashboard/new-post', current: false },
-    // { name: 'Membros', href: '/dashboard/members', current: false },
-  ]
-  const adminNavigation = [
-    { name: 'Sair', onClick: () => logout()},
-  ]
   
-  function classNames(...classes: string[]) {
-    return classes.filter(Boolean).join(' ')
-  }
+function classNames(...classes: string[]) {
+  return classes.filter(Boolean).join(' ')
+}
 
-  interface Admin {
-    id: string,
-    name: string,
-    email: string,
-    admin_role: string,
-  }
+interface Admin {
+  id: string,
+  name: string,
+  email: string,
+  admin_role: string,
+}
 
-  interface Users {
-    name: string,
-    email: string,
-    admin_role: string
-  }
+interface Users {
+  name: string,
+  email: string,
+  admin_role: string
+}
 
-  interface Post {
-    id: string,
-    title: string,
-    slug: string,
-    admin_id: string,
-    status: string,
-    visibility: string
-  }
+interface Post {
+  id: string,
+  title: string,
+  slug: string,
+  admin_id: string,
+  status: string,
+  visibility: string
+}
   
 function Dashboard() {
 
-    const { user } = useUser();
+    const { user, logout } = useUser();
 
     //const {id} = useParams()
     const [admin, setAdmin] = useState<Admin>();
     const [users, setUsers] = useState<Users[]>([])
     const [listAdmin, setListAdmin] = useState<Admin[]>([])
     const [textos, setTextos] = useState<Post[]>([])
+
+    const navigation = [
+      { name: 'Dashboard', href: '/dashboard', current: true },
+      { name: 'New Post', href: '/dashboard/new-post', current: false },
+      // { name: 'Membros', href: '/dashboard/members', current: false },
+    ]
+    const adminNavigation = [
+      { name: 'Sair', onClick: () => logout()},
+    ]
   
     useEffect(() => {
       api.get(`/admins/profile`).then(({data}) => {
