@@ -12,6 +12,7 @@ import {
 import { api } from '../../lib/axios'
 import { useEffect, useState } from 'react'
 import { logout } from '../../lib/auth'
+import { useUser } from '../../shared/contexts/UserContext';
 
   const navigation = [
     { name: 'Dashboard', href: '/dashboard', current: true },
@@ -49,6 +50,9 @@ import { logout } from '../../lib/auth'
   }
   
 function Dashboard() {
+
+    const { user } = useUser();
+
     //const {id} = useParams()
     const [admin, setAdmin] = useState<Admin>();
     const [users, setUsers] = useState<Users[]>([])
@@ -229,7 +233,7 @@ function Dashboard() {
   
           <header className="bg-white shadow">
             <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-              <h1 className="text-3xl font-bold tracking-tight text-gray-900">Olá, {admin?.name}</h1>
+              <h1 className="text-3xl font-bold tracking-tight text-gray-900">Olá, {user?.role}</h1>
             </div>
           </header>
           <main className='flex gap-2 justify-center p-5'>

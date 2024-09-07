@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { LOCAL_STORAGE_USER_DATA } from "../../lib/auth";
 
 interface IUserContextData {
@@ -16,6 +16,10 @@ interface IUserData {
 }
 
 const UserContext = createContext<IUserContextData | null>(null);
+
+export const useUser = () => {
+    return useContext(UserContext) as IUserContextData;
+}
 
 export const UserProvider: React.FC<IUserProviderProps> = ({ children }) => {
     const [user, setUser] = useState<IUserData | null>(null);
