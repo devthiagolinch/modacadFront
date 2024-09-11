@@ -1,4 +1,4 @@
-import { UsersData } from "../../assets/utils/usersData.index";
+import { UsersData } from "../../../assets/utils/usersData.index";
 import { Button } from "../Button";
 
 
