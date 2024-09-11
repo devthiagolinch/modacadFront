@@ -1,25 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import { LayoutDashboard } from '../../shared/layouts/LayoutDashboard';
-
-const posts = [
-  {
-    id: 1,
-    title: 'Postagem 1',
-    author: 'Autor 1',
-    updatedAt: '2023-10-01',
-    status: 'Publicado',
-  },
-  {
-    id: 2,
-    title: 'Postagem 2',
-    author: 'Autor 2',
-    updatedAt: '2023-10-02',
-    status: 'Rascunho',
-  },
-];
+import { IPostData, PostsService } from '../../shared/services/api/posts/PostsService';
 
 export const Dashboard: React.FC = () => {
+  const [rows, setRows] = useState<IPostData[]>([]);
+
+  useEffect(() => {
+    PostsService.getAll('texto').then((data) => {
+      if (data instanceof Error) {
+        console.error(data.message);
+      } else {
+        setRows(data);
+      }
+    });
+  }, []);
+
   return (
     <LayoutDashboard>
       <div className="container mx-auto">
@@ -29,18 +25,16 @@ export const Dashboard: React.FC = () => {
             <tr>
               <th className="px-4 py-2 border-b">Título</th>
               <th className="px-4 py-2 border-b">Autor</th>
-              <th className="px-4 py-2 border-b">Data de Atualização</th>
               <th className="px-4 py-2 border-b">Status</th>
               <th className="px-4 py-2 border-b">Ações</th>
             </tr>
           </thead>
           <tbody>
-            {posts.map((post) => (
-              <tr key={post.id}>
-                <td className="px-4 py-2 border-b">{post.title}</td>
-                <td className="px-4 py-2 border-b">{post.author}</td>
-                <td className="px-4 py-2 border-b">{post.updatedAt}</td>
-                <td className="px-4 py-2 border-b">{post.status}</td>
+            {rows.map((row) => (
+              <tr key={row.id}>
+                <td className="px-4 py-2 border-b">{row.title}</td>
+                <td className="px-4 py-2 border-b">{row.admin}</td>
+                <td className="px-4 py-2 border-b">{row.status}</td>
                 <td className="px-4 py-2 border-b">
                   <Menu as="div" className="relative inline-block text-left">
                     <MenuButton className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
