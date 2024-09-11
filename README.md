@@ -17,9 +17,3 @@ yarn dev
 ```ss
 yarn build
 ```
-
-## Deploy o projeto
-
-```ss
-npx vercel ./dist --prod 
-```
