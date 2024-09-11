@@ -7,55 +7,55 @@
         src: url("./assets/fonts/butler_ultra_light.otf") format("opentype");
         font-style: normal;
         font-display: swap
-    },
+    }
     @font-face {
         font-family: "autography";
         src: url("./assets/fonts/Autography.otf") format("opentype");
         font-style: normal;
         font-display: swap
-    },
+    }
     @font-face {
         font-family: "butler-bold";
         src: url("./assets/fonts/Butler_Bold.otf") format("opentype");
         font-style: bold;
         font-display: swap
-    },
+    }
     @font-face {
         font-family: "butler-extra-bold";
         src: url("./assets/fonts/Butler_ExtraBold.otf") format("opentype");
         font-style: normal;
         font-display: swap
-    },
+    }
     @font-face {
         font-family: "butler_regular";
         src: url("./assets/fonts/Butler_Regular.otf") format("opentype");
         font-style: normal;
         font-display: swap
-    },
+    }
     @font-face {
         font-family: "montserrat-light-italic";
         src: url("./assets/fonts/Montserrat-LightItalic.ttf") format("ttf");
         font-style: normal;
         font-display: swap
-    },
+    }
     @font-face {
         font-family: "montserrat-medium";
         src: url("./assets/fonts/Montserrat-Medium.ttf") format("ttf");
         font-style: medium;
         font-display: swap
-    },
+    }
     @font-face {
         font-family: "montserrat-medium-italic";
         src: url("./assets/fonts/Montserrat-MediumItalic.ttf") format("ttf");
         font-style: medium;
         font-display: swap
-    },
+    }
     @font-face {
         font-family: "montserrat-regular";
         src: url("./assets/fonts/Montserrat-Regular.ttf") format("opentype");
         font-style: regular;
         font-display: swap
-    },
+    }
     @font-face {
         font-family: "montserrat-light";
         src: url("./assets/fonts/Montserrat-Light.ttf") format("ttf");
