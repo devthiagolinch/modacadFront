@@ -1,10 +1,10 @@
-import { Footer } from '../shared/components/footer';
-import { Header } from '../shared/components/header';
-import { Button } from '../shared/components/Button';
+import { Footer } from '../../shared/components/footer';
+import { Header } from '../../shared/components/header';
+import { Button } from '../../shared/components/Button';
 
-import checkListIcon from '../assets/icons/check-mark.svg';
+import checkListIcon from '../../assets/icons/check-mark.svg';
 import { useEffect, useState } from 'react';
-import { api } from '../shared/services/api/lib/axios';
+import { api } from '../../shared/services/api/lib/axios';
 
 interface Planos {
   id: string;
@@ -14,7 +14,7 @@ interface Planos {
   price: string;
 }
 
-export function PlanosMDC() {
+export function Plans() {
   const [plan, setPlan] = useState<Planos>();
 
   useEffect(() => {

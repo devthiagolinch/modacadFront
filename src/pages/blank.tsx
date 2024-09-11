@@ -10,7 +10,7 @@ interface Subjects {
   name: string;
 }
 
-export function BlanckPage() {
+export function BlankPage() {
   const texto = ServiceData.find((text) => text.id == '1');
 
   const [subjects, setSubjects] = useState<Subjects[]>([]);

@@ -43,7 +43,7 @@ function UpdatePost() {
   const [_, setEditorContent] = useState('');
 
   // useEffect(() => {
-  //     api.get(`/admins/texto/${id.id}`).then(response => {
+  //     api.get(`/admins/posts/${id.id}`).then(response => {
   //         setTexto(response.data)
   //     })
   //   }, []
@@ -51,7 +51,7 @@ function UpdatePost() {
 
   useEffect(() => {
     (async () => {
-      await api.get(`/admins/texto/${id}`).then(({ data }) => setTexto(data));
+      await api.get(`/admins/posts/${id}`).then(({ data }) => setTexto(data));
     })();
   }, [texto]);
 
@@ -131,7 +131,7 @@ function UpdatePost() {
   return (
     <form className="">
       <header className="flex items-center justify-between p-10">
-        <a href="/dashboard/profile">
+        <a href="/dashboard">
           <MdKeyboardArrowLeft className="w-8 h-8 ml-16" />
         </a>
       </header>

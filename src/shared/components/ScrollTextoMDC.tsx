@@ -30,13 +30,13 @@ export function ScrollTextoMCD({ title }: TextScrollInterface) {
   const [cards, setCards] = useState<Post[]>([]);
 
   useEffect(() => {
-    api.get('/textos').then((response) => setCards(response.data));
+    api.get('/postss').then((response) => setCards(response.data));
   }, []);
 
   return (
     <div className="flex flex-row -mt-[1px]">
       <div className="flex justify-center items-center border-[1px] border-[#202020] -mr-[1px] pt-32">
-        <Link to={`/textosmodacad/`}>
+        <Link to={`/postssmodacad/`}>
           <p
             className="
           text-nowrap transform: -rotate-90 w-8 lg:w-[22px] lg:p-5"
@@ -60,7 +60,7 @@ export function ScrollTextoMCD({ title }: TextScrollInterface) {
         >
           {cards?.map((item) => (
             <SwiperSlide key={item.id}>
-              <Link to={`/texto/${item.id}`}>
+              <Link to={`/posts/${item.id}`}>
                 <TextoMocadCard
                   id={item.id}
                   banner={item.backgroundImage}

@@ -1,11 +1,11 @@
-import { Footer } from '../shared/components/footer';
-import { Header } from '../shared/components/header';
+import { Footer } from '../../shared/components/footer';
+import { Header } from '../../shared/components/header';
 
-import { BlockText } from '../shared/components/blocktext';
+import { BlockText } from '../../shared/components/blocktext';
 import { useParams } from 'react-router-dom';
-import { CriarPerfil } from '../shared/components/criarPerfil';
+import { CriarPerfil } from '../../shared/components/criarPerfil';
 import { useEffect, useState } from 'react';
-import { api } from '../shared/services/api/lib/axios';
+import { api } from '../../shared/services/api/lib/axios';
 
 interface Post {
   id: string;
@@ -20,13 +20,13 @@ interface Post {
   admin_id: string;
 }
 
-export function PilulasMCD() {
+export function PillDetails() {
   const id = useParams<{ id: string }>();
   const [pilula, setPilula] = useState<Post>();
 
   useEffect(() => {
     (async () => {
-      await api.get(`/admins/texto/${id.id}`).then(({ data }) => setPilula(data));
+      await api.get(`/admins/posts/${id.id}`).then(({ data }) => setPilula(data));
     })();
   }, [pilula]);
   console.log(pilula?.title);

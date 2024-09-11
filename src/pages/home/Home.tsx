@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
-import { api } from '../shared/services/api/lib/axios';
+import { api } from '../../shared/services/api/lib/axios';
 import { Link } from 'react-router-dom';
 
-import { ScrollTextoMCD } from '../shared/components/ScrollTextoMDC';
-import { ScrollPiluaMCD } from '../shared/components/ScrollPilulasMDC';
-import { ScrollTextosMaisLidos } from '../shared/components/ScrollTextoMaisLidos';
-import { Footer } from '../shared/components/footer';
-import { LastPost } from '../shared/components/last-post';
-import { ReadingBox } from '../shared/components/reagindBox';
+import { ScrollTextoMCD } from '../../shared/components/ScrollTextoMDC';
+import { ScrollPiluaMCD } from '../../shared/components/ScrollPilulasMDC';
+import { ScrollTextosMaisLidos } from '../../shared/components/ScrollTextoMaisLidos';
+import { Footer } from '../../shared/components/footer';
+import { LastPost } from '../../shared/components/last-post';
+import { ReadingBox } from '../../shared/components/reagindBox';
 
-import banner from '../assets/imgs/Banner-home.jpg';
-import telmaLogoDesk from '../assets/svg/HOME logo TELMA BARCELLOS modacad.svg';
-import telmaLogoDMobile from '../assets/svg/MOBILE Logo TELMA BARCELLOS modacad.svg';
+import banner from '../../assets/imgs/Banner-home.jpg';
+import telmaLogoDesk from '../../assets/svg/HOME logo TELMA BARCELLOS modacad.svg';
+import telmaLogoDMobile from '../../assets/svg/MOBILE Logo TELMA BARCELLOS modacad.svg';
 
 interface Subjects {
   id: string;
@@ -48,7 +48,7 @@ export function Home() {
 
           <nav className="flex items-center">
             <Link
-              to="/dashboard/new-post"
+              to="/dashboard"
               className="hidden lg:flex font-normal text-sm border border-r-0 border-b-0 border-t-0 border-zinc-950 w-50 h-20 px-5 py-7 tracking-[0.05em]
                       bg-gradient-to-t from-[#dcdf1e] to-[#dcdf1e] bg-[length:90%_2em] bg-no-repeat bg-[position:calc(90%_-_var(--p,0%))_900%]  hover:bg-[position:50%_73%]
                   "
@@ -64,7 +64,7 @@ export function Home() {
               Criar Perfil
             </a>
             <Link
-              to="/planos"
+              to="/plans"
               className="font-medium text-sm border border-r-0 border-b-0 border-t-0 border-zinc-950 w-50 h-20 px-6 py-6 pt-7
                       hover:bg-[#dcdf1e]
                   "

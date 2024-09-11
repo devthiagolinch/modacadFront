@@ -15,7 +15,7 @@ export function LastPost() {
   const post = posts.at(-1);
 
   useEffect(() => {
-    api.get('/textos').then((response) => setPosts(response.data));
+    api.get('/postss').then((response) => setPosts(response.data));
   });
 
   return (
@@ -30,7 +30,7 @@ export function LastPost() {
       </div>
 
       {/** DESKTOP */}
-      <Link to={`/textomodacad/${post?.id}`} className="hidden lg:flex lg:gap-10">
+      <Link to={`/postsmodacad/${post?.id}`} className="hidden lg:flex lg:gap-10">
         <div className="flex flex-col w-full gap-4 lg:w-[44%] lg:p-10">
           {post?.tags.map((t) => <span className="font-montserratLight text-[12px] -mt-[15px] ">{t}</span>)}
 
@@ -44,7 +44,7 @@ export function LastPost() {
         </div>
       </Link>
       {/** MOBILE */}
-      <Link to={`/textomodacad/${post?.id}`} className="flex flex-col lg:hidden ">
+      <Link to={`/postsmodacad/${post?.id}`} className="flex flex-col lg:hidden ">
         <div className="shadow-inner">
           <img src={post?.backgroundImage} className="h-full object-cover object-top sm:h-full" />
         </div>

@@ -26,7 +26,7 @@ export const HeaderDashboard = () => {
       name: 'Dashboard',
       current: true,
       onClick: () => {
-        navigate('/dashboard/profile');
+        navigate('/dashboard');
       },
     },
     {

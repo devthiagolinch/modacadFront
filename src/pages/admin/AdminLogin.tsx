@@ -1,8 +1,8 @@
 import { FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { api } from '../shared/services/api/lib/axios';
-import { useUser } from '../shared/contexts/UserContext';
+import { api } from '../../shared/services/api/lib/axios';
+import { useUser } from '../../shared/contexts/UserContext';
 
 export type Admin = {
   name: string;
@@ -11,7 +11,7 @@ export type Admin = {
   password: string;
 };
 
-export function AdminLoginPage() {
+export function AdminLogin() {
   const { login } = useUser();
 
   // SETTING API
@@ -37,7 +37,7 @@ export function AdminLoginPage() {
 
       login(token, admin);
 
-      history(`/dashboard/profile`);
+      history(`/dashboard`);
     });
   }
 

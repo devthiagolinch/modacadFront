@@ -64,7 +64,7 @@ export const Dashboard: React.FC = () => {
                         <MenuItem>
                           {({ active }) => (
                             <button
-                              onClick={() => navigate(`dashboard/profile/post-editor/${row.id}`)}
+                              onClick={() => navigate(`/dashboard/edit-post/${row.id}`)}
                               className={`${active ? 'bg-gray-100' : ''} w-full text-left block px-4 py-2 text-sm text-gray-700`}
                             >
                               Editar
@@ -84,7 +84,7 @@ export const Dashboard: React.FC = () => {
                         <MenuItem>
                           {({ active }) => (
                             <button
-                              onClick={() => navigate(`/texto/${row.id}`)}
+                              onClick={() => navigate(`/posts/${row.id}`)}
                               className={`${active ? 'bg-gray-100' : ''} w-full text-left block px-4 py-2 text-sm text-gray-700`}
                             >
                               Ver
