@@ -8,7 +8,7 @@ export const LayoutDashboard: React.FC<ILayoutDashboardProps> = ({ children }) =
   return (
     <div className="layout-dashboard">
       <HeaderDashboard />
-      <div className="layout-dashboard__content">{children}</div>
+      <main className="flex gap-2 justify-center p-5">{children}</main>
     </div>
   );
 };
