@@ -1,10 +1,10 @@
 import { ServiceData } from "../assets/utils/constants.index"
-import { Header } from "../components/header"
-import { TextoMocadCard } from "../components/cards/textoModacadCard"
-import { Footer } from "../components/footer"
+import { Header } from "../shared/components/header"
+import { TextoMocadCard } from "../shared/components/cards/textoModacadCard"
+import { Footer } from "../shared/components/footer"
 import { Link } from "react-router-dom"
-import { ReadingBox } from "../components/reagindBox"
-import { Button } from "../components/Button"
+import { ReadingBox } from "../shared/components/reagindBox"
+import { Button } from "../shared/components/Button"
 
 
 export function PublishText() {

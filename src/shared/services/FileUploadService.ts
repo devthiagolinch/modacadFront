@@ -1,4 +1,4 @@
-import {api} from "../lib/axios";
+import {api} from "./lib/axios";
 
 const upload = (file: File, onUploadProgress: any): Promise<any> => {
   let formData = new FormData();

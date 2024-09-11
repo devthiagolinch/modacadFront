@@ -1,8 +1,8 @@
-import { Footer } from "../components/footer";
-import { Header } from "../components/header";
+import { Footer } from "../shared/components/footer";
+import { Header } from "../shared/components/header";
 
 
-import { BlockText } from "../components/blocktext";
+import { BlockText } from "../shared/components/blocktext";
 import { useParams } from "react-router-dom";
 import { ServiceData } from "../assets/utils/constants.index";
 

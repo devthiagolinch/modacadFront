@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 import { useEffect, useState } from "react"
-import { api } from "../lib/axios"
+import { api } from "../services/lib/axios"
 
 interface Post {
     id: string,

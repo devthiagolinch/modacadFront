@@ -1,12 +1,12 @@
-import { Footer } from "../components/footer";
-import { Header } from "../components/header";
+import { Footer } from "../shared/components/footer";
+import { Header } from "../shared/components/header";
 
 
-import { BlockText } from "../components/blocktext";
+import { BlockText } from "../shared/components/blocktext";
 import { useParams } from "react-router-dom";
-import { CriarPerfil } from "../components/criarPerfil";
+import { CriarPerfil } from "../shared/components/criarPerfil";
 import { useEffect, useState } from "react";
-import { api } from "../lib/axios";
+import { api } from "../shared/services/lib/axios";
 
 interface Post {
     id: string;

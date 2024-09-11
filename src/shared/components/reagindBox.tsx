@@ -1,4 +1,4 @@
-import setaCurvaIcon from "../assets/icons/seta-curva.svg"
+import setaCurvaIcon from "../../assets/icons/seta-curva.svg"
 import { Button } from "./Button"
 
 export function ReadingBox() {

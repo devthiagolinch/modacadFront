@@ -1,10 +1,10 @@
 
 import { ServiceData } from "../assets/utils/constants.index";
 import banner from "../assets/imgs/camila.jpg"
-import { Button } from "../components/Button";
+import { Button } from "../shared/components/Button";
 import { useEffect, useState } from "react";
 
-import { api } from "../lib/axios";
+import { api } from "../shared/services/lib/axios";
 
 interface Subjects {
     id: string,

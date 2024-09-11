@@ -11,7 +11,7 @@ import { A11y, Navigation, Pagination, Scrollbar } from "swiper/modules";
 /* import { RxArrowTopRight } from "react-icons/rx"; */
 import { TextoMocadCard } from "./cards/textoModacadCard";
 import { useEffect, useState } from "react";
-import { api } from "../lib/axios";
+import { api } from "../services/lib/axios";
 
 interface TextScrollInterface {
   title: string

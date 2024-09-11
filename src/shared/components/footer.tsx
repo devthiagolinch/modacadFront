@@ -1,12 +1,12 @@
-import setaCurvaIcon from "../assets/icons/seta-curva.svg";
-import facebookicon from "../assets/icons/social  media/facebook.svg"
-import tiktokIcon from "../assets/icons/social  media/tiktok.svg"
-import pinterestIcon from "../assets/icons/social  media/pinterest.svg"
-import linkedinIcon from "../assets/icons/social  media/linkedin.svg"
-import instaIcon from "../assets/icons/social  media/instagram.svg"
-import youtubeIcon from "../assets/icons/social  media/youtube.svg"
-import emailIcon from "../assets/icons/email.svg";
-import wppIcon from "../assets/icons/whatsapp.svg"
+import setaCurvaIcon from "../../assets/icons/seta-curva.svg";
+import facebookicon from "../../assets/icons/social  media/facebook.svg"
+import tiktokIcon from "../../assets/icons/social  media/tiktok.svg"
+import pinterestIcon from "../../assets/icons/social  media/pinterest.svg"
+import linkedinIcon from "../../assets/icons/social  media/linkedin.svg"
+import instaIcon from "../../assets/icons/social  media/instagram.svg"
+import youtubeIcon from "../../assets/icons/social  media/youtube.svg"
+import emailIcon from "../../assets/icons/email.svg";
+import wppIcon from "../../assets/icons/whatsapp.svg"
 import { ReadingBox } from "./reagindBox";
 
 

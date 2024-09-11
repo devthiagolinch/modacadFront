@@ -1,5 +1,5 @@
-import telmaLogoDesk from "../assets/svg/HOME logo TELMA BARCELLOS modacad.svg";
-import telmaLogoDMobile from "../assets/svg/MOBILE Logo TELMA BARCELLOS modacad.svg";
+import telmaLogoDesk from "../../assets/svg/HOME logo TELMA BARCELLOS modacad.svg";
+import telmaLogoDMobile from "../../assets/svg/MOBILE Logo TELMA BARCELLOS modacad.svg";
 
 import { Link } from "react-router-dom"
 

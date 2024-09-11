@@ -10,7 +10,7 @@ import { A11y, Navigation, Pagination, Scrollbar } from "swiper/modules";
 import { Link } from "react-router-dom";
 import { PilulaModacadCard } from "./cards/pilulasModacadCard";
 import { useEffect, useState } from "react";
-import { api } from "../lib/axios";
+import { api } from "../services/lib/axios";
 
 interface TextScrollInterface {
   title: string

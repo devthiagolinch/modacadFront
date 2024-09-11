@@ -1,4 +1,4 @@
-import { ServiceData } from "../../assets/utils/constants.index";
+import { ServiceData } from "../../../assets/utils/constants.index";
 
 interface TextosCardDTO {
     id: string

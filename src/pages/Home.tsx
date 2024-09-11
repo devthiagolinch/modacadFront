@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react"
-import { api } from "../lib/axios"
+import { api } from "../shared/services/lib/axios"
 import { Link } from "react-router-dom"
 
-import { ScrollTextoMCD } from "../components/ScrollTextoMDC"
-import { ScrollPiluaMCD } from "../components/ScrollPilulasMDC"
-import { ScrollTextosMaisLidos } from "../components/ScrollTextoMaisLidos"
-import { Footer } from "../components/footer"
-import { LastPost } from "../components/last-post"
-import { ReadingBox } from "../components/reagindBox"
+import { ScrollTextoMCD } from "../shared/components/ScrollTextoMDC"
+import { ScrollPiluaMCD } from "../shared/components/ScrollPilulasMDC"
+import { ScrollTextosMaisLidos } from "../shared/components/ScrollTextoMaisLidos"
+import { Footer } from "../shared/components/footer"
+import { LastPost } from "../shared/components/last-post"
+import { ReadingBox } from "../shared/components/reagindBox"
 
 import banner from "../assets/imgs/Banner-home.jpg"
 import telmaLogoDesk from "../assets/svg/HOME logo TELMA BARCELLOS modacad.svg";
