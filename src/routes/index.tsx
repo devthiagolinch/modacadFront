@@ -14,6 +14,7 @@ import { PublishedPills } from '../pages/posts/PublishedPills';
 import { PillDetails } from '../pages/posts/PillDetails';
 import { Posts } from '../pages/posts/Posts';
 import { PostDetails } from '../pages/posts/PostDetails';
+import { PostEditor } from '../pages/dashboard/PostEditor';
 
 type TPrivateRouteProps = RouteProps & {
   element: React.ReactNode;
@@ -47,6 +48,7 @@ export const AppRoutes = () => {
       <Route path="/dashboard/new-post" element={<PrivateRoute element={<NewPost />} />} />
       <Route path="/dashboard/edit-post/:postId" element={<PrivateRoute element={<UpdatePost />} />} />
       <Route path="/dashboard" element={<PrivateRoute element={<Dashboard />} />} />
+      <Route path="/dashboard/post-editor" element={<PrivateRoute element={<PostEditor />} />} />
 
       {/* Login Admin */}
       <Route path="/admin/login" element={<AdminLogin />} />

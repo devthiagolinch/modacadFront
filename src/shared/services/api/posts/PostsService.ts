@@ -7,10 +7,10 @@ export interface IPostData {
   type: string;
   content: string;
   admin: string;
-  tags: string[];
-  subjects: string[];
-  status: string;
-  visibility: string;
+  tags: string[] | string | null;
+  subjects: string[] | string | null;
+  status: 'published' | 'draft' | 'deleted' | 'pending';
+  visibility: 'public' | 'basic' | 'pro';
 }
 
 const getAll = async (type: 'pilula' | 'texto', statusId?: string, authorId?: string): Promise<IPostData[] | Error> => {
