@@ -1,23 +1,26 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IPostData, PostsService } from '../../shared/services/api/posts/PostsService';
 import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Heading from '@tiptap/extension-heading';
 import Bold from '@tiptap/extension-bold';
 import { LayoutDashboard } from '../../shared/layouts';
+import { useParams } from 'react-router-dom';
 
 const defaultPost: Omit<IPostData, 'id' | 'admin'> = {
   title: '',
   description: '',
   type: 'texto',
   content: '',
-  tags: null,
-  subjects: null,
+  tags: '',
+  subjects: '',
   status: 'draft',
   visibility: 'pro',
 };
 
 export const PostEditor = () => {
+  const { postId } = useParams<{ postId: string }>();
+
   const [post, setPost] = useState<Omit<IPostData, 'id' | 'admin'>>(defaultPost);
 
   const editor = useEditor({
@@ -27,6 +30,19 @@ export const PostEditor = () => {
       setPost((prev) => ({ ...prev, content: editor.getHTML() }));
     },
   });
+
+  useEffect(() => {
+    if (postId) {
+      PostsService.getById(postId).then((response) => {
+        if (response instanceof Error) {
+          console.error(response.message);
+        } else {
+          setPost(response);
+          editor?.commands.setContent(response.content);
+        }
+      });
+    }
+  }, [postId, editor]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;

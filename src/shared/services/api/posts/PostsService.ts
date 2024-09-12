@@ -40,7 +40,19 @@ const create = async (post: Omit<IPostData, 'id' | 'admin'>): Promise<IPostData 
   }
 };
 
+const getById = async (postId: string): Promise<IPostData | Error> => {
+  try {
+    const { data } = await api.get<IPostData>(`/admins/texto/${postId}`);
+
+    return data;
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido ao buscar o registro';
+    return new Error(errorMessage);
+  }
+};
+
 export const PostsService = {
   getAll,
   create,
+  getById,
 };

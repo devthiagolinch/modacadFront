@@ -64,7 +64,7 @@ export const Dashboard: React.FC = () => {
                         <MenuItem>
                           {({ active }) => (
                             <button
-                              onClick={() => navigate(`/dashboard/edit-post/${row.id}`)}
+                              onClick={() => navigate(`/posts/${row.id}/editar`)}
                               className={`${active ? 'bg-gray-100' : ''} w-full text-left block px-4 py-2 text-sm text-gray-700`}
                             >
                               Editar
