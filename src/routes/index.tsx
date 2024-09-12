@@ -7,7 +7,6 @@ import { Plans } from '../pages/posts/Plans';
 import { AdminLogin } from '../pages/admin/AdminLogin';
 import { BlankPage } from '../pages/blank';
 import { Dashboard } from '../pages/dashboard/Dashboard';
-import { UpdatePost } from '../pages/dashboard/AtualizarPost';
 import { PopularPosts } from '../pages/posts/PopularPosts';
 import { PublishedPills } from '../pages/posts/PublishedPills';
 import { PillDetails } from '../pages/posts/PillDetails';

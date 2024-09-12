@@ -51,8 +51,18 @@ const getById = async (postId: string): Promise<IPostData | Error> => {
   }
 };
 
+const updateById = async (postId: string, post: Omit<IPostData, 'id' | 'admin'>): Promise<void | Error> => {
+  try {
+    await api.put<IPostData>(`/post/${postId}`, post);
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido ao atualizar o registro';
+    return new Error(errorMessage);
+  }
+};
+
 export const PostsService = {
   getAll,
   create,
   getById,
+  updateById,
 };

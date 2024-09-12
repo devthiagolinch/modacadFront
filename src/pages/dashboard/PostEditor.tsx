@@ -50,20 +50,31 @@ export const PostEditor = () => {
   };
 
   const handleSubmit = () => {
-    PostsService.create(post).then((response) => {
-      if (response instanceof Error) {
-        console.error(response.message);
-      } else {
-        setPost(defaultPost);
-        editor?.commands.setContent('');
-      }
-    });
+    if (postId) {
+      PostsService.updateById(postId, post).then((response) => {
+        if (response instanceof Error) {
+          console.error(response.message);
+        } else {
+          setPost(defaultPost);
+          editor?.commands.setContent('');
+        }
+      });
+    } else {
+      PostsService.create(post).then((response) => {
+        if (response instanceof Error) {
+          console.error(response.message);
+        } else {
+          setPost(defaultPost);
+          editor?.commands.setContent('');
+        }
+      });
+    }
   };
 
   return (
     <LayoutDashboard>
       <div className="container">
-        <h1 className="text-xl font-bold mb-4">Editor de Postagem</h1>
+        <h1 className="text-xl font-bold mb-4">{postId ? 'Editar publicação' : 'Criar publicação'}</h1>
 
         {/* Campo para título */}
         <input
@@ -92,7 +103,7 @@ export const PostEditor = () => {
 
         {/* Botão de Publicar */}
         <button className="px-4 py-2 bg-blue-500 text-white rounded" onClick={handleSubmit}>
-          Publicar Postagem
+          {postId ? 'Atualizar postagem' : 'Publicar Postagem'}
         </button>
 
         {/* Pré-visualização */}
