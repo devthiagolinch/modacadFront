@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { IPostData } from '../../shared/services/api/posts/PostsService';
+import { IPostData, PostsService } from '../../shared/services/api/posts/PostsService';
 import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Heading from '@tiptap/extension-heading';
@@ -34,7 +34,14 @@ export const PostEditor = () => {
   };
 
   const handleSubmit = () => {
-    console.log('Postagem salva', post);
+    PostsService.create(post).then((response) => {
+      if (response instanceof Error) {
+        console.error(response.message);
+      } else {
+        setPost(defaultPost);
+        editor?.commands.setContent('');
+      }
+    });
   };
 
   return (

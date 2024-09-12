@@ -4,7 +4,7 @@ export interface IPostData {
   id: string;
   title: string;
   description: string;
-  type: string;
+  type: 'texto' | 'pilula';
   content: string;
   admin: string;
   tags: string[] | string | null;
@@ -29,6 +29,18 @@ const getAll = async (type: 'pilula' | 'texto', statusId?: string, authorId?: st
   }
 };
 
+const create = async (post: Omit<IPostData, 'id' | 'admin'>): Promise<IPostData | Error> => {
+  try {
+    const { data } = await api.post<IPostData>('/post', post);
+
+    return data;
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido ao criar o registro';
+    return new Error(errorMessage);
+  }
+};
+
 export const PostsService = {
   getAll,
+  create,
 };
