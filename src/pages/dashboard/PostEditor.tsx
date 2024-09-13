@@ -32,7 +32,7 @@ export const PostEditor = () => {
   });
 
   useEffect(() => {
-    if (postId) {
+    if (postId && postId !== 'novo') {
       PostsService.getById(postId).then((response) => {
         if (response instanceof Error) {
           console.error(response.message);
@@ -50,7 +50,7 @@ export const PostEditor = () => {
   };
 
   const handleSubmit = () => {
-    if (postId) {
+    if (postId && postId !== 'novo') {
       PostsService.updateById(postId, post).then((response) => {
         if (response instanceof Error) {
           console.error(response.message);
@@ -73,7 +73,7 @@ export const PostEditor = () => {
 
   return (
     <LayoutDashboard>
-      <div className="container">
+      <div className="container mx-auto py-6 sm:px-6">
         <h1 className="text-xl font-bold mb-4">{postId ? 'Editar publicação' : 'Criar publicação'}</h1>
 
         {/* Campo para título */}

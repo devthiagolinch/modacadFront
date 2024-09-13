@@ -42,7 +42,7 @@ export const AppRoutes = () => {
       <Route path="/plans" element={<Plans />} />
 
       {/* Rotas para postagens */}
-      <Route path="/posts/adicionar-novo" element={<PrivateRoute element={<PostEditor />} />} />
+      <Route path="/posts/novo" element={<PrivateRoute element={<PostEditor />} />} />
       <Route path="/posts/:postId/editar" element={<PrivateRoute element={<PostEditor />} />} />
       <Route path="/posts/:postId" element={<PostDetails />} />
 
