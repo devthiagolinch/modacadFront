@@ -5,15 +5,14 @@ import { useUser } from '../shared/contexts/UserContext';
 import { Home } from '../pages/home/Home';
 import { Plans } from '../pages/posts/Plans';
 import { AdminLogin } from '../pages/admin/AdminLogin';
-import { NewPost } from '../pages/dashboard/NewPost';
 import { BlankPage } from '../pages/blank';
 import { Dashboard } from '../pages/dashboard/Dashboard';
-import { UpdatePost } from '../pages/dashboard/AtualizarPost';
 import { PopularPosts } from '../pages/posts/PopularPosts';
 import { PublishedPills } from '../pages/posts/PublishedPills';
 import { PillDetails } from '../pages/posts/PillDetails';
 import { Posts } from '../pages/posts/Posts';
 import { PostDetails } from '../pages/posts/PostDetails';
+import { PostEditor } from '../pages/dashboard/PostEditor';
 
 type TPrivateRouteProps = RouteProps & {
   element: React.ReactNode;
@@ -40,12 +39,14 @@ export const AppRoutes = () => {
       <Route path="/posts/pills" element={<PublishedPills />} />
       <Route path="/posts/pills/:pillId" element={<PillDetails />} />
       <Route path="/posts/news" element={<Posts />} />
-      <Route path="/posts/:postId" element={<PostDetails />} />
       <Route path="/plans" element={<Plans />} />
 
+      {/* Rotas para postagens */}
+      <Route path="/posts/novo" element={<PrivateRoute element={<PostEditor />} />} />
+      <Route path="/posts/:postId/editar" element={<PrivateRoute element={<PostEditor />} />} />
+      <Route path="/posts/:postId" element={<PostDetails />} />
+
       {/* Rotas Protegidas (Privadas) */}
-      <Route path="/dashboard/new-post" element={<PrivateRoute element={<NewPost />} />} />
-      <Route path="/dashboard/edit-post/:postId" element={<PrivateRoute element={<UpdatePost />} />} />
       <Route path="/dashboard" element={<PrivateRoute element={<Dashboard />} />} />
 
       {/* Login Admin */}

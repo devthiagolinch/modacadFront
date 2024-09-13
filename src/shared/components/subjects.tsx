@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { api } from '../services/api/lib/axios';
+import { api } from '../services/axios';
 
 interface Subjects {
   id: string;

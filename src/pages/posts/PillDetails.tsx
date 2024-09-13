@@ -5,7 +5,7 @@ import { BlockText } from '../../shared/components/blocktext';
 import { useParams } from 'react-router-dom';
 import { CriarPerfil } from '../../shared/components/criarPerfil';
 import { useEffect, useState } from 'react';
-import { api } from '../../shared/services/api/lib/axios';
+import { api } from '../../shared/services/axios';
 
 interface Post {
   id: string;

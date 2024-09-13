@@ -3,7 +3,7 @@ import banner from '../assets/imgs/camila.jpg';
 import { Button } from '../shared/components/Button';
 import { useEffect, useState } from 'react';
 
-import { api } from '../shared/services/api/lib/axios';
+import { api } from '../shared/services/axios';
 
 interface Subjects {
   id: string;

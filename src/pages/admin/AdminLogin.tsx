@@ -1,7 +1,7 @@
 import { FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { api } from '../../shared/services/api/lib/axios';
+import { api } from '../../shared/services/axios';
 import { useUser } from '../../shared/contexts/UserContext';
 
 export type Admin = {
