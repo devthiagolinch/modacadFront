@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { LOCAL_STORAGE_USER_DATA, login as authLogin, logout as authLogout } from '../services/api/lib/auth';
+import { LOCAL_STORAGE_USER_DATA, login as authLogin, logout as authLogout } from '../services/auth';
 
 interface IUserContextData {
   user: IUserData | null;

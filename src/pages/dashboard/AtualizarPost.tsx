@@ -22,7 +22,7 @@ import { MdKeyboardArrowLeft } from 'react-icons/md';
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { api } from '../../shared/services/api/lib/axios';
+import { api } from '../../shared/services/axios';
 
 interface Texto {
   id: string;

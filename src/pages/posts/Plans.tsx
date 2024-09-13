@@ -4,7 +4,7 @@ import { Button } from '../../shared/components/Button';
 
 import checkListIcon from '../../assets/icons/check-mark.svg';
 import { useEffect, useState } from 'react';
-import { api } from '../../shared/services/api/lib/axios';
+import { api } from '../../shared/services/axios';
 
 interface Planos {
   id: string;

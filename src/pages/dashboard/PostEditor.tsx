@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { IPostData, PostsService } from '../../shared/services/api/posts/PostsService';
+import { IPostData, PostsService } from '../../shared/api/posts/PostsService';
 import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Heading from '@tiptap/extension-heading';
@@ -105,6 +105,12 @@ export const PostEditor = () => {
         <button className="px-4 py-2 bg-blue-500 text-white rounded" onClick={handleSubmit}>
           {postId ? 'Atualizar postagem' : 'Publicar Postagem'}
         </button>
+
+        {/* Tags */}
+
+        {/* Subjects */}
+
+        {/* Botões de status e visibilidade */}
 
         {/* Pré-visualização */}
         <div className="mt-6">

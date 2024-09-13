@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { api } from '../../shared/services/api/lib/axios';
+import { api } from '../../shared/services/axios';
 import { Link } from 'react-router-dom';
 
 import { ScrollTextoMCD } from '../../shared/components/ScrollTextoMDC';

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import { LayoutDashboard } from '../../shared/layouts/LayoutDashboard';
-import { IPostData, PostsService } from '../../shared/services/api/posts/PostsService';
+import { IPostData, PostsService } from '../../shared/api/posts/PostsService';
 import { useNavigate } from 'react-router-dom';
 
 export const Dashboard: React.FC = () => {

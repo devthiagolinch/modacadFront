@@ -1,4 +1,4 @@
-import { api } from '../lib/axios';
+import { api } from '../../services/axios';
 
 export interface IPostData {
   id: string;
