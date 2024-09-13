@@ -44,3 +44,8 @@ export const visibilities: Record<Visibility, { name: string; bgColor: string; t
     textColor: 'text-white',
   },
 };
+
+export const types: Record<Type, string> = {
+  pilula: 'Pílula',
+  texto: 'Texto',
+};
