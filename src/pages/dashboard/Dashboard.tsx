@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
+import { useNavigate } from 'react-router-dom';
+
 import { LayoutDashboard } from '../../shared/layouts/LayoutDashboard';
 import { IPostData, PostsService } from '../../shared/api/posts/PostsService';
-import { useNavigate } from 'react-router-dom';
+import { statuses } from '../../shared/services/postOptions';
 
 export const Dashboard: React.FC = () => {
   const navigate = useNavigate();
@@ -50,8 +52,10 @@ export const Dashboard: React.FC = () => {
                 <td className="px-4 py-2 border-b">{row.title}</td>
                 <td className="px-4 py-2 border-b">{row.admin}</td>
                 <td className="px-4 py-2 border-b">
-                  <span className="px-2 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800">
-                    {row.status}
+                  <span
+                    className={`px-2 py-1 rounded-full text-xs font-semibold ${statuses[row.status].bgColor} ${statuses[row.status].textColor}`}
+                  >
+                    {statuses[row.status].name}
                   </span>
                 </td>
                 <td className="px-4 py-2 border-b">

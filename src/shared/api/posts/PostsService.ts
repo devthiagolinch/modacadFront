@@ -1,16 +1,17 @@
+import { Status, Type, Visibility } from '../../services/postOptions';
 import { api } from '../../services/axios';
 
 export interface IPostData {
   id: string;
   title: string;
   description: string;
-  type: 'texto' | 'pilula';
+  type: Type;
   content: string;
   admin: string;
   tags: string[] | string | null;
   subjects: string[] | string | null;
-  status: 'published' | 'draft' | 'deleted' | 'pending';
-  visibility: 'public' | 'basic' | 'pro';
+  status: Status;
+  visibility: Visibility;
 }
 
 const getAll = async (type: 'pilula' | 'texto', statusId?: string, authorId?: string): Promise<IPostData[] | Error> => {
