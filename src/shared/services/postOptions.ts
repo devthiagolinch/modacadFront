@@ -1,6 +1,6 @@
 export type Status = 'published' | 'draft' | 'deleted' | 'pending';
 export type Visibility = 'public' | 'basic' | 'pro';
-export type Type = 'pilula' | 'texto';
+export type PostType = 'pilula' | 'texto';
 
 // Configuração de Status com nome, cor de fundo e cor do texto
 export const statuses: Record<Status, { name: string; bgColor: string; textColor: string }> = {
@@ -45,7 +45,7 @@ export const visibilities: Record<Visibility, { name: string; bgColor: string; t
   },
 };
 
-export const types: Record<Type, string> = {
+export const types: Record<PostType, string> = {
   pilula: 'Pílula',
   texto: 'Texto',
 };

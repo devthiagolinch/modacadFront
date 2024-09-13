@@ -1,11 +1,11 @@
-import { Status, Type, Visibility } from '../../services/postOptions';
+import { Status, PostType, Visibility } from '../../services/postOptions';
 import { api } from '../../services/axios';
 
 export interface IPostData {
   id: string;
   title: string;
   description: string;
-  type: Type;
+  type: PostType;
   content: string;
   admin: string;
   tags: string[] | string | null;

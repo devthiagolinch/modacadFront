@@ -53,9 +53,9 @@ export const Dashboard: React.FC = () => {
                 <td className="px-4 py-2 border-b">{row.admin}</td>
                 <td className="px-4 py-2 border-b">
                   <span
-                    className={`px-2 py-1 rounded-full text-xs font-semibold ${statuses[row.status].bgColor} ${statuses[row.status].textColor}`}
+                    className={`px-2 py-1 rounded-full text-xs font-semibold ${statuses[row.status] ? statuses[row.status].bgColor : ''} ${statuses[row.status] ? statuses[row.status].textColor : ''}`}
                   >
-                    {statuses[row.status].name}
+                    {statuses[row.status] ? statuses[row.status].name : row.status}
                   </span>
                 </td>
                 <td className="px-4 py-2 border-b">
