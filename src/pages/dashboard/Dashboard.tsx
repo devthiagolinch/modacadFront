@@ -41,7 +41,6 @@ export const Dashboard: React.FC = () => {
           <thead>
             <tr>
               <th className="px-4 py-2 border-b">Título</th>
-              <th className="px-4 py-2 border-b">Autor</th>
               <th className="px-4 py-2 border-b">Status</th>
               <th className="px-4 py-2 border-b">Ações</th>
             </tr>
@@ -50,7 +49,6 @@ export const Dashboard: React.FC = () => {
             {rows.map((row) => (
               <tr key={row.id}>
                 <td className="px-4 py-2 border-b">{row.title}</td>
-                <td className="px-4 py-2 border-b">{row.admin}</td>
                 <td className="px-4 py-2 border-b">
                   <span
                     className={`px-2 py-1 rounded-full text-xs font-semibold ${statuses[row.status] ? statuses[row.status].bgColor : ''} ${statuses[row.status] ? statuses[row.status].textColor : ''}`}
