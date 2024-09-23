@@ -7,11 +7,11 @@ import { useParams } from 'react-router-dom';
 import Bold from '@tiptap/extension-bold';
 
 import { Status, statuses, PostType, types, visibilities, Visibility } from '../../shared/services/postOptions';
-import { IPostData, PostsService } from '../../shared/api/posts/PostsService';
+import { IPostSave, PostsService } from '../../shared/api/posts/PostsService';
 import { ISubjectData, SubjectsService } from '../../shared/api/subjects/SubjectsService';
 import { LayoutDashboard } from '../../shared/layouts';
 
-const defaultPost: Omit<IPostData, 'id' | 'admin'> = {
+const defaultPost: IPostSave = {
   title: '',
   description: '',
   type: 'texto',
@@ -25,8 +25,10 @@ const defaultPost: Omit<IPostData, 'id' | 'admin'> = {
 export const PostEditor = () => {
   const { postId } = useParams<{ postId: string }>();
 
-  const [post, setPost] = useState<Omit<IPostData, 'id' | 'admin'>>(defaultPost);
+  const [post, setPost] = useState<IPostSave>(defaultPost);
   const [subjectsOptions, setSubjectsOptions] = useState<ISubjectData[]>([]);
+  const [featureImageUrl, setFeatureImageUrl] = useState<string | null>(null);
+  const [uploading, setUploading] = useState(false);
 
   const editor = useEditor({
     extensions: [StarterKit, Heading, Bold],
@@ -44,6 +46,7 @@ export const PostEditor = () => {
         setSubjectsOptions(response);
       }
     });
+
     if (postId && postId !== 'novo') {
       PostsService.getById(postId).then((response) => {
         if (response instanceof Error) {
@@ -51,6 +54,7 @@ export const PostEditor = () => {
         } else {
           setPost(response);
           editor?.commands.setContent(response.content);
+          setFeatureImageUrl(response.feature_image);
         }
       });
     }
@@ -59,6 +63,25 @@ export const PostEditor = () => {
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setPost((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    setUploading(true);
+
+    const result = await PostsService.uploadFeatureImage(postId || 'novo', file);
+
+    console.log(result);
+
+    if (result instanceof Error) {
+      console.error(result.message);
+    } else {
+      setFeatureImageUrl(result);
+    }
+
+    setUploading(false);
   };
 
   const handleChangeStatus = (status: Status) => {
@@ -120,6 +143,21 @@ export const PostEditor = () => {
     <LayoutDashboard>
       <div className="container mx-auto py-6 sm:px-6">
         <h1 className="text-xl font-bold mb-4">{postId ? 'Editar publicação' : 'Criar publicação'}</h1>
+
+        {/* Imagem destacada */}
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700">Imagem destacada</label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageUpload}
+            className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+          />
+          {uploading && <p>Carregando...</p>}
+          {featureImageUrl && (
+            <img src={featureImageUrl} alt="Imagem destacada" className="mt-4 max-h-64 object-cover rounded-lg" />
+          )}
+        </div>
 
         {/* Campo para título */}
         <input
