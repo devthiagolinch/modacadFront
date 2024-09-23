@@ -43,7 +43,7 @@ const create = async (post: Omit<IPostData, 'id' | 'admin'>): Promise<IPostData 
 
 const getById = async (postId: string): Promise<IPostData | Error> => {
   try {
-    const { data } = await api.get<IPostData>(`/admins/texto/${postId}`);
+    const { data } = await api.get<IPostData>(`/post/${postId}`);
 
     return data;
   } catch (error) {
