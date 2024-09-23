@@ -16,7 +16,7 @@ export interface IPostData {
 
 const getAll = async (type: 'pilula' | 'texto', statusId?: string, authorId?: string): Promise<IPostData[] | Error> => {
   try {
-    const urlRelativa = `/post?type=${type}&statusId=${statusId}&authorId=${authorId}`;
+    const urlRelativa = `/post?type=${type ?? ''}&statusId=${statusId ?? ''}&authorId=${authorId ?? ''}`;
     const { data } = await api.get<IPostData[]>(urlRelativa);
 
     if (Array.isArray(data)) {
@@ -43,7 +43,7 @@ const create = async (post: Omit<IPostData, 'id' | 'admin'>): Promise<IPostData 
 
 const getById = async (postId: string): Promise<IPostData | Error> => {
   try {
-    const { data } = await api.get<IPostData>(`/admins/texto/${postId}`);
+    const { data } = await api.get<IPostData>(`/post/${postId}`);
 
     return data;
   } catch (error) {
