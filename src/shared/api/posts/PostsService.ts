@@ -16,7 +16,7 @@ export interface IPostData {
 
 const getAll = async (type: 'pilula' | 'texto', statusId?: string, authorId?: string): Promise<IPostData[] | Error> => {
   try {
-    const urlRelativa = `/post?type=${type}&statusId=${statusId}&authorId=${authorId}`;
+    const urlRelativa = `/post?type=${type ?? ''}&statusId=${statusId ?? ''}&authorId=${authorId ?? ''}`;
     const { data } = await api.get<IPostData[]>(urlRelativa);
 
     if (Array.isArray(data)) {
