@@ -90,10 +90,31 @@ const uploadFeatureImage = async (postId: string, file: File): Promise<string | 
   }
 };
 
+const uploadImage = async (file: File): Promise<string | Error> => {
+  try {
+    const formData = new FormData();
+    formData.append('image', file);
+
+    const { data } = await api.post<string>('/post/images', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    if (data) {
+      return data;
+    }
+    return new Error('Erro ao fazer upload da imagem');
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido ao fazer upload da imagem';
+    return new Error(errorMessage);
+  }
+};
+
 export const PostsService = {
   getAll,
   create,
   getById,
   updateById,
   uploadFeatureImage,
+  uploadImage,
 };
