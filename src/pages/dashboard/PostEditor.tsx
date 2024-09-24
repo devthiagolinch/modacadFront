@@ -1,14 +1,18 @@
 import { useEffect, useState } from 'react';
-import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
+
+import { useParams } from 'react-router-dom';
+
 import { EditorContent, useEditor } from '@tiptap/react';
 import Heading from '@tiptap/extension-heading';
 import StarterKit from '@tiptap/starter-kit';
-import { useParams } from 'react-router-dom';
 import Bold from '@tiptap/extension-bold';
+import Image from '@tiptap/extension-image';
+
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 
 import { Status, statuses, PostType, types, visibilities, Visibility } from '../../shared/services/postOptions';
-import { IPostSave, PostsService } from '../../shared/api/posts/PostsService';
 import { ISubjectData, SubjectsService } from '../../shared/api/subjects/SubjectsService';
+import { IPostSave, PostsService } from '../../shared/api/posts/PostsService';
 import { LayoutDashboard } from '../../shared/layouts';
 
 const defaultPost: IPostSave = {
@@ -31,7 +35,7 @@ export const PostEditor = () => {
   const [uploading, setUploading] = useState(false);
 
   const editor = useEditor({
-    extensions: [StarterKit, Heading, Bold],
+    extensions: [StarterKit, Heading, Bold, Image.configure({ inline: true })],
     content: post.content,
     onUpdate: ({ editor }) => {
       setPost((prev) => ({ ...prev, content: editor.getHTML() }));
@@ -65,7 +69,7 @@ export const PostEditor = () => {
     setPost((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFeatureImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
 
@@ -79,6 +83,25 @@ export const PostEditor = () => {
       console.error(result.message);
     } else {
       setFeatureImageUrl(result);
+    }
+
+    setUploading(false);
+  };
+
+  const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    setUploading(true);
+
+    const result = await PostsService.uploadImage(file);
+
+    if (result instanceof Error) {
+      console.error(result.message);
+    } else {
+      const imageUrl = result;
+
+      editor?.commands.setImage({ src: imageUrl });
     }
 
     setUploading(false);
@@ -150,7 +173,7 @@ export const PostEditor = () => {
           <input
             type="file"
             accept="image/*"
-            onChange={handleImageUpload}
+            onChange={handleFeatureImageUpload}
             className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
           />
           {uploading && <p>Carregando...</p>}
@@ -178,6 +201,18 @@ export const PostEditor = () => {
           placeholder="Descrição"
           className="border p-2 w-full mb-4"
         />
+
+        {/* Campo para adicionar imagem ao conteúdo */}
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700">Adicionar Imagem ao Conteúdo</label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageUpload}
+            className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+          />
+          {uploading && <p>Carregando...</p>}
+        </div>
 
         {/* Editor Tiptap para o conteúdo */}
         <div className="border p-2 rounded-lg mb-4">
