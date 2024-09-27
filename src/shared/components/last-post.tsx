@@ -1,22 +1,22 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { api } from '../services/axios';
-
-interface Post {
-  id: string;
-  backgroundImage: string;
-  title: string;
-  description: string;
-  tags: string[];
-}
+import { IPostData, PostsService } from '../api/posts/PostsService';
 
 export function LastPost() {
-  const [posts, setPosts] = useState<Post[]>([]);
-  const post = posts.at(-1);
+  const [post, setPost] = useState<IPostData>();
 
   useEffect(() => {
-    api.get('/postss').then((response) => setPosts(response.data));
-  });
+    PostsService.getAll('texto').then((response) => {
+      if (response instanceof Error) {
+        console.error(response.message);
+        return;
+      }
+
+      if (response && response.length > 0) {
+        setPost(response[0]);
+      }
+    });
+  }, []);
 
   return (
     <div className="flex lg:justify-between border-[1px] border-[#202020] -mb-[1px]">
@@ -32,7 +32,9 @@ export function LastPost() {
       {/** DESKTOP */}
       <Link to={`/postsmodacad/${post?.id}`} className="hidden lg:flex lg:gap-10">
         <div className="flex flex-col w-full gap-4 lg:w-[44%] lg:p-10">
-          {post?.tags.map((t) => <span className="font-montserratLight text-[12px] -mt-[15px] ">{t}</span>)}
+          {post?.tags &&
+            Array.isArray(post.tags) &&
+            post?.tags.map((t) => <span className="font-montserratLight text-[12px] -mt-[15px] ">{t}</span>)}
 
           <h1 className="text-xl lg:text-6xl">{post?.title}</h1>
 
@@ -40,16 +42,19 @@ export function LastPost() {
         </div>
 
         <div className=" lg:w-[60%] shadow-inner">
-          <img src={post?.backgroundImage} className="h-full object-cover object-top sm:h-full" />
+          <img src={post?.feature_image ?? ''} className="h-full object-cover object-top sm:h-full" />
         </div>
       </Link>
+
       {/** MOBILE */}
       <Link to={`/postsmodacad/${post?.id}`} className="flex flex-col lg:hidden ">
         <div className="shadow-inner">
-          <img src={post?.backgroundImage} className="h-full object-cover object-top sm:h-full" />
+          <img src={post?.feature_image ?? ''} className="h-full object-cover object-top sm:h-full" />
         </div>
         <div className="flex flex-col w-full p-3">
-          {post?.tags.map((t) => <span className="font-montserratLight text-[12px] -mt-[5px]">{t}</span>)}
+          {post?.tags &&
+            Array.isArray(post.tags) &&
+            post?.tags.map((t) => <span className="font-montserratLight text-[12px] -mt-[5px]">{t}</span>)}
 
           <h1 className="text-xl lg:text-6xl">{post?.title}</h1>
 

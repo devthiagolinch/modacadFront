@@ -10,25 +10,23 @@ import { A11y, Navigation, Pagination, Scrollbar } from 'swiper/modules';
 /* import { RxArrowTopRight } from "react-icons/rx"; */
 import { TextoMocadCard } from './cards/textoModacadCard';
 import { useEffect, useState } from 'react';
-import { api } from '../services/axios';
+import { IPostData, PostsService } from '../api/posts/PostsService';
 
 interface TextScrollInterface {
   title: string;
 }
 
-interface Post {
-  id: string;
-  backgroundImage: string;
-  title: string;
-  description: string;
-  tags: string[];
-}
-
 export function ScrollTextosMaisLidos({ title }: TextScrollInterface) {
-  const [cards, setCards] = useState<Post[]>([]);
+  const [posts, setPosts] = useState<IPostData[]>([]);
 
   useEffect(() => {
-    api.get('/postss').then((response) => setCards(response.data));
+    PostsService.getAll('texto').then((response) => {
+      if (response instanceof Error) {
+        console.error(response.message);
+        return;
+      }
+      setPosts(response);
+    });
   }, []);
 
   return (
@@ -51,20 +49,12 @@ export function ScrollTextosMaisLidos({ title }: TextScrollInterface) {
           slidesPerView={3}
           navigation
           scrollbar={{ draggable: true }}
-          onSwiper={(swiper) => console.log(swiper)}
-          onSlideChange={() => console.log('slide change')}
           className="lg:max-w-[1400px] -ml-[1px] h-[100%]"
         >
-          {cards.map((item) => (
+          {posts.map((item) => (
             <SwiperSlide key={item.id}>
               <Link to={`/posts/${item.id}`}>
-                <TextoMocadCard
-                  id={item.id}
-                  banner={item.backgroundImage}
-                  title={item.title}
-                  description={item.description}
-                  tags={item.tags}
-                />
+                <TextoMocadCard post={item} />
               </Link>
             </SwiperSlide>
           ))}

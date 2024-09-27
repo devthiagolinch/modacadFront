@@ -10,7 +10,6 @@ import { Dashboard } from '../pages/dashboard/Dashboard';
 import { PopularPosts } from '../pages/posts/PopularPosts';
 import { PublishedPills } from '../pages/posts/PublishedPills';
 import { PillDetails } from '../pages/posts/PillDetails';
-import { Posts } from '../pages/posts/Posts';
 import { PostDetails } from '../pages/posts/PostDetails';
 import { PostEditor } from '../pages/dashboard/PostEditor';
 
@@ -36,9 +35,9 @@ export const AppRoutes = () => {
       {/* Rotas Públicas */}
       <Route path="/" element={<Home />} />
       <Route path="/posts/popular" element={<PopularPosts />} />
-      <Route path="/posts/pills" element={<PublishedPills />} />
-      <Route path="/posts/pills/:pillId" element={<PillDetails />} />
-      <Route path="/posts/news" element={<Posts />} />
+      <Route path="/pilulas" element={<PublishedPills />} />
+      <Route path="/pilulas/:postId" element={<PillDetails />} />
+      <Route path="/posts/news" element={<PopularPosts />} />
       <Route path="/plans" element={<Plans />} />
 
       {/* Rotas para postagens */}
