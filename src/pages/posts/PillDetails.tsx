@@ -2,35 +2,32 @@ import { Footer } from '../../shared/components/footer';
 import { Header } from '../../shared/components/header';
 
 import { BlockText } from '../../shared/components/blocktext';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { CriarPerfil } from '../../shared/components/criarPerfil';
 import { useEffect, useState } from 'react';
-import { api } from '../../shared/services/axios';
+import { IPostData, PostsService } from '../../shared/api/posts/PostsService';
 
-interface Post {
-  id: string;
-  html: string;
-  title: string;
-  slug: string;
-  tags: string[];
-  feature_image: string;
-  visibility: string;
-  type: string;
-  plaintext: string;
-  admin_id: string;
-}
+export const PillDetails = () => {
+  const { postId } = useParams<{ postId: string }>();
+  const navigate = useNavigate();
 
-export function PillDetails() {
-  const id = useParams<{ id: string }>();
-  const [pilula, setPilula] = useState<Post>();
+  const [pilula, setPilula] = useState<IPostData>();
 
   useEffect(() => {
-    (async () => {
-      await api.get(`/admins/posts/${id.id}`).then(({ data }) => setPilula(data));
-    })();
-  }, [pilula]);
+    if (postId) {
+      PostsService.getById(postId).then((response) => {
+        if (response instanceof Error) {
+          console.error(response.message);
+          return;
+        }
+        setPilula(response);
+      });
+    } else {
+      navigate('/pilulas');
+    }
+  }, [postId]);
 
-  if (pilula?.visibility == 'Pro') {
+  if (pilula?.visibility == 'pro') {
     return (
       <div className="overflow-hidden block">
         <CriarPerfil />
@@ -56,18 +53,20 @@ export function PillDetails() {
                 {pilula?.title}
               </h1>
 
-              <p className="lg:text-left lg:text-[20px] w-[100%] font-montserratLight">{pilula?.slug}</p>
+              <p className="lg:text-left lg:text-[20px] w-[100%] font-montserratLight">{pilula?.description}</p>
             </div>
           </div>
 
           <div className="lg:flex lg:w-full lg:justify-between lg:px-[20%]">
             <div className="lg:flex lg:p-5 lg:gap-5 lg:items-center lg:justify-start">
               <img
-                src={pilula?.admin_id}
+                src={pilula?.admins.avatar ?? ''}
                 alt=""
                 className="w-14 h-14 rounded-full flex items-center justify-center bg-black"
               />
-              <p className="lg:-ml-3 lg:text-[20px] lg:font-montserratMedium tracking-[0.05em]">{pilula?.admin_id}</p>
+              <p className="lg:-ml-3 lg:text-[20px] lg:font-montserratMedium tracking-[0.05em]">
+                {pilula?.admins.name}
+              </p>
             </div>
 
             <div className="lg:flex lg:flex-row lg:justify-center lg:items-center text-zinc-800">
@@ -90,7 +89,7 @@ export function PillDetails() {
           <div className=" pt-7 pb-5 w-full px-5 grid gap-5">
             <h1 className="text-[40px] lg:text-[30px] leading-[40px] font-butler_ultra_light">{pilula?.title}</h1>
 
-            <p className="text-left leading-[20px] font-montserratLight">{pilula?.slug}</p>
+            <p className="text-left leading-[20px] font-montserratLight">{pilula?.description}</p>
           </div>
 
           <div className="flex flex-col ">
@@ -108,11 +107,11 @@ export function PillDetails() {
 
             <div className="flex p-5 gap-[10px] items-center">
               <img
-                src={pilula?.admin_id}
+                src={pilula?.admins.avatar ?? ''}
                 alt=""
                 className="w-[50px] h-[50px] rounded-full flex items-center justify-center bg-black"
               />
-              <p className="text-[20px]">{pilula?.admin_id}</p>
+              <p className="text-[20px]">{pilula?.admins.name}</p>
             </div>
 
             <div className="flex justify-between items-start align-top gap-10 px-5 mb-[20px] text-zinc-800">
@@ -131,7 +130,10 @@ export function PillDetails() {
         </div>
 
         <div className="lg:pt-12 lg:px-[20%] mb-[40px] mx-[20px]  ">
-          <p className="lg:text-justify lg:text-lg font-montserrat_light">{pilula?.html}</p>
+          <p
+            className="lg:text-justify lg:text-lg font-montserrat_light"
+            dangerouslySetInnerHTML={{ __html: pilula.content }}
+          />
         </div>
         <Footer />
       </div>
@@ -155,18 +157,20 @@ export function PillDetails() {
                 {pilula?.title}
               </h1>
 
-              <p className="lg:text-left lg:text-[20px] w-[100%] font-montserratLight">{pilula?.slug}</p>
+              <p className="lg:text-left lg:text-[20px] w-[100%] font-montserratLight">{pilula?.description}</p>
             </div>
           </div>
 
           <div className="lg:flex lg:w-full lg:justify-between lg:px-[20%]">
             <div className="lg:flex lg:p-5 lg:gap-5 lg:items-center lg:justify-start">
               <img
-                src={pilula?.admin_id}
+                src={pilula?.admins.name}
                 alt=""
                 className="w-14 h-14 rounded-full flex items-center justify-center bg-black"
               />
-              <p className="lg:-ml-3 lg:text-[20px] lg:font-montserratMedium tracking-[0.05em]">{pilula?.admin_id}</p>
+              <p className="lg:-ml-3 lg:text-[20px] lg:font-montserratMedium tracking-[0.05em]">
+                {pilula?.admins.name}
+              </p>
             </div>
 
             <div className="lg:flex lg:flex-row lg:justify-center lg:items-center text-zinc-800">
@@ -189,7 +193,7 @@ export function PillDetails() {
           <div className=" pt-7 pb-5 w-full px-5 grid gap-5">
             <h1 className="text-3xl font-butler_ultra_light">{pilula?.title}</h1>
 
-            <p className="text-left leading-[20px] font-montserratLight">{pilula?.slug}</p>
+            <p className="text-left leading-[20px] font-montserratLight">{pilula?.description}</p>
           </div>
 
           <div className="flex flex-col ">
@@ -207,11 +211,11 @@ export function PillDetails() {
 
             <div className="flex p-5 gap-[10px] items-center">
               <img
-                src={pilula?.admin_id}
+                src={pilula?.admins.name}
                 alt=""
                 className="w-[50px] h-[50px] rounded-full flex items-center justify-center bg-black"
               />
-              <p className="text-[20px]">{pilula?.admin_id}</p>
+              <p className="text-[20px]">{pilula?.admins.name}</p>
             </div>
 
             <div className="flex justify-between items-start align-top gap-10 px-5 mb-[20px] text-zinc-800">
@@ -230,13 +234,14 @@ export function PillDetails() {
         </div>
 
         <div className="lg:pt-12 lg:px-[20%] mb-[40px] mx-[20px]  ">
-          <p className="lg:text-justify lg:text-lg font-montserrat_light lg:h-40 h-48 overflow-hidden">
-            {pilula?.html}
-          </p>
+          <p
+            className="lg:text-justify lg:text-lg font-montserrat_light lg:h-40 h-48 overflow-hidden"
+            dangerouslySetInnerHTML={{ __html: pilula?.content ?? '' }}
+          />
         </div>
         <BlockText />
         <Footer />
       </div>
     );
   }
-}
+};

@@ -37,7 +37,7 @@ export const AppRoutes = () => {
       <Route path="/" element={<Home />} />
       <Route path="/posts/popular" element={<PopularPosts />} />
       <Route path="/pilulas" element={<PublishedPills />} />
-      <Route path="/posts/pills/:pillId" element={<PillDetails />} />
+      <Route path="/pilulas/:postId" element={<PillDetails />} />
       <Route path="/posts/news" element={<Posts />} />
       <Route path="/plans" element={<Plans />} />
 
