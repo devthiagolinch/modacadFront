@@ -11,27 +11,25 @@ import { A11y, Navigation, Pagination, Scrollbar } from 'swiper/modules';
 
 /* import { RxArrowTopRight } from "react-icons/rx"; */
 import { TextoMocadCard } from './cards/textoModacadCard';
-import { useEffect, useState } from 'react';
-import { api } from '../services/axios';
+import React, { useEffect, useState } from 'react';
+import { IPostData, PostsService } from '../api/posts/PostsService';
 
 interface TextScrollInterface {
   title: string;
 }
 
-interface Post {
-  id: string;
-  backgroundImage: string;
-  title: string;
-  description: string;
-  tags: string[];
-}
-
-export function ScrollTextoMCD({ title }: TextScrollInterface) {
-  const [cards, setCards] = useState<Post[]>([]);
+export const ScrollTextoMCD: React.FC<TextScrollInterface> = ({ title }) => {
+  const [posts, setPosts] = useState<IPostData[]>([]);
 
   useEffect(() => {
-    api.get('/postss').then((response) => setCards(response.data));
-  }, []);
+    PostsService.getAll('texto').then((response) => {
+      if (response instanceof Error) {
+        console.error(response.message);
+        return;
+      }
+      setPosts(response);
+    });
+  });
 
   return (
     <div className="flex flex-row -mt-[1px]">
@@ -54,20 +52,12 @@ export function ScrollTextoMCD({ title }: TextScrollInterface) {
           navigation={{ enabled: true }}
           freeMode={true}
           scrollbar={{ draggable: true }}
-          onSwiper={(swiper) => console.log(swiper)}
-          onSlideChange={() => console.log('slide change')}
           className="mySwiper"
         >
-          {cards?.map((item) => (
-            <SwiperSlide key={item.id}>
-              <Link to={`/posts/${item.id}`}>
-                <TextoMocadCard
-                  id={item.id}
-                  banner={item.backgroundImage}
-                  title={item.title}
-                  description={item.description}
-                  tags={item.tags}
-                />
+          {posts?.map((post) => (
+            <SwiperSlide key={post.id}>
+              <Link to={`/posts/${post.id}`}>
+                <TextoMocadCard post={post} />
               </Link>
             </SwiperSlide>
           ))}
@@ -75,4 +65,4 @@ export function ScrollTextoMCD({ title }: TextScrollInterface) {
       </div>
     </div>
   );
-}
+};

@@ -1,27 +1,30 @@
-import { useEffect, useState } from 'react';
-import { api } from '../../shared/services/axios';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { ScrollTextoMCD } from '../../shared/components/ScrollTextoMDC';
-import { ScrollPiluaMCD } from '../../shared/components/ScrollPilulasMDC';
+import { ScrollPilulaMCD } from '../../shared/components/ScrollPilulasMDC';
 import { ScrollTextosMaisLidos } from '../../shared/components/ScrollTextoMaisLidos';
 import { Footer } from '../../shared/components/footer';
 import { LastPost } from '../../shared/components/last-post';
 import { ReadingBox } from '../../shared/components/reagindBox';
 
+import { ISubjectData, SubjectsService } from '../../shared/api/subjects/SubjectsService';
+
 import banner from '../../assets/imgs/Banner-home.jpg';
 import telmaLogoDesk from '../../assets/svg/HOME logo TELMA BARCELLOS modacad.svg';
 import telmaLogoDMobile from '../../assets/svg/MOBILE Logo TELMA BARCELLOS modacad.svg';
 
-interface Subjects {
-  id: string;
-  name: string;
-}
 export function Home() {
-  const [subjects, setSubjects] = useState<Subjects[]>([]);
+  const [subjects, setSubjects] = useState<ISubjectData[]>([]);
 
   useEffect(() => {
-    api.get('/subjects').then((response) => setSubjects(response.data));
+    SubjectsService.getAll().then((response) => {
+      if (response instanceof Error) {
+        console.error(response.message);
+        return;
+      }
+      setSubjects(response);
+    });
   }, []);
 
   return (
@@ -148,9 +151,8 @@ export function Home() {
         >
           {subjects.map((sub) => {
             return (
-              <>
+              <React.Fragment key={sub.id}>
                 <a
-                  key={sub.id}
                   className="px-2 lg:px-5
                                 bg-gradient-to-t from-[#dcdf1e] to-[#dcdf1e] bg-[length:120%_.60em] bg-no-repeat bg-[position:calc(90%_-_var(--p,0%))_900%]  hover:bg-[position:50%_95%]
                               "
@@ -158,16 +160,20 @@ export function Home() {
                   {sub.name}
                 </a>
                 <span className="text-2xl">•</span>
-              </>
+              </React.Fragment>
             );
           })}
         </div>
       </div>
 
       <ScrollTextosMaisLidos title={'TEXTOS MAIS LIDOS'} />
+
       <ScrollTextoMCD title={'TEXTO PUBLICADOS'} />
+
       <ReadingBox />
-      <ScrollPiluaMCD title={'PILULAS MODACAD'} />
+
+      <ScrollPilulaMCD title={'PILULAS MODACAD'} />
+
       <div className="h-96"></div>
 
       <Footer />

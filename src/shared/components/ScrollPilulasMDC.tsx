@@ -10,32 +10,23 @@ import { A11y, Navigation, Pagination, Scrollbar } from 'swiper/modules';
 import { Link } from 'react-router-dom';
 import { PilulaModacadCard } from './cards/pilulasModacadCard';
 import { useEffect, useState } from 'react';
-import { api } from '../services/axios';
+import { IPostData, PostsService } from '../api/posts/PostsService';
 
 interface TextScrollInterface {
   title: string;
 }
 
-interface Post {
-  id: string;
-  html: string;
-  title: string;
-  slug: string;
-  tags: string[];
-  feature_image: string;
-  visibility: string;
-  type: string;
-  plaintext: string;
-  admin_id: string;
-}
-
-// ARRUMAR AS TAGS DOS CARDS PARA TER MAIS DISTANCIA ENTRE ELES
-
-export function ScrollPiluaMCD({ title }: TextScrollInterface) {
-  const [cards, setCards] = useState<Post[]>([]);
+export function ScrollPilulaMCD({ title }: TextScrollInterface) {
+  const [posts, setPosts] = useState<IPostData[]>([]);
 
   useEffect(() => {
-    api.get('/post/posts/pills').then((response) => setCards(response.data));
+    PostsService.getAll('pilula').then((response) => {
+      if (response instanceof Error) {
+        console.error(response.message);
+        return;
+      }
+      setPosts(response);
+    });
   }, []);
 
   return (
@@ -54,20 +45,12 @@ export function ScrollPiluaMCD({ title }: TextScrollInterface) {
           navigation
           pagination
           scrollbar={{ draggable: true }}
-          onSwiper={(swiper) => console.log(swiper)}
-          onSlideChange={() => console.log('slide change')}
           className="lg:max-w-[1400px] -ml-[1px] h-[100%]"
         >
-          {cards.map((item) => (
-            <SwiperSlide key={item.id}>
-              <Link to={`/posts/pills/${item.id}`}>
-                <PilulaModacadCard
-                  banner={item.id}
-                  description={item.slug}
-                  tags={item.tags}
-                  title={item.title}
-                  id={item.id}
-                />
+          {posts.map((post) => (
+            <SwiperSlide key={post.id}>
+              <Link to={`/posts/pills/${post.id}`}>
+                <PilulaModacadCard post={post} />
               </Link>
             </SwiperSlide>
           ))}
