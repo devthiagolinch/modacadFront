@@ -19,7 +19,7 @@ export function Plans() {
 
   useEffect(() => {
     api.get('/planos').then((response) => setPlan(response.data));
-  });
+  }, []);
   console.log(plan);
 
   return (

@@ -18,7 +18,7 @@ export function PopularPosts() {
       }
       setPosts(response);
     });
-  });
+  }, []);
 
   return (
     <div className="">

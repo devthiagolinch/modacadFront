@@ -29,7 +29,7 @@ export const ScrollTextoMCD: React.FC<TextScrollInterface> = ({ title }) => {
       }
       setPosts(response);
     });
-  });
+  }, []);
 
   return (
     <div className="flex flex-row -mt-[1px]">

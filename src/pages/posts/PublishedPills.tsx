@@ -1,13 +1,23 @@
-import { ServiceData } from '../../assets/utils/constants.index';
 import { Header } from '../../shared/components/header';
 import { Footer } from '../../shared/components/footer';
 import { Link } from 'react-router-dom';
 import { ReadingBox } from '../../shared/components/reagindBox';
-import { Button } from '../../shared/components/Button';
 import { PilulaModacadCard } from '../../shared/components/cards/pilulasModacadCard';
+import { useEffect, useState } from 'react';
+import { IPostData, PostsService } from '../../shared/api/posts/PostsService';
 
 export function PublishedPills() {
-  const data = ServiceData.filter((t) => t.type == 'pilulas');
+  const [posts, setPosts] = useState<IPostData[]>([]);
+
+  useEffect(() => {
+    PostsService.getAll('pilula').then((response) => {
+      if (response instanceof Error) {
+        console.error(response.message);
+        return;
+      }
+      setPosts(response);
+    });
+  }, []);
 
   return (
     <div className="">
@@ -28,21 +38,15 @@ export function PublishedPills() {
                     grid grid-cols-2
                 "
         >
-          {data.map((texto) => (
-            <Link to={`/posts/pills/${texto.id}`}>
-              <PilulaModacadCard
-                id={texto.id}
-                banner={texto.backgroundImage}
-                title={texto.title}
-                description={texto.description}
-                tags={texto.tag}
-              />
+          {posts.map((post) => (
+            <Link to={`/posts/pills/${post.id}`} key={post.id}>
+              <PilulaModacadCard post={post} />
             </Link>
           ))}
         </div>
-        <div className="lg:mb-[80px] lg:mt-[60px] mt-[25px] mb-[50px] justify-center items-center flex">
+        {/* <div className="lg:mb-[80px] lg:mt-[60px] mt-[25px] mb-[50px] justify-center items-center flex">
           <Button title={'Carregar mais'} active={false} />
-        </div>
+        </div> */}
       </div>
 
       <ReadingBox />

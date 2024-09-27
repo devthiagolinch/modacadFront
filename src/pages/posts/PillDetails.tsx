@@ -29,7 +29,6 @@ export function PillDetails() {
       await api.get(`/admins/posts/${id.id}`).then(({ data }) => setPilula(data));
     })();
   }, [pilula]);
-  console.log(pilula?.title);
 
   if (pilula?.visibility == 'Pro') {
     return (

@@ -42,13 +42,6 @@ function UpdatePost() {
   const [texto, setTexto] = useState<Texto>();
   const [_, setEditorContent] = useState('');
 
-  // useEffect(() => {
-  //     api.get(`/admins/posts/${id.id}`).then(response => {
-  //         setTexto(response.data)
-  //     })
-  //   }, []
-  // )
-
   useEffect(() => {
     (async () => {
       await api.get(`/admins/posts/${id}`).then(({ data }) => setTexto(data));
