@@ -38,7 +38,7 @@ export const AppRoutes = () => {
       <Route path="/posts/popular" element={<PopularPosts />} />
       <Route path="/pilulas" element={<PublishedPills />} />
       <Route path="/pilulas/:postId" element={<PillDetails />} />
-      <Route path="/posts/news" element={<Posts />} />
+      <Route path="/posts/news" element={<PopularPosts />} />
       <Route path="/plans" element={<Plans />} />
 
       {/* Rotas para postagens */}
