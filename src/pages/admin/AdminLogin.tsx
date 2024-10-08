@@ -37,7 +37,7 @@ export function AdminLogin() {
 
       login(token, admin);
 
-      history(`/dashboard`);
+      history(`/dashboard/texto`);
     });
   }
 

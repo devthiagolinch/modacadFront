@@ -44,7 +44,7 @@ export const AppRoutes = () => {
       <Route path="/posts/:postId" element={<PostDetails />} />
 
       {/* Rotas Protegidas (Privadas) */}
-      <Route path="/dashboard" element={<PrivateRoute element={<Dashboard />} />} />
+      <Route path="/dashboard/:type" element={<PrivateRoute element={<Dashboard />} />} />
       <Route path="/posts/novo" element={<PrivateRoute element={<PostEditor />} />} />
       <Route path="/posts/:postId/editar" element={<PrivateRoute element={<PostEditor />} />} />
 

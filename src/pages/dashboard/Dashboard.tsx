@@ -1,25 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { LayoutDashboard } from '../../shared/layouts/LayoutDashboard';
 import { IPostData, PostsService } from '../../shared/api/posts/PostsService';
-import { statuses } from '../../shared/services/postOptions';
+import { statuses, TPostsType } from '../../shared/services/postOptions';
 
 export const Dashboard: React.FC = () => {
   const navigate = useNavigate();
+  const { type } = useParams<{ type: TPostsType }>();
 
   const [rows, setRows] = useState<IPostData[]>([]);
 
   useEffect(() => {
-    PostsService.getAll('texto').then((data) => {
+    PostsService.getAll(type ?? 'texto').then((data) => {
       if (data instanceof Error) {
         console.error(data.message);
       } else {
         setRows(data);
       }
     });
-  }, []);
+  }, [type]);
 
   const handleDelete = (postId: string) => {
     console.log(postId + ' deleted');

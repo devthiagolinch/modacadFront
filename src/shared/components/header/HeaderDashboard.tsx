@@ -11,7 +11,8 @@ import {
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
 
 import { useUser } from '../../contexts';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
@@ -20,21 +21,16 @@ function classNames(...classes: string[]) {
 export const HeaderDashboard = () => {
   const { user, logout } = useUser();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const navigation = [
     {
-      name: 'Dashboard',
-      current: true,
-      onClick: () => {
-        navigate('/dashboard');
-      },
+      name: 'Textos',
+      redirectTo: '/dashboard/texto',
     },
     {
-      name: 'Nova publicação',
-      current: false,
-      onClick: () => {
-        navigate('/posts/novo');
-      },
+      name: 'Pílulas',
+      redirectTo: '/dashboard/pilula',
     },
   ];
 
@@ -49,25 +45,27 @@ export const HeaderDashboard = () => {
               <div className="flex h-16 items-center justify-between">
                 <div className="flex items-center">
                   <div className="flex-shrink-0">
-                    <img
-                      className="h-8 w-8"
-                      src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                      alt="Your Company"
-                    />
+                    <Link to="/" className="h-8 w-8">
+                      <img
+                        className="h-8 w-8"
+                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                        alt="Your Company"
+                      />
+                    </Link>
                   </div>
                   <div className="hidden md:block">
                     <div className="ml-10 flex items-baseline space-x-4">
                       {navigation.map((item) => (
                         <button
                           key={item.name}
-                          onClick={item.onClick}
+                          onClick={() => navigate(item.redirectTo)}
                           className={classNames(
-                            item.current
+                            location.pathname === item.redirectTo
                               ? 'bg-gray-900 text-white'
                               : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                             'rounded-md px-3 py-2 text-sm font-medium'
                           )}
-                          aria-current={item.current ? 'page' : undefined}
+                          aria-current={location.pathname === item.redirectTo ? 'page' : undefined}
                         >
                           {item.name}
                         </button>
@@ -144,12 +142,14 @@ export const HeaderDashboard = () => {
                 {navigation.map((item) => (
                   <DisclosureButton
                     key={item.name}
-                    onClick={item.onClick}
+                    onClick={() => navigate(item.redirectTo)}
                     className={classNames(
-                      item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                      location.pathname === item.redirectTo
+                        ? 'bg-gray-900 text-white'
+                        : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                       'block rounded-md px-3 py-2 text-base font-medium'
                     )}
-                    aria-current={item.current ? 'page' : undefined}
+                    aria-current={location.pathname === item.redirectTo ? 'page' : undefined}
                   >
                     {item.name}
                   </DisclosureButton>
