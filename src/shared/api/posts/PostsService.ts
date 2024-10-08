@@ -72,7 +72,7 @@ interface IMetaData {
 
 const getAll = async (
   type: TPostsType,
-  statusId?: TPostsStatus,
+  statusId?: string,
   authorId?: string,
   limit?: number
 ): Promise<IPostData[] | Error> => {
