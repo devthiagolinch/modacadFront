@@ -1,4 +1,5 @@
-import { TPostsVisibility } from 'src/shared/services/postOptions';
+import { api } from '../../../shared/services/axios';
+import { TPostsVisibility } from '../../../../src/shared/services/postOptions';
 
 export interface ITagData {
   id: string;
@@ -23,3 +24,22 @@ export interface ITagData {
   created_at: string;
   updated_at: string;
 }
+
+const getAll = async () => {
+  try {
+    const { data } = await api.get<ITagData[]>(`/tags`);
+
+    if (Array.isArray(data)) {
+      return data;
+    }
+
+    return new Error('Erro ao buscar os registros');
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido ao listar os registros';
+    return new Error(errorMessage);
+  }
+};
+
+export const TagsService = {
+  getAll,
+};

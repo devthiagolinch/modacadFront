@@ -35,8 +35,8 @@ export interface IPostDataRequest {
   images: string | null;
   visibility: TPostsVisibility;
   admins: string[];
-  tags: string[];
-  subjects: string[];
+  tags: ITagData[];
+  subjects: ISubjectData[];
   og_image: string;
   og_title: string;
   og_description: string;
@@ -117,27 +117,6 @@ const updateById = async (postId: string, post: IPostDataRequest): Promise<void 
   }
 };
 
-const uploadFeatureImage = async (postId: string, file: File): Promise<string | Error> => {
-  try {
-    const formData = new FormData();
-    formData.append('images', file);
-
-    const urlRelativa = `/post/images/feature-image/${postId}`;
-    const { data } = await api.post<string>(urlRelativa, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
-    if (data) {
-      return data;
-    }
-    return new Error('Erro ao fazer upload da imagem');
-  } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido ao fazer upload da imagem';
-    return new Error(errorMessage);
-  }
-};
-
 const uploadImage = async (file: File): Promise<string | Error> => {
   try {
     const formData = new FormData();
@@ -163,6 +142,5 @@ export const PostsService = {
   create,
   getById,
   updateById,
-  uploadFeatureImage,
   uploadImage,
 };

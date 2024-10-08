@@ -21,6 +21,7 @@ import {
 import { ISubjectData, SubjectsService } from '../../shared/api/subjects/SubjectsService';
 import { IPostDataRequest, PostsService } from '../../shared/api/posts/PostsService';
 import { LayoutDashboard } from '../../shared/layouts';
+import { ITagData, TagsService } from '../../shared/api/tags/TagsService';
 
 const defaultPost: IPostDataRequest = {
   title: '',
@@ -54,6 +55,8 @@ export const PostEditor = () => {
 
   const [post, setPost] = useState<IPostDataRequest>(defaultPost);
   const [subjectsOptions, setSubjectsOptions] = useState<ISubjectData[]>([]);
+  const [tagsOptions, setTagsOptions] = useState<ITagData[]>([]);
+
   const [featureImageUrl, setFeatureImageUrl] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
 
@@ -74,6 +77,15 @@ export const PostEditor = () => {
       }
     });
 
+    TagsService.getAll().then((response) => {
+      if (response instanceof Error) {
+        console.error(response.message);
+      } else {
+        setTagsOptions(response);
+        setFilteredTags(response);
+      }
+    });
+
     if (postId && postId !== 'novo') {
       PostsService.getById(postId).then((response) => {
         if (response instanceof Error) {
@@ -89,8 +101,8 @@ export const PostEditor = () => {
             images: response.images ? response.images.join(',') : null,
             visibility: response.visibility,
             admins: response.admins.map((admin) => admin.id),
-            tags: response.tags.map((tag) => tag.id),
-            subjects: response.subjects.map((subject) => subject.id),
+            tags: response.tags.map((tag) => tag),
+            subjects: response.subjects.map((subject) => subject),
             og_image: response.meta?.og_image ?? '',
             og_title: response.meta?.og_title ?? '',
             og_description: response.meta?.og_description ?? '',
@@ -112,11 +124,22 @@ export const PostEditor = () => {
     }
   }, [postId, editor]);
 
-  useEffect(() => {
-    if (post) {
-      console.log(post);
-    }
-  }, [post]);
+  // Tags
+  const [isOpen, setIsOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredTags, setFilteredTags] = useState<ITagData[]>(tagsOptions);
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value.toLowerCase();
+    setSearchTerm(value);
+    setFilteredTags(
+      tagsOptions.filter((tag) => tag.name.toLowerCase().includes(value) || tag.slug.toLowerCase().includes(value))
+    );
+  };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -129,13 +152,14 @@ export const PostEditor = () => {
 
     setUploading(true);
 
-    const result = await PostsService.uploadFeatureImage(postId || 'novo', file);
+    const result = await PostsService.uploadImage(file);
 
     console.log(result);
 
     if (result instanceof Error) {
       console.error(result.message);
     } else {
+      setPost((prev) => ({ ...prev, feature_image: result }));
       setFeatureImageUrl(result);
     }
 
@@ -173,29 +197,30 @@ export const PostEditor = () => {
     setPost({ ...post, type });
   };
 
-  const handleSubjectSelect = (subjectId: string) => {
+  const handleChangeTags = (newTag: ITagData) => {
     setPost((prevPost) => {
-      let updatedSubjects: string[] = [];
+      let updatedTags: ITagData[] = [];
+      updatedTags = [...prevPost.tags];
 
-      // Garantir que prevPost.subjects seja sempre tratado como um array de strings
-      if (Array.isArray(prevPost.subjects)) {
-        updatedSubjects = [...prevPost.subjects];
-      } else if (typeof prevPost.subjects === 'string') {
-        updatedSubjects = [prevPost.subjects];
-      }
+      const isSelected = updatedTags.includes(newTag);
+      isSelected ? (updatedTags = updatedTags.filter((tag) => tag !== newTag)) : updatedTags.push(newTag);
 
-      // Verificar se o subject já foi selecionado
-      const isSelected = updatedSubjects.includes(subjectId);
+      return { ...prevPost, tags: updatedTags };
+    });
+    setIsOpen(false);
+    setSearchTerm('');
+  };
 
-      if (isSelected) {
-        // Remover o subject selecionado
-        updatedSubjects = updatedSubjects.filter((id) => id !== subjectId);
-      } else if (updatedSubjects.length < 3) {
-        // Adicionar o subject se não estiver selecionado e não exceder o limite de 3
-        updatedSubjects.push(subjectId);
-      }
+  const handleSubjectSelect = (newSubject: ISubjectData) => {
+    setPost((prevPost) => {
+      let updatedSubjects: ISubjectData[] = [];
+      updatedSubjects = [...prevPost.subjects];
 
-      // Retornar o estado atualizado
+      const isSelected = updatedSubjects.includes(newSubject);
+      isSelected
+        ? (updatedSubjects = updatedSubjects.filter((subject) => subject !== newSubject))
+        : updatedSubjects.push(newSubject);
+
       return { ...prevPost, subjects: updatedSubjects };
     });
   };
@@ -274,6 +299,46 @@ export const PostEditor = () => {
         </div>
 
         {/* Tags */}
+        <div className="mb-4 relative w-64">
+          <input
+            type="text"
+            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
+            value={searchTerm}
+            onChange={handleSearch}
+            onClick={toggleDropdown}
+            placeholder="Pesquise tags"
+          />
+          {isOpen && (
+            <ul className="absolute z-10 w-full mt-2 bg-white border border-gray-300 rounded-md max-h-60 overflow-y-auto">
+              {filteredTags.length > 0 ? (
+                filteredTags.map((tag, index) => (
+                  <li
+                    key={index}
+                    className="p-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() => handleChangeTags(tag)}
+                  >
+                    {tag.name}
+                  </li>
+                ))
+              ) : (
+                <li className="p-2 text-gray-500">Nenhum resultado encontrado</li>
+              )}
+            </ul>
+          )}
+          {post.tags.length > 0 && (
+            <div className="mt-2">
+              {post.tags.map((tag, index) => (
+                <span
+                  onClick={() => handleChangeTags(tag)}
+                  key={index}
+                  className="inline-block bg-blue-500 text-white rounded-full px-4 py-2 mr-2"
+                >
+                  {tag.name}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
 
         {/* Subjects */}
         <div className="mb-4">
@@ -283,9 +348,9 @@ export const PostEditor = () => {
               <button
                 key={subject.id}
                 type="button"
-                onClick={() => handleSubjectSelect(subject.id)}
+                onClick={() => handleSubjectSelect(subject)}
                 className={`px-4 py-2 rounded-lg border text-sm font-medium ${
-                  Array.isArray(post.subjects) && post.subjects.includes(subject.id)
+                  Array.isArray(post.subjects) && post.subjects.includes(subject)
                     ? 'bg-blue-500 text-white'
                     : 'bg-gray-200 text-gray-700'
                 }`}
