@@ -1,29 +1,40 @@
 import React, { useEffect, useState } from 'react';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
 import { LayoutDashboard } from '../../shared/layouts/LayoutDashboard';
 import { IPostData, PostsService } from '../../shared/api/posts/PostsService';
-import { statuses, TPostsType } from '../../shared/services/postOptions';
+import { statuses, TPostsStatus, TPostsType } from '../../shared/services/postOptions';
 
 export const Dashboard: React.FC = () => {
   const navigate = useNavigate();
   const { type } = useParams<{ type: TPostsType }>();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const [rows, setRows] = useState<IPostData[]>([]);
 
   useEffect(() => {
-    PostsService.getAll(type ?? 'texto').then((data) => {
+    const status = searchParams.get('status') || '';
+    const authorId = searchParams.get('authorId') || '';
+    const typePost = type || 'texto';
+
+    PostsService.getAll(typePost, status, authorId).then((data) => {
       if (data instanceof Error) {
         console.error(data.message);
       } else {
         setRows(data);
       }
     });
-  }, [type]);
+  }, [type, searchParams]);
 
   const handleDelete = (postId: string) => {
     console.log(postId + ' deleted');
+  };
+
+  const updateStatusParam = (status: TPostsStatus) => {
+    const newSearchParams = new URLSearchParams(searchParams.toString());
+    newSearchParams.set('status', status);
+    setSearchParams(newSearchParams);
   };
 
   return (
@@ -31,12 +42,25 @@ export const Dashboard: React.FC = () => {
       <div className="container mx-auto">
         <div className="flex justify-between items-center mb-4">
           <h1 className="text-2xl font-bold">Publicações</h1>
-          <button
-            onClick={() => navigate('/posts/novo')}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          >
-            Adicionar post
-          </button>
+          <div className="flex space-x-4">
+            <div className="flex space-x-2">
+              {Object.entries(statuses).map(([key, value]) => (
+                <button
+                  key={key}
+                  onClick={() => updateStatusParam(key as TPostsStatus)}
+                  className={`px-4 py-2 rounded-full text-sm font-semibold ${searchParams.get('status') === key ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+                >
+                  {value.name}
+                </button>
+              ))}
+            </div>
+            <button
+              onClick={() => navigate('/posts/novo')}
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            >
+              Adicionar post
+            </button>
+          </div>
         </div>
         <table className="min-w-full bg-white border border-gray-200">
           <thead>

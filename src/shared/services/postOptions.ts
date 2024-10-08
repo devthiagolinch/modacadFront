@@ -1,4 +1,4 @@
-export type TPostsStatus = 'published' | 'draft' | 'deleted' | 'pending';
+export type TPostsStatus = 'published' | 'draft' | 'pending';
 export type TPostsVisibility = 'public' | 'basic' | 'pro';
 export type TPostsType = 'pilula' | 'texto';
 
@@ -9,20 +9,15 @@ export const statuses: Record<TPostsStatus, { name: string; bgColor: string; tex
     bgColor: 'bg-green-500',
     textColor: 'text-white',
   },
-  draft: {
-    name: 'Rascunho',
-    bgColor: 'bg-yellow-500',
-    textColor: 'text-black',
-  },
-  deleted: {
-    name: 'Deletado',
-    bgColor: 'bg-red-500',
-    textColor: 'text-white',
-  },
   pending: {
     name: 'Pendente',
     bgColor: 'bg-orange-500',
     textColor: 'text-white',
+  },
+  draft: {
+    name: 'Rascunho',
+    bgColor: 'bg-yellow-500',
+    textColor: 'text-black',
   },
 };
 

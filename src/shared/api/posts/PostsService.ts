@@ -70,9 +70,14 @@ interface IMetaData {
   email_only: string;
 }
 
-const getAll = async (type: 'pilula' | 'texto', statusId?: string, authorId?: string): Promise<IPostData[] | Error> => {
+const getAll = async (
+  type: TPostsType,
+  statusId?: TPostsStatus,
+  authorId?: string,
+  limit?: number
+): Promise<IPostData[] | Error> => {
   try {
-    const urlRelativa = `/post?type=${type ?? ''}&statusId=${statusId ?? ''}&authorId=${authorId ?? ''}`;
+    const urlRelativa = `/post?type=${type ?? ''}&statusId=${statusId ?? ''}&authorId=${authorId ?? ''}&limit=${limit ?? ''}`;
     const { data } = await api.get<IPostData[]>(urlRelativa);
 
     if (Array.isArray(data)) {
