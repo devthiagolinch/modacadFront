@@ -39,7 +39,7 @@ export function PublishedPills() {
                 "
         >
           {posts.map((post) => (
-            <Link to={`/posts/pills/${post.id}`} key={post.id}>
+            <Link to={`/pilulas/${post.id}`} key={post.id}>
               <PilulaModacadCard post={post} />
             </Link>
           ))}

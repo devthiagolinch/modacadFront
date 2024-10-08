@@ -16,7 +16,11 @@ export const TextoMocadCard: React.FC<TextosCardDTO> = ({ post }) => {
         <ul className="flex flex-col">
           {post?.tags &&
             Array.isArray(post.tags) &&
-            post?.tags.map((t) => <li className="font-montserratLight text-[12px] -mt-[4px]">{t}</li>)}
+            post?.tags.map((t, index) => (
+              <li className="font-montserratLight text-[12px] -mt-[4px]" key={index}>
+                {t.name}
+              </li>
+            ))}
         </ul>
 
         <h1 className="font-butler_regular text-[25px] leading-[30px] mb-[13px] mt-[12px]">{post?.title}</h1>

@@ -34,19 +34,19 @@ export const AppRoutes = () => {
     <Routes>
       {/* Rotas Públicas */}
       <Route path="/" element={<Home />} />
-      <Route path="/posts/popular" element={<PopularPosts />} />
+      <Route path="/planos" element={<Plans />} />
+
       <Route path="/pilulas" element={<PublishedPills />} />
       <Route path="/pilulas/:postId" element={<PillDetails />} />
-      <Route path="/posts/news" element={<PopularPosts />} />
-      <Route path="/plans" element={<Plans />} />
 
       {/* Rotas para postagens */}
-      <Route path="/posts/novo" element={<PrivateRoute element={<PostEditor />} />} />
-      <Route path="/posts/:postId/editar" element={<PrivateRoute element={<PostEditor />} />} />
+      <Route path="/posts/popular" element={<PopularPosts />} />
       <Route path="/posts/:postId" element={<PostDetails />} />
 
       {/* Rotas Protegidas (Privadas) */}
-      <Route path="/dashboard" element={<PrivateRoute element={<Dashboard />} />} />
+      <Route path="/dashboard/:type" element={<PrivateRoute element={<Dashboard />} />} />
+      <Route path="/posts/novo" element={<PrivateRoute element={<PostEditor />} />} />
+      <Route path="/posts/:postId/editar" element={<PrivateRoute element={<PostEditor />} />} />
 
       {/* Login Admin */}
       <Route path="/admin/login" element={<AdminLogin />} />

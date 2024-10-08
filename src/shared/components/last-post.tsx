@@ -30,11 +30,15 @@ export function LastPost() {
       </div>
 
       {/** DESKTOP */}
-      <Link to={`/postsmodacad/${post?.id}`} className="hidden lg:flex lg:gap-10">
+      <Link to={`/posts/${post?.id}`} className="hidden lg:flex lg:gap-10">
         <div className="flex flex-col w-full gap-4 lg:w-[44%] lg:p-10">
           {post?.tags &&
             Array.isArray(post.tags) &&
-            post?.tags.map((t) => <span className="font-montserratLight text-[12px] -mt-[15px] ">{t}</span>)}
+            post?.tags.map((t, index) => (
+              <span className="font-montserratLight text-[12px] -mt-[15px] " key={index}>
+                {t.name}
+              </span>
+            ))}
 
           <h1 className="text-xl lg:text-6xl">{post?.title}</h1>
 
@@ -47,14 +51,18 @@ export function LastPost() {
       </Link>
 
       {/** MOBILE */}
-      <Link to={`/postsmodacad/${post?.id}`} className="flex flex-col lg:hidden ">
+      <Link to={`/posts/${post?.id}`} className="flex flex-col lg:hidden ">
         <div className="shadow-inner">
           <img src={post?.feature_image ?? ''} className="h-full object-cover object-top sm:h-full" />
         </div>
         <div className="flex flex-col w-full p-3">
           {post?.tags &&
             Array.isArray(post.tags) &&
-            post?.tags.map((t) => <span className="font-montserratLight text-[12px] -mt-[5px]">{t}</span>)}
+            post?.tags.map((t, index) => (
+              <span className="font-montserratLight text-[12px] -mt-[5px]" key={index}>
+                {t.name}
+              </span>
+            ))}
 
           <h1 className="text-xl lg:text-6xl">{post?.title}</h1>
 

@@ -20,7 +20,11 @@ export const PilulaModacadCard: React.FC<PilulaCardDTO> = ({ post }) => {
         <div className="grid">
           {post.tags &&
             Array.isArray(post.tags) &&
-            post.tags?.map((t) => <span className="font-montserratLight text-[12px] -mt-[5px]">{t}</span>)}
+            post.tags?.map((t, index) => (
+              <span className="font-montserratLight text-[12px] -mt-[5px]" key={index}>
+                {t.name}
+              </span>
+            ))}
         </div>
 
         <h1 className="text-[16px] font-butler_bold leading-[20px] mb-[10px] mt-[8px]">{post.title}</h1>
@@ -30,7 +34,11 @@ export const PilulaModacadCard: React.FC<PilulaCardDTO> = ({ post }) => {
         </p>
 
         <p className="text-[14px] font-montserratRegular leading-[15px] h-[45px] overflow-hidden mb-[10px]">
-          {post.tags}
+          {post.tags?.map((t, index) => (
+            <span className="font-montserratLight text-[12px] -mt-[5px]" key={index}>
+              {t.name}
+            </span>
+          ))}
         </p>
       </div>
     </div>

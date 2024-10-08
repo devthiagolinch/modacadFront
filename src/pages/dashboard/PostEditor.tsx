@@ -10,27 +10,53 @@ import Image from '@tiptap/extension-image';
 
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 
-import { Status, statuses, PostType, types, visibilities, Visibility } from '../../shared/services/postOptions';
+import {
+  TPostsStatus,
+  statuses,
+  TPostsType,
+  types,
+  visibilities,
+  TPostsVisibility,
+} from '../../shared/services/postOptions';
 import { ISubjectData, SubjectsService } from '../../shared/api/subjects/SubjectsService';
-import { IPostSave, PostsService } from '../../shared/api/posts/PostsService';
+import { IPostDataRequest, PostsService } from '../../shared/api/posts/PostsService';
 import { LayoutDashboard } from '../../shared/layouts';
+import { ITagData, TagsService } from '../../shared/api/tags/TagsService';
 
-const defaultPost: IPostSave = {
+const defaultPost: IPostDataRequest = {
   title: '',
   description: '',
+  feature_image: null,
   type: 'texto',
   content: '',
+  status: 'draft',
+  images: null,
+  visibility: 'pro',
+  admins: [],
   tags: [],
   subjects: [],
-  status: 'draft',
-  visibility: 'pro',
+  og_image: '',
+  og_title: '',
+  og_description: '',
+  twitter_image: '',
+  twitter_title: '',
+  twitter_description: '',
+  meta_title: '',
+  meta_description: '',
+  email_subject: '',
+  frontmatter: '',
+  feature_image_alt: '',
+  feature_image_caption: '',
+  email_only: '',
 };
 
 export const PostEditor = () => {
   const { postId } = useParams<{ postId: string }>();
 
-  const [post, setPost] = useState<IPostSave>(defaultPost);
+  const [post, setPost] = useState<IPostDataRequest>(defaultPost);
   const [subjectsOptions, setSubjectsOptions] = useState<ISubjectData[]>([]);
+  const [tagsOptions, setTagsOptions] = useState<ITagData[]>([]);
+
   const [featureImageUrl, setFeatureImageUrl] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
 
@@ -51,18 +77,69 @@ export const PostEditor = () => {
       }
     });
 
+    TagsService.getAll().then((response) => {
+      if (response instanceof Error) {
+        console.error(response.message);
+      } else {
+        setTagsOptions(response);
+        setFilteredTags(response);
+      }
+    });
+
     if (postId && postId !== 'novo') {
       PostsService.getById(postId).then((response) => {
         if (response instanceof Error) {
           console.error(response.message);
         } else {
-          setPost(response);
+          setPost({
+            title: response.title,
+            description: response.description,
+            feature_image: response.feature_image,
+            type: response.type,
+            content: response.content,
+            status: response.status,
+            images: response.images ? response.images.join(',') : null,
+            visibility: response.visibility,
+            admins: response.admins.map((admin) => admin.id),
+            tags: response.tags.map((tag) => tag),
+            subjects: response.subjects.map((subject) => subject),
+            og_image: response.meta?.og_image ?? '',
+            og_title: response.meta?.og_title ?? '',
+            og_description: response.meta?.og_description ?? '',
+            twitter_image: response.meta?.twitter_image ?? '',
+            twitter_title: response.meta?.twitter_title ?? '',
+            twitter_description: response.meta?.twitter_description ?? '',
+            meta_title: response.meta?.meta_title ?? '',
+            meta_description: response.meta?.meta_description ?? '',
+            email_subject: response.meta?.email_subject ?? '',
+            frontmatter: response.meta?.frontmatter ?? '',
+            feature_image_alt: response.meta?.feature_image_alt ?? '',
+            email_only: response.meta?.email_only ?? '',
+            feature_image_caption: response.meta?.feature_image_caption ?? '',
+          });
           editor?.commands.setContent(response.content);
           setFeatureImageUrl(response.feature_image);
         }
       });
     }
   }, [postId, editor]);
+
+  // Tags
+  const [isOpen, setIsOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredTags, setFilteredTags] = useState<ITagData[]>(tagsOptions);
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value.toLowerCase();
+    setSearchTerm(value);
+    setFilteredTags(
+      tagsOptions.filter((tag) => tag.name.toLowerCase().includes(value) || tag.slug.toLowerCase().includes(value))
+    );
+  };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -75,13 +152,14 @@ export const PostEditor = () => {
 
     setUploading(true);
 
-    const result = await PostsService.uploadFeatureImage(postId || 'novo', file);
+    const result = await PostsService.uploadImage(file);
 
     console.log(result);
 
     if (result instanceof Error) {
       console.error(result.message);
     } else {
+      setPost((prev) => ({ ...prev, feature_image: result }));
       setFeatureImageUrl(result);
     }
 
@@ -107,41 +185,46 @@ export const PostEditor = () => {
     setUploading(false);
   };
 
-  const handleChangeStatus = (status: Status) => {
+  const handleChangeStatus = (status: TPostsStatus) => {
     setPost({ ...post, status });
   };
 
-  const handleChangeVisibility = (visibility: Visibility) => {
+  const handleChangeVisibility = (visibility: TPostsVisibility) => {
     setPost({ ...post, visibility });
   };
 
-  const handleChangeType = (type: PostType) => {
+  const handleChangeType = (type: TPostsType) => {
     setPost({ ...post, type });
   };
 
-  const handleSubjectSelect = (subjectId: string) => {
+  const handleChangeTags = (newTag: ITagData) => {
     setPost((prevPost) => {
-      let updatedSubjects: string[] = [];
+      let updatedTags: ITagData[] = [];
+      updatedTags = [...prevPost.tags];
 
-      // Garantir que prevPost.subjects seja sempre tratado como um array de strings
-      if (Array.isArray(prevPost.subjects)) {
-        updatedSubjects = [...prevPost.subjects];
-      } else if (typeof prevPost.subjects === 'string') {
-        updatedSubjects = [prevPost.subjects];
-      }
+      const isSelected = updatedTags.includes(newTag);
+      isSelected ? (updatedTags = updatedTags.filter((tag) => tag !== newTag)) : updatedTags.push(newTag);
 
-      // Verificar se o subject já foi selecionado
-      const isSelected = updatedSubjects.includes(subjectId);
+      return { ...prevPost, tags: updatedTags };
+    });
+    setIsOpen(false);
+    setSearchTerm('');
+  };
 
+  const handleSubjectSelect = (newSubject: ISubjectData) => {
+    setPost((prevPost) => {
+      let updatedSubjects: ISubjectData[] = [];
+      updatedSubjects = [...prevPost.subjects];
+
+      const isSelected = updatedSubjects.some((s) => s.id === newSubject.id);
       if (isSelected) {
-        // Remover o subject selecionado
-        updatedSubjects = updatedSubjects.filter((id) => id !== subjectId);
-      } else if (updatedSubjects.length < 3) {
-        // Adicionar o subject se não estiver selecionado e não exceder o limite de 3
-        updatedSubjects.push(subjectId);
+        updatedSubjects = updatedSubjects.filter((subject) => subject.id !== newSubject.id);
+      } else {
+        if (post.subjects.length < 3) {
+          updatedSubjects.push(newSubject);
+        }
       }
 
-      // Retornar o estado atualizado
       return { ...prevPost, subjects: updatedSubjects };
     });
   };
@@ -220,6 +303,46 @@ export const PostEditor = () => {
         </div>
 
         {/* Tags */}
+        <div className="mb-4 relative w-64">
+          <input
+            type="text"
+            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
+            value={searchTerm}
+            onChange={handleSearch}
+            onClick={toggleDropdown}
+            placeholder="Pesquise tags"
+          />
+          {isOpen && (
+            <ul className="absolute z-10 w-full mt-2 bg-white border border-gray-300 rounded-md max-h-60 overflow-y-auto">
+              {filteredTags.length > 0 ? (
+                filteredTags.map((tag, index) => (
+                  <li
+                    key={index}
+                    className="p-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() => handleChangeTags(tag)}
+                  >
+                    {tag.name}
+                  </li>
+                ))
+              ) : (
+                <li className="p-2 text-gray-500">Nenhum resultado encontrado</li>
+              )}
+            </ul>
+          )}
+          {post.tags.length > 0 && (
+            <div className="mt-2">
+              {post.tags.map((tag, index) => (
+                <span
+                  onClick={() => handleChangeTags(tag)}
+                  key={index}
+                  className="inline-block bg-blue-500 text-white rounded-full px-4 py-2 mr-2"
+                >
+                  {tag.name}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
 
         {/* Subjects */}
         <div className="mb-4">
@@ -229,9 +352,9 @@ export const PostEditor = () => {
               <button
                 key={subject.id}
                 type="button"
-                onClick={() => handleSubjectSelect(subject.id)}
+                onClick={() => handleSubjectSelect(subject)}
                 className={`px-4 py-2 rounded-lg border text-sm font-medium ${
-                  Array.isArray(post.subjects) && post.subjects.includes(subject.id)
+                  Array.isArray(post.subjects) && post.subjects.some((s) => s.id === subject.id)
                     ? 'bg-blue-500 text-white'
                     : 'bg-gray-200 text-gray-700'
                 }`}
@@ -256,9 +379,9 @@ export const PostEditor = () => {
                   {({ active }) => (
                     <button
                       className={`${active ? 'bg-gray-100' : ''} block px-4 py-2 text-sm w-full text-left`}
-                      onClick={() => handleChangeStatus(status as Status)}
+                      onClick={() => handleChangeStatus(status as TPostsStatus)}
                     >
-                      {statuses[status as Status].name}
+                      {statuses[status as TPostsStatus].name}
                     </button>
                   )}
                 </MenuItem>
@@ -281,9 +404,9 @@ export const PostEditor = () => {
                   {({ active }) => (
                     <button
                       className={`${active ? 'bg-gray-100' : ''} block px-4 py-2 text-sm w-full text-left`}
-                      onClick={() => handleChangeVisibility(visibility as Visibility)}
+                      onClick={() => handleChangeVisibility(visibility as TPostsVisibility)}
                     >
-                      {visibilities[visibility as Visibility].name}
+                      {visibilities[visibility as TPostsVisibility].name}
                     </button>
                   )}
                 </MenuItem>
@@ -306,9 +429,9 @@ export const PostEditor = () => {
                   {({ active }) => (
                     <button
                       className={`${active ? 'bg-gray-100' : ''} block px-4 py-2 text-sm w-full text-left`}
-                      onClick={() => handleChangeType(type as PostType)}
+                      onClick={() => handleChangeType(type as TPostsType)}
                     >
-                      {types[type as PostType]}
+                      {types[type as TPostsType]}
                     </button>
                   )}
                 </MenuItem>

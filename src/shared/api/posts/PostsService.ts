@@ -1,30 +1,83 @@
-import { Status, PostType, Visibility } from '../../services/postOptions';
+import { TPostsStatus, TPostsType, TPostsVisibility } from '../../services/postOptions';
 import { api } from '../../services/axios';
 import { IUserData } from '../users/UserServices';
+import { ITagData } from '../tags/TagsService';
+import { ISubjectData } from '../subjects/SubjectsService';
 
 export interface IPostData {
-  admins: IUserData;
-  content: string;
-  created_at: Date;
+  id: string;
+  post_id: string;
+  title: string;
   description: string;
   feature_image: string | null;
-  id: string;
-  published_at: Date;
-  status: Status;
-  tags: string[];
-  subjects: string[];
-  title: string;
-  type: PostType;
-  visibility: Visibility;
-  updated_at: Date;
+  type: TPostsType;
+  content: string;
+  status: TPostsStatus;
+  images: string[] | null; // TODO: Verificar se é necessário
+  visibility: TPostsVisibility;
+  created_at: string;
+  updated_at: string;
+  published_at: string | null;
+  meta_id: number | null; // TODO: Verificar a tipagem
+  admins: IUserData[];
+  tags: ITagData[];
+  subjects: ISubjectData[];
+  meta: IMetaData | null;
 }
 
-export interface IPostSave
-  extends Omit<IPostData, 'id' | 'admins' | 'created_at' | 'published_at' | 'updated_at' | 'feature_image'> {}
+export interface IPostDataRequest {
+  title: string;
+  description: string;
+  feature_image: string | null;
+  type: TPostsType;
+  content: string;
+  status: TPostsStatus;
+  images: string | null;
+  visibility: TPostsVisibility;
+  admins: string[];
+  tags: ITagData[];
+  subjects: ISubjectData[];
+  og_image: string;
+  og_title: string;
+  og_description: string;
+  twitter_image: string;
+  twitter_title: string;
+  twitter_description: string;
+  meta_title: string;
+  meta_description: string;
+  email_subject: string;
+  frontmatter: string;
+  feature_image_alt: string;
+  feature_image_caption: string;
+  email_only: string;
+}
 
-const getAll = async (type: 'pilula' | 'texto', statusId?: string, authorId?: string): Promise<IPostData[] | Error> => {
+interface IMetaData {
+  id: string;
+  post_id: string;
+  og_image: string;
+  og_title: string;
+  og_description: string;
+  twitter_image: string;
+  twitter_title: string;
+  twitter_description: string;
+  meta_title: string;
+  meta_description: string;
+  email_subject: string;
+  frontmatter: string;
+  feature_image_alt: string | null;
+  feature_image_caption: string | null;
+  email_only: string;
+}
+
+const getAll = async (
+  type: TPostsType,
+  statusId?: string,
+  authorId?: string,
+  limit?: number
+): Promise<IPostData[] | Error> => {
   try {
-    const urlRelativa = `/post?type=${type ?? ''}&statusId=${statusId ?? ''}&authorId=${authorId ?? ''}`;
+    const urlRelativa = `/post?type=${type ?? ''}&statusId=${statusId ?? ''}&authorId=${authorId ?? ''}&limit=${limit ?? ''}`;
     const { data } = await api.get<IPostData[]>(urlRelativa);
 
     if (Array.isArray(data)) {
@@ -38,7 +91,7 @@ const getAll = async (type: 'pilula' | 'texto', statusId?: string, authorId?: st
   }
 };
 
-const create = async (post: IPostSave): Promise<IPostData | Error> => {
+const create = async (post: IPostDataRequest): Promise<IPostData | Error> => {
   try {
     const { data } = await api.post<IPostData>('/post', post);
 
@@ -60,32 +113,11 @@ const getById = async (postId: string): Promise<IPostData | Error> => {
   }
 };
 
-const updateById = async (postId: string, post: IPostSave): Promise<void | Error> => {
+const updateById = async (postId: string, post: IPostDataRequest): Promise<void | Error> => {
   try {
     await api.put<IPostData>(`/post/${postId}`, post);
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido ao atualizar o registro';
-    return new Error(errorMessage);
-  }
-};
-
-const uploadFeatureImage = async (postId: string, file: File): Promise<string | Error> => {
-  try {
-    const formData = new FormData();
-    formData.append('images', file);
-
-    const urlRelativa = `/post/images/feature-image/${postId}`;
-    const { data } = await api.post<string>(urlRelativa, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
-    if (data) {
-      return data;
-    }
-    return new Error('Erro ao fazer upload da imagem');
-  } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido ao fazer upload da imagem';
     return new Error(errorMessage);
   }
 };
@@ -115,6 +147,5 @@ export const PostsService = {
   create,
   getById,
   updateById,
-  uploadFeatureImage,
   uploadImage,
 };

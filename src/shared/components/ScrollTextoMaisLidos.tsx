@@ -59,7 +59,7 @@ export function ScrollTextosMaisLidos({ title }: TextScrollInterface) {
             </SwiperSlide>
           ))}
           <SwiperSlide key={'01940914'}>
-            <Link to={`/postsspublicados/`}>
+            <Link to={`/posts/popular`}>
               <div className="w-[350px] lg:w-[550px] h-full border-[1px] border-[#202020]">
                 <div className=" border-b-[1px] border-[#202020]">
                   <img

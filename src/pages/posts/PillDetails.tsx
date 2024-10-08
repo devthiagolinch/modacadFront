@@ -38,13 +38,14 @@ export const PillDetails = () => {
           <div className="lg:flex  lg:pb-5 2xl:gap-[14.5%] lg:gap-[12%] lg:justify-between">
             {/** tentar subir um pouco as tags para ficar alinhado com a descrição */}
             <div className="lg:flex lg:pl-[55px] lg:flex-row lg:align-middle lg:items-end lg:w-auto">
-              {pilula?.tags.map((tag) => (
+              {pilula?.tags.map((tag, index) => (
                 <span
+                  key={index}
                   className=" w-[22px] lg:transform: -rotate-90 text-nowrap 
                                     bg-gradient-to-t from-[#dcdf1e] to-[#dcdf1e] bg-[length:100%_1em] bg-no-repeat bg-[position:calc(100%_-_var(--p,0%))_900%]  hover:bg-[position:100%_100%]
                                 "
                 >
-                  {tag.toUpperCase()}
+                  {tag.name.toUpperCase()}
                 </span>
               ))}
             </div>
@@ -59,14 +60,18 @@ export const PillDetails = () => {
 
           <div className="lg:flex lg:w-full lg:justify-between lg:px-[20%]">
             <div className="lg:flex lg:p-5 lg:gap-5 lg:items-center lg:justify-start">
-              <img
-                src={pilula?.admins.avatar ?? ''}
-                alt=""
-                className="w-14 h-14 rounded-full flex items-center justify-center bg-black"
-              />
-              <p className="lg:-ml-3 lg:text-[20px] lg:font-montserratMedium tracking-[0.05em]">
-                {pilula?.admins.name}
-              </p>
+              {pilula?.admins &&
+                Array.isArray(pilula.admins) &&
+                pilula.admins.map((admin, index) => (
+                  <div key={index}>
+                    <img
+                      src={admin.avatar ?? ''}
+                      alt=""
+                      className="w-14 h-14 rounded-full flex items-center justify-center bg-black"
+                    />
+                    <p className="lg:-ml-3 lg:text-[20px] lg:font-montserratMedium tracking-[0.05em]">{admin.name}</p>
+                  </div>
+                ))}
             </div>
 
             <div className="lg:flex lg:flex-row lg:justify-center lg:items-center text-zinc-800">
@@ -106,12 +111,18 @@ export const PillDetails = () => {
             </div>
 
             <div className="flex p-5 gap-[10px] items-center">
-              <img
-                src={pilula?.admins.avatar ?? ''}
-                alt=""
-                className="w-[50px] h-[50px] rounded-full flex items-center justify-center bg-black"
-              />
-              <p className="text-[20px]">{pilula?.admins.name}</p>
+              {pilula?.admins &&
+                Array.isArray(pilula.admins) &&
+                pilula.admins.map((admin, index) => (
+                  <div key={index}>
+                    <img
+                      src={admin.avatar ?? ''}
+                      alt=""
+                      className="w-14 h-14 rounded-full flex items-center justify-center bg-black"
+                    />
+                    <p className="lg:-ml-3 lg:text-[20px] lg:font-montserratMedium tracking-[0.05em]">{admin.name}</p>
+                  </div>
+                ))}
             </div>
 
             <div className="flex justify-between items-start align-top gap-10 px-5 mb-[20px] text-zinc-800">
@@ -163,14 +174,18 @@ export const PillDetails = () => {
 
           <div className="lg:flex lg:w-full lg:justify-between lg:px-[20%]">
             <div className="lg:flex lg:p-5 lg:gap-5 lg:items-center lg:justify-start">
-              <img
-                src={pilula?.admins.name}
-                alt=""
-                className="w-14 h-14 rounded-full flex items-center justify-center bg-black"
-              />
-              <p className="lg:-ml-3 lg:text-[20px] lg:font-montserratMedium tracking-[0.05em]">
-                {pilula?.admins.name}
-              </p>
+              {pilula?.admins &&
+                Array.isArray(pilula.admins) &&
+                pilula.admins.map((admin, index) => (
+                  <div key={index}>
+                    <img
+                      src={admin.avatar ?? ''}
+                      alt=""
+                      className="w-14 h-14 rounded-full flex items-center justify-center bg-black"
+                    />
+                    <p className="lg:-ml-3 lg:text-[20px] lg:font-montserratMedium tracking-[0.05em]">{admin.name}</p>
+                  </div>
+                ))}
             </div>
 
             <div className="lg:flex lg:flex-row lg:justify-center lg:items-center text-zinc-800">
@@ -210,12 +225,18 @@ export const PillDetails = () => {
             </div>
 
             <div className="flex p-5 gap-[10px] items-center">
-              <img
-                src={pilula?.admins.name}
-                alt=""
-                className="w-[50px] h-[50px] rounded-full flex items-center justify-center bg-black"
-              />
-              <p className="text-[20px]">{pilula?.admins.name}</p>
+              {pilula?.admins &&
+                Array.isArray(pilula.admins) &&
+                pilula.admins.map((admin, index) => (
+                  <div key={index}>
+                    <img
+                      src={admin.avatar ?? ''}
+                      alt=""
+                      className="w-14 h-14 rounded-full flex items-center justify-center bg-black"
+                    />
+                    <p className="lg:-ml-3 lg:text-[20px] lg:font-montserratMedium tracking-[0.05em]">{admin.name}</p>
+                  </div>
+                ))}
             </div>
 
             <div className="flex justify-between items-start align-top gap-10 px-5 mb-[20px] text-zinc-800">
