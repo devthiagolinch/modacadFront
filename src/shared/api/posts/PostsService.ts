@@ -1,26 +1,74 @@
-import { Status, PostType, Visibility } from '../../services/postOptions';
+import { TStatus, TPostType, TVisibility } from '../../services/postOptions';
 import { api } from '../../services/axios';
 import { IUserData } from '../users/UserServices';
+import { ITagData } from '../tags/TagsService';
+import { ISubjectData } from '../subjects/SubjectsService';
 
 export interface IPostData {
-  admins: IUserData;
-  content: string;
-  created_at: Date;
+  id: string;
+  post_id: string;
+  title: string;
   description: string;
   feature_image: string | null;
-  id: string;
-  published_at: Date;
-  status: Status;
-  tags: string[];
-  subjects: string[];
-  title: string;
-  type: PostType;
-  visibility: Visibility;
-  updated_at: Date;
+  type: TPostType;
+  content: string;
+  status: TStatus;
+  images: string[] | null; // TODO: Verificar se é necessário
+  visibility: TVisibility;
+  created_at: string;
+  updated_at: string;
+  published_at: string | null;
+  meta_id: number | null; // TODO: Verificar a tipagem
+  admins: IUserData[];
+  tags: ITagData[];
+  subjects: ISubjectData[];
+  meta: IMetaData | null;
 }
 
-export interface IPostSave
-  extends Omit<IPostData, 'id' | 'admins' | 'created_at' | 'published_at' | 'updated_at' | 'feature_image'> {}
+export interface IPostDataRequest {
+  title: string;
+  description: string;
+  feature_image: string | null;
+  type: TPostType;
+  content: string;
+  status: TStatus;
+  images: string | null;
+  visibility: TVisibility;
+  admins: string[];
+  tags: string[];
+  subjects: string[];
+  og_image: string;
+  og_title: string;
+  og_description: string;
+  twitter_image: string;
+  twitter_title: string;
+  twitter_description: string;
+  meta_title: string;
+  meta_description: string;
+  email_subject: string;
+  frontmatter: string;
+  feature_image_atl: string;
+  feature_image_caption: string;
+  email_only: string;
+}
+
+interface IMetaData {
+  id: string;
+  post_id: string;
+  og_image: string;
+  og_title: string;
+  og_description: string;
+  twitter_image: string;
+  twitter_title: string;
+  twitter_description: string;
+  meta_title: string;
+  meta_description: string;
+  email_subject: string;
+  frontmatter: string;
+  feature_image_alt: string | null;
+  feature_image_caption: string | null;
+  email_only: string;
+}
 
 const getAll = async (type: 'pilula' | 'texto', statusId?: string, authorId?: string): Promise<IPostData[] | Error> => {
   try {
@@ -38,7 +86,7 @@ const getAll = async (type: 'pilula' | 'texto', statusId?: string, authorId?: st
   }
 };
 
-const create = async (post: IPostSave): Promise<IPostData | Error> => {
+const create = async (post: IPostDataRequest): Promise<IPostData | Error> => {
   try {
     const { data } = await api.post<IPostData>('/post', post);
 
@@ -60,7 +108,7 @@ const getById = async (postId: string): Promise<IPostData | Error> => {
   }
 };
 
-const updateById = async (postId: string, post: IPostSave): Promise<void | Error> => {
+const updateById = async (postId: string, post: IPostDataRequest): Promise<void | Error> => {
   try {
     await api.put<IPostData>(`/post/${postId}`, post);
   } catch (error) {

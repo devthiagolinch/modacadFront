@@ -1,9 +1,9 @@
-export type Status = 'published' | 'draft' | 'deleted' | 'pending';
-export type Visibility = 'public' | 'basic' | 'pro';
-export type PostType = 'pilula' | 'texto';
+export type TStatus = 'published' | 'draft' | 'deleted' | 'pending';
+export type TVisibility = 'public' | 'basic' | 'pro';
+export type TPostType = 'pilula' | 'texto';
 
 // Configuração de Status com nome, cor de fundo e cor do texto
-export const statuses: Record<Status, { name: string; bgColor: string; textColor: string }> = {
+export const statuses: Record<TStatus, { name: string; bgColor: string; textColor: string }> = {
   published: {
     name: 'Publicado',
     bgColor: 'bg-green-500',
@@ -27,7 +27,7 @@ export const statuses: Record<Status, { name: string; bgColor: string; textColor
 };
 
 // Configuração de Visibility com nome, cor de fundo e cor do texto
-export const visibilities: Record<Visibility, { name: string; bgColor: string; textColor: string }> = {
+export const visibilities: Record<TVisibility, { name: string; bgColor: string; textColor: string }> = {
   public: {
     name: 'Público',
     bgColor: 'bg-blue-500',
@@ -45,7 +45,7 @@ export const visibilities: Record<Visibility, { name: string; bgColor: string; t
   },
 };
 
-export const types: Record<PostType, string> = {
+export const types: Record<TPostType, string> = {
   pilula: 'Pílula',
   texto: 'Texto',
 };

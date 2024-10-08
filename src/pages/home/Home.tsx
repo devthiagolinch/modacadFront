@@ -67,7 +67,7 @@ export function Home() {
               Criar Perfil
             </a>
             <Link
-              to="/plans"
+              to="/planos"
               className="font-medium text-sm border border-r-0 border-b-0 border-t-0 border-zinc-950 w-50 h-20 px-6 py-6 pt-7
                       hover:bg-[#dcdf1e]
                   "

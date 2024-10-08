@@ -32,7 +32,7 @@ export function ScrollPilulaMCD({ title }: TextScrollInterface) {
   return (
     <div className="flex flex-row -mt-[1px] z-0">
       <div className="flex justify-center items-center border-[1px] border-[#202020] -mr-[1px] pt-32">
-        <Link to={'/posts/pills'}>
+        <Link to={'/pilulas'}>
           <p className="text-nowrap transform: -rotate-90 w-8 lg:w-[22px] lg:p-5">{title}</p>
         </Link>
       </div>

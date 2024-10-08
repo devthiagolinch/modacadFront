@@ -41,8 +41,10 @@ export function PostDetails() {
             <div className="lg:flex lg:pl-[55px] lg:flex-row lg:align-middle lg:items-end lg:w-auto">
               {post?.tags &&
                 Array.isArray(post.tags) &&
-                post?.tags.map((tag) => (
-                  <span className=" w-[22px] lg:transform: -rotate-90 text-nowrap">{tag.toUpperCase()}</span>
+                post?.tags.map((tag, index) => (
+                  <span className=" w-[22px] lg:transform: -rotate-90 text-nowrap" key={index}>
+                    {tag.name.toUpperCase()}
+                  </span>
                 ))}
             </div>
             <div className="lg:flex lg:flex-col lg:pr-[20%] ">
@@ -56,12 +58,18 @@ export function PostDetails() {
 
           <div className="lg:flex lg:w-full lg:justify-between lg:px-[20%]">
             <div className="lg:flex lg:p-5 lg:gap-5 lg:items-center lg:justify-start">
-              <img
-                src={post?.admins.avatar ?? ''}
-                alt=""
-                className="w-14 h-14 rounded-full flex items-center justify-center bg-black"
-              />
-              <p className="lg:-ml-3 lg:text-[20px] lg:font-montserratMedium tracking-[0.05em]">{post?.admins.name}</p>
+              {post?.admins &&
+                Array.isArray(post.admins) &&
+                post.admins.map((admin, index) => (
+                  <div key={index}>
+                    <img
+                      src={admin.avatar ?? ''}
+                      alt=""
+                      className="w-14 h-14 rounded-full flex items-center justify-center bg-black"
+                    />
+                    <p className="lg:-ml-3 lg:text-[20px] lg:font-montserratMedium tracking-[0.05em]">{admin.name}</p>
+                  </div>
+                ))}
             </div>
 
             <div className="lg:flex lg:flex-row lg:justify-center lg:items-center text-zinc-800">
@@ -101,19 +109,29 @@ export function PostDetails() {
             </div>
 
             <div className="flex p-5 gap-[10px] items-center">
-              <img
-                src={post?.admins.avatar ?? ''}
-                alt=""
-                className="w-[50px] h-[50px] rounded-full flex items-center justify-center bg-black"
-              />
-              <p className="text-[20px]">{post?.admins.name ?? ''}</p>
+              {post?.admins &&
+                Array.isArray(post.admins) &&
+                post.admins.map((admin, index) => (
+                  <div key={index}>
+                    <img
+                      src={admin.avatar ?? ''}
+                      alt=""
+                      className="w-14 h-14 rounded-full flex items-center justify-center bg-black"
+                    />
+                    <p className="lg:-ml-3 lg:text-[20px] lg:font-montserratMedium tracking-[0.05em]">{admin.name}</p>
+                  </div>
+                ))}
             </div>
 
             <div className="flex justify-between items-start align-top gap-10 px-5 mb-[20px] text-zinc-800">
               <div className="flex flex-col font-montserrat_light_italic">
                 {post?.tags &&
                   Array.isArray(post.tags) &&
-                  post?.tags.map((tag) => <span className="-mb-[5px] text-[13px]">{tag.toUpperCase()}</span>)}
+                  post?.tags.map((tag, index) => (
+                    <span className="-mb-[5px] text-[13px]" key={index}>
+                      {tag.name.toUpperCase()}
+                    </span>
+                  ))}
               </div>
 
               <div className="flex flex-col justify-between items-end">
@@ -144,27 +162,42 @@ export function PostDetails() {
             <div className="lg:flex lg:pl-[55px] lg:flex-row lg:align-middle lg:items-end lg:w-auto">
               {post?.tags &&
                 Array.isArray(post.tags) &&
-                post?.tags.map((tag) => (
-                  <span className=" w-[22px] lg:transform: -rotate-90 text-nowrap">{tag.toUpperCase()}</span>
+                post?.tags.map((tag, index) => (
+                  <span className=" w-[22px] lg:transform: -rotate-90 text-nowrap" key={index}>
+                    {tag.name.toUpperCase()}
+                  </span>
                 ))}
             </div>
             <div className="lg:flex lg:flex-col lg:pr-[20%] ">
-              <h1 className="lg:text-7xl lg:font-butler_ultra_light lg:my-14 lg:mb-[30px] lg:leading-[80px]  ">
-                {post?.title}
-              </h1>
-
-              <p className="lg:text-left lg:text-[20px] w-[100%] lg:font-montserrat_regular">{post?.description}</p>
+              {post?.admins &&
+                Array.isArray(post.admins) &&
+                post.admins.map((admin, index) => (
+                  <div key={index}>
+                    <img
+                      src={admin.avatar ?? ''}
+                      alt=""
+                      className="w-14 h-14 rounded-full flex items-center justify-center bg-black"
+                    />
+                    <p className="lg:-ml-3 lg:text-[20px] lg:font-montserratMedium tracking-[0.05em]">{admin.name}</p>
+                  </div>
+                ))}
             </div>
           </div>
 
           <div className="lg:flex lg:w-full lg:justify-between lg:px-[20%]">
             <div className="lg:flex lg:p-5 lg:gap-5 lg:items-center lg:justify-start">
-              <img
-                src={post?.admins.avatar ?? ''}
-                alt=""
-                className="w-14 h-14 rounded-full flex items-center justify-center bg-black"
-              />
-              <p className="lg:-ml-3 lg:text-[20px] lg:font-montserratMedium tracking-[0.05em]">{post?.admins.name}</p>
+              {post?.admins &&
+                Array.isArray(post.admins) &&
+                post.admins.map((admin, index) => (
+                  <div key={index}>
+                    <img
+                      src={admin.avatar ?? ''}
+                      alt=""
+                      className="w-14 h-14 rounded-full flex items-center justify-center bg-black"
+                    />
+                    <p className="lg:-ml-3 lg:text-[20px] lg:font-montserratMedium tracking-[0.05em]">{admin.name}</p>
+                  </div>
+                ))}
             </div>
 
             <div className="lg:flex lg:flex-row lg:justify-center lg:items-center text-zinc-800">
@@ -204,19 +237,29 @@ export function PostDetails() {
             </div>
 
             <div className="flex p-5 gap-[10px] items-center">
-              <img
-                src={post?.admins.avatar ?? ''}
-                alt=""
-                className="w-[50px] h-[50px] rounded-full flex items-center justify-center bg-black"
-              />
-              <p className="text-[20px]">{post?.admins.name}</p>
+              {post?.admins &&
+                Array.isArray(post.admins) &&
+                post.admins.map((admin, index) => (
+                  <div key={index}>
+                    <img
+                      src={admin.avatar ?? ''}
+                      alt=""
+                      className="w-14 h-14 rounded-full flex items-center justify-center bg-black"
+                    />
+                    <p className="lg:-ml-3 lg:text-[20px] lg:font-montserratMedium tracking-[0.05em]">{admin.name}</p>
+                  </div>
+                ))}
             </div>
 
             <div className="flex justify-between items-start align-top gap-10 px-5 mb-[20px] text-zinc-800">
               <div className="flex flex-col font-montserrat_light_italic">
                 {post?.tags &&
                   Array.isArray(post.tags) &&
-                  post?.tags.map((tag) => <span className="-mb-[5px] text-[13px]">{tag.toUpperCase()}</span>)}
+                  post?.tags.map((tag, index) => (
+                    <span className="-mb-[5px] text-[13px]" key={index}>
+                      {tag.name.toUpperCase()}
+                    </span>
+                  ))}
               </div>
 
               <div className="flex flex-col justify-between items-end">
