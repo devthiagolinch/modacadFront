@@ -216,10 +216,14 @@ export const PostEditor = () => {
       let updatedSubjects: ISubjectData[] = [];
       updatedSubjects = [...prevPost.subjects];
 
-      const isSelected = updatedSubjects.includes(newSubject);
-      isSelected
-        ? (updatedSubjects = updatedSubjects.filter((subject) => subject !== newSubject))
-        : updatedSubjects.push(newSubject);
+      const isSelected = updatedSubjects.some((s) => s.id === newSubject.id);
+      if (isSelected) {
+        updatedSubjects = updatedSubjects.filter((subject) => subject.id !== newSubject.id);
+      } else {
+        if (post.subjects.length < 3) {
+          updatedSubjects.push(newSubject);
+        }
+      }
 
       return { ...prevPost, subjects: updatedSubjects };
     });
@@ -350,7 +354,7 @@ export const PostEditor = () => {
                 type="button"
                 onClick={() => handleSubjectSelect(subject)}
                 className={`px-4 py-2 rounded-lg border text-sm font-medium ${
-                  Array.isArray(post.subjects) && post.subjects.includes(subject)
+                  Array.isArray(post.subjects) && post.subjects.some((s) => s.id === subject.id)
                     ? 'bg-blue-500 text-white'
                     : 'bg-gray-200 text-gray-700'
                 }`}
