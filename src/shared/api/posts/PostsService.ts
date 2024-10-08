@@ -1,4 +1,4 @@
-import { TStatus, TPostType, TVisibility } from '../../services/postOptions';
+import { TPostsStatus, TPostsType, TPostsVisibility } from '../../services/postOptions';
 import { api } from '../../services/axios';
 import { IUserData } from '../users/UserServices';
 import { ITagData } from '../tags/TagsService';
@@ -10,11 +10,11 @@ export interface IPostData {
   title: string;
   description: string;
   feature_image: string | null;
-  type: TPostType;
+  type: TPostsType;
   content: string;
-  status: TStatus;
+  status: TPostsStatus;
   images: string[] | null; // TODO: Verificar se é necessário
-  visibility: TVisibility;
+  visibility: TPostsVisibility;
   created_at: string;
   updated_at: string;
   published_at: string | null;
@@ -29,11 +29,11 @@ export interface IPostDataRequest {
   title: string;
   description: string;
   feature_image: string | null;
-  type: TPostType;
+  type: TPostsType;
   content: string;
-  status: TStatus;
+  status: TPostsStatus;
   images: string | null;
-  visibility: TVisibility;
+  visibility: TPostsVisibility;
   admins: string[];
   tags: string[];
   subjects: string[];
@@ -47,7 +47,7 @@ export interface IPostDataRequest {
   meta_description: string;
   email_subject: string;
   frontmatter: string;
-  feature_image_atl: string;
+  feature_image_alt: string;
   feature_image_caption: string;
   email_only: string;
 }

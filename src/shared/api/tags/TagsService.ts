@@ -1,4 +1,4 @@
-import { TVisibility } from 'src/shared/services/postOptions';
+import { TPostsVisibility } from 'src/shared/services/postOptions';
 
 export interface ITagData {
   id: string;
@@ -7,7 +7,7 @@ export interface ITagData {
   description: string | null;
   feature_image: string | null;
   parent_id: string | null;
-  visibility: TVisibility;
+  visibility: TPostsVisibility;
   og_image: string | null;
   og_title: string | null;
   og_description: string | null;

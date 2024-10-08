@@ -10,26 +10,49 @@ import Image from '@tiptap/extension-image';
 
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 
-import { Status, statuses, PostType, types, visibilities, Visibility } from '../../shared/services/postOptions';
+import {
+  TPostsStatus,
+  statuses,
+  TPostsType,
+  types,
+  visibilities,
+  TPostsVisibility,
+} from '../../shared/services/postOptions';
 import { ISubjectData, SubjectsService } from '../../shared/api/subjects/SubjectsService';
-import { IPostSave, PostsService } from '../../shared/api/posts/PostsService';
+import { IPostDataRequest, PostsService } from '../../shared/api/posts/PostsService';
 import { LayoutDashboard } from '../../shared/layouts';
 
-const defaultPost: IPostSave = {
+const defaultPost: IPostDataRequest = {
   title: '',
   description: '',
+  feature_image: null,
   type: 'texto',
   content: '',
+  status: 'draft',
+  images: null,
+  visibility: 'pro',
+  admins: [],
   tags: [],
   subjects: [],
-  status: 'draft',
-  visibility: 'pro',
+  og_image: '',
+  og_title: '',
+  og_description: '',
+  twitter_image: '',
+  twitter_title: '',
+  twitter_description: '',
+  meta_title: '',
+  meta_description: '',
+  email_subject: '',
+  frontmatter: '',
+  feature_image_alt: '',
+  feature_image_caption: '',
+  email_only: '',
 };
 
 export const PostEditor = () => {
   const { postId } = useParams<{ postId: string }>();
 
-  const [post, setPost] = useState<IPostSave>(defaultPost);
+  const [post, setPost] = useState<IPostDataRequest>(defaultPost);
   const [subjectsOptions, setSubjectsOptions] = useState<ISubjectData[]>([]);
   const [featureImageUrl, setFeatureImageUrl] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
@@ -56,13 +79,44 @@ export const PostEditor = () => {
         if (response instanceof Error) {
           console.error(response.message);
         } else {
-          setPost(response);
+          setPost({
+            title: response.title,
+            description: response.description,
+            feature_image: response.feature_image,
+            type: response.type,
+            content: response.content,
+            status: response.status,
+            images: response.images ? response.images.join(',') : null,
+            visibility: response.visibility,
+            admins: response.admins.map((admin) => admin.id),
+            tags: response.tags.map((tag) => tag.id),
+            subjects: response.subjects.map((subject) => subject.id),
+            og_image: response.meta?.og_image ?? '',
+            og_title: response.meta?.og_title ?? '',
+            og_description: response.meta?.og_description ?? '',
+            twitter_image: response.meta?.twitter_image ?? '',
+            twitter_title: response.meta?.twitter_title ?? '',
+            twitter_description: response.meta?.twitter_description ?? '',
+            meta_title: response.meta?.meta_title ?? '',
+            meta_description: response.meta?.meta_description ?? '',
+            email_subject: response.meta?.email_subject ?? '',
+            frontmatter: response.meta?.frontmatter ?? '',
+            feature_image_alt: response.meta?.feature_image_alt ?? '',
+            email_only: response.meta?.email_only ?? '',
+            feature_image_caption: response.meta?.feature_image_caption ?? '',
+          });
           editor?.commands.setContent(response.content);
           setFeatureImageUrl(response.feature_image);
         }
       });
     }
   }, [postId, editor]);
+
+  useEffect(() => {
+    if (post) {
+      console.log(post);
+    }
+  }, [post]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -107,15 +161,15 @@ export const PostEditor = () => {
     setUploading(false);
   };
 
-  const handleChangeStatus = (status: Status) => {
+  const handleChangeStatus = (status: TPostsStatus) => {
     setPost({ ...post, status });
   };
 
-  const handleChangeVisibility = (visibility: Visibility) => {
+  const handleChangeVisibility = (visibility: TPostsVisibility) => {
     setPost({ ...post, visibility });
   };
 
-  const handleChangeType = (type: PostType) => {
+  const handleChangeType = (type: TPostsType) => {
     setPost({ ...post, type });
   };
 
@@ -256,9 +310,9 @@ export const PostEditor = () => {
                   {({ active }) => (
                     <button
                       className={`${active ? 'bg-gray-100' : ''} block px-4 py-2 text-sm w-full text-left`}
-                      onClick={() => handleChangeStatus(status as Status)}
+                      onClick={() => handleChangeStatus(status as TPostsStatus)}
                     >
-                      {statuses[status as Status].name}
+                      {statuses[status as TPostsStatus].name}
                     </button>
                   )}
                 </MenuItem>
@@ -281,9 +335,9 @@ export const PostEditor = () => {
                   {({ active }) => (
                     <button
                       className={`${active ? 'bg-gray-100' : ''} block px-4 py-2 text-sm w-full text-left`}
-                      onClick={() => handleChangeVisibility(visibility as Visibility)}
+                      onClick={() => handleChangeVisibility(visibility as TPostsVisibility)}
                     >
-                      {visibilities[visibility as Visibility].name}
+                      {visibilities[visibility as TPostsVisibility].name}
                     </button>
                   )}
                 </MenuItem>
@@ -306,9 +360,9 @@ export const PostEditor = () => {
                   {({ active }) => (
                     <button
                       className={`${active ? 'bg-gray-100' : ''} block px-4 py-2 text-sm w-full text-left`}
-                      onClick={() => handleChangeType(type as PostType)}
+                      onClick={() => handleChangeType(type as TPostsType)}
                     >
-                      {types[type as PostType]}
+                      {types[type as TPostsType]}
                     </button>
                   )}
                 </MenuItem>
