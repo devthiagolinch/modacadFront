@@ -34,7 +34,7 @@ export interface IPostDataRequest {
   status: TPostsStatus;
   images: string | null;
   visibility: TPostsVisibility;
-  admins: string[];
+  admins: IUserData[];
   tags: ITagData[];
   subjects: ISubjectData[];
   og_image: string;

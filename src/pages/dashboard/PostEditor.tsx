@@ -3,9 +3,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { EditorContent, useEditor } from '@tiptap/react';
-import Heading from '@tiptap/extension-heading';
 import StarterKit from '@tiptap/starter-kit';
-import Bold from '@tiptap/extension-bold';
 import Image from '@tiptap/extension-image';
 
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
@@ -22,6 +20,7 @@ import { ISubjectData, SubjectsService } from '../../shared/api/subjects/Subject
 import { IPostDataRequest, PostsService } from '../../shared/api/posts/PostsService';
 import { LayoutDashboard } from '../../shared/layouts';
 import { ITagData, TagsService } from '../../shared/api/tags/TagsService';
+import { IUserData, UsersService } from '../../shared/api/users/UserServices';
 
 const defaultPost: IPostDataRequest = {
   title: '',
@@ -54,14 +53,16 @@ export const PostEditor = () => {
   const { postId } = useParams<{ postId: string }>();
 
   const [post, setPost] = useState<IPostDataRequest>(defaultPost);
+
   const [subjectsOptions, setSubjectsOptions] = useState<ISubjectData[]>([]);
   const [tagsOptions, setTagsOptions] = useState<ITagData[]>([]);
+  const [usersOptions, setUsersOptions] = useState<IUserData[]>([]);
 
   const [featureImageUrl, setFeatureImageUrl] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
 
   const editor = useEditor({
-    extensions: [StarterKit, Heading, Bold, Image.configure({ inline: true })],
+    extensions: [StarterKit, Image.configure({ inline: true })],
     content: post.content,
     onUpdate: ({ editor }) => {
       setPost((prev) => ({ ...prev, content: editor.getHTML() }));
@@ -86,6 +87,16 @@ export const PostEditor = () => {
       }
     });
 
+    UsersService.getAllStaff().then((response) => {
+      if (response instanceof Error) {
+        console.error(response.message);
+        return;
+      }
+      setUsersOptions(response);
+    });
+  }, []);
+
+  useEffect(() => {
     if (postId && postId !== 'novo') {
       PostsService.getById(postId).then((response) => {
         if (response instanceof Error) {
@@ -100,7 +111,7 @@ export const PostEditor = () => {
             status: response.status,
             images: response.images ? response.images.join(',') : null,
             visibility: response.visibility,
-            admins: response.admins.map((admin) => admin.id),
+            admins: response.admins.map((admin) => admin),
             tags: response.tags.map((tag) => tag),
             subjects: response.subjects.map((subject) => subject),
             og_image: response.meta?.og_image ?? '',
@@ -229,6 +240,22 @@ export const PostEditor = () => {
     });
   };
 
+  const handleUserSelect = (newUser: IUserData) => {
+    setPost((prevPost) => {
+      let updatedAdmins: IUserData[] = [];
+      updatedAdmins = [...prevPost.admins];
+
+      const isSelected = updatedAdmins.some((admin) => admin.id === newUser.id);
+      if (isSelected) {
+        updatedAdmins = updatedAdmins.filter((admin) => admin.id !== newUser.id);
+      } else {
+        updatedAdmins.push(newUser);
+      }
+
+      return { ...prevPost, admins: updatedAdmins };
+    });
+  };
+
   const handleSubmit = () => {
     if (postId && postId !== 'novo') {
       PostsService.updateById(postId, post).then((response) => {
@@ -304,6 +331,7 @@ export const PostEditor = () => {
 
         {/* Tags */}
         <div className="mb-4 relative w-64">
+          <label className="block text-sm font-medium text-gray-700">Tags</label>
           <input
             type="text"
             className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
@@ -344,10 +372,27 @@ export const PostEditor = () => {
           )}
         </div>
 
+        {/* Autores */}
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700">Autores</label>
+          <div className="mt-1 grid grid-cols-4 gap-2">
+            {usersOptions.map((user) => (
+              <button
+                key={user.id}
+                type="button"
+                onClick={() => handleUserSelect(user)}
+                className={`px-4 py-2 rounded-lg border text-sm font-medium ${post.admins.some((admin) => admin.id === user.id) ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
+              >
+                {user.name}
+              </button>
+            ))}
+          </div>
+        </div>
+
         {/* Subjects */}
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700">Assuntos</label>
-          <div className="mt-1 grid grid-cols-2 gap-2">
+          <div className="mt-1 grid grid-cols-3 gap-2">
             {subjectsOptions.map((subject) => (
               <button
                 key={subject.id}

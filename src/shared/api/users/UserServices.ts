@@ -1,4 +1,4 @@
-import { api } from 'src/shared/services/axios';
+import { api } from '../../../shared/services/axios';
 import { EUsersStatus, TUsersPlan, TUsersRole } from 'src/shared/services/userOptions';
 
 export interface IUserData {
@@ -6,7 +6,6 @@ export interface IUserData {
   role: string;
   name: string;
   avatar: string | null;
-  email: string;
 }
 
 const getAll = async (role?: TUsersRole, status?: EUsersStatus, plan?: TUsersPlan) => {
@@ -25,6 +24,20 @@ const getAll = async (role?: TUsersRole, status?: EUsersStatus, plan?: TUsersPla
   }
 };
 
+const getAllStaff = async () => {
+  try {
+    const { data } = await api.get<IUserData[]>('/admins/staff');
+    if (data && Array.isArray(data)) {
+      return data;
+    }
+    return new Error('Erro ao listar os registros');
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido ao listar os registros';
+    return new Error(errorMessage);
+  }
+};
+
 export const UsersService = {
   getAll,
+  getAllStaff,
 };
