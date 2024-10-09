@@ -27,7 +27,7 @@ export const ScrollTextoMCD: React.FC<TextScrollInterface> = ({ title }) => {
         console.error(response.message);
         return;
       }
-      setPosts(response);
+      setPosts(response.posts);
     });
   }, []);
 

@@ -25,7 +25,7 @@ export function ScrollTextosMaisLidos({ title }: TextScrollInterface) {
         console.error(response.message);
         return;
       }
-      setPosts(response);
+      setPosts(response.posts);
     });
   }, []);
 

@@ -12,8 +12,8 @@ export function LastPost() {
         return;
       }
 
-      if (response && response.length > 0) {
-        setPost(response[0]);
+      if (response.posts && response.posts.length > 0) {
+        setPost(response.posts[0]);
       }
     });
   }, []);
