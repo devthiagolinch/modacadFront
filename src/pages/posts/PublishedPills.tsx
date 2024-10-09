@@ -15,7 +15,7 @@ export function PublishedPills() {
         console.error(response.message);
         return;
       }
-      setPosts(response);
+      setPosts(response.posts);
     });
   }, []);
 

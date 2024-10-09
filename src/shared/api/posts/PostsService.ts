@@ -70,17 +70,25 @@ interface IMetaData {
   email_only: string;
 }
 
+interface IPostResponse {
+  currentPage: number;
+  pageSize: number;
+  totalItems: number;
+  totalPages: number;
+  posts: IPostData[];
+}
+
 const getAll = async (
   type: TPostsType,
   statusId?: string,
   authorId?: string,
   limit?: number
-): Promise<IPostData[] | Error> => {
+): Promise<IPostResponse | Error> => {
   try {
     const urlRelativa = `/post?type=${type ?? ''}&statusId=${statusId ?? ''}&authorId=${authorId ?? ''}&limit=${limit ?? ''}`;
-    const { data } = await api.get<IPostData[]>(urlRelativa);
+    const { data } = await api.get<IPostResponse>(urlRelativa);
 
-    if (Array.isArray(data)) {
+    if (data) {
       return data;
     } else {
       return new Error('Erro ao listar os registros');

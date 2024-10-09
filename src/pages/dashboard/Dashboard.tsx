@@ -22,7 +22,7 @@ export const Dashboard: React.FC = () => {
       if (data instanceof Error) {
         console.error(data.message);
       } else {
-        setRows(data);
+        setRows(data.posts);
       }
     });
   }, [type, searchParams]);
