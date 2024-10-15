@@ -82,10 +82,11 @@ const getAll = async (
   type: TPostsType,
   statusId?: string,
   authorId?: string,
-  limit?: number
+  limit = 20,
+  page = 1
 ): Promise<IPostResponse | Error> => {
   try {
-    const urlRelativa = `/post?type=${type ?? ''}&statusId=${statusId ?? ''}&authorId=${authorId ?? ''}&limit=${limit ?? ''}`;
+    const urlRelativa = `/post?type=${type ?? ''}&statusId=${statusId ?? ''}&authorId=${authorId ?? ''}&limit=${limit}&page=${page}`;
     const { data } = await api.get<IPostResponse>(urlRelativa);
 
     if (data) {
