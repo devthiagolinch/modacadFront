@@ -687,18 +687,6 @@ export const PostEditor = () => {
               </button>
             </div>
           </div>
-          {/* Metadados - Google */}
-          <div className="bg-white rounded-lg shadow-md p-6 mt-4">
-            <h2 className="text-2xl font-bold mb-6">Google</h2>
-          </div>
-          {/* Metadados - Twitter (X) */}
-          <div className="bg-white rounded-lg shadow-md p-6 mt-4">
-            <h2 className="text-2xl font-bold mb-6">Twitter (X)</h2>
-          </div>
-          {/* Metadados - Meta */}
-          <div className="bg-white rounded-lg shadow-md p-6 mt-4">
-            <h2 className="text-2xl font-bold mb-6">Meta</h2>
-          </div>
         </div>
       </div>
     </LayoutDashboard>
