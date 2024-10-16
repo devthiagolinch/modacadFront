@@ -83,7 +83,7 @@ export const PostEditor = () => {
         console.error(response.message);
       } else {
         setTagsOptions(response);
-        setFilteredTags(response);
+        setFilteredTags(response.slice(0, 5));
       }
     });
 
@@ -136,19 +136,16 @@ export const PostEditor = () => {
   }, [postId, editor]);
 
   // Tags
-  const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredTags, setFilteredTags] = useState<ITagData[]>(tagsOptions);
-
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
-  };
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value.toLowerCase();
     setSearchTerm(value);
     setFilteredTags(
-      tagsOptions.filter((tag) => tag.name.toLowerCase().includes(value) || tag.slug.toLowerCase().includes(value))
+      tagsOptions
+        .filter((tag) => tag.name.toLowerCase().includes(value) || tag.slug.toLowerCase().includes(value))
+        .slice(0, 5)
     );
   };
 
@@ -218,7 +215,6 @@ export const PostEditor = () => {
 
       return { ...prevPost, tags: updatedTags };
     });
-    setIsOpen(false);
     setSearchTerm('');
   };
 
@@ -315,7 +311,7 @@ export const PostEditor = () => {
           </div>
         </div>
 
-        <div className="col-span-4">
+        <div className="col-span-4 bg-white rounded-lg shadow-md p-6">
           {/* Imagem destacada */}
           <div className="mb-6">
             <label className="block text-sm font-medium text-gray-700 mb-2">Imagem Destacada</label>
@@ -345,84 +341,247 @@ export const PostEditor = () => {
           </div>
 
           {/* Tags */}
-          <div className="mb-6 relative">
+          <div className="mb-6">
             <label className="block text-sm font-medium text-gray-700 mb-2">Tags</label>
-            <input
-              type="text"
-              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
-              value={searchTerm}
-              onChange={handleSearch}
-              onClick={toggleDropdown}
-              placeholder="Pesquise tags"
-            />
-            {isOpen && (
-              <ul className="absolute z-10 w-full mt-2 bg-white border border-gray-300 rounded-md max-h-60 overflow-y-auto">
-                {filteredTags.length > 0 ? (
-                  filteredTags.map((tag, index) => (
-                    <li
-                      key={index}
-                      className="p-2 hover:bg-gray-100 cursor-pointer"
-                      onClick={() => handleChangeTags(tag)}
-                    >
-                      {tag.name}
-                    </li>
-                  ))
-                ) : (
-                  <li className="p-2 text-gray-500">Nenhum resultado encontrado</li>
-                )}
-              </ul>
-            )}
             {post.tags.length > 0 && (
               <div className="mt-2 flex flex-wrap">
                 {post.tags.map((tag, index) => (
                   <span
                     onClick={() => handleChangeTags(tag)}
                     key={index}
-                    className="inline-block bg-blue-500 text-white rounded-full px-4 py-2 mr-2 mb-2 cursor-pointer"
+                    className="inline-block bg-blue-500 text-white rounded-full px-3 py-1 mr-2 mb-2 cursor-pointer text-xs flex items-center"
                   >
                     {tag.name}
+                    <svg
+                      className="ml-2 w-3 h-3"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M6 18L18 6M6 6l12 12"
+                      ></path>
+                    </svg>
                   </span>
                 ))}
               </div>
             )}
+            <Menu as="div" className="relative inline-block text-left w-full">
+              <MenuButton className="inline-flex justify-between w-full rounded-md border shadow-sm px-4 py-2 text-sm font-medium bg-white">
+                {post.tags.length > 0
+                  ? post.tags.length > 1
+                    ? `${post.tags[0].name} + ${post.tags.length - 1}`
+                    : post.tags[0].name
+                  : 'Selecione as tags'}
+              </MenuButton>
+              <MenuItems
+                className="absolute mt-2 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50"
+                style={{
+                  maxHeight: '300px',
+                  overflowY: 'auto',
+                }}
+              >
+                <div className="py-1">
+                  <div className="px-4 py-2">
+                    <input
+                      type="text"
+                      className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
+                      value={searchTerm}
+                      onChange={handleSearch}
+                      placeholder="Pesquise tags"
+                    />
+                  </div>
+                  {filteredTags.length > 0 ? (
+                    filteredTags.map((tag) => (
+                      <MenuItem key={tag.id}>
+                        {({ active }) => (
+                          <button
+                            className={`${active ? 'bg-gray-100' : ''} block px-4 py-2 text-sm w-full text-left flex items-center`}
+                            onClick={() => handleChangeTags(tag)}
+                          >
+                            {post.tags.some((selectedTag) => selectedTag.id === tag.id) && (
+                              <svg
+                                className="w-4 h-4 mr-2 text-blue-500"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                              </svg>
+                            )}
+                            {tag.name}
+                          </button>
+                        )}
+                      </MenuItem>
+                    ))
+                  ) : (
+                    <div className="px-4 py-2 text-sm text-gray-500">Nenhum item encontrado</div>
+                  )}
+                </div>
+              </MenuItems>
+            </Menu>
           </div>
 
           {/* Autores */}
           <div className="mb-6">
             <label className="block text-sm font-medium text-gray-700 mb-2">Autores</label>
-            <div className="mt-1 grid grid-cols-4 gap-2">
-              {usersOptions.map((user) => (
-                <button
-                  key={user.id}
-                  type="button"
-                  onClick={() => handleUserSelect(user)}
-                  className={`px-4 py-2 rounded-lg border text-sm font-medium ${post.admins.some((admin) => admin.id === user.id) ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
-                >
-                  {user.name}
-                </button>
-              ))}
-            </div>
+            {post.admins.length > 0 && (
+              <div className="mt-2 flex flex-wrap">
+                {post.admins.map((admin, index) => (
+                  <span
+                    onClick={() => handleUserSelect(admin)}
+                    key={index}
+                    className="inline-block bg-blue-500 text-white rounded-full px-3 py-1 mr-2 mb-2 cursor-pointer text-xs flex items-center"
+                  >
+                    {admin.name}
+                    <svg
+                      className="ml-2 w-3 h-3"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M6 18L18 6M6 6l12 12"
+                      ></path>
+                    </svg>
+                  </span>
+                ))}
+              </div>
+            )}
+            <Menu as="div" className="relative inline-block text-left w-full">
+              <MenuButton className="inline-flex justify-between w-full rounded-md border shadow-sm px-4 py-2 text-sm font-medium bg-white">
+                {post.admins.length > 0
+                  ? post.admins.length > 1
+                    ? `${post.admins[0].name} + ${post.admins.length - 1}`
+                    : post.admins[0].name
+                  : 'Selecione os autores'}
+              </MenuButton>
+              <MenuItems
+                className="absolute mt-2 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50"
+                style={{
+                  maxHeight: '300px',
+                  overflowY: 'auto',
+                }}
+              >
+                <div className="py-1">
+                  {usersOptions.length > 0 ? (
+                    usersOptions.map((user) => (
+                      <MenuItem key={user.id}>
+                        {({ active }) => (
+                          <button
+                            className={`${active ? 'bg-gray-100' : ''} block px-4 py-2 text-sm w-full text-left flex items-center`}
+                            onClick={() => handleUserSelect(user)}
+                          >
+                            <img src={user.avatar ?? ''} alt={user.name} className="w-6 h-6 rounded-full mr-2" />
+                            {user.name}
+                            {post.admins.some((admin) => admin.id === user.id) && (
+                              <svg
+                                className="w-4 h-4 ml-2 text-blue-500"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                              </svg>
+                            )}
+                          </button>
+                        )}
+                      </MenuItem>
+                    ))
+                  ) : (
+                    <div className="px-4 py-2 text-sm text-gray-500">Nenhum autor encontrado</div>
+                  )}
+                </div>
+              </MenuItems>
+            </Menu>
           </div>
 
           {/* Assuntos */}
           <div className="mb-6">
             <label className="block text-sm font-medium text-gray-700 mb-2">Assuntos</label>
-            <div className="mt-1 grid grid-cols-3 gap-2">
-              {subjectsOptions.map((subject) => (
-                <button
-                  key={subject.id}
-                  type="button"
-                  onClick={() => handleSubjectSelect(subject)}
-                  className={`px-4 py-2 rounded-lg border text-sm font-medium ${
-                    Array.isArray(post.subjects) && post.subjects.some((s) => s.id === subject.id)
-                      ? 'bg-blue-500 text-white'
-                      : 'bg-gray-200 text-gray-700'
-                  }`}
-                >
-                  {subject.name}
-                </button>
-              ))}
-            </div>
+            {post.subjects.length > 0 && (
+              <div className="mt-2 flex flex-wrap">
+                {post.subjects.map((subject, index) => (
+                  <span
+                    onClick={() => handleSubjectSelect(subject)}
+                    key={index}
+                    className="inline-block bg-blue-500 text-white rounded-full px-3 py-1 mr-2 mb-2 cursor-pointer text-xs flex items-center"
+                  >
+                    {subject.name}
+                    <svg
+                      className="ml-2 w-3 h-3"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M6 18L18 6M6 6l12 12"
+                      ></path>
+                    </svg>
+                  </span>
+                ))}
+              </div>
+            )}
+            <Menu as="div" className="relative inline-block text-left w-full">
+              <MenuButton className="inline-flex justify-between w-full rounded-md border shadow-sm px-4 py-2 text-sm font-medium bg-white">
+                {post.subjects.length > 0
+                  ? post.subjects.length > 1
+                    ? `${post.subjects[0].name} + ${post.subjects.length - 1}`
+                    : post.subjects[0].name
+                  : 'Selecione os assuntos'}
+              </MenuButton>
+              <MenuItems
+                className="absolute mt-2 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50"
+                style={{
+                  maxHeight: '300px',
+                  overflowY: 'auto',
+                }}
+              >
+                <div className="py-1">
+                  {subjectsOptions.length > 0 ? (
+                    subjectsOptions.map((subject) => (
+                      <MenuItem key={subject.id}>
+                        {({ active }) => (
+                          <button
+                            className={`${active ? 'bg-gray-100' : ''} block px-4 py-2 text-sm w-full text-left flex items-center`}
+                            onClick={() => handleSubjectSelect(subject)}
+                          >
+                            {post.subjects.some((s) => s.id === subject.id) && (
+                              <svg
+                                className="w-4 h-4 ml-2 text-blue-500"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                              </svg>
+                            )}
+                            {subject.name}
+                          </button>
+                        )}
+                      </MenuItem>
+                    ))
+                  ) : (
+                    <div className="px-4 py-2 text-sm text-gray-500">Nenhum assunto encontrado</div>
+                  )}
+                </div>
+              </MenuItems>
+            </Menu>
           </div>
 
           {/* Status */}
@@ -432,7 +591,7 @@ export const PostEditor = () => {
               <MenuButton className="inline-flex justify-between w-full rounded-md border shadow-sm px-4 py-2 text-sm font-medium bg-white">
                 {statuses[post.status].name}
               </MenuButton>
-              <MenuItems className="absolute mt-2 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+              <MenuItems className="absolute mt-2 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
                 <div className="py-1">
                   {Object.keys(statuses).map((status) => (
                     <MenuItem key={status}>
@@ -458,7 +617,7 @@ export const PostEditor = () => {
               <MenuButton className="inline-flex justify-between w-full rounded-md border shadow-sm px-4 py-2 text-sm font-medium bg-white">
                 {visibilities[post.visibility].name}
               </MenuButton>
-              <MenuItems className="absolute mt-2 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+              <MenuItems className="absolute mt-2 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
                 <div className="py-1">
                   {Object.keys(visibilities).map((visibility) => (
                     <MenuItem key={visibility}>
@@ -484,7 +643,7 @@ export const PostEditor = () => {
               <MenuButton className="inline-flex justify-between w-full rounded-md border shadow-sm px-4 py-2 text-sm font-medium bg-white">
                 {types[post.type]}
               </MenuButton>
-              <MenuItems className="absolute mt-2 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+              <MenuItems className="absolute mt-2 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
                 <div className="py-1">
                   {Object.keys(types).map((type) => (
                     <MenuItem key={type}>
