@@ -303,12 +303,6 @@ export const PostEditor = () => {
           <div className="border p-4 rounded-lg mb-6">
             <EditorContent editor={editor} />
           </div>
-
-          {/* Pré-visualização */}
-          <div className="mt-6">
-            <h2 className="text-lg font-semibold mb-4">Pré-visualização:</h2>
-            <div className="border p-4 rounded-lg" dangerouslySetInnerHTML={{ __html: post.content }} />
-          </div>
         </div>
 
         <div className="col-span-4 bg-white rounded-lg shadow-md p-6">
@@ -666,6 +660,12 @@ export const PostEditor = () => {
           <div className="mb-6">
             <button className="px-4 py-2 bg-blue-500 text-white rounded w-full" onClick={handleSubmit}>
               {postId ? 'Atualizar Postagem' : 'Publicar Postagem'}
+            </button>
+            <button
+              className="px-4 py-2 border border-blue-500 text-blue-500 rounded w-full mt-2"
+              onClick={() => window.open(`/posts/${postId}`, '_blank')}
+            >
+              Ver Publicação
             </button>
           </div>
         </div>
