@@ -33,12 +33,7 @@ export function ScrollTextosMaisLidos({ title }: TextScrollInterface) {
     <div className="flex flex-row -mt-[1px]">
       <div className="flex justify-center items-center border-[1px] border-[#202020] -mr-[1px] pt-24">
         <Link to={`/posts/popular`}>
-          <p
-            className="
-          text-nowrap transform: -rotate-90 w-8 lg:w-[22px] lg:p-5"
-          >
-            {title}
-          </p>
+          <p className="text-nowrap transform: -rotate-90 w-8 lg:w-[22px] lg:p-5">{title}</p>
         </Link>
       </div>
 
