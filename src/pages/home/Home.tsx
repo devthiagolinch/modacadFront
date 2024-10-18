@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { ScrollTextoMCD } from '../../shared/components/ScrollTextoMDC';
 import { ScrollPilulaMCD } from '../../shared/components/ScrollPilulasMDC';
-import { ScrollTextosMaisLidos } from '../../shared/components/ScrollTextoMaisLidos';
 import { Footer } from '../../shared/components/footer';
 import { ReadingBox } from '../../shared/components/reagindBox';
 
@@ -48,7 +46,7 @@ export function Home() {
       <ReadingBox />
       {lastPost && (
         <StyledBox title="ULTIMO POST">
-          <FeaturedPost post={lastPost} />
+          <FeaturedPost post={lastPost} postType="texto" />
         </StyledBox>
       )}
       {subjects.length > 0 && (
@@ -68,12 +66,14 @@ export function Home() {
       )}
       {posts.length > 0 && (
         <StyledBox title="TEXTOS MAIS LIDOS">
-          <SwiperPosts posts={posts}></SwiperPosts>
+          <SwiperPosts posts={posts} postType="texto"></SwiperPosts>
         </StyledBox>
       )}
-
-      <ScrollTextosMaisLidos title={'TEXTOS MAIS LIDOS'} />
-      <ScrollTextoMCD title={'TEXTO PUBLICADOS'} />
+      {posts.length > 0 && (
+        <StyledBox title="TEXTOS PUBLICADOS">
+          <SwiperPosts posts={posts} postType="texto"></SwiperPosts>
+        </StyledBox>
+      )}
       <ReadingBox />
       <ScrollPilulaMCD title={'PILULAS MODACAD'} />
       <div className="h-96"></div>
