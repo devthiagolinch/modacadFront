@@ -14,7 +14,13 @@ interface ISwiperPosts {
 
 export const SwiperPosts: React.FC<ISwiperPosts> = ({ posts, postType }) => {
   return (
-    <Swiper spaceBetween={0} slidesPerView={3} navigation scrollbar={{ draggable: true }} style={{ height: '100%' }}>
+    <Swiper
+      spaceBetween={0}
+      slidesPerView={posts.length >= 3 ? 3 : posts.length}
+      navigation
+      scrollbar={{ draggable: true }}
+      style={{ height: '100%' }}
+    >
       {posts.map((post) => (
         <SwiperSlide key={post.id} style={{ height: '100%' }}>
           <Link to={`/${postType === 'texto' ? 'posts' : 'pilulas'}/${post.id}`}>

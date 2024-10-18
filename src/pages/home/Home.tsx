@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 
-import { ScrollPilulaMCD } from '../../shared/components/ScrollPilulasMDC';
 import { Footer } from '../../shared/components/footer';
 import { ReadingBox } from '../../shared/components/reagindBox';
 
@@ -18,6 +17,7 @@ export function Home() {
   const [subjects, setSubjects] = useState<ISubjectData[]>([]);
   const [lastPost, setLastPost] = useState<IPostData>();
   const [posts, setPosts] = useState<IPostData[]>([]);
+  const [pilulas, setPilulas] = useState<IPostData[]>([]);
 
   useEffect(() => {
     SubjectsService.getAll().then((response) => {
@@ -35,11 +35,19 @@ export function Home() {
       setLastPost(response.posts[0]);
       setPosts(response.posts.slice(1));
     });
+    PostsService.getAll('pilula').then((response) => {
+      if (response instanceof Error) {
+        console.error(response.message);
+        return;
+      }
+      setPilulas(response.posts);
+    });
   }, []);
 
   return (
     <div className="mx-auto h-screen">
       <PublicHeader />
+      {/* Banner da página inicial */}
       <div>
         <img src={banner} alt="" className="min-w-full max-h-[650px] object-cover" />
       </div>
@@ -75,8 +83,11 @@ export function Home() {
         </StyledBox>
       )}
       <ReadingBox />
-      <ScrollPilulaMCD title={'PILULAS MODACAD'} />
-      <div className="h-96"></div>
+      {pilulas.length > 0 && (
+        <StyledBox title="PILULAS MODACAD">
+          <SwiperPosts posts={pilulas} postType="pilula" />
+        </StyledBox>
+      )}
       <Footer />
     </div>
   );
