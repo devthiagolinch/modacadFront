@@ -34,7 +34,7 @@ export const FeaturedPost: React.FC<IFeaturedPost> = ({ post, postType, title })
           {/* Imagem da publicação */}
           <img src={post.feature_image ?? ''} alt={`Imagem do ${post.title}`} className="w-full h-full object-cover" />
           {/* Triângulo decorativo na borda esquerda ao centro */}
-          <div className="absolute top-1/2 left-0 transform -translate-y-1/2 w-0 h-0 border-r-[60px] border-r-transparent border-t-[60px] border-t-transparent border-b-[60px] border-b-transparent border-l-[60px] border-l-[#F1EDE9]"></div>
+          <div className="absolute top-1/2 left-[-1px] transform -translate-y-1/2 w-0 h-0 border-r-[60px] border-r-transparent border-t-[60px] border-t-transparent border-b-[60px] border-b-transparent border-l-[60px] border-l-[#F1EDE9]"></div>
         </div>
       </div>
     </Link>
