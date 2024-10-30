@@ -52,11 +52,7 @@ export function Home() {
         <img src={banner} alt="" className="min-w-full max-h-[650px] object-cover" />
       </div>
       <ReadingBox />
-      {lastPost && (
-        <StyledBox title="ULTIMO POST">
-          <FeaturedPost post={lastPost} postType="texto" />
-        </StyledBox>
-      )}
+      {lastPost && <FeaturedPost post={lastPost} postType="texto" title="ÚLTIMO TEXTO" />}
       {subjects.length > 0 && (
         <StyledBox title="ASSUNTOS">
           {subjects.map((sub) => (
