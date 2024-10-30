@@ -15,7 +15,7 @@ export const FeaturedPost: React.FC<IFeaturedPost> = ({ post, postType, title })
       <div className="grid grid-cols-12 gap-4 font-montserrat">
         {/* Título da seção */}
         <div className="col-span-1 flex flex-col justify-center">
-          <h2 className="transform -rotate-90 text-2xl whitespace-nowrap font-light text-gray-700">{title}</h2>
+          <h2 className="transform -rotate-90 text-2xl text-nowrap font-light text-gray-700">{title}</h2>
         </div>
         <div className="col-span-4 flex flex-col justify-center">
           {/* Assuntos da publicação */}

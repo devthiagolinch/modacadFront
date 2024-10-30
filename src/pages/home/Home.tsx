@@ -55,15 +55,10 @@ export function Home() {
       {lastPost && <FeaturedPost post={lastPost} postType="texto" title="ÚLTIMO TEXTO" />}
       {subjects.length > 0 && (
         <StyledBox title="ASSUNTOS">
-          {subjects.map((sub) => (
-            <div key={sub.id}>
-              <Link
-                to="" // To-do - Linkar para a página de assuntos
-                className="px-2 lg:px-5 bg-gradient-to-t from-[#dcdf1e] to-[#dcdf1e] bg-[length:120%_.60em] bg-no-repeat bg-[position:calc(90%_-_var(--p,0%))_900%] hover:bg-[position:50%_95%] transition-all duration-300"
-              >
-                {sub.name}
-              </Link>
-              <span className="text-2xl">•</span>
+          {subjects.map((sub, index) => (
+            <div key={sub.id} className="text-5xl font-butler font-light">
+              <Link to="">{sub.name}</Link>
+              {index < subjects.length - 1 && <span className="ml-4 mr-2">•</span>}
             </div>
           ))}
         </StyledBox>
