@@ -54,14 +54,21 @@ export function Home() {
       <ReadingBox />
       {lastPost && <FeaturedPost post={lastPost} postType="texto" title="ÚLTIMO TEXTO" />}
       {subjects.length > 0 && (
-        <StyledBox title="ASSUNTOS">
-          {subjects.map((sub, index) => (
-            <div key={sub.id} className="text-5xl font-butler font-light">
-              <Link to="">{sub.name}</Link>
-              {index < subjects.length - 1 && <span className="ml-4 mr-2">•</span>}
-            </div>
-          ))}
-        </StyledBox>
+        <div className="flex border border-gray-800 mb-[-1px] py-16">
+          <div className="flex justify-start items-center">
+            <p className="transform -rotate-90 text-2xl text-nowrap font-light text-gray-700">ASSUNTOS</p>
+          </div>
+          <div className="flex flex-wrap gap-4 p-6">
+            {subjects.map((sub, index) => (
+              <div key={sub.id} className="text-5xl font-butler font-light">
+                <Link to="" className="highlight-link">
+                  {sub.name}
+                </Link>
+                {index < subjects.length - 1 && <span className="ml-4 mr-2">•</span>}
+              </div>
+            ))}
+          </div>
+        </div>
       )}
       {posts.length > 0 && (
         <StyledBox title="TEXTOS MAIS LIDOS">
