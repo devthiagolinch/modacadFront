@@ -17,7 +17,8 @@ export const FeaturedPost: React.FC<IFeaturedPost> = ({ post, postType, title })
         <div className="col-span-1 flex flex-col justify-center">
           <h2 className="transform -rotate-90 text-2xl text-nowrap font-light text-gray-700">{title}</h2>
         </div>
-        <div className="col-span-4 flex flex-col justify-center">
+        {/* Conteúdo da publicação */}
+        <div className="col-span-4 py-8 flex flex-col justify-center">
           {/* Assuntos da publicação */}
           {post.subjects.length > 0 &&
             post.subjects.slice(0, 3).map((subject) => (
@@ -30,6 +31,7 @@ export const FeaturedPost: React.FC<IFeaturedPost> = ({ post, postType, title })
           {/* Descrição da publicação */}
           <p className="text-gray-700 line-clamp-4 text-2xl font-light">{post.description}</p>
         </div>
+        {/* Imagem da publicação */}
         <div className="col-span-7 relative">
           {/* Imagem da publicação */}
           <img src={post.feature_image ?? ''} alt={`Imagem do ${post.title}`} className="w-full h-full object-cover" />
