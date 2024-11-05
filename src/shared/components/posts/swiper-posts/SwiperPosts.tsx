@@ -15,25 +15,13 @@ interface ISwiperPosts {
   postType: TPostsType;
   title: string;
   slidesPerView?: number;
+  index: number; // Adiciona um índice para identificar cada carrossel
 }
 
-export const SwiperPosts: React.FC<ISwiperPosts> = ({ posts, postType, title, slidesPerView = 2 }) => {
+export const SwiperPosts: React.FC<ISwiperPosts> = ({ posts, postType, title, slidesPerView = 2, index }) => {
   // Criar referências para os botões de navegação
-  const prevRef = useRef<HTMLDivElement>(null);
-  const nextRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    // Atribuir as referências dos botões de navegação ao Swiper após a montagem do componente
-    const swiperInstance = (document.querySelector('.swiper-container') as any)?.swiper;
-    if (swiperInstance && typeof swiperInstance.params.navigation !== 'boolean') {
-      const navigation = swiperInstance.params.navigation;
-      if (navigation) {
-        navigation.prevEl = prevRef.current;
-        navigation.nextEl = nextRef.current;
-        swiperInstance.navigation.update();
-      }
-    }
-  }, []);
+  const prevRef = useRef<HTMLDivElement[]>([]);
+  const nextRef = useRef<HTMLDivElement[]>([]);
 
   return (
     <div>
@@ -47,16 +35,16 @@ export const SwiperPosts: React.FC<ISwiperPosts> = ({ posts, postType, title, sl
             modules={[Navigation]}
             loop={true}
             navigation={{
-              prevEl: prevRef.current,
-              nextEl: nextRef.current,
+              prevEl: prevRef.current[index],
+              nextEl: nextRef.current[index],
             }}
             onBeforeInit={(swiper) => {
               // Atribuir as referências dos botões de navegação ao Swiper
               if (typeof swiper.params.navigation !== 'boolean') {
                 const navigation = swiper.params.navigation;
                 if (navigation) {
-                  navigation.prevEl = prevRef.current;
-                  navigation.nextEl = nextRef.current;
+                  navigation.prevEl = prevRef.current[index];
+                  navigation.nextEl = nextRef.current[index];
                 }
               }
             }}
@@ -74,13 +62,13 @@ export const SwiperPosts: React.FC<ISwiperPosts> = ({ posts, postType, title, sl
       {/* Menu de navegação */}
       <div className="swiper-navigation flex">
         <div
-          ref={prevRef}
+          ref={(el) => (prevRef.current[index] = el!)}
           className="swiper-button-prev flex grow justify-center hover:bg-primary cursor-pointer py-6 border border-gray-950"
         >
           <ArrowLongLeftIcon className="size-12" />
         </div>
         <div
-          ref={nextRef}
+          ref={(el) => (nextRef.current[index] = el!)}
           className="swiper-button-next flex grow justify-center hover:bg-primary cursor-pointer py-6 border-y border-r border-gray-950"
         >
           <ArrowLongRightIcon className="size-12" />
