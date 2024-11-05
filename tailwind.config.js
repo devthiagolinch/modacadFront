@@ -17,6 +17,9 @@ export default {
         montserrat: ['Montserrat', 'sans-serif'],
         autography: ['Autography', 'sans-serif'],
       },
+      colors: {
+        primary: '#DBDF1D',
+      },
     },
   },
   plugins: [require('tailwindcss-inner-border'), require('@tailwindcss/typography')],

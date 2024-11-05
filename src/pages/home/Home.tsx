@@ -8,7 +8,6 @@ import { ISubjectData, SubjectsService } from '../../shared/api/subjects/Subject
 import banner from '../../assets/imgs/Banner-home.jpg';
 import { PublicHeader } from '../../shared/components/header/PublicHeader';
 import { Link } from 'react-router-dom';
-import { StyledBox } from '../../shared/components/styled-box/StyledBox';
 import { IPostData, PostsService } from '../../shared/api/posts/PostsService';
 import { FeaturedPost } from '../../shared/components/posts/featured-post/FeaturedPost';
 import { SwiperPosts } from '../../shared/components/posts/swiper-posts/SwiperPosts';
@@ -19,6 +18,7 @@ export function Home() {
   const [posts, setPosts] = useState<IPostData[]>([]);
   const [pilulas, setPilulas] = useState<IPostData[]>([]);
 
+  // Busca os dados da API
   useEffect(() => {
     SubjectsService.getAll().then((response) => {
       if (response instanceof Error) {
@@ -51,8 +51,11 @@ export function Home() {
       <div>
         <img src={banner} alt="" className="min-w-full max-h-[650px] object-cover" />
       </div>
+      {/* CTA - Planos */}
       <ReadingBox />
+      {/* Último post */}
       {lastPost && <FeaturedPost post={lastPost} postType="texto" title="ÚLTIMO TEXTO" />}
+      {/* Assuntos */}
       {subjects.length > 0 && (
         <div className="flex border border-gray-800 mb-[-1px] py-16">
           <div className="flex justify-start items-center">
@@ -70,22 +73,17 @@ export function Home() {
           </div>
         </div>
       )}
-      {posts.length > 0 && (
-        <StyledBox title="TEXTOS MAIS LIDOS">
-          <SwiperPosts posts={posts} postType="texto"></SwiperPosts>
-        </StyledBox>
-      )}
-      {posts.length > 0 && (
-        <StyledBox title="TEXTOS PUBLICADOS">
-          <SwiperPosts posts={posts} postType="texto"></SwiperPosts>
-        </StyledBox>
-      )}
+      {/* Textos mais lidos */}
+      {posts.length > 0 && <SwiperPosts posts={posts} postType="texto" title="TEXTOS MAIS LIDOS" />}
+      {/* Textos publicados */}
+      {posts.length > 0 && <SwiperPosts posts={posts} postType="texto" title="TEXTOS PUBLICADOS"></SwiperPosts>}
+      {/* CTA - Planos */}
       <ReadingBox />
-      {pilulas.length > 0 && (
-        <StyledBox title="PILULAS MODACAD">
-          <SwiperPosts posts={pilulas} postType="pilula" />
-        </StyledBox>
-      )}
+      {/* Pilulas */}
+      {pilulas.length > 0 && <SwiperPosts posts={pilulas} postType="pilula" title="PILULAS MODACAD" />}
+      {/* Sobre a Telma */}
+      <div></div>
+      {/* Rodapé */}
       <Footer />
     </div>
   );
