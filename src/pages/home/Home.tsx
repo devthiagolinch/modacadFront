@@ -80,7 +80,9 @@ export function Home() {
       {/* CTA - Planos */}
       <ReadingBox />
       {/* Pilulas */}
-      {pilulas.length > 0 && <SwiperPosts posts={pilulas} postType="pilula" title="PILULAS MODACAD" />}
+      {pilulas.length > 0 && (
+        <SwiperPosts posts={pilulas} postType="pilula" title="PILULAS MODACAD" slidesPerView={4} />
+      )}
       {/* Sobre a Telma */}
       <div></div>
       {/* Rodapé */}

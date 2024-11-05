@@ -14,9 +14,10 @@ interface ISwiperPosts {
   posts: IPostData[];
   postType: TPostsType;
   title: string;
+  slidesPerView?: number;
 }
 
-export const SwiperPosts: React.FC<ISwiperPosts> = ({ posts, postType, title }) => {
+export const SwiperPosts: React.FC<ISwiperPosts> = ({ posts, postType, title, slidesPerView = 2 }) => {
   // Criar referências para os botões de navegação
   const prevRef = useRef<HTMLDivElement>(null);
   const nextRef = useRef<HTMLDivElement>(null);
@@ -29,7 +30,7 @@ export const SwiperPosts: React.FC<ISwiperPosts> = ({ posts, postType, title }) 
         </div>
         <div className="col-span-11 border-x border-t border-gray-950">
           <Swiper
-            slidesPerView={Math.min(posts.length, 2)}
+            slidesPerView={Math.min(posts.length, slidesPerView)}
             modules={[Navigation]}
             loop={true}
             navigation={{
