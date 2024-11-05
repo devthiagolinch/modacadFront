@@ -3,40 +3,64 @@
 @tailwind utilities;
 
 @layer base {
+  /* Butler */
   @font-face {
     font-family: 'Butler';
-    src: url('./assets/fonts/butler_ultra_light.otf') format('opentype');
+    src: url('./assets/fonts/Butler-UltraLight.woff') format('woff');
     font-style: normal;
-    font-weight: 100;
+    font-weight: 200;
     font-display: swap;
   }
   @font-face {
     font-family: 'Butler';
-    src: url('/src/assets/fonts/Butler_Regular.otf') format('opentype');
+    src: url('./assets/fonts/Butler-Light.woff') format('woff');
+    font-style: normal;
+    font-weight: 300;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Butler';
+    src: url('/src/assets/fonts/Butler.woff') format('woff');
     font-style: normal;
     font-weight: 400;
     font-display: swap;
   }
   @font-face {
     font-family: 'Butler';
-    src: url('/src/assets/fonts/Butler_Bold.otf') format('opentype');
+    src: url('/src/assets/fonts/Butler-Medium.woff') format('woff');
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Butler';
+    src: url('/src/assets/fonts/Butler-Bold.woff') format('woff');
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Butler';
+    src: url('/src/assets/fonts/Butler-ExtraBold.woff') format('woff');
     font-style: normal;
     font-weight: 700;
     font-display: swap;
   }
   @font-face {
     font-family: 'Butler';
-    src: url('/src/assets/fonts/Butler_ExtraBold.otf') format('opentype');
+    src: url('/src/assets/fonts/Butler-Black.woff') format('woff');
     font-style: normal;
     font-weight: 800;
     font-display: swap;
   }
+  /* Autography */
   @font-face {
     font-family: 'Autography';
     src: url('/src/assets/fonts/Autography.otf') format('opentype');
     font-style: normal;
     font-display: swap;
   }
+  /* Montserrat */
   @font-face {
     font-family: 'Montserrat';
     src: url('/src/assets/fonts/Montserrat-Light.ttf') format('truetype');
