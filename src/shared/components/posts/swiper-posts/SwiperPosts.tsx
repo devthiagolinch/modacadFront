@@ -8,7 +8,7 @@ import { TPostsType } from 'src/shared/services/postOptions';
 import 'swiper/css';
 import { ArrowLongLeftIcon, ArrowLongRightIcon } from '@heroicons/react/24/outline';
 import { Navigation } from 'swiper/modules';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 
 interface ISwiperPosts {
   posts: IPostData[];
