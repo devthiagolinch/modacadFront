@@ -8,7 +8,7 @@ import { TPostsType } from 'src/shared/services/postOptions';
 import 'swiper/css';
 import { ArrowLongLeftIcon, ArrowLongRightIcon } from '@heroicons/react/24/outline';
 import { Navigation } from 'swiper/modules';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 interface ISwiperPosts {
   posts: IPostData[];
@@ -21,6 +21,19 @@ export const SwiperPosts: React.FC<ISwiperPosts> = ({ posts, postType, title, sl
   // Criar referências para os botões de navegação
   const prevRef = useRef<HTMLDivElement>(null);
   const nextRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // Atribuir as referências dos botões de navegação ao Swiper após a montagem do componente
+    const swiperInstance = (document.querySelector('.swiper-container') as any)?.swiper;
+    if (swiperInstance && typeof swiperInstance.params.navigation !== 'boolean') {
+      const navigation = swiperInstance.params.navigation;
+      if (navigation) {
+        navigation.prevEl = prevRef.current;
+        navigation.nextEl = nextRef.current;
+        swiperInstance.navigation.update();
+      }
+    }
+  }, []);
 
   return (
     <div>
