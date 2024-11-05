@@ -1,65 +1,129 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 @layer base {
-    @font-face {
-        font-family: "butler-ultra-light";
-        src: url("./assets/fonts/butler_ultra_light.otf") format("opentype");
-        font-style: normal;
-        font-display: swap
+  /* Butler */
+  @font-face {
+    font-family: 'Butler';
+    src: url('./assets/fonts/Butler-UltraLight.woff') format('woff');
+    font-style: normal;
+    font-weight: 200;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Butler';
+    src: url('./assets/fonts/Butler-Light.woff') format('woff');
+    font-style: normal;
+    font-weight: 300;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Butler';
+    src: url('/src/assets/fonts/Butler.woff') format('woff');
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Butler';
+    src: url('/src/assets/fonts/Butler-Medium.woff') format('woff');
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Butler';
+    src: url('/src/assets/fonts/Butler-Bold.woff') format('woff');
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Butler';
+    src: url('/src/assets/fonts/Butler-ExtraBold.woff') format('woff');
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Butler';
+    src: url('/src/assets/fonts/Butler-Black.woff') format('woff');
+    font-style: normal;
+    font-weight: 800;
+    font-display: swap;
+  }
+  /* Autography */
+  @font-face {
+    font-family: 'Autography';
+    src: url('/src/assets/fonts/Autography.otf') format('opentype');
+    font-style: normal;
+    font-display: swap;
+  }
+  /* Montserrat */
+  @font-face {
+    font-family: 'Montserrat';
+    src: url('/src/assets/fonts/Montserrat-Light.ttf') format('truetype');
+    font-style: normal;
+    font-weight: 300;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Montserrat';
+    src: url('/src/assets/fonts/Montserrat-LightItalic.ttf') format('truetype');
+    font-style: italic;
+    font-weight: 300;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Montserrat';
+    src: url('/src/assets/fonts/Montserrat-Regular.ttf') format('truetype');
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Montserrat';
+    src: url('/src/assets/fonts/Montserrat-Medium.ttf') format('truetype');
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Montserrat';
+    src: url('/src/assets/fonts/Montserrat-MediumItalic.ttf') format('truetype');
+    font-style: italic;
+    font-weight: 500;
+    font-display: swap;
+  }
+}
+
+@layer components {
+  @layer components {
+    .highlight-link {
+      position: relative;
+      display: inline-block;
+      color: inherit;
+      text-decoration: none;
+      overflow: hidden;
     }
-    @font-face {
-        font-family: "autography";
-        src: url("./assets/fonts/Autography.otf") format("opentype");
-        font-style: normal;
-        font-display: swap
+
+    .highlight-link::before {
+      content: '';
+      position: absolute;
+      bottom: 0.1em; /* Posição vertical para começar na metade da fonte */
+      left: 0;
+      width: 100%;
+      height: 50%; /* Metade da altura da fonte para efeito marca-texto */
+      background: linear-gradient(90deg, #dcdf1e, #dcdf1e);
+      transition: transform 0.4s ease;
+      transform-origin: left;
+      transform: scaleX(0);
+      z-index: -1; /* Coloca o efeito atrás do texto */
     }
-    @font-face {
-        font-family: "butler-bold";
-        src: url("./assets/fonts/Butler_Bold.otf") format("opentype");
-        font-style: bold;
-        font-display: swap
+
+    .highlight-link:hover::before {
+      transform: scaleX(1);
     }
-    @font-face {
-        font-family: "butler-extra-bold";
-        src: url("./assets/fonts/Butler_ExtraBold.otf") format("opentype");
-        font-style: normal;
-        font-display: swap
-    }
-    @font-face {
-        font-family: "butler_regular";
-        src: url("./assets/fonts/Butler_Regular.otf") format("opentype");
-        font-style: normal;
-        font-display: swap
-    }
-    @font-face {
-        font-family: "montserrat-light-italic";
-        src: url("./assets/fonts/Montserrat-LightItalic.ttf") format("ttf");
-        font-style: normal;
-        font-display: swap
-    }
-    @font-face {
-        font-family: "montserrat-medium";
-        src: url("./assets/fonts/Montserrat-Medium.ttf") format("ttf");
-        font-style: medium;
-        font-display: swap
-    }
-    @font-face {
-        font-family: "montserrat-medium-italic";
-        src: url("./assets/fonts/Montserrat-MediumItalic.ttf") format("ttf");
-        font-style: medium;
-        font-display: swap
-    }
-    @font-face {
-        font-family: "montserrat-regular";
-        src: url("./assets/fonts/Montserrat-Regular.ttf") format("opentype");
-        font-style: regular;
-        font-display: swap
-    }
-    @font-face {
-        font-family: "montserrat-light";
-        src: url("./assets/fonts/Montserrat-Light.ttf") format("ttf");
-        font-display: swap;
-        font-style: light
-    }
+  }
 }

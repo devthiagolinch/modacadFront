@@ -13,7 +13,7 @@ export function ReadingBox() {
       >
         {/** MOBILE */}
         <div className="lg:hidden flex flex-col justify-center items-center mb-[35px]">
-          <p className=" text-[40px] font-butler_ultra_light leading-[40px] mb-[20px]">Planos de leitura</p>
+          <p className=" text-[40px] font-butler font-light leading-[40px] mb-[20px]">Planos de leitura</p>
           <span className="text-[20px] leading-5 font-montserrat_light_italic max-w-[80%] text-center md:text-left">
             para conteúdos exclusivos modacad
           </span>
@@ -27,8 +27,10 @@ export function ReadingBox() {
                     "
         >
           <div className="lg:mr-10">
-            <p className="md:text-[70px] text-[50px] font-butler_ultra_light leading-[65px]">Planos de leitura</p>
-            <span className="font-montserratLight md:text-[30px] text-[25px]">para conteúdos exclusivos modacad</span>
+            <p className="md:text-[70px] text-[50px] font-butler font-light leading-[65px]">Planos de leitura</p>
+            <span className="font-montserrat font-light md:text-[30px] text-[25px]">
+              para conteúdos exclusivos modacad
+            </span>
           </div>
 
           <img src={setaCurvaIcon} alt="" className="max-h-[40px]" />
