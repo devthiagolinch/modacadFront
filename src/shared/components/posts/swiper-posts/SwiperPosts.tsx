@@ -8,7 +8,7 @@ import { TPostsType } from 'src/shared/services/postOptions';
 import 'swiper/css';
 import { ArrowLongLeftIcon, ArrowLongRightIcon } from '@heroicons/react/24/outline';
 import { Navigation } from 'swiper/modules';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 interface ISwiperPosts {
   posts: IPostData[];
@@ -21,7 +21,12 @@ export const SwiperPosts: React.FC<ISwiperPosts> = ({ posts, postType, title, sl
   const prevRef = useRef<HTMLDivElement | null>(null);
   const nextRef = useRef<HTMLDivElement | null>(null);
 
-  console.log(slidesPerView);
+  useEffect(() => {
+    if (prevRef.current && nextRef.current) {
+      prevRef.current.classList.add('swiper-button-prev');
+      nextRef.current.classList.add('swiper-button-next');
+    }
+  }, []);
 
   return (
     <div>
@@ -31,7 +36,7 @@ export const SwiperPosts: React.FC<ISwiperPosts> = ({ posts, postType, title, sl
         </div>
         <div className="col-span-11 border-x border-t border-gray-950">
           <Swiper
-            slidesPerView={2}
+            slidesPerView={Math.min(posts.length, slidesPerView)}
             modules={[Navigation]}
             loop={true}
             navigation={{
