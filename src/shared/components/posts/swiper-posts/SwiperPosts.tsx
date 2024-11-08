@@ -8,7 +8,7 @@ import { TPostsType } from 'src/shared/services/postOptions';
 import 'swiper/css';
 import { ArrowLongLeftIcon, ArrowLongRightIcon } from '@heroicons/react/24/outline';
 import { Navigation } from 'swiper/modules';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 
 interface ISwiperPosts {
   posts: IPostData[];
@@ -18,21 +18,8 @@ interface ISwiperPosts {
 }
 
 export const SwiperPosts: React.FC<ISwiperPosts> = ({ posts, postType, title, slidesPerView = 2 }) => {
-  // Criar referências para os botões de navegação
   const prevRef = useRef<HTMLDivElement | null>(null);
   const nextRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    if (prevRef.current && nextRef.current) {
-      const swiper = (document.querySelector('.swiper-container') as any)?.swiper;
-      console.log(swiper);
-      if (swiper) {
-        swiper.params.navigation.prevEl = prevRef.current;
-        swiper.params.navigation.nextEl = nextRef.current;
-        swiper.navigation.update();
-      }
-    }
-  }, [prevRef, nextRef]);
 
   return (
     <div>
@@ -42,7 +29,7 @@ export const SwiperPosts: React.FC<ISwiperPosts> = ({ posts, postType, title, sl
         </div>
         <div className="col-span-11 border-x border-t border-gray-950">
           <Swiper
-            slidesPerView={Math.min(posts.length, slidesPerView)}
+            slidesPerView={2}
             modules={[Navigation]}
             loop={true}
             navigation={{
@@ -50,7 +37,6 @@ export const SwiperPosts: React.FC<ISwiperPosts> = ({ posts, postType, title, sl
               nextEl: nextRef.current,
             }}
             onBeforeInit={(swiper) => {
-              // Atribuir as referências dos botões de navegação ao Swiper
               if (typeof swiper.params.navigation !== 'boolean') {
                 const navigation = swiper.params.navigation;
                 if (navigation) {
@@ -59,7 +45,6 @@ export const SwiperPosts: React.FC<ISwiperPosts> = ({ posts, postType, title, sl
                 }
               }
             }}
-            className="swiper-container"
           >
             {posts.map((post) => (
               <SwiperSlide key={post.id} style={{ height: 'auto' }}>
