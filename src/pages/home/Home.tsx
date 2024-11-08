@@ -74,16 +74,14 @@ export function Home() {
         </div>
       )}
       {/* Textos mais lidos */}
-      {posts.length > 0 && <SwiperPosts posts={posts} postType="texto" title="TEXTOS MAIS LIDOS" index={1} />}
+      {posts.length > 0 && <SwiperPosts posts={posts} postType="texto" title="TEXTOS MAIS LIDOS" />}
       {/* Textos publicados */}
-      {posts.length > 0 && (
-        <SwiperPosts posts={posts} postType="texto" title="TEXTOS PUBLICADOS" index={2}></SwiperPosts>
-      )}
+      {posts.length > 0 && <SwiperPosts posts={posts} postType="texto" title="TEXTOS PUBLICADOS"></SwiperPosts>}
       {/* CTA - Planos */}
       <ReadingBox />
       {/* Pilulas */}
       {pilulas.length > 0 && (
-        <SwiperPosts posts={pilulas} postType="pilula" title="PILULAS MODACAD" slidesPerView={4} index={3} />
+        <SwiperPosts posts={pilulas} postType="pilula" title="PILULAS MODACAD" slidesPerView={4} />
       )}
       {/* Sobre a Telma */}
       <div></div>

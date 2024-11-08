@@ -8,20 +8,31 @@ import { TPostsType } from 'src/shared/services/postOptions';
 import 'swiper/css';
 import { ArrowLongLeftIcon, ArrowLongRightIcon } from '@heroicons/react/24/outline';
 import { Navigation } from 'swiper/modules';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 interface ISwiperPosts {
   posts: IPostData[];
   postType: TPostsType;
   title: string;
   slidesPerView?: number;
-  index: number; // Adiciona um índice para identificar cada carrossel
 }
 
-export const SwiperPosts: React.FC<ISwiperPosts> = ({ posts, postType, title, slidesPerView = 2, index }) => {
+export const SwiperPosts: React.FC<ISwiperPosts> = ({ posts, postType, title, slidesPerView = 2 }) => {
   // Criar referências para os botões de navegação
-  const prevRef = useRef<HTMLDivElement[]>([]);
-  const nextRef = useRef<HTMLDivElement[]>([]);
+  const prevRef = useRef<HTMLDivElement | null>(null);
+  const nextRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (prevRef.current && nextRef.current) {
+      const swiper = (document.querySelector('.swiper-container') as any)?.swiper;
+      console.log(swiper);
+      if (swiper) {
+        swiper.params.navigation.prevEl = prevRef.current;
+        swiper.params.navigation.nextEl = nextRef.current;
+        swiper.navigation.update();
+      }
+    }
+  }, [prevRef, nextRef]);
 
   return (
     <div>
@@ -35,19 +46,20 @@ export const SwiperPosts: React.FC<ISwiperPosts> = ({ posts, postType, title, sl
             modules={[Navigation]}
             loop={true}
             navigation={{
-              prevEl: prevRef.current[index],
-              nextEl: nextRef.current[index],
+              prevEl: prevRef.current,
+              nextEl: nextRef.current,
             }}
             onBeforeInit={(swiper) => {
               // Atribuir as referências dos botões de navegação ao Swiper
               if (typeof swiper.params.navigation !== 'boolean') {
                 const navigation = swiper.params.navigation;
                 if (navigation) {
-                  navigation.prevEl = prevRef.current[index];
-                  navigation.nextEl = nextRef.current[index];
+                  navigation.prevEl = prevRef.current;
+                  navigation.nextEl = nextRef.current;
                 }
               }
             }}
+            className="swiper-container"
           >
             {posts.map((post) => (
               <SwiperSlide key={post.id} style={{ height: 'auto' }}>
@@ -62,13 +74,13 @@ export const SwiperPosts: React.FC<ISwiperPosts> = ({ posts, postType, title, sl
       {/* Menu de navegação */}
       <div className="swiper-navigation flex">
         <div
-          ref={(el) => (prevRef.current[index] = el!)}
+          ref={prevRef}
           className="swiper-button-prev flex grow justify-center hover:bg-primary cursor-pointer py-6 border border-gray-950"
         >
           <ArrowLongLeftIcon className="size-12" />
         </div>
         <div
-          ref={(el) => (nextRef.current[index] = el!)}
+          ref={nextRef}
           className="swiper-button-next flex grow justify-center hover:bg-primary cursor-pointer py-6 border-y border-r border-gray-950"
         >
           <ArrowLongRightIcon className="size-12" />
