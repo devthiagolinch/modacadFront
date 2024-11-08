@@ -21,6 +21,8 @@ export const SwiperPosts: React.FC<ISwiperPosts> = ({ posts, postType, title, sl
   const prevRef = useRef<HTMLDivElement | null>(null);
   const nextRef = useRef<HTMLDivElement | null>(null);
 
+  console.log(slidesPerView);
+
   return (
     <div>
       <div className="grid grid-cols-12 gap-4 font-montserrat">
