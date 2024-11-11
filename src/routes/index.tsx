@@ -12,6 +12,7 @@ import { PublishedPills } from '../pages/posts/PublishedPills';
 import { PillDetails } from '../pages/posts/PillDetails';
 import { PostDetails } from '../pages/posts/PostDetails';
 import { PostEditor } from '../pages/dashboard/PostEditor';
+import { ListagemTags } from '../pages/dashboard/ListagemTags';
 
 type TPrivateRouteProps = RouteProps & {
   element: React.ReactNode;
@@ -50,6 +51,7 @@ export const AppRoutes = () => {
 
       {/* Login Admin */}
       <Route path="/admin/login" element={<AdminLogin />} />
+      <Route path="/admin/tags" element={<PrivateRoute element={<ListagemTags />} />} />
 
       {/* Página em Branco (Para teste ou outro propósito) */}
       <Route path="/blank" element={<BlankPage />} />
