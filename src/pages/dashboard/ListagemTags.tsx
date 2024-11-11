@@ -1,10 +1,14 @@
 import { useEffect, useState } from 'react';
+import { FaSearch, FaUpload } from 'react-icons/fa';
+import { useDropzone } from 'react-dropzone';
+
 import { ITagData, TagsService } from '../../shared/api/tags/TagsService';
-import { FaSearch } from 'react-icons/fa';
 
 export const ListagemTags = () => {
   const [tags, setTags] = useState<ITagData[]>([]);
+  const [imageFacebook, setImageFacebook] = useState<File | null>(null);
 
+  // Buscar tags da API
   useEffect(() => {
     TagsService.getAll().then((response) => {
       if (response instanceof Error) {
@@ -14,6 +18,23 @@ export const ListagemTags = () => {
       setTags(response);
     });
   }, []);
+
+  // Adicionar imagens
+  const onDrop = (acceptedFiles: File[]) => {
+    if (acceptedFiles.length > 0) {
+      setImageFacebook(acceptedFiles[0]);
+    }
+  };
+
+  // Remover imagem
+  const handleRemoveImage = () => {
+    setImageFacebook(null);
+  };
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    maxSize: 5 * 1024 * 1024,
+  });
 
   return (
     <div className="container mx-auto px-4 grid gap-6 mb-6 md:grid-cols-2">
@@ -43,9 +64,7 @@ export const ListagemTags = () => {
           />
         </div>
         <div className="mt-2">
-          <label htmlFor="meta_description" className="block mb-2 text-sm font-medium text-gray-900">
-            Meta descrição (até 500 caracteres)
-          </label>
+          <label className="block mb-2 text-sm font-medium text-gray-900">Meta descrição (até 500 caracteres)</label>
           <input
             type="text"
             id="meta_description"
@@ -54,16 +73,29 @@ export const ListagemTags = () => {
           />
         </div>
         <div className="mt-2">
-          <label htmlFor="image_facebook" className="block mb-2 text-sm font-medium text-gray-900">
-            Imagem Facebook
-          </label>
-          <input
-            type="file"
-            id="image_facebook"
-            accept="image/*"
-            className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none"
-            required
-          />
+          <label className="block mb-2 text-sm font-medium text-gray-900">Imagem Facebook</label>
+          <div {...getRootProps()} className="flex items-center justify-center w-full">
+            <input {...getInputProps()} className="hidden" />
+            {imageFacebook ? (
+              <div className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                <img
+                  src={URL.createObjectURL(imageFacebook)}
+                  alt="Imagem do Facebook"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+            ) : (
+              <div className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                  <FaUpload className="size-8" />
+                  <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                    <span className="font-semibold">Click to upload</span> or drag and drop
+                  </p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF</p>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
         <div className="mt-2">
           <label htmlFor="title_facebook" className="block mb-2 text-sm font-medium text-gray-900">
