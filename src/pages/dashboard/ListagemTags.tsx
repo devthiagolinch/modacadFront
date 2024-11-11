@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import { FaSearch, FaUpload } from 'react-icons/fa';
 import { useDropzone } from 'react-dropzone';
+import React, { useEffect, useState } from 'react';
+import { FaSearch, FaTimes, FaUpload } from 'react-icons/fa';
 
 import { ITagData, TagsService } from '../../shared/api/tags/TagsService';
 
@@ -27,7 +27,8 @@ export const ListagemTags = () => {
   };
 
   // Remover imagem
-  const handleRemoveImage = () => {
+  const handleRemoveImage = (event: React.MouseEvent) => {
+    event.stopPropagation();
     setImageFacebook(null);
   };
 
@@ -74,24 +75,34 @@ export const ListagemTags = () => {
         </div>
         <div className="mt-2">
           <label className="block mb-2 text-sm font-medium text-gray-900">Imagem Facebook</label>
-          <div {...getRootProps()} className="flex items-center justify-center w-full">
+          <div
+            {...getRootProps()}
+            className={`flex items-center justify-center w-full ${isDragActive ? 'bg-gray-100' : 'bg-gray-50'}`}
+          >
             <input {...getInputProps()} className="hidden" />
             {imageFacebook ? (
-              <div className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+              <div className="relative flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer">
                 <img
                   src={URL.createObjectURL(imageFacebook)}
                   alt="Imagem do Facebook"
                   className="h-full w-full object-cover"
                 />
+                <button
+                  type="button"
+                  className="absolute top-2 right-2 bg-gray-800 text-white rounded-full p-1"
+                  onClick={handleRemoveImage}
+                >
+                  <FaTimes className="size-4" />
+                </button>
               </div>
             ) : (
-              <div className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+              <div className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer">
                 <div className="flex flex-col items-center justify-center pt-5 pb-6">
                   <FaUpload className="size-8" />
-                  <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                    <span className="font-semibold">Click to upload</span> or drag and drop
+                  <p className="mb-2 text-sm text-gray-500 dark:text-gray-400 mt-2">
+                    <span className="font-semibold">Clique para fazer upload</span> ou arraste e solte aqui.
                   </p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">JPG, HEIC ou PNG</p>
                 </div>
               </div>
             )}
