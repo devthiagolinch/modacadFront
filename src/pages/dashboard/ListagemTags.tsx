@@ -5,6 +5,8 @@ import { FaSearch, FaTimes, FaUpload } from 'react-icons/fa';
 import { ITagData, TagsService } from '../../shared/api/tags/TagsService';
 
 export const ListagemTags = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredTags, setFilteredTags] = useState<ITagData[]>([]);
   const [tags, setTags] = useState<ITagData[]>([]);
   const [imageFacebook, setImageFacebook] = useState<File | null>(null);
 
@@ -18,6 +20,13 @@ export const ListagemTags = () => {
       setTags(response);
     });
   }, []);
+
+  // Filtrar tags
+  useEffect(() => {
+    const lowercasedTerm = searchTerm.toLowerCase();
+    const filteredData = tags.filter((tag) => tag.name.toLowerCase().includes(lowercasedTerm));
+    setFilteredTags(filteredData);
+  }, [searchTerm]);
 
   // Adicionar imagens
   const onDrop = (acceptedFiles: File[]) => {
@@ -133,23 +142,34 @@ export const ListagemTags = () => {
       </div>
       {/* Buscar tags */}
       <div>
+        {/* Input de busca */}
         <div>
-          <label htmlFor="search_tags">Buscar tags</label>
+          <label htmlFor="search_tags" className="mb-2 text-sm font-medium text-gray-900 sr-only">
+            Buscar tags
+          </label>
           <div className="relative">
             <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
               <FaSearch className="size-4" />
-              <input type="text" id="search_tags" />
             </div>
-            <div>
-              <ul>
-                {tags.map((tag) => (
-                  <li key={tag.id}>
-                    <span>{tag.name}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <input
+              type="search"
+              id="search_tags"
+              className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+              placeholder="Buscar tags..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
           </div>
+        </div>
+        {/* Listagem de tags */}
+        <div>
+          <ul>
+            {filteredTags.map((tag) => (
+              <li key={tag.id}>
+                <span>{tag.name}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </div>
