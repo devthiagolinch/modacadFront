@@ -144,7 +144,7 @@ export function PostDetails() {
 
         <div className="lg:pt-12 lg:px-[20%] mb-[40px] mx-[20px]">
           <p
-            className="text-justify lg:text-lg font-montserrat_light"
+            className="text-justify lg:text-lg font-montserrat_light prose"
             dangerouslySetInnerHTML={{ __html: post?.content ?? '' }}
           />
         </div>

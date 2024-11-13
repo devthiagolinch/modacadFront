@@ -23,6 +23,7 @@ export interface IPostData {
   tags: ITagData[];
   subjects: ISubjectData[];
   meta: IMetaData | null;
+  canonicalUrl: string;
 }
 
 export interface IPostDataRequest {
@@ -50,6 +51,7 @@ export interface IPostDataRequest {
   feature_image_alt: string;
   feature_image_caption: string;
   email_only: string;
+  canonicalUrl: string;
 }
 
 interface IMetaData {

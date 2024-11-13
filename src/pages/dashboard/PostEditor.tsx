@@ -2,11 +2,18 @@ import { useEffect, useState } from 'react';
 
 import { useParams } from 'react-router-dom';
 
-import { EditorContent, useEditor } from '@tiptap/react';
+import { BubbleMenu, EditorContent, FloatingMenu, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Image from '@tiptap/extension-image';
+import Paragraph from '@tiptap/extension-paragraph';
+import Text from '@tiptap/extension-text';
 
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
+import { FaImage } from "react-icons/fa6";
+import { TbBlockquote } from "react-icons/tb";
+import { FiDownload } from "react-icons/fi";
+
+
 
 import {
   TPostsStatus,
@@ -21,6 +28,9 @@ import { IPostDataRequest, PostsService } from '../../shared/api/posts/PostsServ
 import { LayoutDashboard } from '../../shared/layouts';
 import { ITagData, TagsService } from '../../shared/api/tags/TagsService';
 import { IUserData, UsersService } from '../../shared/api/users/UserServices';
+import Blockquote from '@tiptap/extension-blockquote';
+import { FaBold, FaItalic, FaStrikethrough } from 'react-icons/fa';
+import Placeholder from '@tiptap/extension-placeholder';
 
 const defaultPost: IPostDataRequest = {
   title: '',
@@ -47,6 +57,7 @@ const defaultPost: IPostDataRequest = {
   feature_image_alt: '',
   feature_image_caption: '',
   email_only: '',
+  canonicalUrl: ''
 };
 
 export const PostEditor = () => {
@@ -62,7 +73,27 @@ export const PostEditor = () => {
   const [uploading, setUploading] = useState(false);
 
   const editor = useEditor({
-    extensions: [StarterKit, Image.configure({ inline: true })],
+    extensions: [
+      StarterKit,
+      Image.configure({ inline: true }),
+      Blockquote,
+      Paragraph,
+      Text,
+      Placeholder.configure({
+        placeholder: ({ node }) => {
+          if (node.type.name === 'heading') {
+            return 'Insira o título aqui...'; // Placeholder para título
+          }
+          return 'Escreva o conteúdo do post aqui...'; // Placeholder para o conteúdo principal
+        },
+        emptyEditorClass: 'is-editor-empty', // Classe CSS para o editor vazio
+      }),
+    ],
+    editorProps: {
+      attributes: {
+        class: "prose prose-sm sm:prose lg:prose-lg xl:prose-2xl focus:outline-none w-full min-h-screen -2"
+      }
+    },
     content: post.content,
     onUpdate: ({ editor }) => {
       setPost((prev) => ({ ...prev, content: editor.getHTML() }));
@@ -127,6 +158,7 @@ export const PostEditor = () => {
             feature_image_alt: response.meta?.feature_image_alt ?? '',
             email_only: response.meta?.email_only ?? '',
             feature_image_caption: response.meta?.feature_image_caption ?? '',
+            canonicalUrl: response.canonicalUrl
           });
           editor?.commands.setContent(response.content);
           setFeatureImageUrl(response.feature_image);
@@ -134,6 +166,10 @@ export const PostEditor = () => {
       });
     }
   }, [postId, editor]);
+  console.log(post.canonicalUrl.split("/", 2).pop())
+
+  // Canonical URL
+  const canonicalUrl = post.canonicalUrl.split("/",2).pop()
 
   // Tags
   const [searchTerm, setSearchTerm] = useState('');
@@ -153,6 +189,11 @@ export const PostEditor = () => {
     const { name, value } = event.target;
     setPost((prev) => ({ ...prev, [name]: value }));
   };
+
+  const handleUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setPost((prev) => ({...prev, [name]: value}))
+  }
 
   const handleFeatureImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -272,24 +313,62 @@ export const PostEditor = () => {
     <LayoutDashboard>
       <div className="container mx-auto py-6 sm:px-6 grid grid-cols-12 gap-6">
         <div className="col-span-8">
-          <h1 className="text-2xl font-bold mb-6">{postId ? 'Editar Publicação' : 'Criar Publicação'}</h1>
+          
+          {/* Imagem destacada */}
+          <div className="mb-6 w-full bg-transparent justify-center align-middle">
+              {
+              /* Botão de Importar Imagem */
+                featureImageUrl ? 
+                <button
+                onClick={() => document.getElementById('featureImageInput')?.click()}
+                className="flex justify-center gap-8 align-middle py-2 px-4 w-full bg-transparent text-zinc-600 text-xl font-bold"
+              >
+                <FiDownload className='text-zinc-600 text-2xl font-extrabold' /> Trocar Foto em Destaque
+              </button> :
 
+              <button
+              onClick={() => document.getElementById('featureImageInput')?.click()}
+              className="flex justify-center gap-8 align-middle py-2 px-4 w-full bg-transparent text-zinc-600 text-xl font-bold"
+              >
+              <FiDownload className='text-zinc-600 text-2xl font-extrabold' /> Foto em Destaque
+              </button>
+              }              
+
+              {/* Input de arquivo oculto */}
+              <input
+                type="file"
+                id="featureImageInput"
+                accept="image/*"
+                onChange={handleFeatureImageUpload}
+                style={{ display: 'none' }}
+              />
+              {/* <input
+                type="file"
+                accept="image/*"
+                onChange={handleFeatureImageUpload}
+                className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+              /> */}
+
+              {uploading && <p className="text-sm font-montserrat text-gray-500 mt-2">Carregando...</p>}
+              {featureImageUrl && (
+                <img src={featureImageUrl} alt="Imagem destacada" className="mt-4 object-cover rounded-lg w-screen h-[400px]" />
+              )}
+            </div>
           {/* Campo para título */}
           <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700 mb-2">Título</label>
             <input
               type="text"
               name="title"
               value={post.title}
               onChange={handleInputChange}
-              placeholder="Digite o título da postagem"
-              className="border p-2 w-full rounded-md"
+              placeholder="Título"
+              className="border p-2 w-full rounded-md font-montserrat"
             />
           </div>
 
           {/* Campo para adicionar imagem ao conteúdo */}
-          <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700 mb-2">Adicionar Imagem ao Conteúdo</label>
+{/*           <div className="mb-6">
+            <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2">Adicionar Imagem ao Conteúdo</label>
             <input
               type="file"
               accept="image/*"
@@ -297,43 +376,117 @@ export const PostEditor = () => {
               className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
             />
             {uploading && <p className="text-sm text-gray-500 mt-2">Carregando...</p>}
-          </div>
+          </div> */}
+
+          {editor && (
+            <FloatingMenu
+              editor={editor}
+              tippyOptions={{ duration: 100 }}
+            >
+              <div className="flex gap-2 p-2 bg-zinc-600 rounded-lg text-white">
+                <button
+                  onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
+                  className={editor.isActive('heading', { level: 1 }) ? 'text-yellow-400' : 'hover:text-yellow-400'}
+                >
+                  H1
+                </button>
+                <button
+                  onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
+                  className={editor.isActive('heading', { level: 2 }) ? 'text-yellow-400' : 'hover:text-yellow-400'}
+                >
+                  H2
+                </button>
+                <button
+                  onClick={() => editor.chain().focus().toggleBulletList().run()}
+                  className={editor.isActive('bulletList') ? 'text-yellow-400' : 'hover:text-yellow-400'}
+                >
+                  Bullet list
+                </button>
+                      {/* Botão de upload de imagem */}
+                      <button
+                        onClick={() => document.getElementById('imageUpload')?.click()}
+                        className="hover:text-yellow-400"
+                      >
+                      <FaImage />
+                      </button>
+                      <input
+                        type="file"
+                        id="imageUpload"
+                        style={{ display: 'none' }}
+                        accept="image/*"
+                        onChange={handleImageUpload}
+                      />
+              </div>
+            </FloatingMenu>
+          )}
+
+          {editor && (
+                  <BubbleMenu editor={editor} tippyOptions={{ duration: 100 }}>
+                    <div className="flex p-2 gap-2 bg-gray-950 drop-shadow-xl text-zinc-300 text-sm rounded-lg overflow-hidden leading-none">
+                      <button
+                        onClick={() => editor.chain().focus().toggleBold().run()}
+                        className={editor.isActive('bold') ? 'text-yellow-400 p-1' : 'p-1 items-center'}
+                      >
+                        <FaBold />
+                      </button>
+                      <button
+                        onClick={() => editor.chain().focus().toggleItalic().run()}
+                        className={editor.isActive('italic') ? 'text-yellow-400 p-1' : ''}
+                      >
+                        <FaItalic />
+                      </button>
+                      <button
+                        onClick={() => editor.chain().focus().toggleStrike().run()}
+                        className={editor.isActive('strike') ? 'text-yellow-400 p-1' : 'p-1'}
+                      >
+                        <FaStrikethrough />
+                      </button>
+                      <button
+                        onClick={() => editor.chain().focus().toggleBlockquote().run()}
+                        className={editor.isActive('blockquote') ? 'text-yellow-400 text-lg align-middle' : 'hover:text-yellow-400 text-lg align-middle'}
+                      >
+                        <TbBlockquote />
+                      </button>
+                    </div>
+                  </BubbleMenu>
+                )}
 
           {/* Editor Tiptap para o conteúdo */}
-          <div className="border p-4 rounded-lg mb-6">
-            <EditorContent editor={editor} />
+          <div className="">
+            <EditorContent editor={editor}
+              className="w-full border-2 border-zinc-300 rounded-lg min-h-screen bg-white p-2 mx-auto focus:outline-none hover:border-[#dcdf1e]"
+            />
           </div>
         </div>
 
         <div className="col-span-4">
           {/* Informações da Postagem */}
           <div className="bg-white rounded-lg shadow-md p-6">
-            <h2 className="text-2xl font-bold mb-6">Detalhes da postagem</h2>
-            {/* Imagem destacada */}
-            <div className="mb-6">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Imagem Destacada</label>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleFeatureImageUpload}
-                className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-              />
-              {uploading && <p className="text-sm text-gray-500 mt-2">Carregando...</p>}
-              {featureImageUrl && (
-                <img src={featureImageUrl} alt="Imagem destacada" className="mt-4 max-h-64 object-cover rounded-lg" />
-              )}
-            </div>
+            <h1 className="text-2xl font-montserrat font-light mb-6">{postId ? 'Edição' : 'Criação'}</h1>
 
+            {/** Campo para URL da publicação */}
+            <div className='mb-6'>
+                <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2"> URL da publicação</label>
+                <input 
+                  type="text"
+                  name='canonicalUrl'
+                  value={canonicalUrl}
+                  onChange={handleUrlChange}
+                  className='border p-2 w-full rounded-md font-montserrat font-light'
+                />
+                <span className='text-sm text-zinc-500 font-light font-montserrat'>blog.modacad.com.br/{canonicalUrl}</span>
+            </div>
+            
             {/* Campo para descrição */}
             <div className="mb-6">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Descrição</label>
+              <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2">Descrição</label>
               <input
                 type="text"
                 name="description"
                 value={post.description}
                 onChange={handleInputChange}
                 placeholder="Digite a descrição da postagem"
-                className="border p-2 w-full rounded-md"
+                className="border p-2 w-full rounded-md font-montserrat"
               />
             </div>
 
