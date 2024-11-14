@@ -1,4 +1,4 @@
-import { HeaderDashboard } from '../components/header/HeaderDashboard';
+import { MenuLateral } from '../components/menu-lateral/MenuLateral';
 
 interface ILayoutDashboardProps {
   children: React.ReactNode;
@@ -6,9 +6,9 @@ interface ILayoutDashboardProps {
 
 export const LayoutDashboard: React.FC<ILayoutDashboardProps> = ({ children }) => {
   return (
-    <div className="layout-dashboard">
-      <HeaderDashboard />
-      <main className="flex flex-col gap-2 justify-center p-5">{children}</main>
+    <div className="flex h-screen">
+      <MenuLateral />
+      <main className="flex-grow p-6">{children}</main>
     </div>
   );
 };
