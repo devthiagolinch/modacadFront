@@ -18,6 +18,7 @@ export const ListagemTags = () => {
         return;
       }
       setTags(response);
+      setFilteredTags(response);
     });
   }, []);
 
@@ -47,7 +48,7 @@ export const ListagemTags = () => {
   });
 
   return (
-    <div className="container mx-auto px-4 grid gap-6 mb-6 md:grid-cols-2">
+    <div className="container mx-auto px-4 grid gap-6 md:grid-cols-2">
       {/* Criar tag */}
       <div>
         <h1 className="font-butler text-3xl">Criar tag</h1>
@@ -82,15 +83,16 @@ export const ListagemTags = () => {
             required
           />
         </div>
+        <div className="my-4 border-t border-gray-300"></div>
         <div className="mt-2">
           <label className="block mb-2 text-sm font-medium text-gray-900">Imagem Facebook</label>
           <div
             {...getRootProps()}
-            className={`flex items-center justify-center w-full ${isDragActive ? 'bg-gray-100' : 'bg-gray-50'}`}
+            className={`flex items-center justify-center rounded-lg w-full ${isDragActive ? 'bg-gray-100' : 'bg-gray-50'}`}
           >
             <input {...getInputProps()} className="hidden" />
             {imageFacebook ? (
-              <div className="relative flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer">
+              <div className="relative flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed cursor-pointer">
                 <img
                   src={URL.createObjectURL(imageFacebook)}
                   alt="Imagem do Facebook"
@@ -162,10 +164,10 @@ export const ListagemTags = () => {
           </div>
         </div>
         {/* Listagem de tags */}
-        <div>
+        <div className="bg-white mt-4 border border-gray-300 rounded-lg font-montserrat font-medium italic">
           <ul>
             {filteredTags.map((tag) => (
-              <li key={tag.id}>
+              <li key={tag.id} className="border-b border-gray-300 p-4">
                 <span>{tag.name}</span>
               </li>
             ))}
