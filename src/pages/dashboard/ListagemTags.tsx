@@ -161,7 +161,7 @@ export const ListagemTags = () => {
               <input
                 type="search"
                 id="search_tags"
-                className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                className="block w-full p-4 ps-10 text-bgBtn border border-gray-300 rounded-full bg-gray-50 focus:ring-bgBtn focus:border-bgBtn"
                 placeholder="Buscar tags..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -172,7 +172,7 @@ export const ListagemTags = () => {
           <div className="bg-white mt-4 border border-gray-300 rounded-lg font-montserrat font-medium italic">
             <ul>
               {filteredTags.map((tag) => (
-                <li key={tag.id} className="border-b border-gray-300 p-4">
+                <li key={tag.id} className="border-b border-gray-300 p-4 last:border-0">
                   <span>{tag.name}</span>
                 </li>
               ))}
