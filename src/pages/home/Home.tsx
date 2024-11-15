@@ -64,7 +64,7 @@ export function Home() {
           <div className="flex flex-wrap gap-4 p-6">
             {subjects.map((sub, index) => (
               <div key={sub.id} className="text-5xl font-butler font-light">
-                <Link to="" className="highlight-link">
+                <Link to="#" className="highlight-link">
                   {sub.name}
                 </Link>
                 {index < subjects.length - 1 && <span className="ml-4 mr-2">•</span>}

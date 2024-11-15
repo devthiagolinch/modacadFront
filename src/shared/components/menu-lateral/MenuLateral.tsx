@@ -1,28 +1,33 @@
 import { Link } from 'react-router-dom';
-import { HomeIcon, UserIcon } from '@heroicons/react/24/outline';
+import { UserIcon } from '@heroicons/react/24/outline';
 
 const primaryLinks = [
-  { name: 'Home', path: '/', icon: <HomeIcon className="h-6 w-6" /> },
-  { name: 'Profile', path: '/profile', icon: <UserIcon className="h-6 w-6" /> },
+  { name: 'posts', path: '/dashboard/posts', disabled: false },
+  { name: 'pílulas', path: '/dashboard/pilulas', icon: <UserIcon className="h-6 w-6" />, disabled: false },
+  { name: 'tags', path: '/admin/tags', icon: <UserIcon className="h-6 w-6" />, disabled: false },
+  { name: 'assuntos', path: '/admin/assuntos', icon: <UserIcon className="h-6 w-6" />, disabled: false },
+  { name: 'footer', path: '/admin/footer', icon: <UserIcon className="h-6 w-6" />, disabled: false },
 ];
 
-const secondaryLinks = [{ name: 'Settings', path: '/settings', icon: <HomeIcon className="h-6 w-6" /> }];
+const secondaryLinks = [
+  { name: 'membros', path: '/admin/membros', disabled: false },
+  { name: 'planos', path: '/admin/planos', disabled: false },
+  { name: 'autores', path: '/admin/autores', disabled: false },
+  { name: 'equipe', path: '/admin/equipes', disabled: true },
+  { name: 'chat', path: '/admin/chat', disabled: true },
+  { name: 'live', path: '/admin/live', disabled: true },
+  { name: 'reunião', path: '/admin/reuniao', disabled: true },
+];
 
 export const MenuLateral = () => {
   return (
-    <div className="h-full w-64 bg-gray-800 text-white flex flex-col">
-      {/* Logo */}
-      <div className="p-4 flex items-center justify-center">
-        <img src="/path/to/logo.png" alt="Logo" className="h-12 w-12" />
-      </div>
-
+    <div className="h-full w-48 flex flex-col border-r border-gray-950 font-montserrat text-2xl">
       {/* Primary Links */}
-      <div className="flex-grow">
+      <div className="flex-grow p-4">
         <nav className="mt-4">
           {primaryLinks.map((link) => (
-            <Link key={link.name} to={link.path} className="flex items-center p-4 hover:bg-gray-700">
-              {link.icon}
-              <span className="ml-3">{link.name}</span>
+            <Link key={link.name} to={link.path} className="flex items-center highlight-link mt-4">
+              {link.name}
             </Link>
           ))}
         </nav>
@@ -30,20 +35,11 @@ export const MenuLateral = () => {
         {/* Secondary Links */}
         <nav className="mt-4">
           {secondaryLinks.map((link) => (
-            <Link key={link.name} to={link.path} className="flex items-center p-4 hover:bg-gray-700">
-              {link.icon}
-              <span className="ml-3">{link.name}</span>
+            <Link key={link.name} to={link.path} className="flex items-center highlight-link mt-4">
+              {link.name}
             </Link>
           ))}
         </nav>
-      </div>
-
-      {/* Icon at the Bottom */}
-      <div className="p-4">
-        <button className="flex items-center w-full p-4 hover:bg-gray-700">
-          <HomeIcon className="h-6 w-6" />
-          <span className="ml-3">Logout</span>
-        </button>
       </div>
     </div>
   );

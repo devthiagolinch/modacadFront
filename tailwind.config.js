@@ -19,6 +19,7 @@ export default {
       },
       colors: {
         primary: '#DBDF1D',
+        paper: '#F3ECE8',
       },
     },
   },
