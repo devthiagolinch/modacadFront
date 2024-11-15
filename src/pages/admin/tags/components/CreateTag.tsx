@@ -22,18 +22,22 @@ const createTagSchema: yup.ObjectSchema<IFormCreateTag> = yup.object({
 });
 
 export const CreateTag = () => {
+  // TO DO - Implementar helper texts para os erros dos inputs
+
   const [imageFacebook, setImageFacebook] = useState<File | null>(null);
 
   const { handleSubmit, register } = useForm<IFormCreateTag>({ resolver: yupResolver(createTagSchema) });
 
   const onSubmit: SubmitHandler<IFormCreateTag> = (data) => {
     console.log(data);
+    // TO DO - Implementar criação de tag
   };
 
   // Adicionar imagens
   const onDrop = (acceptedFiles: File[]) => {
     if (acceptedFiles.length > 0) {
       setImageFacebook(acceptedFiles[0]);
+      // TO DO - Implementar upload de imagem
     }
   };
 
@@ -41,6 +45,7 @@ export const CreateTag = () => {
   const handleRemoveImage = (event: React.MouseEvent) => {
     event.stopPropagation();
     setImageFacebook(null);
+    // TO DO - Implementar remoção de imagem
   };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
