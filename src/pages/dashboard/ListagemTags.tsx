@@ -53,7 +53,10 @@ export const ListagemTags = () => {
       <div className="container mx-auto px-4 grid gap-6 md:grid-cols-2">
         {/* Criar tag */}
         <div>
-          <h1 className="font-butler text-3xl">Criar tag</h1>
+          <div className="flex justify-between">
+            <h1 className="font-butler text-3xl">Criar tag</h1>
+            <button className="bg-bgBtn text-white font-medium px-4 py-2">SALVAR</button>
+          </div>
           <div className="mt-2">
             <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900">
               Nome
@@ -90,7 +93,7 @@ export const ListagemTags = () => {
             <label className="block mb-2 text-sm font-medium text-gray-900">Imagem Facebook</label>
             <div
               {...getRootProps()}
-              className={`flex items-center justify-center rounded-lg w-full ${isDragActive ? 'bg-gray-100' : 'bg-gray-50'}`}
+              className={`flex items-center justify-center rounded-lg w-full overflow-hidden ${isDragActive ? 'bg-gray-100' : 'bg-gray-50'}`}
             >
               <input {...getInputProps()} className="hidden" />
               {imageFacebook ? (
