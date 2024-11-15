@@ -1,9 +1,34 @@
 import { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { FaTimes, FaUpload } from 'react-icons/fa';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+
+interface IFormCreateTag {
+  name: string;
+  slug: string;
+  meta_description: string;
+  facebook_title?: string;
+  facebook_description?: string;
+}
+
+const createTagSchema: yup.ObjectSchema<IFormCreateTag> = yup.object({
+  name: yup.string().required(),
+  slug: yup.string().required(),
+  meta_description: yup.string().required(),
+  facebook_title: yup.string(),
+  facebook_description: yup.string(),
+});
 
 export const CreateTag = () => {
   const [imageFacebook, setImageFacebook] = useState<File | null>(null);
+
+  const { handleSubmit, register } = useForm<IFormCreateTag>({ resolver: yupResolver(createTagSchema) });
+
+  const onSubmit: SubmitHandler<IFormCreateTag> = (data) => {
+    console.log(data);
+  };
 
   // Adicionar imagens
   const onDrop = (acceptedFiles: File[]) => {
@@ -24,16 +49,19 @@ export const CreateTag = () => {
   });
 
   return (
-    <div>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div className="flex justify-between">
         <h1 className="font-butler text-3xl">Criar tag</h1>
-        <button className="bg-bgBtn text-white font-medium px-4 py-2">SALVAR</button>
+        <button className="bg-bgBtn text-white font-medium px-4 py-2" type="submit">
+          SALVAR
+        </button>
       </div>
       <div className="mt-2">
         <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900">
           Nome
         </label>
         <input
+          {...register('name')}
           type="text"
           id="name"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -45,6 +73,7 @@ export const CreateTag = () => {
           Slug
         </label>
         <input
+          {...register('slug')}
           type="text"
           id="slug"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -54,6 +83,7 @@ export const CreateTag = () => {
       <div className="mt-2">
         <label className="block mb-2 text-sm font-medium text-gray-900">Meta descrição (até 500 caracteres)</label>
         <input
+          {...register('meta_description')}
           type="text"
           id="meta_description"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -101,6 +131,7 @@ export const CreateTag = () => {
           Título Facebook
         </label>
         <input
+          {...register('facebook_title')}
           type="text"
           id="title_facebook"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -112,12 +143,13 @@ export const CreateTag = () => {
           Descrição Facebook (até 500 caracteres)
         </label>
         <input
+          {...register('facebook_description')}
           type="text"
           id="description_facebook"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           required
         />
       </div>
-    </div>
+    </form>
   );
 };
