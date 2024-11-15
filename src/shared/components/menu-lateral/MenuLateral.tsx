@@ -1,20 +1,19 @@
 import { Link } from 'react-router-dom';
-import { UserIcon } from '@heroicons/react/24/outline';
 
 import logo from '../../../assets/svg/icon_rounded_bg_red.svg';
 
 const primaryLinks = [
   { name: 'posts', path: '/dashboard/posts', disabled: false },
-  { name: 'pílulas', path: '/dashboard/pilulas', icon: <UserIcon className="h-6 w-6" />, disabled: false },
-  { name: 'tags', path: '/admin/tags', icon: <UserIcon className="h-6 w-6" />, disabled: false },
-  { name: 'assuntos', path: '/admin/assuntos', icon: <UserIcon className="h-6 w-6" />, disabled: false },
-  { name: 'footer', path: '/admin/footer', icon: <UserIcon className="h-6 w-6" />, disabled: false },
+  { name: 'pílulas', path: '/dashboard/pilulas', disabled: false },
+  { name: 'tags', path: '/admin/tags', disabled: false },
+  { name: 'assuntos', path: '/admin/assuntos', disabled: true },
+  { name: 'footer', path: '/admin/footer', disabled: true },
 ];
 
 const secondaryLinks = [
-  { name: 'membros', path: '/admin/membros', disabled: false },
-  { name: 'planos', path: '/admin/planos', disabled: false },
-  { name: 'autores', path: '/admin/autores', disabled: false },
+  { name: 'membros', path: '/admin/membros', disabled: true },
+  { name: 'planos', path: '/admin/planos', disabled: true },
+  { name: 'autores', path: '/admin/autores', disabled: true },
   { name: 'equipe', path: '/admin/equipes', disabled: true },
   { name: 'chat', path: '/admin/chat', disabled: true },
   { name: 'live', path: '/admin/live', disabled: true },
@@ -34,7 +33,12 @@ export const MenuLateral = () => {
       {/* Primary Links */}
       <nav>
         {primaryLinks.map((link) => (
-          <Link key={link.name} to={link.path} className="flex items-center highlight-link mt-4">
+          <Link
+            key={link.name}
+            to={link.disabled ? '#' : link.path}
+            className={`flex items-center highlight-link mt-4 ${link.disabled ? 'opacity-30 cursor-not-allowed' : ''}`}
+            onClick={(e) => link.disabled && e.preventDefault()}
+          >
             {link.name}
           </Link>
         ))}
