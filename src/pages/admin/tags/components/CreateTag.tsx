@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { FaTimes, FaUpload } from 'react-icons/fa';
+import { FaCloudUploadAlt, FaTimes } from 'react-icons/fa';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -121,7 +121,7 @@ export const CreateTag = () => {
           ) : (
             <div className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer">
               <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                <FaUpload className="size-8" />
+                <FaCloudUploadAlt className="size-8 text-gray-600" />
                 <p className="mb-2 text-sm text-gray-500 dark:text-gray-400 mt-2">
                   <span className="font-semibold">Clique para fazer upload</span> ou arraste e solte aqui.
                 </p>
