@@ -11,118 +11,68 @@ is-editor-empty {
 }
 
 .tiptap {
-
-  /* Heading styles */
-h1, 
-h2, 
-h3, 
-h4, 
-h5, 
-h6 {
-  line-height: 1.1;
-  margin-top: 2.5rem;
-  text-wrap: pretty;
-
+  font-family: montserrat;
+  font-size: 16px;
+    /* Heading styles */
   h1, 
-  h2 {
-    margin-top: 3.5rem;
-    margin-bottom: 1.5rem;
-  }
-
-  h1 { 
-    font-size: 1.4rem; 
-  }
-
-  h2 { 
-    font-size: 1.2rem; 
-  }
-
-  h3 { 
-    font-size: 1.1rem; 
-  }
-
+  h2, 
+  h3, 
   h4, 
-  h5,
-  h6 { 
-    font-size: 1rem; 
-  }
-}
+  h5, 
+  h6 {
+    line-height: 1.1;
+    margin-top: 2.5rem;
+    text-wrap: pretty;
 
-img {
-  display: block;
-  height: auto;
-  margin: 1.5rem 0;
-  max-width: 100%;
-}
+    h1, 
+    h2 {
+      margin-top: 3.5rem;
+      margin-bottom: 1.5rem;
+    }
 
-blockquote {
-  border-left: 3px solid #dcdf1e;
-  margin: 1.5rem 2rem;
-  padding-left: 1rem;
-}
+    h1 { 
+      font-size: 1.4rem; 
+    }
 
+    h2 { 
+      font-size: 1.2rem; 
+    }
 
-table {
-  border-collapse: collapse;
-  margin: 0;
-  overflow: hidden;
-  table-layout: fixed;
-  width: 100%;
+    h3 { 
+      font-size: 1.1rem; 
+    }
 
-  td,
-  th {
-    border: 2px solid #008a8d;
-    box-sizing: border-box;
-    min-width: 1em;
-    padding: 6px 8px;
-    position: relative;
-    vertical-align: top;
-
-    > * {
-      margin-bottom: 0;
+    h4, 
+    h5,
+    h6 { 
+      font-size: 1rem; 
     }
   }
 
-  th {
-    background-color: #008a8d;
-    color: white;
-    font-weight: bold;
-    text-align: left;
-  }
-
-  .selectedCell:after {
-      background-color: #202020;
-      content: "";
-      left: 0; right: 0; top: 0; bottom: 0;
-      pointer-events: none;
-      position: absolute;
-      z-index: 2;
-    }
-
-    .column-resize-handle {
-      background-color: var(--purple);
-      bottom: -2px;
-      pointer-events: none;
-      position: absolute;
-      right: -2px;
-      top: 0;
-      width: 4px;
-    }
-  }
-
-  .tableWrapper {
+  img {
+    display: block;
+    height: auto;
     margin: 1.5rem 0;
-    overflow-x: auto;
+    max-width: 80%;
   }
 
-  &.resize-cursor {
-    cursor: ew-resize;
-    cursor: col-resize;
+  blockquote {
+    quotes: none;
+    border-left: 4px solid #dcdf1e;
+    margin: 1.5rem 2rem;
+    padding-left: 1rem;
+  }
+  custom-blockquote::before,
+  custom-blockquote::after {
+    content: '';
   }
 
-  :first-child {
-    margin-top: 0;
-  }
+  .prose blockquote {
+    border-left: 4px solid #ccc;
+    padding-left: 1em;
+    color: #555;
+    font-style: italic;
+}
 }
 
 

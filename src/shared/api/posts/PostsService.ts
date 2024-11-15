@@ -17,7 +17,7 @@ export interface IPostData {
   visibility: TPostsVisibility;
   created_at: string;
   updated_at: string;
-  published_at: string | null;
+  published_at: Date | null;
   meta_id: number | null; // TODO: Verificar a tipagem
   admins: IUserData[];
   tags: ITagData[];
@@ -34,6 +34,7 @@ export interface IPostDataRequest {
   content: string;
   status: TPostsStatus;
   images: string | null;
+  published_at: Date | null;
   visibility: TPostsVisibility;
   admins: IUserData[];
   tags: ITagData[];
