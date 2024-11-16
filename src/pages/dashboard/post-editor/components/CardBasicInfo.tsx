@@ -127,7 +127,14 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ title, feature_image, content
   }, [ postId, feature_image, title, content ]);
 
   // Canonical URL
-  const canonicalUrl = post.canonicalUrl.split("/",2).pop()
+  let canonicalUrl;
+
+  if(post.canonicalUrl) {
+    canonicalUrl = post.canonicalUrl.split("https://lobster-app-n6jep.ondigitalocean.app/",2).pop()
+  }else {
+    canonicalUrl = ''
+  }
+  
 
   const handleUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       const { name, value } = event.target;
@@ -295,7 +302,7 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ title, feature_image, content
             <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2">Descrição</label>
             <textarea
               name="description"
-              value={post.description}
+              value={post.description || ""}
               onChange={handleInputChange}
               placeholder="Resumo de 300 caracteres"
               maxLength={300}
