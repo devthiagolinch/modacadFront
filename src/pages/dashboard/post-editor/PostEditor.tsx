@@ -147,7 +147,6 @@ export const PostEditor = () => {
       });
     }
   }, [postId, editor]);
-
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setPost((prev) => ({ ...prev, [name]: value }));
