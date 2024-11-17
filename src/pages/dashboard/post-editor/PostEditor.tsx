@@ -31,6 +31,8 @@ const defaultPost: IPostDataRequest = {
   published_at: null,
   visibility: 'pro',
   admins: [],
+  editors: [],
+  curadors: [],
   tags: [],
   subjects: [],
   og_image: '',
@@ -52,7 +54,7 @@ const defaultPost: IPostDataRequest = {
 export const PostEditor = () => {
   const { postId } = useParams<{ postId: string }>();
 
-  const [post, setPost] = useState<IPostDataRequest>(defaultPost);
+  const [post, setPost] = useState(defaultPost);
 
   const [featureImageUrl, setFeatureImageUrl] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
@@ -119,6 +121,8 @@ export const PostEditor = () => {
             images: response.images ? response.images.join(',') : null,
             visibility: response.visibility,
             admins: response.admins.map((admin) => admin),
+            editors: response.editors.map((editor) => editor),
+            curadors: response.curadors.map((curador) => curador),
             tags: response.tags.map((tag) => tag),
             subjects: response.subjects.map((subject) => subject),
             og_image: response.meta?.og_image ?? '',
@@ -144,7 +148,7 @@ export const PostEditor = () => {
     }
   }, [postId, editor]);
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setPost((prev) => ({ ...prev, [name]: value }));
   };  
@@ -342,7 +346,7 @@ export const PostEditor = () => {
           </div>
         </div>
 
-        <CardBasicInfo title={post.title} feature_image={featureImageUrl} content={post.content} />
+        <CardBasicInfo  props={post} />
       </div>
     </LayoutDashboard>
   );

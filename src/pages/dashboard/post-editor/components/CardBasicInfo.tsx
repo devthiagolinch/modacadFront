@@ -5,7 +5,7 @@ import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 
 import { FaRegSave } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
-import { IPostDataRequest, PostsService } from "../../../../shared/api/posts/PostsService";
+import { IPostData, IPostDataRequest, PostsService } from "../../../../shared/api/posts/PostsService";
 import { useEffect, useState } from "react";
 import { ITagData, TagsService } from "../../../../shared/api/tags/TagsService";
 import { ISubjectData, SubjectsService } from "../../../../shared/api/subjects/SubjectsService";
@@ -14,9 +14,10 @@ import { IUserData, UsersService } from "../../../../shared/api/users/UserServic
 import { useParams } from "react-router-dom";
 
 interface CardDTO {
-  title: string | '';
+/*   title: string | '';
   feature_image: string | null;
-  content: string | '';
+  content: string | ''; */
+  props: IPostDataRequest
 }
 
 const defaultPost: IPostDataRequest = {
@@ -50,8 +51,7 @@ const defaultPost: IPostDataRequest = {
   canonicalUrl: ''
 };
 
-export const CardBasicInfo: React.FC<CardDTO> = ({ title, feature_image, content }) => {
-
+export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
   const { postId } = useParams<{ postId: string }>();
   const [post, setPost] = useState<IPostDataRequest>(defaultPost);
 
@@ -60,6 +60,48 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ title, feature_image, content
 
   const [usersOptions, setUsersOptions] = useState<IUserData[]>([]);
 
+  useEffect(() => {
+    if (postId && postId !== 'novo') {
+      PostsService.getById(postId).then((response) => {
+        if (response instanceof Error) {
+          console.error(response.message);
+        } else {
+          setPost({
+            title: response.title,
+            description: response.description,
+            feature_image: response.feature_image,
+            type: response.type,
+            content: response.content,
+            status: response.status,
+            images: response.images ? response.images.join(',') : null,
+            visibility: response.visibility,
+            admins: response.admins.map((admin) => admin),
+            editors: response.editors.map((editor) => editor),
+            curadors: response.curadors.map((curador) => curador),
+            tags: response.tags.map((tag) => tag),
+            subjects: response.subjects.map((subject) => subject),
+            og_image: response.meta?.og_image ?? '',
+            og_title: response.meta?.og_title ?? '',
+            og_description: response.meta?.og_description ?? '',
+            twitter_image: response.meta?.twitter_image ?? '',
+            twitter_title: response.meta?.twitter_title ?? '',
+            twitter_description: response.meta?.twitter_description ?? '',
+            meta_title: response.meta?.meta_title ?? '',
+            meta_description: response.meta?.meta_description ?? '',
+            email_subject: response.meta?.email_subject ?? '',
+            frontmatter: response.meta?.frontmatter ?? '',
+            feature_image_alt: response.meta?.feature_image_alt ?? '',
+            email_only: response.meta?.email_only ?? '',
+            feature_image_caption: response.meta?.feature_image_caption ?? '',
+            canonicalUrl: response.canonicalUrl,
+            published_at: response.published_at
+          });
+        }
+      });
+    }else {
+      setPost(props)
+    }
+  }, [ postId, props ]);
   // const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
@@ -89,56 +131,15 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ title, feature_image, content
     });
   }, []);
 
-  useEffect(() => {
-    if (postId && postId !== 'novo') {
-      PostsService.getById(postId).then((response) => {
-        if (response instanceof Error) {
-          console.error(response.message);
-        } else {
-          setPost({
-            title,
-            description: response.description,
-            feature_image,
-            type: response.type,
-            content,
-            status: response.status,
-            images: response.images ? response.images.join(',') : null,
-            visibility: response.visibility,
-            admins: response.admins.map((admin) => admin),
-            editors: response.editors.map((editor) => editor),
-            curadors: response.curadors.map((curador) => curador),
-            tags: response.tags.map((tag) => tag),
-            subjects: response.subjects.map((subject) => subject),
-            og_image: response.meta?.og_image ?? '',
-            og_title: response.meta?.og_title ?? '',
-            og_description: response.meta?.og_description ?? '',
-            twitter_image: response.meta?.twitter_image ?? '',
-            twitter_title: response.meta?.twitter_title ?? '',
-            twitter_description: response.meta?.twitter_description ?? '',
-            meta_title: response.meta?.meta_title ?? '',
-            meta_description: response.meta?.meta_description ?? '',
-            email_subject: response.meta?.email_subject ?? '',
-            frontmatter: response.meta?.frontmatter ?? '',
-            feature_image_alt: response.meta?.feature_image_alt ?? '',
-            email_only: response.meta?.email_only ?? '',
-            feature_image_caption: response.meta?.feature_image_caption ?? '',
-            canonicalUrl: response.canonicalUrl,
-            published_at: response.published_at
-          });
-        }
-      });
-    }
-  }, [ postId, feature_image, title, content ]);
+
 
   // Canonical URL
   let canonicalUrl;
-
   if(post.canonicalUrl) {
     canonicalUrl = post.canonicalUrl.split("https://lobster-app-n6jep.ondigitalocean.app/",2).pop()
   }else {
     canonicalUrl = ''
   }
-  
 
   const handleUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       const { name, value } = event.target;
@@ -287,6 +288,7 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ title, feature_image, content
   const handleSubmit = () => {
     if (postId && postId !== 'novo') {
       PostsService.updateById(postId, post).then((response) => {
+        console.log(post)
         if (response instanceof Error) {
           console.error(response.message);
         }
@@ -299,6 +301,8 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ title, feature_image, content
       });
     }
   };
+
+  console.log('Post atualizado console solto:', post.title);
 
   return (
       <div className="col-span-4">
