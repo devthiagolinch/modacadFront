@@ -123,6 +123,8 @@ export const PostEditor = () => {
             admins: response.admins.map((admin) => admin),
             editors: response.editors.map((editor) => editor),
             curadors: response.curadors.map((curador) => curador),
+            published_at: response.published_at,
+            canonicalUrl: response.canonicalUrl,
             tags: response.tags.map((tag) => tag),
             subjects: response.subjects.map((subject) => subject),
             og_image: response.meta?.og_image ?? '',
@@ -138,8 +140,6 @@ export const PostEditor = () => {
             feature_image_alt: response.meta?.feature_image_alt ?? '',
             email_only: response.meta?.email_only ?? '',
             feature_image_caption: response.meta?.feature_image_caption ?? '',
-            canonicalUrl: response.canonicalUrl,
-            published_at: response.published_at
           });
           editor?.commands.setContent(response.content);
           setFeatureImageUrl(response.feature_image);

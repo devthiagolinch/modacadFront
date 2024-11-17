@@ -5,7 +5,7 @@ import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 
 import { FaRegSave } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
-import { IPostData, IPostDataRequest, PostsService } from "../../../../shared/api/posts/PostsService";
+import { IPostDataRequest, PostsService } from "../../../../shared/api/posts/PostsService";
 import { useEffect, useState } from "react";
 import { ITagData, TagsService } from "../../../../shared/api/tags/TagsService";
 import { ISubjectData, SubjectsService } from "../../../../shared/api/subjects/SubjectsService";
@@ -67,11 +67,11 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
           console.error(response.message);
         } else {
           setPost({
-            title: response.title,
+            title: props.title,
             description: response.description,
-            feature_image: response.feature_image,
+            feature_image: props.feature_image,
             type: response.type,
-            content: response.content,
+            content: props.content,
             status: response.status,
             images: response.images ? response.images.join(',') : null,
             visibility: response.visibility,
@@ -103,6 +103,7 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
     }
   }, [ postId, props ]);
   // const [uploading, setUploading] = useState(false);
+  console.log("post", post.title)
 
   useEffect(() => {
     SubjectsService.getAll().then((response) => {
@@ -302,7 +303,7 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
     }
   };
 
-  console.log('Post atualizado console solto:', post.title);
+  console.log('Post atualizado console solto:', props.title);
 
   return (
       <div className="col-span-4">
