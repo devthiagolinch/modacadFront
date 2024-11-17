@@ -20,6 +20,8 @@ export interface IPostData {
   published_at: Date | null;
   meta_id: number | null; // TODO: Verificar a tipagem
   admins: IUserData[];
+  editors: IUserData[],
+  curadors: IUserData[],
   tags: ITagData[];
   subjects: ISubjectData[];
   meta: IMetaData | null;
@@ -37,6 +39,8 @@ export interface IPostDataRequest {
   published_at: Date | null;
   visibility: TPostsVisibility;
   admins: IUserData[];
+  editors: IUserData[],
+  curadors: IUserData[],
   tags: ITagData[];
   subjects: ISubjectData[];
   og_image: string;

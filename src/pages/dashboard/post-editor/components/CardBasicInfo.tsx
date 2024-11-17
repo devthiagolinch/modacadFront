@@ -30,6 +30,8 @@ const defaultPost: IPostDataRequest = {
   published_at: null,
   visibility: 'pro',
   admins: [],
+  editors: [],
+  curadors: [],
   tags: [],
   subjects: [],
   og_image: '',
@@ -103,6 +105,8 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ title, feature_image, content
             images: response.images ? response.images.join(',') : null,
             visibility: response.visibility,
             admins: response.admins.map((admin) => admin),
+            editors: response.editors.map((editor) => editor),
+            curadors: response.curadors.map((curador) => curador),
             tags: response.tags.map((tag) => tag),
             subjects: response.subjects.map((subject) => subject),
             og_image: response.meta?.og_image ?? '',
@@ -245,6 +249,38 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ title, feature_image, content
       }
 
       return { ...prevPost, admins: updatedAdmins };
+    });
+  };
+
+  const handleEditorSelect = (newUser: IUserData) => {
+    setPost((prevPost) => {
+      let updatedEditors: IUserData[] = [];
+      updatedEditors = [...prevPost.editors];
+
+      const isSelected = updatedEditors.some((admin) => admin.id === newUser.id);
+      if (isSelected) {
+        updatedEditors = updatedEditors.filter((admin) => admin.id !== newUser.id);
+      } else {
+        updatedEditors.push(newUser);
+      }
+
+      return { ...prevPost, editors: updatedEditors };
+    });
+  };
+
+  const handleCuradorSelect = (newUser: IUserData) => {
+    setPost((prevPost) => {
+      let updatedCuradors: IUserData[] = [];
+      updatedCuradors = [...prevPost.curadors];
+
+      const isSelected = updatedCuradors.some((admin) => admin.id === newUser.id);
+      if (isSelected) {
+        updatedCuradors = updatedCuradors.filter((admin) => admin.id !== newUser.id);
+      } else {
+        updatedCuradors.push(newUser);
+      }
+
+      return { ...prevPost, curadors: updatedCuradors };
     });
   };
 
@@ -626,9 +662,9 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ title, feature_image, content
             <label className="block text-sm font-montserrat font-medium text-gray-700 mb-2">Edtor(a)</label>
             {post.admins.length > 0 && (
               <div className="mt-2 flex flex-wrap">
-                {post.admins.map((admin, index) => (
+                {post.editors.map((admin, index) => (
                   <span
-                    onClick={() => handleUserSelect(admin)}
+                    onClick={() => handleEditorSelect(admin)}
                     key={index}
                     className="inline-block bg-[#dcdf1e] text-black font-montserrat font-light px-3 py-1 mr-2 mb-2 cursor-pointer text-xs flex items-center"
                   >
@@ -653,10 +689,10 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ title, feature_image, content
             )}
             <Menu as="div" className="relative inline-block text-left w-full">
               <MenuButton className="inline-flex justify-between w-full border shadow-sm px-4 py-2 text-sm font-light font-montserrat bg-white">
-                {post.admins.length > 0
-                  ? post.admins.length > 1
-                    ? `${post.admins[0].name} + ${post.admins.length - 1}`
-                    : post.admins[0].name
+                {post.editors.length > 0
+                  ? post.editors.length > 1
+                    ? `${post.editors[0].name} + ${post.editors.length - 1}`
+                    : post.editors[0].name
                   : 'Selecione os autores'}
               </MenuButton>
               <MenuItems
@@ -673,11 +709,11 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ title, feature_image, content
                         {({ active }) => (
                           <button
                             className={`${active ? 'bg-gray-100' : ''} block px-4 py-2 text-sm w-full text-left flex items-center`}
-                            onClick={() => handleUserSelect(user)}
+                            onClick={() => handleEditorSelect(user)}
                           >
                             <img src={user.avatar ?? ''} alt={user.name} className="w-6 h-6 mr-2 rounded-full" />
                             {user.name}
-                            {post.admins.some((admin) => admin.id === user.id) && (
+                            {post.editors.some((admin) => admin.id === user.id) && (
                               <svg
                                 className="w-4 h-4 ml-2 text-blue-500"
                                 fill="none"
@@ -708,11 +744,11 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ title, feature_image, content
           {/* Curdador(a) */}
           <div className="mb-6">
             <label className="block text-sm font-montserrat font-medium text-gray-700 mb-2">Curador(a)</label>
-            {post.admins.length > 0 && (
+            {post.curadors.length > 0 && (
               <div className="mt-2 flex flex-wrap">
-                {post.admins.map((admin, index) => (
+                {post.curadors.map((admin, index) => (
                   <span
-                    onClick={() => handleUserSelect(admin)}
+                    onClick={() => handleCuradorSelect(admin)}
                     key={index}
                     className="inline-block bg-[#dcdf1e] text-black font-montserrat font-light px-3 py-1 mr-2 mb-2 cursor-pointer text-xs flex items-center"
                   >
@@ -737,10 +773,10 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ title, feature_image, content
             )}
             <Menu as="div" className="relative inline-block text-left w-full">
               <MenuButton className="inline-flex justify-between w-full border shadow-sm px-4 py-2 text-sm font-light font-montserrat bg-white">
-                {post.admins.length > 0
-                  ? post.admins.length > 1
-                    ? `${post.admins[0].name} + ${post.admins.length - 1}`
-                    : post.admins[0].name
+                {post.curadors.length > 0
+                  ? post.curadors.length > 1
+                    ? `${post.curadors[0].name} + ${post.curadors.length - 1}`
+                    : post.curadors[0].name
                   : 'Selecione os autores'}
               </MenuButton>
               <MenuItems
@@ -757,11 +793,11 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ title, feature_image, content
                         {({ active }) => (
                           <button
                             className={`${active ? 'bg-gray-100' : ''} block px-4 py-2 text-sm w-full text-left flex items-center`}
-                            onClick={() => handleUserSelect(user)}
+                            onClick={() => handleCuradorSelect(user)}
                           >
                             <img src={user.avatar ?? ''} alt={user.name} className="w-6 h-6 mr-2 rounded-full" />
                             {user.name}
-                            {post.admins.some((admin) => admin.id === user.id) && (
+                            {post.curadors.some((admin) => admin.id === user.id) && (
                               <svg
                                 className="w-4 h-4 ml-2 text-blue-500"
                                 fill="none"
