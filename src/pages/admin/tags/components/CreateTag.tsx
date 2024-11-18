@@ -56,7 +56,7 @@ export const CreateTag = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="flex justify-between">
-        <h1 className="font-butler text-3xl">Criar tag</h1>
+        <h1 className="text-3xl">Criar tag</h1>
         <button className="bg-bgBtn text-white font-medium px-4 py-2" type="submit">
           SALVAR
         </button>

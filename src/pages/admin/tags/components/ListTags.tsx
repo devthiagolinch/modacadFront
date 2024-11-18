@@ -27,7 +27,7 @@ export const ListTags = () => {
   }, [searchTerm]);
 
   return (
-    <div>
+    <div className="flex flex-col h-full overflow-hidden">
       {/* Input de busca */}
       <div>
         <label htmlFor="search_tags" className="mb-2 text-sm font-medium text-gray-900 sr-only">
@@ -48,7 +48,7 @@ export const ListTags = () => {
         </div>
       </div>
       {/* Listagem de tags */}
-      <div className="bg-white mt-4 border border-gray-300 rounded-lg font-montserrat font-medium italic">
+      <div className="flex-grow md:h-4 bg-white mt-4 border border-gray-300 rounded-lg font-montserrat font-medium italic overflow-y-auto">
         <ul>
           {filteredTags.map((tag) => (
             <li key={tag.id} className="border-b border-gray-300 p-4 last:border-0">
