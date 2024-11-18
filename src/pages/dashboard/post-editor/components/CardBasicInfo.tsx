@@ -53,11 +53,14 @@ const defaultPost: IPostDataRequest = {
 };
 
 export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
+  const [notification, setNotification] = useState("");
+
   const { postId } = useParams<{ postId: string }>();
   const [post, setPost] = useState<IPostDataRequest>(defaultPost);
-  console.log(post.meta_title)
 
   const [isCardVisible, setIsCardVisible] = useState(false);
+  const [isCardFaceVisible, setIsCardFaceVisible] = useState(false);
+  const [isCardBasicVisible, setCardBasicVisible] = useState(true)
 
   const [tagsOptions, setTagsOptions] = useState<ITagData[]>([]);
   const [subjectsOptions, setSubjectsOptions] = useState<ISubjectData[]>([]);
@@ -66,6 +69,12 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
 
   const toggleCardVisibility = () => {
     setIsCardVisible((prev) => !prev); // Alterna a visibilidade do CardBasicInfo
+    setCardBasicVisible((prev) => !prev)
+  };
+
+  const toggleCardFaceVisibility = () => {
+    setIsCardFaceVisible((prev) => !prev); // Alterna a visibilidade do CardBasicInfo
+    setCardBasicVisible((prev) => !prev)
   };
 
   useEffect(() => {
@@ -90,9 +99,9 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
             curadors: response.curadors.map((curador) => curador),
             tags: response.tags.map((tag) => tag),
             subjects: response.subjects.map((subject) => subject),
-            og_image: meta.og_image ?? '',
-            og_title: meta.og_title ?? '',
-            og_description: meta.og_description ?? '',
+            og_image: meta?.og_image ?? '',
+            og_title: meta?.og_title ?? '',
+            og_description: meta?.og_description ?? '',
             twitter_image: meta.twitter_image ?? '',
             twitter_title: meta.twitter_title ?? '',
             twitter_description: meta.twitter_description ?? '',
@@ -110,6 +119,7 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
       });
     }else {
       setPost(props)
+      post.og_image = props?.feature_image
     }
   }, [ postId, props ]);
 
@@ -140,7 +150,7 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
     });
   }, []);
 
-
+  console.log(post.og_image)
 
   // Canonical URL
   let canonicalUrl;
@@ -204,21 +214,6 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
       const { name, value } = event.target;
       setPost((prev) => ({ ...prev, [name]: value }));
   };
-
-/*   const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
-    setUploading(true);
-
-    const result = await PostsService.uploadImage(file);
-
-    if (result instanceof Error) {
-      console.error(result.message);
-    }
-
-    setUploading(false);
-  }; */
   
   const handleChangeVisibility = (visibility: TPostsVisibility) => {
     setPost({ ...post, visibility });
@@ -294,7 +289,7 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
     });
   };
 
-  const handleSubmit = () => {
+  const handleSave = () => {
     if (postId && postId !== 'novo') {
       PostsService.updateById(postId, post).then((response) => {
         console.log(post)
@@ -303,17 +298,46 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
         }
       });
     } else {
+      post.status = "draft"
       PostsService.create(post).then((response) => {
         if (response instanceof Error) {
           console.error(response.message);
         }
       });
     }
+    setNotification("Post atualizado com sucesso!");
+  };
+
+  const handleSubmit = () => {
+    if (postId && postId !== 'novo') {
+      if (post.status === "published") {
+        post.status = "draft"
+      } else {
+        post.status = "published"
+      }
+      PostsService.updateById(postId, post).then((response) => {
+        console.log(post)
+        if (response instanceof Error) {
+          console.error(response.message);
+        }
+
+    setNotification("Post despublicado com sucesso!");
+      });
+    } else {
+      post.status = "published"
+      PostsService.create(post).then((response) => {
+        if (response instanceof Error) {
+          console.error(response.message);
+        }
+      });
+
+    setNotification("Post publicado com sucesso!");
+    }
   };
   
   return (
       <div className="col-span-4"  >
-        <div style={{ display: isCardVisible ? 'none' : 'block' }} >
+        <div style={{ display: isCardBasicVisible ? 'block' : 'none' }} >
           {/* Informações da Postagem */}
           <div className="bg-white shadow-md p-6">
                     <h1 className="text-2xl font-montserrat font-light mb-6">{postId ? 'Edição' : 'Criação'}</h1>
@@ -845,19 +869,19 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
                         MetaDados Google
                       </button>
 
-                      {/*<button
+                      <button
                         className="w-full border border-zinc-400 mb-5 h-10"
-                        onClick={toggleCardVisibility}
+                        onClick={toggleCardFaceVisibility}
                       >
                         MetaDados OG
-                      </button> */}
+                      </button>
                     </div>
 
                     {/* Botão de Publicar */}
                     <div className="mb-6 flex gap-4 justify-center" >
                       <button
                           className="px-4 py-2 text-zinc-500 hover:bg-[#dcdf1e] w-auto"
-                          onClick={() => window.open(`/posts/${postId}`, '_blank')}
+                          onClick={handleSave}
                         >
                           <FaRegSave />
                         </button>
@@ -870,12 +894,13 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
                         </button>
                         <button className="px-4 py-2 border-[1px] font-montserrat font-light text-zinc-900 border-zinc-500 hover:bg-gradient-to-t 
                                         from-[#dcdf1e] to-[#dcdf1e] bg-[length:90%_.90em] bg-no-repeat bg-[position:50%_75%] w-full" onClick={handleSubmit}>
-                          {postId ? 'Atualizar Postagem' : 'Publicar Postagem'}
+                          {post.status === "published" ? 'Despublicar' : 'Publicar'}
                         </button>
                     </div>
                   </div>
         </div>
         
+        {/** CARD META DADOS GOOGLE */}
         <div className="col-span-4" style={{ display: isCardVisible ? 'block' : 'none' }} >
         {/* Informações da Postagem */}
         <div className="bg-white shadow-md p-6">
@@ -905,12 +930,60 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
               className="border p-2 w-full font-montserrat font-light focus-visible:border-[#dcdf1e] focus:outline-none min-h-[190px]" // Define um número de linhas padrão
             />
           </div>
+
           <button className="px-4 py-2 border-[1px] font-montserrat font-light text-zinc-900 border-zinc-500 hover:bg-gradient-to-t 
                           from-[#dcdf1e] to-[#dcdf1e] bg-[length:90%_.90em] bg-no-repeat bg-[position:50%_75%] w-full" onClick={toggleCardVisibility}>
                     Prontinho
           </button>
           </div>
         </div>
+
+        {/** CARD META DADOS OG */}
+        <div className="col-span-4" style={{ display: isCardFaceVisible ? 'block' : 'none' }} >
+            {/* Informações da Postagem */}
+            <div className="bg-white shadow-md p-6">
+                <h1 className="text-2xl font-montserrat font-light mb-6">Meta Dados Face Instagram</h1>
+
+                <div className="mb-6 w-full bg-transparent justify-center align-middle">
+                    {post.og_image && (
+                        <img src={post.og_image.toString()} alt="Imagem do Face Instagram" className="mt-4 object-cover w-screen h-64" />
+                    )}
+                </div>
+
+
+                {/** Campo para URL da publicação */}
+                <div className='mb-6'>
+                    <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2"> Meta Title </label>
+                    <input 
+                    type="text"
+                    name='og_title'
+                    value={post?.og_title}
+                    onChange={handleInputChange}
+                    className=' border p-2 w-full font-montserrat font-light focus-visible:border-[#dcdf1e] focus:outline-none'
+                    />
+                </div>
+                
+                {/* Campo para descrição */}
+                <div className="mb-6">
+                    <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2">Meta descrição</label>
+                    <textarea
+                    name="og_description"
+                    value={post.og_description || ''}
+                    onChange={handleInputChange}
+                    placeholder="Resumo de 300 caracteres"
+                    maxLength={300}
+                    className="border p-2 w-full font-montserrat font-light focus-visible:border-[#dcdf1e] focus:outline-none min-h-[190px]" // Define um número de linhas padrão
+                    />
+                </div>
+
+                <button className="px-4 py-2 border-[1px] font-montserrat font-light text-zinc-900 border-zinc-500 hover:bg-gradient-to-t 
+                                from-[#dcdf1e] to-[#dcdf1e] bg-[length:90%_.90em] bg-no-repeat bg-[position:50%_75%] w-full" onClick={toggleCardFaceVisibility}>
+                    Prontinho
+                </button>
+            </div>
+        </div>
+
+        {notification && <div className="notification">{notification}</div>}
       </div>
   )
 }

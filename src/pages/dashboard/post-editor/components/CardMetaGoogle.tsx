@@ -99,73 +99,47 @@ export const CardMetaGoogle: React.FC<CardDTO> = ({ isVisible, props }) => {
     }
   }, [ postId, props ]);
 
-
-
-  // Canonical URL
-  let canonicalUrl;
-  if(post.canonicalUrl) {
-    canonicalUrl = post.canonicalUrl.split("https://lobster-app-n6jep.ondigitalocean.app/",2).pop()
-  }else {
-    canonicalUrl = ''
-  }
-
-  const handleUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      const { name, value } = event.target;
-      setPost((prev) => ({...prev, [name]: value}))
-  }
-
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const { name, value } = event.target;
       setPost((prev) => ({ ...prev, [name]: value }));
   };
   console.log(isVisible)
   return (
-      <div className="col-span-4" style={{ display: isCardVisible ? 'block' : 'none' }} >
-        {/* Informações da Postagem */}
-        <div className="bg-white shadow-md p-6">
-          <h1 className="text-2xl font-montserrat font-light mb-6">Meta Dados Google</h1>
+    <div className="col-span-4" style={{ display: isCardVisible ? 'block' : 'none' }} >
+    {/* Informações da Postagem */}
+    <div className="bg-white shadow-md p-6">
+      <h1 className="text-2xl font-montserrat font-light mb-6">Meta Dados Google</h1>
 
-        {/** Campo para URL da publicação */}
-        <div className='mb-6'>
-            <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2"> Meta Title </label>
-            <input 
-            type="text"
-            name='meta_title'
-            value={post?.meta_title}
-            onChange={handleInputChange}
-            className=' border p-2 w-full font-montserrat font-light focus-visible:border-[#dcdf1e] focus:outline-none'
-            />
-          </div>
+    {/** Campo para URL da publicação */}
+    <div className='mb-6'>
+        <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2"> Meta Title </label>
+        <input 
+        type="text"
+        name='meta_title'
+        value={post?.meta_title}
+        onChange={handleInputChange}
+        className=' border p-2 w-full font-montserrat font-light focus-visible:border-[#dcdf1e] focus:outline-none'
+        />
+      </div>
+      
+      {/* Campo para descrição */}
+      <div className="mb-6">
+        <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2">Meta descrição</label>
+        <textarea
+          name="meta_description"
+          value={post.meta_description || ''}
+          onChange={handleInputChange}
+          placeholder="Resumo de 300 caracteres"
+          maxLength={300}
+          className="border p-2 w-full font-montserrat font-light focus-visible:border-[#dcdf1e] focus:outline-none min-h-[190px]" // Define um número de linhas padrão
+        />
+      </div>
 
-          {/** Campo para URL da publicação */}
-          <div className='mb-6'>
-              <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2"> Canonical URL</label>
-              <input 
-                type="text"
-                name='canonicalUrl'
-                value={canonicalUrl}
-                onChange={handleUrlChange}
-                className=' border p-2 w-full font-montserrat font-light focus-visible:border-[#dcdf1e] focus:outline-none'
-              />
-          </div>
-          
-          {/* Campo para descrição */}
-          <div className="mb-6">
-            <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2">Meta descrição</label>
-            <textarea
-              name="meta_description"
-              value={post.meta_description || ""}
-              onChange={handleInputChange}
-              placeholder="Resumo de 300 caracteres"
-              maxLength={300}
-              className="border p-2 w-full font-montserrat font-light focus-visible:border-[#dcdf1e] focus:outline-none min-h-[190px]" // Define um número de linhas padrão
-            />
-          </div>
-              <button className="px-4 py-2 border-[1px] font-montserrat font-light text-zinc-900 border-zinc-500 hover:bg-gradient-to-t 
-                               from-[#dcdf1e] to-[#dcdf1e] bg-[length:90%_.90em] bg-no-repeat bg-[position:50%_75%] w-full" onClick={toggleCardVisibility}>
-                        Prontinho
-              </button>
-          </div>
+      <button className="px-4 py-2 border-[1px] font-montserrat font-light text-zinc-900 border-zinc-500 hover:bg-gradient-to-t 
+                      from-[#dcdf1e] to-[#dcdf1e] bg-[length:90%_.90em] bg-no-repeat bg-[position:50%_75%] w-full" onClick={toggleCardVisibility}>
+                Prontinho
+      </button>
+      </div>
     </div>
   )
 }

@@ -43,7 +43,7 @@ export interface IPostDataRequest {
   curadors: IUserData[],
   tags: ITagData[];
   subjects: ISubjectData[];
-  og_image: string;
+  og_image: string | null;
   og_title: string;
   og_description: string;
   twitter_image: string;
