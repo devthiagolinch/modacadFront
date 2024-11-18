@@ -150,8 +150,6 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
     });
   }, []);
 
-  console.log(post.og_image)
-
   // Canonical URL
   let canonicalUrl;
   if(post.canonicalUrl) {
@@ -292,7 +290,6 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
   const handleSave = () => {
     if (postId && postId !== 'novo') {
       PostsService.updateById(postId, post).then((response) => {
-        console.log(post)
         if (response instanceof Error) {
           console.error(response.message);
         }
@@ -305,23 +302,23 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
         }
       });
     }
-    setNotification("Post atualizado com sucesso!");
+    setNotification("Post salvo com sucesso!");
   };
 
   const handleSubmit = () => {
     if (postId && postId !== 'novo') {
       if (post.status === "published") {
         post.status = "draft"
+
+      setNotification("Post despublicado com sucesso!");
       } else {
         post.status = "published"
+      setNotification("Post publicado com sucesso!");
       }
       PostsService.updateById(postId, post).then((response) => {
-        console.log(post)
         if (response instanceof Error) {
           console.error(response.message);
         }
-
-    setNotification("Post despublicado com sucesso!");
       });
     } else {
       post.status = "published"
@@ -330,8 +327,6 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
           console.error(response.message);
         }
       });
-
-    setNotification("Post publicado com sucesso!");
     }
   };
   

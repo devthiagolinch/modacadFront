@@ -103,7 +103,7 @@ export const CardMetaGoogle: React.FC<CardDTO> = ({ isVisible, props }) => {
       const { name, value } = event.target;
       setPost((prev) => ({ ...prev, [name]: value }));
   };
-  console.log(isVisible)
+  
   return (
     <div className="col-span-4" style={{ display: isCardVisible ? 'block' : 'none' }} >
     {/* Informações da Postagem */}

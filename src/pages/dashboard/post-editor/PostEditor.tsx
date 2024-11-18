@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import "../../../assets/css/tiptap.css";
 
@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 
 import { BubbleMenu, EditorContent, FloatingMenu, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
+import Link from '@tiptap/extension-link'
 import TextStyle from '@tiptap/extension-text-style';
 import Image from '@tiptap/extension-image';
 
@@ -66,6 +67,11 @@ export const PostEditor = () => {
         inline: true,
         allowBase64: true,
       }),
+      Link.configure({
+        openOnClick: true,
+        autolink: true,
+        defaultProtocol: 'https',
+      }),   
       TextStyle.extend({
         addAttributes() {
           return {
@@ -99,11 +105,6 @@ export const PostEditor = () => {
       setPost((prev) => ({ ...prev, content: editor.getHTML() }));
     },
   });
-  
-  /* Alteração do tamanho da letra no editor */
-  const setFontSize = (size: number) => {
-    editor?.chain().focus().setMark('textStyle', { fontSize: size }).run();
-  };
   
   useEffect(() => {
     if (postId && postId !== 'novo') {
@@ -147,6 +148,34 @@ export const PostEditor = () => {
       });
     }
   }, [postId, editor]);
+
+  const setLink = useCallback(() => {
+    if(!editor?.getAttributes('link').href) {
+      editor?.chain().focus().extendMarkRange('link').unsetLink().run()
+    }
+    
+    const previousUrl = editor?.getAttributes('link').href
+    const url = window.prompt('URL', previousUrl)
+
+    // cancelled
+    if (url === null) {
+      return
+    }
+
+    // empty
+    if (url === '') {
+      editor?.chain().focus().extendMarkRange('link').unsetLink()
+        .run()
+
+      return
+    }
+    // Adiciona "https://" se necessário
+    const formattedUrl = url.match(/^https?:\/\//) ? url : `https://${url.trim()}`;
+
+    // Atualiza o link no editor
+    editor?.chain().focus().extendMarkRange('link').toggleLink({ href: formattedUrl }).run();
+  }, [editor])
+
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setPost((prev) => ({ ...prev, [name]: value }));
@@ -324,15 +353,16 @@ export const PostEditor = () => {
                         <FaStrikethrough />
                       </button>
                       <button
+                        onClick={setLink}
+                        >
+                        link
+                      </button>
+                      <button
                         onClick={() => editor.chain().focus().toggleBlockquote().run()}
                         className={editor.isActive('blockquote') ? 'is-active' : ''}
                       >
                         <TbBlockquote />
                       </button>
-                      <button onClick={() => setFontSize(14)}>14px</button>
-                      <button onClick={() => setFontSize(16)}>16px</button>
-                      <button onClick={() => setFontSize(18)}>18px</button>
-                      <button onClick={() => editor.chain().focus().setMark('textStyle', { fontSize: 20 }).run()}>20px</button>
                     </div>
                   </BubbleMenu>
                 )}
