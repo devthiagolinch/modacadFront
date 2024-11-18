@@ -3,15 +3,15 @@ import { Link } from 'react-router-dom';
 import logo from '../../../assets/svg/icon_rounded_bg_red.svg';
 
 const primaryLinks = [
-  { name: 'posts', path: '/dashboard/posts', disabled: false },
-  { name: 'pílulas', path: '/dashboard/pilulas', disabled: false },
-  { name: 'tags', path: '/admin/tags', disabled: false },
+  { name: 'posts', path: '/dashboard/posts' },
+  { name: 'pílulas', path: '/dashboard/pilulas' },
+  { name: 'tags', path: '/admin/tags' },
   { name: 'assuntos', path: '/admin/assuntos', disabled: true },
   { name: 'footer', path: '/admin/footer', disabled: true },
 ];
 
 const secondaryLinks = [
-  { name: 'membros', path: '/admin/membros', disabled: true },
+  { name: 'membros', path: '/admin/membros' },
   { name: 'planos', path: '/admin/planos', disabled: true },
   { name: 'autores', path: '/admin/autores', disabled: true },
   { name: 'equipe', path: '/admin/equipes', disabled: true },
