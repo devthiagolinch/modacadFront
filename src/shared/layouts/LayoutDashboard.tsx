@@ -10,7 +10,9 @@ export const LayoutDashboard: React.FC<ILayoutDashboardProps> = ({ children }) =
       <div className="w-48 h-screen fixed top-0 left-0 h-full hidden sm:block">
         <MenuLateral />
       </div>
-      <main className="flex-grow p-2 md:p-6 md:ml-48 font-montserrat">{children}</main>
+      <main className="flex-grow p-2 md:p-6 md:ml-48 font-montserrat">
+        <div className="container mx-auto">{children}</div>
+      </main>
     </div>
   );
 };

@@ -1,44 +1,59 @@
+import { useEffect, useState } from 'react';
 import { LayoutDashboard } from '../../../shared/layouts';
+import { IUserData, UsersService } from '../../../shared/api/users/UserServices';
 
 export const PageMembers = () => {
+  const [members, setMembers] = useState<IUserData[]>([]);
+
+  useEffect(() => {
+    UsersService.getAll().then((response) => {
+      if (response instanceof Error) {
+        console.error(response);
+        return;
+      }
+      console.log(response);
+      setMembers(response);
+    });
+  }, []);
+
   return (
     <LayoutDashboard>
-      <div>
-        <div>
-          <button>EXPORTAR</button>
-          <button>filtro 1</button>
-          <button>filtro 2</button>
+      <div className="flex justify-between">
+        <div className="flex gap-2 items-center">
+          <button className="bg-bgBtn text-white font-medium px-4 py-2">EXPORTAR</button>
+          <button className="bg-gray-950 px-4 py-2 text-white">filtro 1</button>
+          <button className="bg-gray-950 px-4 py-2 text-white">filtro 2</button>
         </div>
-        <div>
+        <div className="flex gap-2">
           <table>
             <thead>
               <tr>
-                <th></th>
-                <th>inscritos</th>
+                <td></td>
+                <td className="text-medium">inscritos</td>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>membros</td>
-                <td>10</td>
+                <td className="pr-2">membros</td>
+                <td className="bg-white text-center">10</td>
               </tr>
               <tr>
-                <td>assinantes</td>
-                <td>10</td>
+                <td className="pr-2">assinantes</td>
+                <td className="bg-white text-center">10</td>
               </tr>
               <tr>
-                <td>ex assinantes</td>
-                <td>10</td>
+                <td className="pr-2">ex assinantes</td>
+                <td className="bg-white text-center">10</td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
-      <div className="bg-white mt-4 border border-gray-300 rounded-lg font-montserrat font-medium italic overflow-y-auto">
+      <div className="bg-white mt-4 border border-gray-300 font-montserrat font-medium overflow-y-auto">
         <ul>
-          <li className="border-b border-gray-300 p-4 last:border-0 flex justify-between item-center">
+          <li className="border-b border-gray-300 p-4 last:border-0 flex justify-between items-center">
             <p>Teste</p>
-            <p>assinante</p>
+            <p className="bg-bgBtn rounded-full px-4 py-2 text-white">assinante</p>
           </li>
         </ul>
       </div>

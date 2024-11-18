@@ -30,7 +30,7 @@ export const PageTags = () => {
 
   return (
     <LayoutDashboard>
-      <div className="container mx-auto px-4 grid gap-6 md:grid-cols-2 h-full">
+      <div className="grid gap-6 md:grid-cols-2 h-full">
         <CreateTag onCreated={onCreated} />
         <ListTags tags={tags} />
       </div>
