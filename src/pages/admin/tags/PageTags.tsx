@@ -1,13 +1,38 @@
+import { useEffect, useState } from 'react';
+import { ITagData, TagsService } from '../../../shared/api/tags/TagsService';
 import { LayoutDashboard } from '../../../shared/layouts';
 import { CreateTag } from './components/CreateTag';
 import { ListTags } from './components/ListTags';
 
 export const PageTags = () => {
+  const [tags, setTags] = useState<ITagData[]>([]);
+
+  // Buscar tags
+  const fetchTags = () => {
+    TagsService.getAll().then((response) => {
+      if (response instanceof Error) {
+        console.error(response);
+        return;
+      }
+      setTags(response);
+    });
+  };
+
+  // Solicitar tags ao carregar a página
+  useEffect(() => {
+    fetchTags();
+  }, []);
+
+  // Atualizar a lista de tags ao criar uma nova
+  const onCreated = () => {
+    fetchTags();
+  };
+
   return (
     <LayoutDashboard>
       <div className="container mx-auto px-4 grid gap-6 md:grid-cols-2 h-full">
-        <CreateTag />
-        <ListTags />
+        <CreateTag onCreated={onCreated} />
+        <ListTags tags={tags} />
       </div>
     </LayoutDashboard>
   );

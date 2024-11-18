@@ -1,38 +1,50 @@
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { FaCloudUploadAlt, FaTimes } from 'react-icons/fa';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { ITagData, TagsService } from '../../../../shared/api/tags/TagsService';
 
-interface IFormCreateTag {
-  name: string;
-  slug: string;
-  meta_description: string;
-  facebook_title?: string;
-  facebook_description?: string;
-}
+interface IFormCreateTag
+  extends Pick<ITagData, 'name' | 'slug' | 'meta_description' | 'facebook_title' | 'facebook_description'> {}
 
 const createTagSchema: yup.ObjectSchema<IFormCreateTag> = yup.object({
   name: yup.string().required(),
   slug: yup.string().required(),
-  meta_description: yup.string().required(),
-  facebook_title: yup.string(),
-  facebook_description: yup.string(),
+  meta_description: yup.string().nullable(),
+  facebook_title: yup.string().nullable(),
+  facebook_description: yup.string().nullable(),
 });
 
-export const CreateTag = () => {
-  // TO DO - Implementar helper texts para os erros dos inputs
+interface ICreateTagProps {
+  onCreated: () => void;
+}
 
+type TMessage = { type: 'success' | 'error'; text: string };
+
+export const CreateTag: React.FC<ICreateTagProps> = ({ onCreated }) => {
   const [imageFacebook, setImageFacebook] = useState<File | null>(null);
+  const [message, setMessage] = useState<TMessage>({ type: 'success', text: '' });
 
-  const { handleSubmit, register } = useForm<IFormCreateTag>({ resolver: yupResolver(createTagSchema) });
+  const { handleSubmit, register, reset } = useForm<IFormCreateTag>({ resolver: yupResolver(createTagSchema) });
 
   const onSubmit: SubmitHandler<IFormCreateTag> = async (data) => {
     try {
-      console.log(data);
+      await TagsService.create(data);
+      onCreated();
+      reset();
+      setImageFacebook(null);
+      setMessage({
+        type: 'success',
+        text: 'Tag criada com sucesso',
+      });
     } catch (error) {
       console.error(error);
+      setMessage({
+        type: 'error',
+        text: 'Erro ao criar a tag',
+      });
     }
   };
 
@@ -53,8 +65,18 @@ export const CreateTag = () => {
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    maxSize: 5 * 1024 * 1024,
+    maxSize: 50 * 1024 * 1024,
   });
+
+  useEffect(() => {
+    if (message.text) {
+      const timer = setTimeout(() => {
+        setMessage({ type: 'success', text: '' });
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -64,6 +86,9 @@ export const CreateTag = () => {
           SALVAR
         </button>
       </div>
+      {message.text && (
+        <div className={`mt-4 ${message.type === 'success' ? 'text-green-600' : 'text-red-600'}`}>{message.text}</div>
+      )}
       <div className="mt-2">
         <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900">
           Nome

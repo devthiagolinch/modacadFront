@@ -16,13 +16,15 @@ export interface ITagData {
   twitter_title: string | null;
   twitter_description: string | null;
   meta_title: string | null;
-  meta_description: string | null;
+  meta_description?: string | null;
   code_injection_head: string | null;
   code_injection_foot: string | null;
   cannonical_url: string | null;
   accent_color: string | null;
   created_at: string;
   updated_at: string;
+  facebook_title?: string | null;
+  facebook_description?: string | null;
 }
 
 const getAll = async () => {
@@ -40,6 +42,18 @@ const getAll = async () => {
   }
 };
 
+const create = async (body: Partial<ITagData>) => {
+  try {
+    const { data } = await api.post<ITagData>(`/tags`, body);
+    if (data) return data;
+    return new Error('Erro ao criar o registro');
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido ao criar o registro';
+    return new Error(errorMessage);
+  }
+};
+
 export const TagsService = {
   getAll,
+  create,
 };

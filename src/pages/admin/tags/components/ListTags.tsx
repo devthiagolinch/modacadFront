@@ -1,30 +1,20 @@
-import { useEffect, useState } from 'react';
-import { ITagData, TagsService } from '../../../../shared/api/tags/TagsService';
+import React, { useEffect, useState } from 'react';
+import { ITagData } from '../../../../shared/api/tags/TagsService';
 import { FaSearch } from 'react-icons/fa';
 
-export const ListTags = () => {
+interface IListTagsProps {
+  tags: ITagData[];
+}
+export const ListTags: React.FC<IListTagsProps> = ({ tags }) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [filteredTags, setFilteredTags] = useState<ITagData[]>([]);
-  const [tags, setTags] = useState<ITagData[]>([]);
-
-  // Buscar tags da API
-  useEffect(() => {
-    TagsService.getAll().then((response) => {
-      if (response instanceof Error) {
-        console.error(response);
-        return;
-      }
-      setTags(response);
-      setFilteredTags(response);
-    });
-  }, []);
+  const [filteredTags, setFilteredTags] = useState<ITagData[]>(tags);
 
   // Filtrar tags
   useEffect(() => {
     const lowercasedTerm = searchTerm.toLowerCase();
     const filteredData = tags.filter((tag) => tag.name.toLowerCase().includes(lowercasedTerm));
     setFilteredTags(filteredData);
-  }, [searchTerm]);
+  }, [searchTerm, tags]);
 
   return (
     <div className="flex flex-col h-full overflow-hidden">
