@@ -28,9 +28,12 @@ export const CreateTag = () => {
 
   const { handleSubmit, register } = useForm<IFormCreateTag>({ resolver: yupResolver(createTagSchema) });
 
-  const onSubmit: SubmitHandler<IFormCreateTag> = (data) => {
-    console.log(data);
-    // TO DO - Implementar criação de tag
+  const onSubmit: SubmitHandler<IFormCreateTag> = async (data) => {
+    try {
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   // Adicionar imagens
