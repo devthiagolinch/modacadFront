@@ -51,9 +51,8 @@ export const ListTags = () => {
       <div className="flex-grow md:h-4 bg-white mt-4 border border-gray-300 rounded-lg font-montserrat font-medium italic overflow-y-auto">
         <ul>
           {filteredTags.map((tag) => (
-            <li key={tag.id} className="border-b border-gray-300 p-4 last:border-0 flex justify-between items-center">
+            <li key={tag.id} className="border-b border-gray-300 p-4 last:border-0">
               <span>{tag.name}</span>
-              <button className="bg-bgBtn text-white font-medium text-sm px-4 py-2">EDITAR</button>
             </li>
           ))}
         </ul>
