@@ -6,7 +6,7 @@ const primaryLinks = [
   { name: 'posts', path: '/dashboard/posts' },
   { name: 'pílulas', path: '/dashboard/pilulas' },
   { name: 'tags', path: '/admin/tags' },
-  { name: 'assuntos', path: '/admin/assuntos', disabled: true },
+  { name: 'assuntos', path: '/admin/assuntos' },
   { name: 'footer', path: '/admin/footer', disabled: true },
 ];
 

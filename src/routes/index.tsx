@@ -14,6 +14,7 @@ import { PostDetails } from '../pages/posts/PostDetails';
 import { PostEditor } from '../pages/dashboard/PostEditor';
 import { PageTags } from '../pages/admin/tags/PageTags';
 import { PageMembers } from '../pages/admin/members/PageMembers';
+import { PageSubjects } from '../pages/admin/subjects/PageSubjects';
 
 type TPrivateRouteProps = RouteProps & {
   element: React.ReactNode;
@@ -54,6 +55,7 @@ export const AppRoutes = () => {
       <Route path="/admin/login" element={<AdminLogin />} />
       <Route path="/admin/tags" element={<PrivateRoute element={<PageTags />} />} />
       <Route path="/admin/membros" element={<PrivateRoute element={<PageMembers />} />} />
+      <Route path="/admin/assuntos" element={<PrivateRoute element={<PageSubjects />} />} />
 
       {/* Página em Branco (Para teste ou outro propósito) */}
       <Route path="/blank" element={<BlankPage />} />

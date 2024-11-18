@@ -3,6 +3,7 @@ import { api } from '../../services/axios';
 export interface ISubjectData {
   id: string;
   name: string;
+  priority: number;
 }
 
 const getAll = async (): Promise<ISubjectData[] | Error> => {
