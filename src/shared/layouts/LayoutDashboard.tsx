@@ -7,10 +7,10 @@ interface ILayoutDashboardProps {
 export const LayoutDashboard: React.FC<ILayoutDashboardProps> = ({ children }) => {
   return (
     <div className="flex min-h-screen">
-      <div className="w-48 h-screen fixed top-0 left-0 h-full">
+      <div className="w-48 h-screen fixed top-0 left-0 h-full hidden sm:block">
         <MenuLateral />
       </div>
-      <main className="flex-grow p-6 ml-48 font-montserrat">{children}</main>
+      <main className="flex-grow p-2 md:p-6 md:ml-48 font-montserrat">{children}</main>
     </div>
   );
 };

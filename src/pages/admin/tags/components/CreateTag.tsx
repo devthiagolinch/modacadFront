@@ -119,10 +119,10 @@ export const CreateTag = () => {
               </button>
             </div>
           ) : (
-            <div className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer">
+            <div className="flex flex-col items-center justify-center w-full h-64 p-4 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer">
               <div className="flex flex-col items-center justify-center pt-5 pb-6">
                 <FaCloudUploadAlt className="size-8 text-gray-600" />
-                <p className="mb-2 text-sm text-gray-500 dark:text-gray-400 mt-2">
+                <p className="mb-2 text-sm text-gray-500 dark:text-gray-400 mt-2 text-center font-regular">
                   <span className="font-semibold">Clique para fazer upload</span> ou arraste e solte aqui.
                 </p>
                 <p className="text-xs text-gray-500 dark:text-gray-400">JPG, HEIC ou PNG</p>
