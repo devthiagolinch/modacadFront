@@ -11,7 +11,7 @@ export const LayoutDashboard: React.FC<ILayoutDashboardProps> = ({ children }) =
         <MenuLateral />
       </div>
       <main className="flex-grow p-2 md:p-6 md:ml-48 font-montserrat">
-        <div className="container mx-auto">{children}</div>
+        <div className="container mx-auto h-full">{children}</div>
       </main>
     </div>
   );
