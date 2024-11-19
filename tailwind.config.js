@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./src/index.css', './index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  content: ['./src/index.css', './index.html', './src/**/*.{js,ts,jsx,tsx}', "./node_modules/react-tailwindcss-datepicker/dist/index.esm.{js,ts}" ],
   theme: {
     boxShadow: {
       read: '0 0px 50px 1px rgba(32,32,32,0.3)',

@@ -234,7 +234,7 @@ function NewPost() {
       )}
 
       <EditorContent
-        className="xl:min-w-[70%] xl:max-w-[80%] mx-auto pt-16 prose hover:border-green-400 border-[1px]"
+        className="xl:min-w-[70%] xl:max-w-[80%] mx-auto pt-16 prose border-black-500 border-[3px]"
         editor={editor}
       />
 

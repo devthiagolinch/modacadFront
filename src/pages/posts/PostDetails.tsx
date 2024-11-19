@@ -39,11 +39,11 @@ export function PostDetails() {
         <div className="hidden lg:flex lg:flex-col  lg:w-full">
           <div className="lg:flex  lg:pb-5 2xl:gap-[14.5%] lg:gap-[12%] lg:justify-between">
             <div className="lg:flex lg:pl-[55px] lg:flex-row lg:align-middle lg:items-end lg:w-auto">
-              {post?.tags &&
-                Array.isArray(post.tags) &&
-                post?.tags.map((tag, index) => (
+              {post?.subjects &&
+                Array.isArray(post.subjects) &&
+                post?.subjects.map((subject, index) => (
                   <span className=" w-[22px] lg:transform: -rotate-90 text-nowrap" key={index}>
-                    {tag.name.toUpperCase()}
+                    {subject.name.toUpperCase()}
                   </span>
                 ))}
             </div>
@@ -125,11 +125,11 @@ export function PostDetails() {
 
             <div className="flex justify-between items-start align-top gap-10 px-5 mb-[20px] text-zinc-800">
               <div className="flex flex-col font-montserrat_light_italic">
-                {post?.tags &&
-                  Array.isArray(post.tags) &&
-                  post?.tags.map((tag, index) => (
+                {post?.subjects &&
+                  Array.isArray(post.subjects) &&
+                  post?.subjects.map((subject, index) => (
                     <span className="-mb-[5px] text-[13px]" key={index}>
-                      {tag.name.toUpperCase()}
+                      {subject.name.toUpperCase()}
                     </span>
                   ))}
               </div>
@@ -144,7 +144,7 @@ export function PostDetails() {
 
         <div className="lg:pt-12 lg:px-[20%] mb-[40px] mx-[20px]">
           <p
-            className="text-justify lg:text-lg font-montserrat_light"
+            className="text-justify lg:text-lg font-montserrat_light prose"
             dangerouslySetInnerHTML={{ __html: post?.content ?? '' }}
           />
         </div>
@@ -160,11 +160,11 @@ export function PostDetails() {
         <div className="hidden lg:flex lg:flex-col  lg:w-full">
           <div className="lg:flex  lg:pb-5 2xl:gap-[14.5%] lg:gap-[12%] lg:justify-between">
             <div className="lg:flex lg:pl-[55px] lg:flex-row lg:align-middle lg:items-end lg:w-auto">
-              {post?.tags &&
-                Array.isArray(post.tags) &&
-                post?.tags.map((tag, index) => (
+              {post?.subjects &&
+                Array.isArray(post.subjects) &&
+                post?.subjects.map((subject, index) => (
                   <span className=" w-[22px] lg:transform: -rotate-90 text-nowrap" key={index}>
-                    {tag.name.toUpperCase()}
+                    {subject.name.toUpperCase()}
                   </span>
                 ))}
             </div>
@@ -253,11 +253,11 @@ export function PostDetails() {
 
             <div className="flex justify-between items-start align-top gap-10 px-5 mb-[20px] text-zinc-800">
               <div className="flex flex-col font-montserrat_light_italic">
-                {post?.tags &&
-                  Array.isArray(post.tags) &&
-                  post?.tags.map((tag, index) => (
+                {post?.subjects &&
+                  Array.isArray(post.subjects) &&
+                  post?.subjects.map((subject, index) => (
                     <span className="-mb-[5px] text-[13px]" key={index}>
-                      {tag.name.toUpperCase()}
+                      {subject.name.toUpperCase()}
                     </span>
                   ))}
               </div>
