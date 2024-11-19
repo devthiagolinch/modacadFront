@@ -6,6 +6,7 @@ import { ListTags } from './components/ListTags';
 
 export const PageTags = () => {
   const [tags, setTags] = useState<ITagData[]>([]);
+  const [selectedTag, setSelectedTag] = useState<ITagData | null>(null);
 
   // Buscar tags
   const fetchTags = () => {
@@ -26,13 +27,14 @@ export const PageTags = () => {
   // Atualizar a lista de tags ao criar uma nova
   const onCreated = () => {
     fetchTags();
+    setSelectedTag(null);
   };
 
   return (
     <LayoutDashboard>
       <div className="grid gap-6 md:grid-cols-2 h-full">
-        <CreateTag onCreated={onCreated} />
-        <ListTags tags={tags} />
+        <CreateTag onCreated={onCreated} selectedTag={selectedTag} />
+        <ListTags tags={tags} onSelectTag={setSelectedTag} />
       </div>
     </LayoutDashboard>
   );

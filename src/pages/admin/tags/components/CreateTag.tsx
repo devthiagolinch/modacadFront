@@ -20,11 +20,12 @@ const createTagSchema: yup.ObjectSchema<IFormCreateTag> = yup.object({
 
 interface ICreateTagProps {
   onCreated: () => void;
+  selectedTag: ITagData | null;
 }
 
 type TMessage = { type: 'success' | 'danger'; text: string };
 
-export const CreateTag: React.FC<ICreateTagProps> = ({ onCreated }) => {
+export const CreateTag: React.FC<ICreateTagProps> = ({ onCreated, selectedTag }) => {
   const [imageFacebook, setImageFacebook] = useState<File | null>(null);
   const [message, setMessage] = useState<TMessage>({ type: 'success', text: '' });
 
@@ -32,14 +33,22 @@ export const CreateTag: React.FC<ICreateTagProps> = ({ onCreated }) => {
 
   const onSubmit: SubmitHandler<IFormCreateTag> = async (data) => {
     try {
-      await TagsService.create(data);
+      if (selectedTag) {
+        await TagsService.updateById(selectedTag.id, data);
+        setMessage({
+          type: 'success',
+          text: 'Tag atualizada com sucesso',
+        });
+      } else {
+        await TagsService.create(data);
+        setMessage({
+          type: 'success',
+          text: 'Tag criada com sucesso',
+        });
+      }
       onCreated();
       reset();
       setImageFacebook(null);
-      setMessage({
-        type: 'success',
-        text: 'Tag criada com sucesso',
-      });
     } catch (error) {
       console.error(error);
       setMessage({
@@ -48,6 +57,12 @@ export const CreateTag: React.FC<ICreateTagProps> = ({ onCreated }) => {
       });
     }
   };
+
+  useEffect(() => {
+    if (selectedTag) {
+      reset(selectedTag);
+    }
+  }, [selectedTag, reset]);
 
   // Adicionar imagens
   const onDrop = (acceptedFiles: File[]) => {
@@ -83,11 +98,19 @@ export const CreateTag: React.FC<ICreateTagProps> = ({ onCreated }) => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="flex justify-between">
         <h1 className="text-3xl">Criar tag</h1>
-        <button className="bg-bgBtn text-white font-medium px-4 py-2" type="submit">
-          SALVAR
-        </button>
+        <div className="flex flex-wrap gap-2">
+          <button className="bg-bgBtn text-white font-medium px-4 py-2" type="submit">
+            {selectedTag ? 'ATUALIZAR' : 'SALVAR'}
+          </button>
+          <button className="bg-bgBtn text-white font-medium px-4 py-2" type="submit">
+            EXCLUIR
+          </button>
+          <button className="bg-bgBtn text-white font-medium px-4 py-2" type="submit">
+            LIMPAR
+          </button>
+        </div>
       </div>
-      {message.text && <Alert color={message.type} message={message.text} />}
+      {message.text && <Alert color={message.type}>{message.text}</Alert>}
       <div className="mt-2">
         <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900">
           Nome

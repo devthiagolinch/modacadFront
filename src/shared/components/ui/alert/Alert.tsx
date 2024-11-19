@@ -2,8 +2,7 @@ import React from 'react';
 
 interface IAlertProps {
   color: 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark';
-  message: string;
-  title?: string;
+  children?: React.ReactNode;
 }
 
 const colorClasses = {
@@ -16,7 +15,7 @@ const colorClasses = {
   dark: 'bg-gray-800 text-white',
 };
 
-export const Alert: React.FC<IAlertProps> = ({ color, message, title }) => {
+export const Alert: React.FC<IAlertProps> = ({ color, children }) => {
   return (
     <div
       className={`mt-2 text-sm rounded-lg p-4 ${colorClasses[color]}`}
@@ -24,12 +23,7 @@ export const Alert: React.FC<IAlertProps> = ({ color, message, title }) => {
       tabIndex={-1}
       aria-labelledby={`hs-solid-color-${color}-label`}
     >
-      {title ? (
-        <span id={`hs-solid-color-${color}-label`} className="font-bold">
-          {title}
-        </span>
-      ) : null}
-      <p>{message}</p>
+      {children}
     </div>
   );
 };

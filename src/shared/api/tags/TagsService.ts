@@ -53,7 +53,19 @@ const create = async (body: Partial<ITagData>) => {
   }
 };
 
+const updateById = async (id: string, body: Partial<ITagData>) => {
+  try {
+    const { data } = await api.put<ITagData>(`/tags/${id}`, body);
+    if (data) return data;
+    return new Error('Erro ao atualizar o registro');
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido ao atualizar o registro';
+    return new Error(errorMessage);
+  }
+};
+
 export const TagsService = {
   getAll,
   create,
+  updateById,
 };
