@@ -5,16 +5,32 @@ import { getRoleClass } from '../../../shared/hook/getRoleClass';
 
 export const PageMembers = () => {
   const [members, setMembers] = useState<IUserData[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
-  useEffect(() => {
-    UsersService.getAll().then((response) => {
+  const fetchMembers = async (page: number) => {
+    UsersService.getAll({ page }).then((response) => {
       if (response instanceof Error) {
         console.error(response);
         return;
       }
       setMembers(response.users);
+      setCurrentPage(response.currentPage);
+      setTotalPages(response.totalPages);
     });
+  };
+
+  useEffect(() => {
+    fetchMembers(1);
   }, []);
+
+  const handlePrevious = () => {
+    if (currentPage > 1) fetchMembers(currentPage - 1);
+  };
+
+  const handleNext = () => {
+    if (currentPage < totalPages) fetchMembers(currentPage + 1);
+  };
 
   return (
     <LayoutDashboard>
@@ -61,6 +77,25 @@ export const PageMembers = () => {
             </li>
           ))}
         </ul>
+        <div className="flex justify-between items-center border-t border-gray-300 p-4">
+          <button
+            onClick={handlePrevious}
+            disabled={currentPage === 1}
+            className={`px-4 py-2 text-sm ${currentPage === 1 ? 'bg-gray-200 cursor-not-allowed' : 'bg-bgBtn text-white'}`}
+          >
+            Anterior
+          </button>
+          <p className="text-sm">
+            Página {currentPage} de {totalPages}
+          </p>
+          <button
+            onClick={handleNext}
+            disabled={currentPage === totalPages}
+            className={`px-4 py-2 text-sm ${currentPage === totalPages ? 'bg-gray-200 cursor-not-allowed' : 'bg-bgBtn text-white'}`}
+          >
+            Próximo
+          </button>
+        </div>
       </div>
     </LayoutDashboard>
   );

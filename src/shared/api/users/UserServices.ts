@@ -17,9 +17,15 @@ type TGetAllResult = {
   totalItems: number;
   currentPage: number;
 };
-const getAll = async (role?: TUsersRole, status?: EUsersStatus, plan?: TUsersPlan): Promise<TGetAllResult | Error> => {
+type TGetAllParams = {
+  role?: TUsersRole;
+  status?: EUsersStatus;
+  plan?: TUsersPlan;
+  page?: number;
+};
+const getAll = async ({ role, status, plan, page }: TGetAllParams): Promise<TGetAllResult | Error> => {
   try {
-    const urlRelativa = `/admins/users?role=${role ?? ''}&status=${status ?? ''}&plan=${plan ?? ''}`;
+    const urlRelativa = `/admins/users?role=${role ?? ''}&status=${status ?? ''}&plan=${plan ?? ''}&page=${page ?? 1}`;
     const { data } = await api.get<TGetAllResult>(urlRelativa);
 
     if (data) {
