@@ -70,11 +70,13 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
   const toggleCardVisibility = () => {
     setIsCardVisible((prev) => !prev); // Alterna a visibilidade do CardBasicInfo
     setCardBasicVisible((prev) => !prev)
+    window.scrollTo(0,0)
   };
 
   const toggleCardFaceVisibility = () => {
     setIsCardFaceVisible((prev) => !prev); // Alterna a visibilidade do CardBasicInfo
     setCardBasicVisible((prev) => !prev)
+    window.scrollTo(0,0)
   };
 
   useEffect(() => {
@@ -153,7 +155,7 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
   // Canonical URL
   let canonicalUrl;
   if(post.canonicalUrl) {
-    canonicalUrl = post.canonicalUrl.split("https://lobster-app-n6jep.ondigitalocean.app/",2).pop()
+    canonicalUrl = post.canonicalUrl.split("https://blog.modacad.com.br/",2).pop()
   }else {
     canonicalUrl = ''
   }
@@ -887,8 +889,7 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
                           <FaEye />
 
                         </button>
-                        <button className="px-4 py-2 border-[1px] font-montserrat font-light text-zinc-900 border-zinc-500 hover:bg-gradient-to-t 
-                                        from-[#dcdf1e] to-[#dcdf1e] bg-[length:90%_.90em] bg-no-repeat bg-[position:50%_75%] w-full" onClick={handleSubmit}>
+                        <button className="px-4 py-2 border-[1px] font-montserrat font-light text-zinc-900 border-zinc-500 hi w-full" onClick={handleSubmit}>
                           {post.status === "published" ? 'Despublicar' : 'Publicar'}
                         </button>
                     </div>
