@@ -51,15 +51,15 @@ export const PageMembers = () => {
             <tbody>
               <tr>
                 <td className="pr-2">membros</td>
-                <td className="bg-white text-center">10</td>
+                <td className="bg-white text-center">0</td>
               </tr>
               <tr>
                 <td className="pr-2">assinantes</td>
-                <td className="bg-white text-center">10</td>
+                <td className="bg-white text-center">0</td>
               </tr>
               <tr>
                 <td className="pr-2">ex assinantes</td>
-                <td className="bg-white text-center">10</td>
+                <td className="bg-white text-center">0</td>
               </tr>
             </tbody>
           </table>
