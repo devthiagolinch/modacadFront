@@ -11,7 +11,6 @@ export const PageMembers = () => {
         console.error(response);
         return;
       }
-      console.log(response);
       setMembers(response);
     });
   }, []);
@@ -51,10 +50,15 @@ export const PageMembers = () => {
       </div>
       <div className="bg-white mt-4 border border-gray-300 font-montserrat font-medium overflow-y-auto">
         <ul>
-          <li className="border-b border-gray-300 p-4 last:border-0 flex justify-between items-center">
-            <p>Teste</p>
-            <p className="bg-bgBtn rounded-full px-4 py-2 text-white">assinante</p>
-          </li>
+          {members.map((member) => (
+            <li
+              key={member.id}
+              className="border-b border-gray-300 p-4 last:border-0 flex justify-between items-center"
+            >
+              <p className="highlight-link">{member.name}</p>
+              <p className="bg-bgBtn rounded-full px-4 py-2 text-white">{member.role}</p>
+            </li>
+          ))}
         </ul>
       </div>
     </LayoutDashboard>

@@ -5,6 +5,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { ITagData, TagsService } from '../../../../shared/api/tags/TagsService';
+import { Alert } from '../../../../shared/components/ui/alert/Alert';
 
 interface IFormCreateTag
   extends Pick<ITagData, 'name' | 'slug' | 'meta_description' | 'facebook_title' | 'facebook_description'> {}
@@ -21,7 +22,7 @@ interface ICreateTagProps {
   onCreated: () => void;
 }
 
-type TMessage = { type: 'success' | 'error'; text: string };
+type TMessage = { type: 'success' | 'danger'; text: string };
 
 export const CreateTag: React.FC<ICreateTagProps> = ({ onCreated }) => {
   const [imageFacebook, setImageFacebook] = useState<File | null>(null);
@@ -42,7 +43,7 @@ export const CreateTag: React.FC<ICreateTagProps> = ({ onCreated }) => {
     } catch (error) {
       console.error(error);
       setMessage({
-        type: 'error',
+        type: 'danger',
         text: 'Erro ao criar a tag',
       });
     }
@@ -72,7 +73,7 @@ export const CreateTag: React.FC<ICreateTagProps> = ({ onCreated }) => {
     if (message.text) {
       const timer = setTimeout(() => {
         setMessage({ type: 'success', text: '' });
-      }, 5000);
+      }, 3000);
 
       return () => clearTimeout(timer);
     }
@@ -86,9 +87,7 @@ export const CreateTag: React.FC<ICreateTagProps> = ({ onCreated }) => {
           SALVAR
         </button>
       </div>
-      {message.text && (
-        <div className={`mt-4 ${message.type === 'success' ? 'text-green-600' : 'text-red-600'}`}>{message.text}</div>
-      )}
+      {message.text && <Alert color={message.type} message={message.text} />}
       <div className="mt-2">
         <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900">
           Nome
