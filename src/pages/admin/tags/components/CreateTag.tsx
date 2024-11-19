@@ -157,11 +157,11 @@ export const CreateTag: React.FC<ICreateTagProps> = ({ onCreated, clearTag, sele
           <button className="bg-bgBtn text-white font-medium px-4 py-2" type="submit">
             {selectedTag ? 'ATUALIZAR' : 'SALVAR'}
           </button>
-          <button className="bg-bgBtn text-white font-medium px-4 py-2" type="button" onClick={handleDelete}>
-            EXCLUIR
-          </button>
-          <button className="bg-bgBtn text-white font-medium px-4 py-2" type="button" onClick={handleClear}>
+          <button className="text-bgBtn border border-bgBtn font-medium px-4 py-2" type="button" onClick={handleClear}>
             LIMPAR
+          </button>
+          <button className="bg-red-500 text-white font-medium px-4 py-2" type="button" onClick={handleDelete}>
+            EXCLUIR
           </button>
         </div>
       </div>
