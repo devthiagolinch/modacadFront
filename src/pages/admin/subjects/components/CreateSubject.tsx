@@ -9,7 +9,7 @@ interface IFormCreateSubject extends Omit<ISubjectData, 'id'> {}
 
 const createSubjectSchema: yup.ObjectSchema<IFormCreateSubject> = yup.object({
   name: yup.string().required(),
-  priority: yup.number().required(),
+  sort: yup.number().required(),
 });
 
 interface ICreateTagProps {
@@ -20,7 +20,7 @@ interface ICreateTagProps {
 
 const initialSubject = {
   name: '',
-  priority: 0,
+  sort: 0,
 };
 
 type TMessage = { type: 'success' | 'danger'; text: string };
@@ -32,7 +32,6 @@ export const CreateSubject: React.FC<ICreateTagProps> = ({ onCreated, clearTag, 
 
   const onSubmit: SubmitHandler<IFormCreateSubject> = async (data) => {
     if (selectedSubject) {
-      console.log('editando');
       SubjectsService.updateById(selectedSubject.id, data).then((response) => {
         if (response instanceof Error) {
           console.error(response);
@@ -50,7 +49,6 @@ export const CreateSubject: React.FC<ICreateTagProps> = ({ onCreated, clearTag, 
         onCreated();
       });
     } else {
-      console.log('criando');
       SubjectsService.create(data).then((response) => {
         if (response instanceof Error) {
           console.error(response);
@@ -150,9 +148,9 @@ export const CreateSubject: React.FC<ICreateTagProps> = ({ onCreated, clearTag, 
           número posição na lista
         </label>
         <input
-          {...register('priority')}
+          {...register('sort')}
           type="text"
-          id="priority"
+          id="sort"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           required
         />

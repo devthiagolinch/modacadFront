@@ -3,7 +3,7 @@ import { api } from '../../services/axios';
 export interface ISubjectData {
   id: string;
   name: string;
-  priority: number;
+  sort: number;
 }
 
 const getAll = async (): Promise<ISubjectData[] | Error> => {
@@ -42,11 +42,9 @@ const deleteById = async (id: string): Promise<void | Error> => {
   }
 };
 
-const updateById = async (id: string, post: Omit<ISubjectData, 'id'>): Promise<ISubjectData | Error> => {
+const updateById = async (id: string, post: Omit<ISubjectData, 'id'>): Promise<void | Error> => {
   try {
-    const { data } = await api.patch<ISubjectData>(`/subjects/${id}`, post);
-    if (data) return data;
-    return new Error('Erro ao atualizar o registro');
+    await api.put<ISubjectData>(`/subjects/${id}`, post);
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido ao editar o registro';
     return new Error(errorMessage);
