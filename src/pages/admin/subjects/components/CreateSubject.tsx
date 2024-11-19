@@ -3,6 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { ISubjectData, SubjectsService } from '../../../../shared/api/subjects/SubjectsService';
+import { Alert } from '../../../../shared/components/ui/alert/Alert';
 
 interface IFormCreateSubject extends Omit<ISubjectData, 'id'> {}
 
@@ -13,33 +14,98 @@ const createSubjectSchema: yup.ObjectSchema<IFormCreateSubject> = yup.object({
 
 interface ICreateTagProps {
   onCreated: () => void;
+  clearTag: () => void;
+  selectedSubject: ISubjectData | null;
 }
 
-type TMessage = { type: 'success' | 'error'; text: string };
+const initialSubject = {
+  name: '',
+  priority: 0,
+};
 
-export const CreateSubject: React.FC<ICreateTagProps> = ({ onCreated }) => {
+type TMessage = { type: 'success' | 'danger'; text: string };
+
+export const CreateSubject: React.FC<ICreateTagProps> = ({ onCreated, clearTag, selectedSubject }) => {
   const [message, setMessage] = useState<TMessage>({ type: 'success', text: '' });
 
   const { handleSubmit, register, reset } = useForm<IFormCreateSubject>({ resolver: yupResolver(createSubjectSchema) });
 
   const onSubmit: SubmitHandler<IFormCreateSubject> = async (data) => {
-    try {
-      await SubjectsService.create(data);
-      onCreated();
-      reset();
-      setMessage({
-        type: 'success',
-        text: 'Tag criada com sucesso',
+    if (selectedSubject) {
+      console.log('editando');
+      SubjectsService.updateById(selectedSubject.id, data).then((response) => {
+        if (response instanceof Error) {
+          console.error(response);
+          setMessage({
+            type: 'danger',
+            text: 'Erro ao atualizar o assunto',
+          });
+          return;
+        }
+        setMessage({
+          type: 'success',
+          text: 'Assunto atualizado com sucesso',
+        });
+        reset(initialSubject);
+        onCreated();
       });
-    } catch (error) {
-      console.error(error);
-      setMessage({
-        type: 'error',
-        text: 'Erro ao criar a tag',
+    } else {
+      console.log('criando');
+      SubjectsService.create(data).then((response) => {
+        if (response instanceof Error) {
+          console.error(response);
+          setMessage({
+            type: 'danger',
+            text: 'Erro ao criar o assunto',
+          });
+          return;
+        }
+        setMessage({
+          type: 'success',
+          text: 'Assunto criado com sucesso',
+        });
+        reset(initialSubject);
+        onCreated();
       });
     }
   };
 
+  const handleClear = () => {
+    clearTag();
+    reset(initialSubject);
+  };
+
+  const handleDelete = () => {
+    if (selectedSubject) {
+      SubjectsService.deleteById(selectedSubject.id).then((response) => {
+        if (response instanceof Error) {
+          console.error(response);
+          setMessage({
+            type: 'danger',
+            text: 'Erro ao excluir o assunto',
+          });
+          return;
+        }
+        setMessage({
+          type: 'success',
+          text: 'Assunto excluída com sucesso',
+        });
+        clearTag();
+        onCreated();
+      });
+    }
+  };
+
+  // Atualiza o formulário com os dados da tag se estiver selecionada
+  useEffect(() => {
+    if (selectedSubject) {
+      reset(selectedSubject);
+    } else {
+      reset(initialSubject);
+    }
+  }, [selectedSubject, reset]);
+
+  // Exibir mensagem de sucesso ou erro
   useEffect(() => {
     if (message.text) {
       const timer = setTimeout(() => {
@@ -52,14 +118,21 @@ export const CreateSubject: React.FC<ICreateTagProps> = ({ onCreated }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="flex justify-between">
-        <button className="bg-bgBtn text-white font-medium px-4 py-2" type="submit">
-          CRIAR
-        </button>
+      <div className="flex justify-between flex-wrap gap-2">
+        <h1 className="text-3xl">Criar assunto</h1>
+        <div className="flex flex-wrap gap-2">
+          <button className="bg-bgBtn text-white font-medium px-4 py-2" type="submit">
+            {selectedSubject ? 'ATUALIZAR' : 'SALVAR'}
+          </button>
+          <button className="text-bgBtn border border-bgBtn font-medium px-4 py-2" type="button" onClick={handleClear}>
+            LIMPAR
+          </button>
+          <button className="bg-red-500 text-white font-medium px-4 py-2" type="button" onClick={handleDelete}>
+            EXCLUIR
+          </button>
+        </div>
       </div>
-      {message.text && (
-        <div className={`mt-4 ${message.type === 'success' ? 'text-green-600' : 'text-red-600'}`}>{message.text}</div>
-      )}
+      {message.text && <Alert color={message.type}>{message.text}</Alert>}
       <div className="mt-2">
         <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900">
           Assunto

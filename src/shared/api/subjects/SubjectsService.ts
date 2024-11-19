@@ -33,7 +33,29 @@ const create = async (post: Omit<ISubjectData, 'id'>): Promise<ISubjectData | Er
   }
 };
 
+const deleteById = async (id: string): Promise<void | Error> => {
+  try {
+    await api.delete(`/subjects/${id}`);
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido ao deletar o registro';
+    return new Error(errorMessage);
+  }
+};
+
+const updateById = async (id: string, post: Omit<ISubjectData, 'id'>): Promise<ISubjectData | Error> => {
+  try {
+    const { data } = await api.patch<ISubjectData>(`/subjects/${id}`, post);
+    if (data) return data;
+    return new Error('Erro ao atualizar o registro');
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido ao editar o registro';
+    return new Error(errorMessage);
+  }
+};
+
 export const SubjectsService = {
   getAll,
   create,
+  deleteById,
+  updateById,
 };

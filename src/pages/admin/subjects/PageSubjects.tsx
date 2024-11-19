@@ -6,7 +6,9 @@ import { ISubjectData, SubjectsService } from '../../../shared/api/subjects/Subj
 
 export const PageSubjects = () => {
   const [subjects, setSubjects] = useState<ISubjectData[]>([]);
+  const [selectedSubject, setSelectedSubject] = useState<ISubjectData | null>(null);
 
+  // Buscar assuntos
   const fetchSubjects = () => {
     SubjectsService.getAll().then((response) => {
       if (response instanceof Error) {
@@ -17,10 +19,13 @@ export const PageSubjects = () => {
     });
   };
 
+  // Atualizar a lista de assuntos ao criar um novo
   const onCreated = () => {
     fetchSubjects();
+    setSelectedSubject(null);
   };
 
+  // Solicitar assuntos ao carregar a página
   useEffect(() => {
     fetchSubjects();
   }, []);
@@ -28,8 +33,12 @@ export const PageSubjects = () => {
   return (
     <LayoutDashboard>
       <div className="grid gap-6 md:grid-cols-2 h-full">
-        <ListSubjects subjects={subjects} />
-        <CreateSubject onCreated={onCreated} />
+        <ListSubjects subjects={subjects} onSelectSubject={setSelectedSubject} />
+        <CreateSubject
+          onCreated={onCreated}
+          selectedSubject={selectedSubject}
+          clearTag={() => setSelectedSubject(null)}
+        />
       </div>
     </LayoutDashboard>
   );

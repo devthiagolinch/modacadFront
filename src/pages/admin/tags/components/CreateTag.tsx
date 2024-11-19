@@ -56,7 +56,7 @@ export const CreateTag: React.FC<ICreateTagProps> = ({ onCreated, clearTag, sele
           type: 'success',
           text: 'Tag atualizada com sucesso',
         });
-        reset();
+        reset(initialTag);
         setImageFacebook(null);
         onCreated();
       });
@@ -74,7 +74,7 @@ export const CreateTag: React.FC<ICreateTagProps> = ({ onCreated, clearTag, sele
           type: 'success',
           text: 'Tag criada com sucesso',
         });
-        reset();
+        reset(initialTag);
         setImageFacebook(null);
         onCreated();
       });
@@ -139,6 +139,7 @@ export const CreateTag: React.FC<ICreateTagProps> = ({ onCreated, clearTag, sele
     maxSize: 50 * 1024 * 1024,
   });
 
+  // Exibir mensagem de sucesso ou erro
   useEffect(() => {
     if (message.text) {
       const timer = setTimeout(() => {
