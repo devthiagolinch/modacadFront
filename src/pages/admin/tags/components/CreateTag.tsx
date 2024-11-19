@@ -151,7 +151,7 @@ export const CreateTag: React.FC<ICreateTagProps> = ({ onCreated, clearTag, sele
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="flex justify-between">
+      <div className="flex justify-between flex-wrap gap-2">
         <h1 className="text-3xl">Criar tag</h1>
         <div className="flex flex-wrap gap-2">
           <button className="bg-bgBtn text-white font-medium px-4 py-2" type="submit">
