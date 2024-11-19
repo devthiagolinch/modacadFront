@@ -29,7 +29,7 @@ export interface ITagData {
 
 const getAll = async () => {
   try {
-    const { data } = await api.get<ITagData[]>(`/tags`);
+    const { data } = await api.get<ITagData[]>('/tags');
 
     if (Array.isArray(data)) {
       return data;
@@ -44,7 +44,7 @@ const getAll = async () => {
 
 const create = async (body: Partial<ITagData>) => {
   try {
-    const { data } = await api.post<ITagData>(`/tags`, body);
+    const { data } = await api.post<ITagData>('/tags', body);
     if (data) return data;
     return new Error('Erro ao criar o registro');
   } catch (error) {
@@ -53,11 +53,9 @@ const create = async (body: Partial<ITagData>) => {
   }
 };
 
-const updateById = async (id: string, body: Partial<ITagData>) => {
+const updateById = async (id: string, body: Partial<ITagData>): Promise<void | Error> => {
   try {
-    const { data } = await api.put<ITagData>(`/tags/${id}`, body);
-    if (data) return data;
-    return new Error('Erro ao atualizar o registro');
+    await api.patch<ITagData>(`/tags/${id}`, body);
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido ao atualizar o registro';
     return new Error(errorMessage);

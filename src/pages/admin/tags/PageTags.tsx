@@ -26,14 +26,14 @@ export const PageTags = () => {
 
   // Atualizar a lista de tags ao criar uma nova
   const onCreated = () => {
-    fetchTags();
     setSelectedTag(null);
+    fetchTags();
   };
 
   return (
     <LayoutDashboard>
       <div className="grid gap-6 md:grid-cols-2 h-full">
-        <CreateTag onCreated={onCreated} selectedTag={selectedTag} />
+        <CreateTag onCreated={onCreated} selectedTag={selectedTag} clearTag={() => setSelectedTag(null)} />
         <ListTags tags={tags} onSelectTag={setSelectedTag} />
       </div>
     </LayoutDashboard>

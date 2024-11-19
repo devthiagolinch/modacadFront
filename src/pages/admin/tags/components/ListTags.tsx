@@ -39,11 +39,16 @@ export const ListTags: React.FC<IListTagsProps> = ({ tags, onSelectTag }) => {
         </div>
       </div>
       {/* Listagem de tags */}
-      <div className="flex-grow md:h-4 bg-white mt-4 border border-gray-300 rounded-lg font-montserrat font-medium italic overflow-y-auto overflow-x-hidden">
+      <div className="flex-grow md:h-4 bg-white mt-4 border border-gray-300 rounded-lg font-montserrat font-medium overflow-y-auto overflow-x-hidden">
         <ul>
-          {filteredTags.map((tag) => (
-            <li key={tag.id} className="border-b border-gray-300 p-4 last:border-0" onClick={() => onSelectTag(tag)}>
-              <span className="highlight-link">{tag.name}</span>
+          {filteredTags.map((tag, index) => (
+            <li
+              key={tag.id}
+              className="border-b border-gray-300 p-4 last:border-0 flex items-center gap-2"
+              onClick={() => onSelectTag(tag)}
+            >
+              <span className="text-gray-300">{index}</span>
+              <span className="italic highlight-link">{tag.name}</span>
             </li>
           ))}
         </ul>

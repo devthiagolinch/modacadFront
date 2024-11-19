@@ -20,47 +20,73 @@ const createTagSchema: yup.ObjectSchema<IFormCreateTag> = yup.object({
 
 interface ICreateTagProps {
   onCreated: () => void;
+  clearTag: () => void;
   selectedTag: ITagData | null;
 }
 
+const initialTag = {
+  name: '',
+  slug: '',
+  meta_description: '',
+  facebook_title: '',
+  facebook_description: '',
+};
+
 type TMessage = { type: 'success' | 'danger'; text: string };
 
-export const CreateTag: React.FC<ICreateTagProps> = ({ onCreated, selectedTag }) => {
+export const CreateTag: React.FC<ICreateTagProps> = ({ onCreated, clearTag, selectedTag }) => {
   const [imageFacebook, setImageFacebook] = useState<File | null>(null);
   const [message, setMessage] = useState<TMessage>({ type: 'success', text: '' });
 
   const { handleSubmit, register, reset } = useForm<IFormCreateTag>({ resolver: yupResolver(createTagSchema) });
 
   const onSubmit: SubmitHandler<IFormCreateTag> = async (data) => {
-    try {
-      if (selectedTag) {
-        await TagsService.updateById(selectedTag.id, data);
+    // Se houver tag selecionada, atualiza. Senão, cria uma nova
+    if (selectedTag) {
+      TagsService.updateById(selectedTag.id, data).then((response) => {
+        if (response instanceof Error) {
+          console.error(response);
+          setMessage({
+            type: 'danger',
+            text: 'Erro ao atualizar a tag',
+          });
+          return;
+        }
         setMessage({
           type: 'success',
           text: 'Tag atualizada com sucesso',
         });
-      } else {
-        await TagsService.create(data);
+        reset();
+        setImageFacebook(null);
+        onCreated();
+      });
+    } else {
+      TagsService.create(data).then((response) => {
+        if (response instanceof Error) {
+          console.error(response);
+          setMessage({
+            type: 'danger',
+            text: 'Erro ao criar a tag',
+          });
+          return;
+        }
         setMessage({
           type: 'success',
           text: 'Tag criada com sucesso',
         });
-      }
-      onCreated();
-      reset();
-      setImageFacebook(null);
-    } catch (error) {
-      console.error(error);
-      setMessage({
-        type: 'danger',
-        text: 'Erro ao criar a tag',
+        reset();
+        setImageFacebook(null);
+        onCreated();
       });
     }
   };
 
+  // Atualiza o formulário com os dados da tag se estiver selecionada
   useEffect(() => {
     if (selectedTag) {
       reset(selectedTag);
+    } else {
+      reset(initialTag);
     }
   }, [selectedTag, reset]);
 
@@ -77,6 +103,13 @@ export const CreateTag: React.FC<ICreateTagProps> = ({ onCreated, selectedTag })
     event.stopPropagation();
     setImageFacebook(null);
     // TO DO - Implementar remoção de imagem
+  };
+
+  // Limpar formulário
+  const handleClear = () => {
+    clearTag();
+    reset(initialTag);
+    setImageFacebook(null);
   };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -102,10 +135,8 @@ export const CreateTag: React.FC<ICreateTagProps> = ({ onCreated, selectedTag })
           <button className="bg-bgBtn text-white font-medium px-4 py-2" type="submit">
             {selectedTag ? 'ATUALIZAR' : 'SALVAR'}
           </button>
-          <button className="bg-bgBtn text-white font-medium px-4 py-2" type="submit">
-            EXCLUIR
-          </button>
-          <button className="bg-bgBtn text-white font-medium px-4 py-2" type="submit">
+          <button className="bg-bgBtn text-white font-medium px-4 py-2">EXCLUIR</button>
+          <button className="bg-bgBtn text-white font-medium px-4 py-2" type="button" onClick={handleClear}>
             LIMPAR
           </button>
         </div>
@@ -190,7 +221,6 @@ export const CreateTag: React.FC<ICreateTagProps> = ({ onCreated, selectedTag })
           type="text"
           id="title_facebook"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-          required
         />
       </div>
       <div className="mt-2">
@@ -202,7 +232,6 @@ export const CreateTag: React.FC<ICreateTagProps> = ({ onCreated, selectedTag })
           type="text"
           id="description_facebook"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-          required
         />
       </div>
     </form>
