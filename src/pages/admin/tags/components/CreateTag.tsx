@@ -112,6 +112,28 @@ export const CreateTag: React.FC<ICreateTagProps> = ({ onCreated, clearTag, sele
     setImageFacebook(null);
   };
 
+  // Exclui a tag
+  const handleDelete = () => {
+    if (selectedTag) {
+      TagsService.deleteById(selectedTag.id).then((response) => {
+        if (response instanceof Error) {
+          console.error(response);
+          setMessage({
+            type: 'danger',
+            text: 'Erro ao excluir a tag',
+          });
+          return;
+        }
+        setMessage({
+          type: 'success',
+          text: 'Tag excluída com sucesso',
+        });
+        clearTag();
+        onCreated();
+      });
+    }
+  };
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     maxSize: 50 * 1024 * 1024,
@@ -135,7 +157,9 @@ export const CreateTag: React.FC<ICreateTagProps> = ({ onCreated, clearTag, sele
           <button className="bg-bgBtn text-white font-medium px-4 py-2" type="submit">
             {selectedTag ? 'ATUALIZAR' : 'SALVAR'}
           </button>
-          <button className="bg-bgBtn text-white font-medium px-4 py-2">EXCLUIR</button>
+          <button className="bg-bgBtn text-white font-medium px-4 py-2" type="button" onClick={handleDelete}>
+            EXCLUIR
+          </button>
           <button className="bg-bgBtn text-white font-medium px-4 py-2" type="button" onClick={handleClear}>
             LIMPAR
           </button>

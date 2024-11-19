@@ -62,8 +62,18 @@ const updateById = async (id: string, body: Partial<ITagData>): Promise<void | E
   }
 };
 
+const deleteById = async (id: string): Promise<void | Error> => {
+  try {
+    await api.delete<ITagData>(`/tags/${id}`);
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido ao deletar o registro';
+    return new Error(errorMessage);
+  }
+};
+
 export const TagsService = {
   getAll,
   create,
   updateById,
+  deleteById,
 };
