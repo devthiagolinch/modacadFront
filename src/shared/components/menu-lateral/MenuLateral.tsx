@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import logo from '../../../assets/svg/icon_rounded_bg_red.svg';
 
 const primaryLinks = [
-  { name: 'posts', path: '/dashboard/posts' },
+  { name: 'posts', path: '/dashboard/texto' },
   { name: 'pílulas', path: '/dashboard/pilula' },
   { name: 'tags', path: '/admin/tags' },
   { name: 'assuntos', path: '/admin/assuntos' },
