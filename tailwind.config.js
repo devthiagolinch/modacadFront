@@ -19,6 +19,8 @@ export default {
       },
       colors: {
         primary: '#DBDF1D',
+        paper: '#F3ECE8',
+        bgBtn: '#128D8F',
       },
     },
   },

@@ -11,6 +11,9 @@ import { PopularPosts } from '../pages/posts/PopularPosts';
 import { PublishedPills } from '../pages/posts/PublishedPills';
 import { PillDetails } from '../pages/posts/PillDetails';
 import { PostDetails } from '../pages/posts/PostDetails';
+import { PageTags } from '../pages/admin/tags/PageTags';
+import { PageMembers } from '../pages/admin/members/PageMembers';
+import { PageSubjects } from '../pages/admin/subjects/PageSubjects';
 import { PostEditor } from '../pages/dashboard/post-editor/PostEditor';
 
 type TPrivateRouteProps = RouteProps & {
@@ -50,6 +53,9 @@ export const AppRoutes = () => {
 
       {/* Login Admin */}
       <Route path="/admin/login" element={<AdminLogin />} />
+      <Route path="/admin/tags" element={<PrivateRoute element={<PageTags />} />} />
+      <Route path="/admin/membros" element={<PrivateRoute element={<PageMembers />} />} />
+      <Route path="/admin/assuntos" element={<PrivateRoute element={<PageSubjects />} />} />
 
       {/* Página em Branco (Para teste ou outro propósito) */}
       <Route path="/blank" element={<BlankPage />} />

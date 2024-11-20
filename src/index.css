@@ -99,31 +99,31 @@
 }
 
 @layer components {
-  @layer components {
-    .highlight-link {
-      position: relative;
-      display: inline-block;
-      color: inherit;
-      text-decoration: none;
-      overflow: hidden;
-    }
+  .highlight-link {
+    position: relative;
+    display: inline-block;
+    color: inherit;
+    text-decoration: none;
+    overflow: hidden;
+    z-index: 1;
+    cursor: pointer;
+  }
 
-    .highlight-link::before {
-      content: '';
-      position: absolute;
-      bottom: 0.1em; /* Posição vertical para começar na metade da fonte */
-      left: 0;
-      width: 100%;
-      height: 50%; /* Metade da altura da fonte para efeito marca-texto */
-      background: linear-gradient(90deg, #dcdf1e, #dcdf1e);
-      transition: transform 0.4s ease;
-      transform-origin: left;
-      transform: scaleX(0);
-      z-index: -1; /* Coloca o efeito atrás do texto */
-    }
+  .highlight-link::before {
+    content: '';
+    position: absolute;
+    bottom: 0.1em; /* Posição vertical para começar na metade da fonte */
+    left: 0;
+    width: 100%;
+    height: 50%; /* Metade da altura da fonte para efeito marca-texto */
+    background: linear-gradient(90deg, #dcdf1e, #dcdf1e);
+    transition: transform 0.4s ease;
+    transform-origin: left;
+    transform: scaleX(0);
+    z-index: -1; /* Coloca o efeito atrás do texto */
+  }
 
-    .highlight-link:hover::before {
-      transform: scaleX(1);
-    }
+  .highlight-link:hover::before {
+    transform: scaleX(1);
   }
 }

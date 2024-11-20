@@ -2,18 +2,33 @@ import { api } from '../../../shared/services/axios';
 import { EUsersStatus, TUsersPlan, TUsersRole } from 'src/shared/services/userOptions';
 
 export interface IUserData {
+  avatar: string | null;
+  cellphone: string;
+  created_at: string;
+  email: string;
   id: string;
   role: string;
   name: string;
-  avatar: string | null;
 }
 
-const getAll = async (role?: TUsersRole, status?: EUsersStatus, plan?: TUsersPlan) => {
+type TGetAllResult = {
+  users: IUserData[];
+  totalPages: number;
+  totalItems: number;
+  currentPage: number;
+};
+type TGetAllParams = {
+  role?: TUsersRole;
+  status?: EUsersStatus;
+  plan?: TUsersPlan;
+  page?: number;
+};
+const getAll = async ({ role, status, plan, page }: TGetAllParams): Promise<TGetAllResult | Error> => {
   try {
-    const urlRelativa = `/admins/users?role=${role ?? ''}&status=${status ?? ''}&plan=${plan ?? ''}`;
-    const { data } = await api.get<IUserData[]>(urlRelativa);
+    const urlRelativa = `/admins/users?role=${role ?? ''}&status=${status ?? ''}&plan=${plan ?? ''}&page=${page ?? 1}`;
+    const { data } = await api.get<TGetAllResult>(urlRelativa);
 
-    if (data && Array.isArray(data)) {
+    if (data) {
       return data;
     }
 
