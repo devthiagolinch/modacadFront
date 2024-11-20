@@ -4,7 +4,7 @@ import logo from '../../../assets/svg/icon_rounded_bg_red.svg';
 
 const primaryLinks = [
   { name: 'posts', path: '/dashboard/posts' },
-  { name: 'pílulas', path: '/dashboard/pilulas' },
+  { name: 'pílulas', path: '/dashboard/pilula' },
   { name: 'tags', path: '/admin/tags' },
   { name: 'assuntos', path: '/admin/assuntos' },
   { name: 'footer', path: '/admin/footer', disabled: true },
