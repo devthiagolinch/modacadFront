@@ -17,12 +17,15 @@ export interface IPostData {
   visibility: TPostsVisibility;
   created_at: string;
   updated_at: string;
-  published_at: string | null;
+  published_at: Date | null;
   meta_id: number | null; // TODO: Verificar a tipagem
   admins: IUserData[];
+  editors: IUserData[],
+  curadors: IUserData[],
   tags: ITagData[];
   subjects: ISubjectData[];
   meta: IMetaData | null;
+  canonicalUrl: string;
 }
 
 export interface IPostDataRequest {
@@ -33,11 +36,14 @@ export interface IPostDataRequest {
   content: string;
   status: TPostsStatus;
   images: string | null;
+  published_at: Date | null;
   visibility: TPostsVisibility;
   admins: IUserData[];
+  editors: IUserData[],
+  curadors: IUserData[],
   tags: ITagData[];
   subjects: ISubjectData[];
-  og_image: string;
+  og_image: string | null;
   og_title: string;
   og_description: string;
   twitter_image: string;
@@ -50,6 +56,7 @@ export interface IPostDataRequest {
   feature_image_alt: string;
   feature_image_caption: string;
   email_only: string;
+  canonicalUrl: string;
 }
 
 interface IMetaData {

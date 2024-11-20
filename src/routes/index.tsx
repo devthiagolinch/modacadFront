@@ -11,10 +11,10 @@ import { PopularPosts } from '../pages/posts/PopularPosts';
 import { PublishedPills } from '../pages/posts/PublishedPills';
 import { PillDetails } from '../pages/posts/PillDetails';
 import { PostDetails } from '../pages/posts/PostDetails';
-import { PostEditor } from '../pages/dashboard/PostEditor';
 import { PageTags } from '../pages/admin/tags/PageTags';
 import { PageMembers } from '../pages/admin/members/PageMembers';
 import { PageSubjects } from '../pages/admin/subjects/PageSubjects';
+import { PostEditor } from '../pages/dashboard/post-editor/PostEditor';
 
 type TPrivateRouteProps = RouteProps & {
   element: React.ReactNode;
