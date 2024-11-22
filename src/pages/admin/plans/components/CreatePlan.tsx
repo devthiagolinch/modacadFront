@@ -1,11 +1,13 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Controller, SubmitHandler, useFieldArray, useForm } from 'react-hook-form';
 import { IPlanData, PlansService } from '../../../../shared/api/plans/PlansService';
 import * as yup from 'yup';
+import { Alert } from '../../../../shared/components/ui/alert/Alert';
 
 interface ICreatePlanProps {
   selectedPlan: IPlanData | null;
+  onCreated: () => void;
 }
 
 interface IPlanForm extends Omit<IPlanData, 'id'> {}
@@ -32,7 +34,11 @@ const createPlansSchema: yup.ObjectSchema<IPlanForm> = yup.object({
     .required('Vantagens são obrigatórias'),
 });
 
-export const CreatePlan: React.FC<ICreatePlanProps> = ({ selectedPlan }) => {
+type TMessage = { type: 'success' | 'danger'; text: string };
+
+export const CreatePlan: React.FC<ICreatePlanProps> = ({ selectedPlan, onCreated }) => {
+  const [message, setMessage] = useState<TMessage>({ type: 'success', text: '' });
+
   const {
     control,
     handleSubmit,
@@ -57,6 +63,17 @@ export const CreatePlan: React.FC<ICreatePlanProps> = ({ selectedPlan }) => {
     }
   }, [selectedPlan, reset]);
 
+  // Exibir mensagem de sucesso ou erro
+  useEffect(() => {
+    if (message.text) {
+      const timer = setTimeout(() => {
+        setMessage({ type: 'success', text: '' });
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
+
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'topics',
@@ -70,9 +87,18 @@ export const CreatePlan: React.FC<ICreatePlanProps> = ({ selectedPlan }) => {
       PlansService.updateById(selectedPlan.id, formattedData).then((response) => {
         if (response instanceof Error) {
           console.error(response);
+          setMessage({
+            type: 'danger',
+            text: 'Erro ao atualizar o plano',
+          });
           return;
         }
-        console.log(response);
+        setMessage({
+          type: 'success',
+          text: 'Plano atualizado com sucesso',
+        });
+        reset(initialPlanForm);
+        onCreated();
       });
     } else {
       PlansService.create(formattedData).then((response) => {
@@ -80,14 +106,20 @@ export const CreatePlan: React.FC<ICreatePlanProps> = ({ selectedPlan }) => {
           console.error(response);
           return;
         }
-        console.log(response);
+        setMessage({
+          type: 'success',
+          text: 'Plano criado com sucesso',
+        });
+        reset(initialPlanForm);
+        onCreated();
       });
     }
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
+      {message.text && <Alert color={message.type}>{message.text}</Alert>}
+      <div className="mt-2">
         <button className="bg-bgBtn text-white font-medium px-4 py-2" type="submit">
           {selectedPlan ? 'ATUALIZAR' : 'SALVAR'}
         </button>

@@ -13,7 +13,7 @@ export const PagePlans = () => {
     setSelectedPlan(plan || null);
   };
 
-  useEffect(() => {
+  const fetchPlans = () => {
     PlansService.getAll().then((response) => {
       if (response instanceof Error) {
         console.error(response);
@@ -21,6 +21,14 @@ export const PagePlans = () => {
       }
       setPlans(response);
     });
+  };
+
+  const onCreated = () => {
+    fetchPlans();
+  };
+
+  useEffect(() => {
+    fetchPlans();
   }, []);
 
   return (
@@ -60,7 +68,7 @@ export const PagePlans = () => {
       </div>
       <hr className="border-t border-[#414142] my-4" />
       {/* Formulário */}
-      <CreatePlan selectedPlan={selectedPlan} />
+      <CreatePlan selectedPlan={selectedPlan} onCreated={onCreated} />
     </LayoutDashboard>
   );
 };

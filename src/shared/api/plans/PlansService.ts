@@ -31,10 +31,9 @@ const getAll = async (): Promise<IPlanData[] | Error> => {
 };
 
 // /plan/create
-const create = async (plan: Omit<IPlanDataNotFormatted, 'id'>) => {
+const create = async (plan: Omit<IPlanDataNotFormatted, 'id'>): Promise<void | Error> => {
   try {
-    const { data } = await api.post('/plan/create', plan);
-    return data;
+    await api.post('/plan/create', plan);
   } catch (error) {
     console.error(error);
     return error as Error;
@@ -42,10 +41,9 @@ const create = async (plan: Omit<IPlanDataNotFormatted, 'id'>) => {
 };
 
 // /update/:id
-const updateById = async (id: string, plan: Omit<IPlanDataNotFormatted, 'id'>) => {
+const updateById = async (id: string, plan: Omit<IPlanDataNotFormatted, 'id'>): Promise<void | Error> => {
   try {
-    const { data } = await api.patch(`/plan/update/${id}`, plan);
-    return data;
+    await api.patch(`/plan/update/${id}`, plan);
   } catch (error) {
     console.error(error);
     return error as Error;
