@@ -1,11 +1,11 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import React, { useEffect } from 'react';
 import { Controller, SubmitHandler, useFieldArray, useForm } from 'react-hook-form';
-import { IPlanData } from '../../../../shared/api/plans/PlansService';
+import { IPlanData, PlansService } from '../../../../shared/api/plans/PlansService';
 import * as yup from 'yup';
 
 interface ICreatePlanProps {
-  selectedPlan: Omit<IPlanData, 'id'> | null;
+  selectedPlan: IPlanData | null;
 }
 
 interface IPlanForm extends Omit<IPlanData, 'id'> {}
@@ -63,7 +63,26 @@ export const CreatePlan: React.FC<ICreatePlanProps> = ({ selectedPlan }) => {
   });
 
   const onSubmit: SubmitHandler<IPlanForm> = (data) => {
-    console.log(data);
+    // Se houver plano selecionado é então para atualizar
+    const formattedData = { ...data, topics: data.topics.map((topic) => topic.value) };
+
+    if (selectedPlan) {
+      PlansService.updateById(selectedPlan.id, formattedData).then((response) => {
+        if (response instanceof Error) {
+          console.error(response);
+          return;
+        }
+        console.log(response);
+      });
+    } else {
+      PlansService.create(formattedData).then((response) => {
+        if (response instanceof Error) {
+          console.error(response);
+          return;
+        }
+        console.log(response);
+      });
+    }
   };
 
   return (

@@ -8,7 +8,7 @@ export const PagePlans = () => {
   const [selectedPlan, setSelectedPlan] = useState<IPlanData | null>(null);
   const [plans, setPlans] = useState<IPlanData[]>([]);
 
-  const handleSelectPlan = (id: number | null) => {
+  const handleSelectPlan = (id: string | null) => {
     const plan = plans.find((plan) => plan.id === id);
     setSelectedPlan(plan || null);
   };
@@ -30,7 +30,7 @@ export const PagePlans = () => {
         {plans.map((plan) => (
           <div
             key={plan.id}
-            className="border border-[#414142] p-4 hover:bg-primary cursor-pointer"
+            className="border border-[#414142] p-4 hover:bg-primary cursor-pointer min-h-[400px]"
             onClick={() => handleSelectPlan(plan.id)}
           >
             <h2 className="text-3xl text-center mb-4">{plan.title}</h2>
@@ -52,7 +52,7 @@ export const PagePlans = () => {
           </div>
         ))}
         <div
-          className="border border-[#414142] p-4 flex justify-center items-center hover:bg-primary cursor-pointer"
+          className="border border-[#414142] p-4 flex justify-center items-center hover:bg-primary cursor-pointer min-h-[400px]"
           onClick={() => handleSelectPlan(null)}
         >
           <p className="font-montserrat text-3xl">NOVO</p>

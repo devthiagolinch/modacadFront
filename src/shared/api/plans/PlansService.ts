@@ -1,7 +1,7 @@
 import { api } from '../../../shared/services/axios';
 
 export interface IPlanData {
-  id: number;
+  id: string;
   title: string;
   price: string;
   description: string;
@@ -9,7 +9,7 @@ export interface IPlanData {
 }
 
 export interface IPlanDataNotFormatted {
-  id: number;
+  id: string;
   price: string;
   title: string;
   topics: string[];
@@ -31,7 +31,7 @@ const getAll = async (): Promise<IPlanData[] | Error> => {
 };
 
 // /plan/create
-const create = async (plan: Omit<IPlanData, 'id'>) => {
+const create = async (plan: Omit<IPlanDataNotFormatted, 'id'>) => {
   try {
     const { data } = await api.post('/plan/create', plan);
     return data;
@@ -42,9 +42,9 @@ const create = async (plan: Omit<IPlanData, 'id'>) => {
 };
 
 // /update/:id
-const updateById = async (id: number, plan: Omit<IPlanData, 'id'>) => {
+const updateById = async (id: string, plan: Omit<IPlanDataNotFormatted, 'id'>) => {
   try {
-    const { data } = await api.put(`/update/${id}`, plan);
+    const { data } = await api.patch(`/plan/update/${id}`, plan);
     return data;
   } catch (error) {
     console.error(error);
@@ -53,7 +53,7 @@ const updateById = async (id: number, plan: Omit<IPlanData, 'id'>) => {
 };
 
 // /view/:id
-const getById = async (id: number) => {
+const getById = async (id: string) => {
   try {
     const { data } = await api.get<IPlanData>(`/view/${id}`);
     const planWithIds = {
