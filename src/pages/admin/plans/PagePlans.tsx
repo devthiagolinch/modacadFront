@@ -1,0 +1,75 @@
+import { MdCheckCircleOutline } from 'react-icons/md';
+import { LayoutDashboard } from '../../../shared/layouts';
+import { CreatePlan } from './components/CreatePlan';
+
+const plans = [
+  {
+    title: 'Plano Trimestral',
+    price: 8,
+    description: 'Escolha flexível',
+    advantages: [
+      'Todas as vantagens do plano básico',
+      'Acesso exclusivo aos textos premium',
+      'Chat exclusivo para membros',
+      'Acesso livre de anúncios',
+    ],
+  },
+  {
+    title: 'Premium Anual',
+    price: 5,
+    description: 'Acesso descomplicado',
+    advantages: [
+      'Todas as vantagens do plano básico',
+      'Acesso exclusivo aos textos premium',
+      'Chat exclusivo para membros',
+      'Acesso livre de anúncios',
+    ],
+  },
+  {
+    title: 'Básico',
+    price: 0,
+    description: 'Garanta estas vantagens',
+    advantages: [
+      'Todas as vantagens do plano básico',
+      'Acesso exclusivo aos textos premium',
+      'Chat exclusivo para membros',
+      'Acesso livre de anúncios',
+    ],
+  },
+];
+
+export const PagePlans = () => {
+  return (
+    <LayoutDashboard>
+      {/* Listagem de planos */}
+      <div className="grid grid-cols-4 gap-4 font-butler">
+        {plans.map((plan, index) => (
+          <div key={index} className="border border-[#414142] p-4">
+            <h2 className="text-3xl text-center mb-4">{plan.title}</h2>
+            <h3 className="text-6xl text-center mb-4">
+              <span className="text-3xl align-top">R$</span>
+              {plan.price}
+              <span className="text-3xl">/mês</span>
+            </h3>
+            <p className="text-center text-xl font-medium mb-4">{plan.description}</p>
+            <hr className="border-t border-[#414142] my-4" />
+            <ul>
+              {plan.advantages.map((advantage, index) => (
+                <li key={index} className="flex gap-2 items-center mb-4">
+                  <MdCheckCircleOutline className="size-8 shrink-0" />
+                  <p>{advantage}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+        <div className="border border-[#414142] p-4 flex justify-center items-center">
+          <p className="font-montserrat text-3xl">NOVO</p>
+        </div>
+      </div>
+      <hr className="border-t border-[#414142] my-4" />
+      {/* Formulário */}
+      <CreatePlan selectedPlan={plans[0]} />
+    </LayoutDashboard>
+  );
+};
