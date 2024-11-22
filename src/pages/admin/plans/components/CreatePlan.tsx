@@ -12,16 +12,16 @@ interface IPlanForm extends Omit<IPlanData, 'id'> {}
 
 const initialPlanForm: IPlanForm = {
   title: '',
-  price: 0,
+  price: '',
   description: '',
-  advantages: [],
+  topics: [],
 };
 
 const createPlansSchema: yup.ObjectSchema<IPlanForm> = yup.object({
   title: yup.string().required('Nome é obrigatório'),
-  price: yup.number().required('Preço é obrigatório').positive('Preço deve ser positivo'),
+  price: yup.string().required('Preço é obrigatório'),
   description: yup.string().required('Descrição é obrigatória'),
-  advantages: yup
+  topics: yup
     .array()
     .of(
       yup.object({
@@ -50,7 +50,7 @@ export const CreatePlan: React.FC<ICreatePlanProps> = ({ selectedPlan }) => {
         title: selectedPlan.title,
         price: selectedPlan.price,
         description: selectedPlan.description,
-        advantages: selectedPlan.advantages,
+        topics: selectedPlan.topics,
       });
     } else {
       reset(initialPlanForm);
@@ -59,7 +59,7 @@ export const CreatePlan: React.FC<ICreatePlanProps> = ({ selectedPlan }) => {
 
   const { fields, append, remove } = useFieldArray({
     control,
-    name: 'advantages',
+    name: 'topics',
   });
 
   const onSubmit: SubmitHandler<IPlanForm> = (data) => {
@@ -94,7 +94,7 @@ export const CreatePlan: React.FC<ICreatePlanProps> = ({ selectedPlan }) => {
               Preço
             </label>
             <input
-              type="number"
+              type="text"
               id="price"
               {...register('price')}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -123,7 +123,7 @@ export const CreatePlan: React.FC<ICreatePlanProps> = ({ selectedPlan }) => {
               <div key={field.id} className="flex items-center mb-2">
                 <Controller
                   control={control}
-                  name={`advantages.${index}.value`}
+                  name={`topics.${index}.value`}
                   render={({ field }) => (
                     <input
                       {...field}

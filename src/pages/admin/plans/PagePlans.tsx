@@ -1,55 +1,27 @@
 import { MdCheckCircleOutline } from 'react-icons/md';
 import { LayoutDashboard } from '../../../shared/layouts';
 import { CreatePlan } from './components/CreatePlan';
-import { useState } from 'react';
-import { IPlanData } from '../../../shared/api/plans/PlansService';
-
-const plans: IPlanData[] = [
-  {
-    id: 1,
-    title: 'Plano Trimestral',
-    price: 8,
-    description: 'Escolha flexível',
-    advantages: [
-      { id: 1, value: 'Todas as vantagens do plano básico' },
-      { id: 2, value: 'Acesso exclusivo aos textos premium' },
-      { id: 3, value: 'Chat exclusivo para membros' },
-      { id: 4, value: 'Acesso livre de anúncios' },
-    ],
-  },
-  {
-    id: 2,
-    title: 'Premium Anual',
-    price: 5,
-    description: 'Acesso descomplicado',
-    advantages: [
-      { id: 1, value: 'Todas as vantagens do plano básico' },
-      { id: 2, value: 'Acesso exclusivo aos textos premium' },
-      { id: 3, value: 'Chat exclusivo para membros' },
-      { id: 4, value: 'Acesso livre de anúncios' },
-    ],
-  },
-  {
-    id: 3,
-    title: 'Básico',
-    price: 0,
-    description: 'Garanta estas vantagens',
-    advantages: [
-      { id: 1, value: 'Todas as vantagens do plano básico' },
-      { id: 2, value: 'Acesso exclusivo aos textos premium' },
-      { id: 3, value: 'Chat exclusivo para membros' },
-      { id: 4, value: 'Acesso livre de anúncios' },
-    ],
-  },
-];
+import { useEffect, useState } from 'react';
+import { IPlanData, PlansService } from '../../../shared/api/plans/PlansService';
 
 export const PagePlans = () => {
   const [selectedPlan, setSelectedPlan] = useState<IPlanData | null>(null);
+  const [plans, setPlans] = useState<IPlanData[]>([]);
 
   const handleSelectPlan = (id: number | null) => {
     const plan = plans.find((plan) => plan.id === id);
     setSelectedPlan(plan || null);
   };
+
+  useEffect(() => {
+    PlansService.getAll().then((response) => {
+      if (response instanceof Error) {
+        console.error(response);
+        return;
+      }
+      setPlans(response);
+    });
+  }, []);
 
   return (
     <LayoutDashboard>
@@ -70,7 +42,7 @@ export const PagePlans = () => {
             <p className="text-center text-xl font-medium mb-4">{plan.description}</p>
             <hr className="border-t border-[#414142] my-4" />
             <ul>
-              {plan.advantages.map((advantage) => (
+              {plan.topics.map((advantage) => (
                 <li key={advantage.id} className="flex gap-2 items-center mb-4">
                   <MdCheckCircleOutline className="size-8 shrink-0" />
                   <p>{advantage.value}</p>
