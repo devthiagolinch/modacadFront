@@ -1,20 +1,23 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Controller, SubmitHandler, useFieldArray, useForm } from 'react-hook-form';
+import { IPlanData } from '../../../../shared/api/plans/PlansService';
 import * as yup from 'yup';
 
-interface IPlans {
-  title: string;
-  price: number;
-  description: string;
-  advantages: { id: number; value: string }[];
-}
-
 interface ICreatePlanProps {
-  selectedPlan: IPlans | null;
+  selectedPlan: Omit<IPlanData, 'id'> | null;
 }
 
-const createPlansSchema: yup.ObjectSchema<IPlans> = yup.object({
+interface IPlanForm extends Omit<IPlanData, 'id'> {}
+
+const initialPlanForm: IPlanForm = {
+  title: '',
+  price: 0,
+  description: '',
+  advantages: [],
+};
+
+const createPlansSchema: yup.ObjectSchema<IPlanForm> = yup.object({
   title: yup.string().required('Nome é obrigatório'),
   price: yup.number().required('Preço é obrigatório').positive('Preço deve ser positivo'),
   description: yup.string().required('Descrição é obrigatória'),
@@ -34,23 +37,32 @@ export const CreatePlan: React.FC<ICreatePlanProps> = ({ selectedPlan }) => {
     control,
     handleSubmit,
     register,
+    reset,
     formState: { errors },
-  } = useForm<IPlans>({
+  } = useForm<IPlanForm>({
     resolver: yupResolver(createPlansSchema),
-    defaultValues: {
-      title: selectedPlan?.title || '',
-      price: selectedPlan?.price || 0,
-      description: selectedPlan?.description || '',
-      advantages: selectedPlan?.advantages || [],
-    },
+    defaultValues: initialPlanForm,
   });
+
+  useEffect(() => {
+    if (selectedPlan) {
+      reset({
+        title: selectedPlan.title,
+        price: selectedPlan.price,
+        description: selectedPlan.description,
+        advantages: selectedPlan.advantages,
+      });
+    } else {
+      reset(initialPlanForm);
+    }
+  }, [selectedPlan, reset]);
 
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'advantages',
   });
 
-  const onSubmit: SubmitHandler<IPlans> = (data) => {
+  const onSubmit: SubmitHandler<IPlanForm> = (data) => {
     console.log(data);
   };
 
