@@ -8,10 +8,10 @@ const plans = [
     price: 8,
     description: 'Escolha flexível',
     advantages: [
-      'Todas as vantagens do plano básico',
-      'Acesso exclusivo aos textos premium',
-      'Chat exclusivo para membros',
-      'Acesso livre de anúncios',
+      { id: 1, value: 'Todas as vantagens do plano básico' },
+      { id: 2, value: 'Acesso exclusivo aos textos premium' },
+      { id: 3, value: 'Chat exclusivo para membros' },
+      { id: 4, value: 'Acesso livre de anúncios' },
     ],
   },
   {
@@ -19,10 +19,10 @@ const plans = [
     price: 5,
     description: 'Acesso descomplicado',
     advantages: [
-      'Todas as vantagens do plano básico',
-      'Acesso exclusivo aos textos premium',
-      'Chat exclusivo para membros',
-      'Acesso livre de anúncios',
+      { id: 1, value: 'Todas as vantagens do plano básico' },
+      { id: 2, value: 'Acesso exclusivo aos textos premium' },
+      { id: 3, value: 'Chat exclusivo para membros' },
+      { id: 4, value: 'Acesso livre de anúncios' },
     ],
   },
   {
@@ -30,10 +30,10 @@ const plans = [
     price: 0,
     description: 'Garanta estas vantagens',
     advantages: [
-      'Todas as vantagens do plano básico',
-      'Acesso exclusivo aos textos premium',
-      'Chat exclusivo para membros',
-      'Acesso livre de anúncios',
+      { id: 1, value: 'Todas as vantagens do plano básico' },
+      { id: 2, value: 'Acesso exclusivo aos textos premium' },
+      { id: 3, value: 'Chat exclusivo para membros' },
+      { id: 4, value: 'Acesso livre de anúncios' },
     ],
   },
 ];
@@ -54,10 +54,10 @@ export const PagePlans = () => {
             <p className="text-center text-xl font-medium mb-4">{plan.description}</p>
             <hr className="border-t border-[#414142] my-4" />
             <ul>
-              {plan.advantages.map((advantage, index) => (
-                <li key={index} className="flex gap-2 items-center mb-4">
+              {plan.advantages.map((advantage) => (
+                <li key={advantage.id} className="flex gap-2 items-center mb-4">
                   <MdCheckCircleOutline className="size-8 shrink-0" />
-                  <p>{advantage}</p>
+                  <p>{advantage.value}</p>
                 </li>
               ))}
             </ul>

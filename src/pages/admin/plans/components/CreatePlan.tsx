@@ -1,33 +1,61 @@
-import React, { useState } from 'react';
+import { yupResolver } from '@hookform/resolvers/yup';
+import React from 'react';
+import { Controller, SubmitHandler, useFieldArray, useForm } from 'react-hook-form';
+import * as yup from 'yup';
 
 interface IPlans {
   title: string;
   price: number;
   description: string;
-  advantages: string[];
+  advantages: { id: number; value: string }[];
 }
 
 interface ICreatePlanProps {
   selectedPlan: IPlans | null;
 }
 
+const createPlansSchema: yup.ObjectSchema<IPlans> = yup.object({
+  title: yup.string().required('Nome é obrigatório'),
+  price: yup.number().required('Preço é obrigatório').positive('Preço deve ser positivo'),
+  description: yup.string().required('Descrição é obrigatória'),
+  advantages: yup
+    .array()
+    .of(
+      yup.object({
+        id: yup.number().required(),
+        value: yup.string().required('Vantagem é obrigatória'),
+      })
+    )
+    .required('Vantagens são obrigatórias'),
+});
+
 export const CreatePlan: React.FC<ICreatePlanProps> = ({ selectedPlan }) => {
-  const [advantages, setAdvantages] = useState([{ id: Date.now(), value: '' }]);
+  const {
+    control,
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<IPlans>({
+    resolver: yupResolver(createPlansSchema),
+    defaultValues: {
+      title: selectedPlan?.title || '',
+      price: selectedPlan?.price || 0,
+      description: selectedPlan?.description || '',
+      advantages: selectedPlan?.advantages || [],
+    },
+  });
 
-  const handleAddAdvantage = () => {
-    setAdvantages([...advantages, { id: Date.now(), value: '' }]);
-  };
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'advantages',
+  });
 
-  const handleRemoveAdvantage = (id: number) => {
-    setAdvantages(advantages.filter((offer) => offer.id !== id));
-  };
-
-  const handleAdvantageChange = (id: number, value: string) => {
-    setAdvantages(advantages.map((offer) => (offer.id === id ? { ...offer, value } : offer)));
+  const onSubmit: SubmitHandler<IPlans> = (data) => {
+    console.log(data);
   };
 
   return (
-    <div>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div>
         <button className="bg-bgBtn text-white font-medium px-4 py-2" type="submit">
           {selectedPlan ? 'ATUALIZAR' : 'SALVAR'}
@@ -37,14 +65,16 @@ export const CreatePlan: React.FC<ICreatePlanProps> = ({ selectedPlan }) => {
         <div>
           {/* Nome */}
           <div className="mt-2">
-            <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900">
+            <label htmlFor="title" className="block mb-2 text-sm font-medium text-gray-900">
               Nome
             </label>
             <input
               type="text"
-              id="name"
+              id="title"
+              {...register('title')}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             />
+            {errors.title && <p className="text-red-500 text-sm">{errors.title.message}</p>}
           </div>
           {/* Preço */}
           <div className="mt-2">
@@ -52,10 +82,12 @@ export const CreatePlan: React.FC<ICreatePlanProps> = ({ selectedPlan }) => {
               Preço
             </label>
             <input
-              type="text"
+              type="number"
               id="price"
+              {...register('price')}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             />
+            {errors.price && <p className="text-red-500 text-sm">{errors.price.message}</p>}
           </div>
           {/* Descrição */}
           <div className="mt-2">
@@ -65,36 +97,43 @@ export const CreatePlan: React.FC<ICreatePlanProps> = ({ selectedPlan }) => {
             <input
               type="text"
               id="description"
+              {...register('description')}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             />
+            {errors.description && <p className="text-red-500 text-sm">{errors.description.message}</p>}
           </div>
-          {/* Ordem na tela (TO DO: Implementar) */}
         </div>
         <div>
           {/* Ofertas de valor */}
           <div className="mt-2">
-            <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900">
-              Ofertas de valor
-            </label>
-            {advantages.map((offer) => (
-              <div key={offer.id} className="flex items-center mb-2">
-                <input
-                  type="text"
-                  value={offer.value}
-                  onChange={(e) => handleAdvantageChange(offer.id, e.target.value)}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            <label className="block mb-2 text-sm font-medium text-gray-900">Ofertas de valor</label>
+            {fields.map((field, index) => (
+              <div key={field.id} className="flex items-center mb-2">
+                <Controller
+                  control={control}
+                  name={`advantages.${index}.value`}
+                  render={({ field }) => (
+                    <input
+                      {...field}
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    />
+                  )}
                 />
-                <button type="button" onClick={() => handleRemoveAdvantage(offer.id)} className="ml-2 text-red-500">
+                <button type="button" onClick={() => remove(index)} className="ml-2 text-red-500">
                   Excluir
                 </button>
               </div>
             ))}
-            <button type="button" onClick={handleAddAdvantage} className="mt-2 text-blue-500">
+            <button
+              type="button"
+              onClick={() => append({ id: fields.length + 1, value: '' })}
+              className="mt-2 text-blue-500"
+            >
               Adicionar
             </button>
           </div>
         </div>
       </div>
-    </div>
+    </form>
   );
 };
