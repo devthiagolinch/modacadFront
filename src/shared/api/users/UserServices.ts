@@ -15,6 +15,9 @@ type TGetAllResult = {
   users: IUserData[];
   totalPages: number;
   totalItems: number;
+  totalAssinantes: number;
+  totalMembros: number;
+  totalExAssinantes: number;
   currentPage: number;
 };
 type TGetAllParams = {

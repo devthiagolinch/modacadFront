@@ -8,6 +8,10 @@ export const PageMembers = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
+  const [totalMembros, setTotalMembros] = useState(0);
+  const [totalAssinantes, setTotalAssinantes] = useState(0);
+  const [totalExAssinantes, setTotalExAssinantes] = useState(0);
+
   const fetchMembers = async (page: number) => {
     UsersService.getAll({ page }).then((response) => {
       if (response instanceof Error) {
@@ -17,6 +21,10 @@ export const PageMembers = () => {
       setMembers(response.users);
       setCurrentPage(response.currentPage);
       setTotalPages(response.totalPages);
+
+      setTotalAssinantes(response.totalAssinantes);
+      setTotalMembros(response.totalMembros);
+      setTotalExAssinantes(response.totalExAssinantes);
     });
   };
 
@@ -51,15 +59,15 @@ export const PageMembers = () => {
             <tbody>
               <tr>
                 <td className="pr-2">membros</td>
-                <td className="bg-white text-center">0</td>
+                <td className="bg-white text-center">{totalMembros}</td>
               </tr>
               <tr>
                 <td className="pr-2">assinantes</td>
-                <td className="bg-white text-center">0</td>
+                <td className="bg-white text-center">{totalAssinantes}</td>
               </tr>
               <tr>
                 <td className="pr-2">ex assinantes</td>
-                <td className="bg-white text-center">0</td>
+                <td className="bg-white text-center">{totalExAssinantes}</td>
               </tr>
             </tbody>
           </table>
