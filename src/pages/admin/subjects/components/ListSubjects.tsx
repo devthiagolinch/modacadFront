@@ -15,7 +15,7 @@ export const ListSubjects: React.FC<IListSubjectsProps> = ({ subjects, onSelectS
           {subjects.map((subject) => (
             <li key={subject.id} className="border-b border-gray-300 p-4 last:border-0 flex gap-2">
               {subject.sort && <span className="text-gray-300">{subject.sort}</span>}
-              <p className="highlight-link" onClick={() => onSelectSubject(subject)}>
+              <p className="highlight-link font-semibold" onClick={() => onSelectSubject(subject)}>
                 {subject.name}
               </p>
             </li>

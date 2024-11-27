@@ -38,7 +38,7 @@ export const CreateTag: React.FC<ICreateTagProps> = ({ onCreated, clearTag, sele
   const [imageFacebook, setImageFacebook] = useState<File | null>(null);
   const [message, setMessage] = useState<TMessage>({ type: 'success', text: '' });
 
-  const { handleSubmit, register, reset } = useForm<IFormCreateTag>({ resolver: yupResolver(createTagSchema) });
+  const { handleSubmit, register, reset, watch } = useForm<IFormCreateTag>({ resolver: yupResolver(createTagSchema) });
 
   const onSubmit: SubmitHandler<IFormCreateTag> = async (data) => {
     // Se houver tag selecionada, atualiza. Senão, cria uma nova
@@ -192,16 +192,43 @@ export const CreateTag: React.FC<ICreateTagProps> = ({ onCreated, clearTag, sele
         />
       </div>
       <div className="mt-2">
-        <label className="block mb-2 text-sm font-medium text-gray-900">Meta descrição (até 500 caracteres)</label>
-        <input
+        <label className="block mb-2 text-sm font-medium text-gray-900">
+          Meta descrição (até 500 caracteres)
+          <span className="text-gray-500 ml-2">({watch('meta_description')?.length || 0}/500)</span>
+        </label>
+        <textarea
           {...register('meta_description')}
-          type="text"
           id="meta_description"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          rows={5}
           required
         />
       </div>
       <div className="my-4 border-t border-gray-300"></div>
+
+      <div className="mt-2">
+        <label htmlFor="title_facebook" className="block mb-2 text-sm font-medium text-gray-900">
+          Título Facebook
+        </label>
+        <input
+          {...register('facebook_title')}
+          type="text"
+          id="title_facebook"
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        />
+      </div>
+      <div className="mt-2">
+        <label htmlFor="description_facebook" className="block mb-2 text-sm font-medium text-gray-900">
+          Descrição Facebook (até 130 caracteres)
+          <span className="text-gray-500 ml-2">({watch('facebook_description')?.length || 0}/130)</span>
+        </label>
+        <textarea
+          {...register('facebook_description')}
+          id="description_facebook"
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          rows={4}
+        />
+      </div>
       <div className="mt-2">
         <label className="block mb-2 text-sm font-medium text-gray-900">Imagem Facebook</label>
         <div
@@ -236,28 +263,6 @@ export const CreateTag: React.FC<ICreateTagProps> = ({ onCreated, clearTag, sele
             </div>
           )}
         </div>
-      </div>
-      <div className="mt-2">
-        <label htmlFor="title_facebook" className="block mb-2 text-sm font-medium text-gray-900">
-          Título Facebook
-        </label>
-        <input
-          {...register('facebook_title')}
-          type="text"
-          id="title_facebook"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-        />
-      </div>
-      <div className="mt-2">
-        <label htmlFor="description_facebook" className="block mb-2 text-sm font-medium text-gray-900">
-          Descrição Facebook (até 500 caracteres)
-        </label>
-        <input
-          {...register('facebook_description')}
-          type="text"
-          id="description_facebook"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-        />
       </div>
     </form>
   );

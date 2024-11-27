@@ -80,7 +80,7 @@ export const PageMembers = () => {
               key={member.id}
               className="border-b border-gray-300 p-4 last:border-0 flex justify-between items-center"
             >
-              <p className="highlight-link">{member.email}</p>
+              <p className="highlight-link font-semibold">{member.email}</p>
               <p className={`rounded-full px-4 py-1 ${getRoleClass(member.role)}`}>{member.role}</p>
             </li>
           ))}

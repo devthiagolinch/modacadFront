@@ -100,7 +100,7 @@ export const Dashboard: React.FC = () => {
               <tbody>
                 {rows.map((row) => (
                   <tr key={row.id}>
-                    <td className="px-4 py-2 border-b">{row.title}</td>
+                    <td className="px-4 py-2 border-b font-semibold">{row.title}</td>
                     <td className="px-4 py-2 border-b">
                       <span
                         className={`px-2 py-1 rounded-full text-xs font-semibold ${statuses[row.status] ? statuses[row.status].bgColor : ''} ${statuses[row.status] ? statuses[row.status].textColor : ''}`}
