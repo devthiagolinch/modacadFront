@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 
 import { LayoutDashboard } from '../../shared/layouts/LayoutDashboard';
 import { IPostData, PostsService } from '../../shared/api/posts/PostsService';
 import { statuses, TPostsStatus, TPostsType, TPostsVisibility, visibilities } from '../../shared/services/postOptions';
 import { DropdownMenu } from '../../shared/components/ui/dropdown-menu/DropdownMenu';
+import { Link } from 'react-router-dom';
+import { FaPlusCircle } from 'react-icons/fa';
 
 export const Dashboard: React.FC = () => {
-  const navigate = useNavigate();
   const { type } = useParams<{ type: TPostsType }>();
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -65,10 +65,6 @@ export const Dashboard: React.FC = () => {
     updateOrderParam(key as 'asc' | 'desc');
   };
 
-  const handleDelete = (postId: string) => {
-    console.log(postId + ' deleted');
-  };
-
   const updateStatusParam = (status: TPostsStatus) => {
     const newSearchParams = new URLSearchParams(searchParams.toString());
     if (newSearchParams.get('status') === status) {
@@ -101,15 +97,38 @@ export const Dashboard: React.FC = () => {
     setSearchParams(newSearchParams);
   };
 
+  const handleClearFilters = () => {
+    const newSearchParams = new URLSearchParams(searchParams.toString());
+    newSearchParams.delete('status');
+    newSearchParams.delete('visibility');
+    newSearchParams.delete('order');
+    setSearchParams(newSearchParams);
+  };
+
   const currentPage = Number(searchParams.get('page')) || 1;
 
   return (
     <LayoutDashboard>
+      {/* Filtros */}
       <div className="flex gap-2 my-4">
         <DropdownMenu textButton="Status" items={statusesOptions} onSelect={handleStatusChange} />
         <DropdownMenu textButton="Ordenação" items={orderOptions} onSelect={handleOrderChange} />
         <DropdownMenu textButton="Visibilidade" items={visibilitiesOptions} onSelect={handleVisibilityChange} />
       </div>
+      {/* Título */}
+      <div className="my-4 border border-gray-200 p-4 bg-white flex gap-4">
+        <button className="bg-bgBtn py-4 px-2 text-1xl text-white flex gap-2 items-center">
+          NOVO
+          <FaPlusCircle />
+        </button>
+        <button
+          className="border border-bgBtn px-2 py-4 text-bgBtn hover:bg-bgBtn hover:text-white"
+          onClick={handleClearFilters}
+        >
+          Limpar filtros
+        </button>
+      </div>
+      {/* Tabela */}
       {loading ? (
         <div className="flex justify-center items-center">
           <div className="loader">Carregando...</div>
@@ -117,64 +136,25 @@ export const Dashboard: React.FC = () => {
       ) : (
         <>
           <table className="min-w-full bg-white border border-gray-200">
-            <thead>
-              <tr>
-                <th className="px-4 py-2 border-b">Título</th>
-                <th className="px-4 py-2 border-b">Status</th>
-                <th className="px-4 py-2 border-b">Ações</th>
-              </tr>
-            </thead>
             <tbody>
               {rows.map((row) => (
                 <tr key={row.id}>
-                  <td className="px-4 py-2 border-b font-semibold">{row.title}</td>
+                  <td className="px-4 py-4 w-full border-b font-semibold highlight-link">
+                    <Link to={`/posts/${row.id}/editar`}>{row.title}</Link>
+                  </td>
                   <td className="px-4 py-2 border-b">
                     <span
-                      className={`px-2 py-1 rounded-full text-xs font-semibold ${statuses[row.status] ? statuses[row.status].bgColor : ''} ${statuses[row.status] ? statuses[row.status].textColor : ''}`}
+                      className={`px-2 py-1 rounded-full font-semibold ${statuses[row.status] ? `${statuses[row.status].bgColor} ${statuses[row.status].textColor}` : ''}`}
                     >
                       {statuses[row.status] ? statuses[row.status].name : row.status}
                     </span>
                   </td>
                   <td className="px-4 py-2 border-b">
-                    <Menu as="div" className="relative inline-block text-left">
-                      <MenuButton className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                        Ações
-                      </MenuButton>
-                      <MenuItems className="z-50 origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-                        <div className="py-1">
-                          <MenuItem>
-                            {({ active }) => (
-                              <button
-                                onClick={() => navigate(`/posts/${row.id}/editar`)}
-                                className={`${active ? 'bg-gray-100' : ''} w-full text-left block px-4 py-2 text-sm text-gray-700`}
-                              >
-                                Editar
-                              </button>
-                            )}
-                          </MenuItem>
-                          <MenuItem>
-                            {({ active }) => (
-                              <button
-                                onClick={() => handleDelete(row.id)}
-                                className={`${active ? 'bg-gray-100' : ''} w-full text-left block px-4 py-2 text-sm text-gray-700`}
-                              >
-                                Excluir
-                              </button>
-                            )}
-                          </MenuItem>
-                          <MenuItem>
-                            {({ active }) => (
-                              <button
-                                onClick={() => navigate(`/posts/${row.id}`)}
-                                className={`${active ? 'bg-gray-100' : ''} w-full text-left block px-4 py-2 text-sm text-gray-700`}
-                              >
-                                Ver
-                              </button>
-                            )}
-                          </MenuItem>
-                        </div>
-                      </MenuItems>
-                    </Menu>
+                    <span
+                      className={`px-2 py-1 rounded-full font-semibold ${visibilities[row.visibility] ? `${visibilities[row.visibility].bgColor} ${visibilities[row.visibility].textColor}` : ''}`}
+                    >
+                      {visibilities[row.visibility] ? visibilities[row.visibility].name : row.visibility}
+                    </span>
                   </td>
                 </tr>
               ))}
