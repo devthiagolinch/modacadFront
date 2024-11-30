@@ -14,7 +14,7 @@ const secondaryLinks = [
   { name: 'membros', path: '/admin/membros' },
   { name: 'planos', path: '/admin/planos' },
   { name: 'autores', path: '/admin/autores', disabled: true },
-  { name: 'equipe', path: '/admin/equipes' },
+  { name: 'equipe', path: '/admin/equipe' },
   { name: 'chat', path: '/admin/chat', disabled: true },
   { name: 'live', path: '/admin/live', disabled: true },
   { name: 'reunião', path: '/admin/reuniao', disabled: true },
