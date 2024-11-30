@@ -42,10 +42,21 @@ const getAll = async ({ role, status, plan, page }: TGetAllParams): Promise<TGet
   }
 };
 
+type TGetStaffResponse = {
+  currentPage: number;
+  pageSize: number;
+  staffs: IUserData[];
+  totalAdministradores: number;
+  totalAutores: number;
+  totalColaboradores: number;
+  totalEditores: number;
+  totalPages: number;
+  totalStaff: number;
+};
 const getAllStaff = async () => {
   try {
-    const { data } = await api.get<IUserData[]>('/admins/staff');
-    if (data && Array.isArray(data)) {
+    const { data } = await api.get<TGetStaffResponse>('/admins/staff');
+    if (data && data.staffs) {
       return data;
     }
     return new Error('Erro ao listar os registros');
