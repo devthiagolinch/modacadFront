@@ -10,6 +10,8 @@ import { ITagData, TagsService } from '../../../../shared/api/tags/TagsService';
 import { ISubjectData, SubjectsService } from '../../../../shared/api/subjects/SubjectsService';
 import { TPostsType, TPostsVisibility, types, visibilities } from '../../../../shared/services/postOptions';
 import { IUserData, UsersService } from '../../../../shared/api/users/UserServices';
+import { FacebookPreview } from './snnipets/FaceSnnipetPreviewl';
+import GoogleSnnipet from './snnipets/GoogleSnnipetsPreview';
 import { useParams } from 'react-router-dom';
 
 interface CardDTO {
@@ -868,7 +870,7 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
       {/** CARD META DADOS GOOGLE */}
       <div className="col-span-4" style={{ display: isCardVisible ? 'block' : 'none' }}>
         {/* Informações da Postagem */}
-        <div className="bg-white shadow-md p-6">
+        <div className="bg-white shadow-md">
           <h1 className="text-2xl font-montserrat font-light mb-6">Meta Dados Google</h1>
 
           {/** Campo para URL da publicação */}
@@ -896,6 +898,8 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
             />
           </div>
 
+          <GoogleSnnipet title={post.meta_title} url={canonicalUrl} description={post.meta_description} publish_date={post.published_at} />
+
           <button
             className="px-4 py-2 border-[1px] font-montserrat font-light text-zinc-900 border-zinc-500 hover:bg-gradient-to-t 
                           from-[#dcdf1e] to-[#dcdf1e] bg-[length:90%_.90em] bg-no-repeat bg-[position:50%_75%] w-full"
@@ -909,18 +913,8 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
       {/** CARD META DADOS OG */}
       <div className="col-span-4" style={{ display: isCardFaceVisible ? 'block' : 'none' }}>
         {/* Informações da Postagem */}
-        <div className="bg-white shadow-md p-6">
+        <div className="bg-white shadow-md">
           <h1 className="text-2xl font-montserrat font-light mb-6">Meta Dados Face Instagram</h1>
-
-          <div className="mb-6 w-full bg-transparent justify-center align-middle">
-            {post.og_image && (
-              <img
-                src={post.og_image.toString()}
-                alt="Imagem do Face Instagram"
-                className="mt-4 object-cover w-screen h-64"
-              />
-            )}
-          </div>
 
           {/** Campo para URL da publicação */}
           <div className="mb-6">
@@ -946,6 +940,8 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
               className="border p-2 w-full font-montserrat font-light focus-visible:border-[#dcdf1e] focus:outline-none min-h-[190px]" // Define um número de linhas padrão
             />
           </div>
+
+          <FacebookPreview imageUrl={post.feature_image} url={canonicalUrl} title={post.og_title} description={post.og_description} />
 
           <button
             className="px-4 py-2 border-[1px] font-montserrat font-light text-zinc-900 border-zinc-500 hover:bg-gradient-to-t 
