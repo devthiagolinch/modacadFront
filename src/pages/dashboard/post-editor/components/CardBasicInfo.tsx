@@ -11,6 +11,7 @@ import { ISubjectData, SubjectsService } from '../../../../shared/api/subjects/S
 import { TPostsType, TPostsVisibility, types, visibilities } from '../../../../shared/services/postOptions';
 import { IUserData, UsersService } from '../../../../shared/api/users/UserServices';
 import { useParams } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 
 interface CardDTO {
   /*   title: string | '';
@@ -18,6 +19,10 @@ interface CardDTO {
   content: string | ''; */
   //isVisible: boolean; // Propriedade para controlar a visibilidade
   props: IPostDataRequest;
+}
+
+interface FormData {
+  meta_description: string;
 }
 
 const defaultPost: IPostDataRequest = {
@@ -56,6 +61,8 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
 
   const { postId } = useParams<{ postId: string }>();
   const [post, setPost] = useState<IPostDataRequest>(defaultPost);
+
+  const { register, watch } = useForm<FormData>();
 
   const [isCardVisible, setIsCardVisible] = useState(false);
   const [isCardFaceVisible, setIsCardFaceVisible] = useState(false);
@@ -353,7 +360,7 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
             <span className="text-sm text-zinc-500 font-light font-montserrat">blog.modacad.com.br/{canonicalUrl}</span>
           </div>
 
-          <div className="flex flex-col items-start space-y-2">
+          <div className="flex flex-col items-start space-y-2 mb-6">
             <label htmlFor="publish-date" className="text-sm font-medium text-gray-700">
               Data de Publicação
             </label>
@@ -369,7 +376,10 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
 
           {/* Campo para descrição */}
           <div className="mb-6">
-            <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2">Descrição</label>
+            <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2">
+              Descrição
+              <span className="font-montserrat font-medium text-zinc-400">({post.description?.length || 0}/300)</span>
+            </label>
             <textarea
               name="description"
               value={post.description || ''}
@@ -873,25 +883,31 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
 
           {/** Campo para URL da publicação */}
           <div className="mb-6">
-            <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2"> Meta Title </label>
+            <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2"> Meta Title <span className="font-montserrat font-medium text-zinc-400">({post.meta_title?.length || 0}/60)</span> </label>
             <input
               type="text"
               name="meta_title"
               value={post?.meta_title}
               onChange={handleInputChange}
+              maxLength={60}
               className=" border p-2 w-full font-montserrat font-light focus-visible:border-[#dcdf1e] focus:outline-none"
             />
           </div>
 
           {/* Campo para descrição */}
           <div className="mb-6">
-            <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2">Meta descrição</label>
+            <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2">
+              Meta descrição 
+              <span className="font-montserrat font-medium text-zinc-400">({post.meta_description?.length || 0}/145)</span>
+            </label>
             <textarea
+              {...register('meta_description')}
+              id='meta_description'
               name="meta_description"
-              value={post.meta_description || ''}
+              value={post.meta_description}
               onChange={handleInputChange}
-              placeholder="Resumo de 300 caracteres"
-              maxLength={300}
+              placeholder="Resumo de 145 caracteres"
+              maxLength={145}
               className="border p-2 w-full font-montserrat font-light focus-visible:border-[#dcdf1e] focus:outline-none min-h-[190px]" // Define um número de linhas padrão
             />
           </div>
@@ -912,37 +928,31 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
         <div className="bg-white shadow-md p-6">
           <h1 className="text-2xl font-montserrat font-light mb-6">Meta Dados Face Instagram</h1>
 
-          <div className="mb-6 w-full bg-transparent justify-center align-middle">
-            {post.og_image && (
-              <img
-                src={post.og_image.toString()}
-                alt="Imagem do Face Instagram"
-                className="mt-4 object-cover w-screen h-64"
-              />
-            )}
-          </div>
-
           {/** Campo para URL da publicação */}
           <div className="mb-6">
-            <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2"> Meta Title </label>
+            <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2"> Meta Title <span className="font-montserrat font-medium text-zinc-400">({post.og_title?.length || 0}/60)</span> </label>
             <input
               type="text"
               name="og_title"
               value={post?.og_title}
               onChange={handleInputChange}
               className=" border p-2 w-full font-montserrat font-light focus-visible:border-[#dcdf1e] focus:outline-none"
+              maxLength={60}
             />
           </div>
 
           {/* Campo para descrição */}
           <div className="mb-6">
-            <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2">Meta descrição</label>
+            <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2">
+              Meta descrição
+              <span className="font-montserrat font-medium text-zinc-400">({post.og_description?.length || 0}/120)</span>
+            </label>
             <textarea
               name="og_description"
               value={post.og_description || ''}
               onChange={handleInputChange}
-              placeholder="Resumo de 300 caracteres"
-              maxLength={300}
+              placeholder="Resumo de 120 caracteres"
+              maxLength={120}
               className="border p-2 w-full font-montserrat font-light focus-visible:border-[#dcdf1e] focus:outline-none min-h-[190px]" // Define um número de linhas padrão
             />
           </div>

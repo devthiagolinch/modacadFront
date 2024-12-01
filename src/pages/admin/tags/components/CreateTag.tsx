@@ -201,6 +201,7 @@ export const CreateTag: React.FC<ICreateTagProps> = ({ onCreated, clearTag, sele
           id="meta_description"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           rows={5}
+          maxLength={500}
           required
         />
       </div>
@@ -219,14 +220,15 @@ export const CreateTag: React.FC<ICreateTagProps> = ({ onCreated, clearTag, sele
       </div>
       <div className="mt-2">
         <label htmlFor="description_facebook" className="block mb-2 text-sm font-medium text-gray-900">
-          Descrição Facebook (até 130 caracteres)
-          <span className="text-gray-500 ml-2">({watch('facebook_description')?.length || 0}/130)</span>
+          Descrição Facebook (até 65 caracteres)
+          <span className="text-gray-500 ml-2">({watch('facebook_description')?.length || 0}/65)</span>
         </label>
         <textarea
           {...register('facebook_description')}
           id="description_facebook"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           rows={4}
+          maxLength={65}
         />
       </div>
       <div className="mt-2">
