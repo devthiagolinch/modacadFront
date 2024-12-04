@@ -66,7 +66,17 @@ const getAllStaff = async () => {
   }
 };
 
+const inviteMember = async (email: string, role: string): Promise<void | Error> => {
+  try {
+    await api.post('/admins/staff', { email, role });
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido ao convidar membro';
+    return new Error(errorMessage);
+  }
+};
+
 export const UsersService = {
   getAll,
   getAllStaff,
+  inviteMember,
 };
