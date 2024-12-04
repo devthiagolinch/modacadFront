@@ -10,6 +10,7 @@ import { ITagData, TagsService } from '../../../../shared/api/tags/TagsService';
 import { ISubjectData, SubjectsService } from '../../../../shared/api/subjects/SubjectsService';
 import { TPostsType, TPostsVisibility, types, visibilities } from '../../../../shared/services/postOptions';
 import { IUserData, UsersService } from '../../../../shared/api/users/UserServices';
+import { CreateTag } from '../../../admin/tags/components/CreateTag';
 import { useForm } from 'react-hook-form';
 import { FacebookPreview } from './snnipets/FaceSnnipetPreviewl';
 import GoogleSnnipet from './snnipets/GoogleSnnipetsPreview';
@@ -70,20 +71,31 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
   const [isCardVisible, setIsCardVisible] = useState(false);
   const [isCardFaceVisible, setIsCardFaceVisible] = useState(false);
   const [isCardBasicVisible, setCardBasicVisible] = useState(true);
+  const [isCardTagVisibe, setCardTagVisibe] = useState(false);
 
   const [tagsOptions, setTagsOptions] = useState<ITagData[]>([]);
+  const [_tags, setTags] = useState<ITagData[]>([]);
+  const [selectedTag, setSelectedTag] = useState<ITagData | null>(null);
+
   const [subjectsOptions, setSubjectsOptions] = useState<ISubjectData[]>([]);
 
   const [usersOptions, setUsersOptions] = useState<IUserData[]>([]);
 
   const toggleCardVisibility = () => {
-    setIsCardVisible((prev) => !prev); // Alterna a visibilidade do CardBasicInfo
+    setIsCardVisible((prev) => !prev);
     setCardBasicVisible((prev) => !prev);
     window.scrollTo(0, 0);
   };
 
   const toggleCardFaceVisibility = () => {
-    setIsCardFaceVisible((prev) => !prev); // Alterna a visibilidade do CardBasicInfo
+    setIsCardFaceVisible((prev) => !prev);
+    setCardBasicVisible((prev) => !prev);
+    window.scrollTo(0, 0);
+  };
+
+  const toggleCardTagVisibility = () => {
+    fetchTags();
+    setCardTagVisibe((prev) => !prev);
     setCardBasicVisible((prev) => !prev);
     window.scrollTo(0, 0);
   };
@@ -148,7 +160,7 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
         console.error(response.message);
       } else {
         setTagsOptions(response);
-        setFilteredTags(response.slice(0, 5));
+        setFilteredTags(response.slice(0, 30));
       }
     });
 
@@ -159,7 +171,7 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
       }
       setUsersOptions(response);
     });
-  }, []);
+  }, [setSelectedTag]);
 
   // Canonical URL
   let canonicalUrl;
@@ -172,19 +184,6 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
   const handleUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setPost((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleChangeTags = (newTag: ITagData) => {
-    setPost((prevPost) => {
-      let updatedTags: ITagData[] = [];
-      updatedTags = [...prevPost.tags];
-
-      const isSelected = updatedTags.includes(newTag);
-      isSelected ? (updatedTags = updatedTags.filter((tag) => tag !== newTag)) : updatedTags.push(newTag);
-
-      return { ...prevPost, tags: updatedTags };
-    });
-    setSearchTerm('');
   };
 
   const handleDateChange = (value: Date | null | { startDate: Date | null; endDate: Date | null }) => {
@@ -211,6 +210,40 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
   };
 
   // Tags
+  const fetchTags = () => {
+    TagsService.getAll().then((response) => {
+      if (response instanceof Error) {
+        console.error(response);
+        return;
+      }
+      setTags(response); // Atualiza a lista global de tags
+
+      // Atualiza as tags associadas ao post
+      setPost((prevPost) => ({
+        ...prevPost,
+        tags: response.filter((tag) => prevPost.tags.some((postTag) => postTag.id === tag.id)),
+      }));
+    });
+  };
+
+  // Função chamada após a atualização da tag
+  const onUpdateTag = () => {
+    setSelectedTag(null); // Reseta a tag selecionada
+  };
+
+  const handleChangeTags = (newTag: ITagData) => {
+    setPost((prevPost) => {
+      let updatedTags: ITagData[] = [];
+      updatedTags = [...prevPost.tags];
+
+      const isSelected = updatedTags.includes(newTag);
+      isSelected ? (updatedTags = updatedTags.filter((tag) => tag !== newTag)) : updatedTags.push(newTag);
+
+      return { ...prevPost, tags: updatedTags };
+    });
+    setSearchTerm('');
+  };
+
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredTags, setFilteredTags] = useState<ITagData[]>(tagsOptions);
 
@@ -220,7 +253,7 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
     setFilteredTags(
       tagsOptions
         .filter((tag) => tag.name.toLowerCase().includes(value) || tag.slug.toLowerCase().includes(value))
-        .slice(0, 5)
+        .slice(0, 30)
     );
   };
 
@@ -405,13 +438,17 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
               <div className="mt-2 flex flex-wrap">
                 {post.tags.map((tag, index) => (
                   <span
-                    onClick={() => handleChangeTags(tag)}
+                    onClick={() => {
+                      setSelectedTag(tag);
+                    }}
+                    onDoubleClick={toggleCardTagVisibility}
                     key={index}
-                    className="inline-block bg-[#dcdf1e] text-black font-light font-montserrat px-3 py-1 mr-2 mb-2 cursor-pointer text-xs flex items-center"
+                    className="inline-block bg-[#dcdf1e] text-black font-light font-montserrat px-3 py-1 mr-2 mb-2 cursor-pointer text-xs break-all flex items-center"
                   >
                     {tag.name}
                     <svg
-                      className="ml-2 w-3 h-3"
+                      onClick={() => handleChangeTags(tag)}
+                      className="ml-2 min-w-4 h-4"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -430,11 +467,7 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
             )}
             <Menu as="div" className="relative inline-block text-left w-full">
               <MenuButton className="inline-flex justify-between w-full border shadow-sm px-4 py-2 text-sm font-light font-montserrat bg-white">
-                {post.tags.length > 0
-                  ? post.tags.length > 1
-                    ? `${post.tags[0].name} + ${post.tags.length - 1}`
-                    : post.tags[0].name
-                  : 'Selecione as tags'}
+                Pesquisar Tags
               </MenuButton>
               <MenuItems
                 className="absolute mt-2 w-full shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50"
@@ -453,33 +486,63 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
                       placeholder="Pesquise tags"
                     />
                   </div>
-                  {filteredTags.length > 0 ? (
-                    filteredTags.map((tag) => (
-                      <MenuItem key={tag.id}>
-                        {({ active }) => (
-                          <button
-                            className={`${active ? 'bg-gray-100' : ''} block px-4 py-2 text-sm w-full text-left flex items-center`}
-                            onClick={() => handleChangeTags(tag)}
-                          >
-                            {post.tags.some((selectedTag) => selectedTag.id === tag.id) && (
-                              <svg
-                                className="w-4 h-4 mr-2 text-blue-500"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
-                              </svg>
-                            )}
-                            {tag.name}
-                          </button>
-                        )}
-                      </MenuItem>
-                    ))
-                  ) : (
-                    <div className="px-4 py-2 text-sm text-gray-500">Nenhum item encontrado</div>
-                  )}
+                  {filteredTags.length > 0
+                    ? filteredTags.map((tag) => (
+                        <MenuItem key={tag.id}>
+                          {({ active }) => (
+                            <button
+                              className={`${active ? 'bg-gray-100' : ''} block px-4 py-2 text-sm w-full text-left flex items-center`}
+                              onClick={() => handleChangeTags(tag)}
+                            >
+                              {post.tags.some((selectedTag) => selectedTag.id === tag.id) && (
+                                <svg
+                                  className="w-4 h-4 mr-2 text-blue-500"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  viewBox="0 0 24 24"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M5 13l4 4L19 7"
+                                  />
+                                </svg>
+                              )}
+                              {tag.name}
+                            </button>
+                          )}
+                        </MenuItem>
+                      ))
+                    : filteredTags.map((tag) => (
+                        <MenuItem key={tag.id}>
+                          {({ active }) => (
+                            <button
+                              className={`${active ? 'bg-gray-100' : ''} block px-4 py-2 text-sm w-full text-left flex items-center`}
+                              onClick={() => handleChangeTags(tag)}
+                            >
+                              {post.tags.some((selectedTag) => selectedTag.id === tag.id) && (
+                                <svg
+                                  className="w-4 h-4 mr-2 text-blue-500"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  viewBox="0 0 24 24"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M5 13l4 4L19 7"
+                                  />
+                                </svg>
+                              )}
+                              {tag.name}
+                            </button>
+                          )}
+                        </MenuItem>
+                      ))}
                 </div>
               </MenuItems>
             </Menu>
@@ -492,13 +555,13 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
               <div className="mt-2 flex flex-wrap">
                 {post.subjects.map((subject, index) => (
                   <span
-                    onClick={() => handleSubjectSelect(subject)}
                     key={index}
                     className="inline-block bg-[#dcdf1e] text-black font-montserrat font-light px-3 py-1 mr-2 mb-2 cursor-pointer text-xs flex items-center"
                   >
                     {subject.name}
                     <svg
-                      className="ml-2 w-3 h-3"
+                      onClick={() => handleSubjectSelect(subject)}
+                      className="ml-2 min-w-4 h-4"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -517,11 +580,7 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
             )}
             <Menu as="div" className="relative inline-block text-left w-full">
               <MenuButton className="inline-flex justify-between w-full border shadow-sm px-4 py-2 text-sm font-montserrat font-light bg-white">
-                {post.subjects.length > 0
-                  ? post.subjects.length > 1
-                    ? `${post.subjects[0].name} + ${post.subjects.length - 1}`
-                    : post.subjects[0].name
-                  : 'Selecione os assuntos'}
+                Selecionar Assuntos
               </MenuButton>
               <MenuItems
                 className="absolute mt-2 w-full shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50"
@@ -667,7 +726,6 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
                         {({ active }) => (
                           <button
                             className={`${active ? 'bg-gray-100' : ''} block px-4 py-2 text-sm w-full text-left flex items-center`}
-                            onClick={() => handleUserSelect(user)}
                           >
                             <img src={user.avatar ?? ''} alt={user.name} className="w-6 h-6 mr-2 rounded-full" />
                             {user.name}
@@ -678,6 +736,7 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"
                                 xmlns="http://www.w3.org/2000/svg"
+                                onClick={() => handleUserSelect(user)}
                               >
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                               </svg>
@@ -1014,6 +1073,18 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
             Prontinho
           </button>
         </div>
+      </div>
+
+      <div style={{ display: isCardTagVisibe ? 'block' : 'none' }}>
+        <CreateTag onCreated={onUpdateTag} selectedTag={selectedTag} clearTag={() => setSelectedTag(null)} />
+
+        <button
+          className="px-4 py-2 border-[1px] font-montserrat font-light text-zinc-900 border-zinc-500 hover:bg-gradient-to-t 
+                      from-[#dcdf1e] to-[#dcdf1e] bg-[length:90%_.90em] bg-no-repeat bg-[position:50%_75%] w-full"
+          onClick={toggleCardTagVisibility}
+        >
+          Prontinho
+        </button>
       </div>
 
       {notification && <div className="notification">{notification}</div>}
