@@ -2,7 +2,7 @@ import Datepicker from 'react-tailwindcss-datepicker';
 
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 
-import { FaRegSave } from 'react-icons/fa';
+import { FaRegSave, FaRegTrashAlt } from 'react-icons/fa';
 import { FaEye } from 'react-icons/fa';
 import { IPostDataRequest, PostsService } from '../../../../shared/api/posts/PostsService';
 import { useEffect, useState } from 'react';
@@ -12,7 +12,7 @@ import { TPostsType, TPostsVisibility, types, visibilities } from '../../../../s
 import { IUserData, UsersService } from '../../../../shared/api/users/UserServices';
 import { FacebookPreview } from './snnipets/FaceSnnipetPreviewl';
 import GoogleSnnipet from './snnipets/GoogleSnnipetsPreview';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 interface CardDTO {
   /*   title: string | '';
@@ -54,6 +54,7 @@ const defaultPost: IPostDataRequest = {
 };
 
 export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
+  const navigate = useNavigate();
   const [notification, setNotification] = useState('');
 
   const { postId } = useParams<{ postId: string }>();
@@ -195,6 +196,11 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
       ...prevPost,
       published_at: selectedDate,
     }));
+  };
+
+  const handleDeletePost = () => {
+    postId ? PostsService.deletePost(postId) : console.log('nao existe post para ser deletado');
+    navigate('/dashboard/pilula');
   };
 
   // Tags
@@ -837,11 +843,14 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
           </div>
 
           <div>
-            <button className="w-full border border-zinc-400 mb-5 h-10" onClick={toggleCardVisibility}>
+            <button className="w-full border border-zinc-400 mb-5 h-10 highlight-link" onClick={toggleCardVisibility}>
               MetaDados Google
             </button>
 
-            <button className="w-full border border-zinc-400 mb-5 h-10" onClick={toggleCardFaceVisibility}>
+            <button
+              className="w-full border border-zinc-400 mb-5 h-10 highlight-link"
+              onClick={toggleCardFaceVisibility}
+            >
               MetaDados OG
             </button>
           </div>
@@ -862,6 +871,16 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
               onClick={handleSubmit}
             >
               {post.status === 'published' ? 'Despublicar' : 'Publicar'}
+            </button>
+          </div>
+
+          <div>
+            <button
+              className="border border-red-900 w-full h-12 text-red-800 flex justify-center items-center gap-2"
+              onClick={handleDeletePost}
+            >
+              <FaRegTrashAlt size={22} />
+              EXCLUIR POST
             </button>
           </div>
         </div>
@@ -898,7 +917,12 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
             />
           </div>
 
-          <GoogleSnnipet title={post.meta_title} url={canonicalUrl} description={post.meta_description} publish_date={post.published_at} />
+          <GoogleSnnipet
+            title={post.meta_title}
+            url={canonicalUrl}
+            description={post.meta_description}
+            publish_date={post.published_at}
+          />
 
           <button
             className="px-4 py-2 border-[1px] font-montserrat font-light text-zinc-900 border-zinc-500 hover:bg-gradient-to-t 
@@ -941,7 +965,12 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
             />
           </div>
 
-          <FacebookPreview imageUrl={post.feature_image} url={canonicalUrl} title={post.og_title} description={post.og_description} />
+          <FacebookPreview
+            imageUrl={post.feature_image}
+            url={canonicalUrl}
+            title={post.og_title}
+            description={post.og_description}
+          />
 
           <button
             className="px-4 py-2 border-[1px] font-montserrat font-light text-zinc-900 border-zinc-500 hover:bg-gradient-to-t 
