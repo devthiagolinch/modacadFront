@@ -65,7 +65,7 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
   const [isCardTagVisibe, setCardTagVisibe] = useState(false);
 
   const [tagsOptions, setTagsOptions] = useState<ITagData[]>([]);
-  const [tags, setTags] = useState<ITagData[]>([]);
+  const [_tags, setTags] = useState<ITagData[]>([]);
   const [selectedTag, setSelectedTag] = useState<ITagData | null>(null);
 
   const [subjectsOptions, setSubjectsOptions] = useState<ISubjectData[]>([]);
