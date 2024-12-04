@@ -10,7 +10,7 @@ export function PublishedPills() {
   const [posts, setPosts] = useState<IPostData[]>([]);
 
   useEffect(() => {
-    PostsService.getAll('pilula').then((response) => {
+    PostsService.getAll({ type: 'pilula', status: 'published' }).then((response) => {
       if (response instanceof Error) {
         console.error(response.message);
         return;

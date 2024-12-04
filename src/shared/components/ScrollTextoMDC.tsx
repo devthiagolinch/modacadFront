@@ -22,7 +22,7 @@ export const ScrollTextoMCD: React.FC<TextScrollInterface> = ({ title }) => {
   const [posts, setPosts] = useState<IPostData[]>([]);
 
   useEffect(() => {
-    PostsService.getAll('texto').then((response) => {
+    PostsService.getAll({ type: 'texto', status: 'published' }).then((response) => {
       if (response instanceof Error) {
         console.error(response.message);
         return;

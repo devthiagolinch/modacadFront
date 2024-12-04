@@ -725,6 +725,7 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
                       <MenuItem key={user.id}>
                         {({ active }) => (
                           <button
+                            onClick={() => handleUserSelect(user)}
                             className={`${active ? 'bg-gray-100' : ''} block px-4 py-2 text-sm w-full text-left flex items-center`}
                           >
                             <img src={user.avatar ?? ''} alt={user.name} className="w-6 h-6 mr-2 rounded-full" />
