@@ -169,7 +169,7 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
         console.error(response.message);
         return;
       }
-      setUsersOptions(response);
+      setUsersOptions(response.staffs);
     });
   }, [setSelectedTag]);
 
