@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import * as yup from 'yup';
@@ -10,7 +10,24 @@ interface IFormCreateMember {
   image: File | null;
 }
 
-export const CreateMember = () => {
+export interface IUserPayload {
+  id: string;
+  name: string;
+  avatar: string | null;
+  email: string;
+  role: string;
+}
+interface ICreateMemberProps {
+  user: IUserPayload | null;
+}
+
+const initialFormValues: IFormCreateMember = {
+  email: '',
+  name: '',
+  image: null,
+};
+
+export const CreateMember: React.FC<ICreateMemberProps> = ({ user }) => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   const createMemberSchema: yup.ObjectSchema<IFormCreateMember> = yup.object({
@@ -19,8 +36,9 @@ export const CreateMember = () => {
     image: yup.mixed<File>().required(),
   });
 
-  const { handleSubmit, register, setValue, control } = useForm<IFormCreateMember>({
+  const { handleSubmit, register, setValue, control, reset } = useForm<IFormCreateMember>({
     resolver: yupResolver(createMemberSchema),
+    defaultValues: initialFormValues,
   });
 
   const onSubmit: SubmitHandler<IFormCreateMember> = async (data) => {
@@ -37,6 +55,16 @@ export const CreateMember = () => {
     },
     maxSize: 50 * 1024 * 1024,
   });
+
+  useEffect(() => {
+    if (user) {
+      reset({
+        email: user.email,
+        name: user.name,
+        image: null,
+      });
+    }
+  }, [reset, user]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
