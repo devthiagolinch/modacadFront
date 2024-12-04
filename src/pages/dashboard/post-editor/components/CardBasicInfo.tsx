@@ -2,7 +2,7 @@ import Datepicker from 'react-tailwindcss-datepicker';
 
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 
-import { FaRegSave } from 'react-icons/fa';
+import { FaRegSave, FaRegTrashAlt } from 'react-icons/fa';
 import { FaEye } from 'react-icons/fa';
 import { IPostDataRequest, PostsService } from '../../../../shared/api/posts/PostsService';
 import { useEffect, useState } from 'react';
@@ -10,7 +10,7 @@ import { ITagData, TagsService } from '../../../../shared/api/tags/TagsService';
 import { ISubjectData, SubjectsService } from '../../../../shared/api/subjects/SubjectsService';
 import { TPostsType, TPostsVisibility, types, visibilities } from '../../../../shared/services/postOptions';
 import { IUserData, UsersService } from '../../../../shared/api/users/UserServices';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 interface CardDTO {
   /*   title: string | '';
@@ -52,6 +52,7 @@ const defaultPost: IPostDataRequest = {
 };
 
 export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
+  const navigate = useNavigate();
   const [notification, setNotification] = useState('');
 
   const { postId } = useParams<{ postId: string }>();
@@ -194,6 +195,11 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
       published_at: selectedDate,
     }));
   };
+
+  const handleDeletePost = () => {
+    postId ? PostsService.deletePost(postId) : console.log('nao existe post para ser deletado');
+    navigate('/dashboard/pilula')
+  }
 
   // Tags
   const [searchTerm, setSearchTerm] = useState('');
@@ -835,11 +841,11 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
           </div>
 
           <div>
-            <button className="w-full border border-zinc-400 mb-5 h-10" onClick={toggleCardVisibility}>
+            <button className="w-full border border-zinc-400 mb-5 h-10 highlight-link" onClick={toggleCardVisibility}>
               MetaDados Google
             </button>
 
-            <button className="w-full border border-zinc-400 mb-5 h-10" onClick={toggleCardFaceVisibility}>
+            <button className="w-full border border-zinc-400 mb-5 h-10 highlight-link" onClick={toggleCardFaceVisibility}>
               MetaDados OG
             </button>
           </div>
@@ -860,6 +866,16 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
               onClick={handleSubmit}
             >
               {post.status === 'published' ? 'Despublicar' : 'Publicar'}
+            </button>
+          </div>
+
+          <div>
+            <button
+              className="border border-red-900 w-full h-12 text-red-800 flex justify-center items-center gap-2"
+              onClick={handleDeletePost}
+            >
+              <FaRegTrashAlt size={22} />
+              EXCLUIR POST
             </button>
           </div>
         </div>
