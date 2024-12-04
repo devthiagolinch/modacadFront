@@ -2,7 +2,7 @@ import Datepicker from 'react-tailwindcss-datepicker';
 
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 
-import { FaRegSave } from 'react-icons/fa';
+import { FaRegSave, FaRegTrashAlt } from 'react-icons/fa';
 import { FaEye } from 'react-icons/fa';
 import { IPostDataRequest, PostsService } from '../../../../shared/api/posts/PostsService';
 import { useEffect, useState } from 'react';
@@ -10,8 +10,8 @@ import { ITagData, TagsService } from '../../../../shared/api/tags/TagsService';
 import { ISubjectData, SubjectsService } from '../../../../shared/api/subjects/SubjectsService';
 import { TPostsType, TPostsVisibility, types, visibilities } from '../../../../shared/services/postOptions';
 import { IUserData, UsersService } from '../../../../shared/api/users/UserServices';
-import { useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { useNavigate, useParams } from 'react-router-dom';
 
 interface CardDTO {
   /*   title: string | '';
@@ -57,12 +57,13 @@ const defaultPost: IPostDataRequest = {
 };
 
 export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
+  const navigate = useNavigate();
   const [notification, setNotification] = useState('');
 
   const { postId } = useParams<{ postId: string }>();
   const [post, setPost] = useState<IPostDataRequest>(defaultPost);
 
-  const { register, watch } = useForm<FormData>();
+  const { register } = useForm<FormData>();
 
   const [isCardVisible, setIsCardVisible] = useState(false);
   const [isCardFaceVisible, setIsCardFaceVisible] = useState(false);
@@ -200,6 +201,11 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
       ...prevPost,
       published_at: selectedDate,
     }));
+  };
+
+  const handleDeletePost = () => {
+    postId ? PostsService.deletePost(postId) : console.log('nao existe post para ser deletado');
+    navigate('/dashboard/pilula');
   };
 
   // Tags
@@ -845,11 +851,14 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
           </div>
 
           <div>
-            <button className="w-full border border-zinc-400 mb-5 h-10" onClick={toggleCardVisibility}>
+            <button className="w-full border border-zinc-400 mb-5 h-10 highlight-link" onClick={toggleCardVisibility}>
               MetaDados Google
             </button>
 
-            <button className="w-full border border-zinc-400 mb-5 h-10" onClick={toggleCardFaceVisibility}>
+            <button
+              className="w-full border border-zinc-400 mb-5 h-10 highlight-link"
+              onClick={toggleCardFaceVisibility}
+            >
               MetaDados OG
             </button>
           </div>
@@ -872,6 +881,16 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
               {post.status === 'published' ? 'Despublicar' : 'Publicar'}
             </button>
           </div>
+
+          <div>
+            <button
+              className="border border-red-900 w-full h-12 text-red-800 flex justify-center items-center gap-2"
+              onClick={handleDeletePost}
+            >
+              <FaRegTrashAlt size={22} />
+              EXCLUIR POST
+            </button>
+          </div>
         </div>
       </div>
 
@@ -883,7 +902,13 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
 
           {/** Campo para URL da publicação */}
           <div className="mb-6">
-            <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2"> Meta Title <span className="font-montserrat font-medium text-zinc-400">({post.meta_title?.length || 0}/60)</span> </label>
+            <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2">
+              {' '}
+              Meta Title{' '}
+              <span className="font-montserrat font-medium text-zinc-400">
+                ({post.meta_title?.length || 0}/60)
+              </span>{' '}
+            </label>
             <input
               type="text"
               name="meta_title"
@@ -897,12 +922,14 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
           {/* Campo para descrição */}
           <div className="mb-6">
             <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2">
-              Meta descrição 
-              <span className="font-montserrat font-medium text-zinc-400">({post.meta_description?.length || 0}/145)</span>
+              Meta descrição
+              <span className="font-montserrat font-medium text-zinc-400">
+                ({post.meta_description?.length || 0}/145)
+              </span>
             </label>
             <textarea
               {...register('meta_description')}
-              id='meta_description'
+              id="meta_description"
               name="meta_description"
               value={post.meta_description}
               onChange={handleInputChange}
@@ -930,7 +957,11 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
 
           {/** Campo para URL da publicação */}
           <div className="mb-6">
-            <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2"> Meta Title <span className="font-montserrat font-medium text-zinc-400">({post.og_title?.length || 0}/60)</span> </label>
+            <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2">
+              {' '}
+              Meta Title{' '}
+              <span className="font-montserrat font-medium text-zinc-400">({post.og_title?.length || 0}/60)</span>{' '}
+            </label>
             <input
               type="text"
               name="og_title"
@@ -945,7 +976,9 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
           <div className="mb-6">
             <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2">
               Meta descrição
-              <span className="font-montserrat font-medium text-zinc-400">({post.og_description?.length || 0}/120)</span>
+              <span className="font-montserrat font-medium text-zinc-400">
+                ({post.og_description?.length || 0}/120)
+              </span>
             </label>
             <textarea
               name="og_description"

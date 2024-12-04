@@ -107,6 +107,15 @@ const getAll = async (
   }
 };
 
+const deletePost = async (postId: string): Promise<void | Error> => {
+  try {
+    await api.delete(`/post/${postId}`);
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido ao deletar o registro'
+    return new Error(errorMessage)
+  }
+}
+
 const create = async (post: IPostDataRequest): Promise<IPostData | Error> => {
   try {
     const { data } = await api.post<IPostData>('/post', post);
@@ -160,6 +169,7 @@ const uploadImage = async (file: File): Promise<string | Error> => {
 
 export const PostsService = {
   getAll,
+  deletePost,
   create,
   getById,
   updateById,
