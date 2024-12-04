@@ -56,6 +56,18 @@ export const CreateMember: React.FC<ICreateMemberProps> = ({ user, onCreated }) 
     }
   };
 
+  const handleDelete = async () => {
+    if (user) {
+      UsersService.deleteById(user.id).then((response) => {
+        if (response instanceof Error) {
+          console.error(response);
+          return;
+        }
+        onCreated();
+      });
+    }
+  };
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: (acceptedFiles) => {
       if (acceptedFiles.length > 0) {
@@ -141,9 +153,20 @@ export const CreateMember: React.FC<ICreateMemberProps> = ({ user, onCreated }) 
           )}
         />
       </div>
-      <div className="mt-4">
-        <button className="py-2 px-4 bg-bgBtn text-white text-1xl">Salvar</button>
-      </div>
+      {user && (
+        <div className="mt-4 flex gap-2">
+          <button className="py-2 px-4 bg-bgBtn text-white text-1xl" type="submit">
+            Atualizar
+          </button>
+          <button
+            className="py-2 px-4 border border-rose-500 text-rose-500 text-1xl hover:bg-rose-500 hover:text-white"
+            type="button"
+            onClick={handleDelete}
+          >
+            Excluir
+          </button>
+        </div>
+      )}
     </form>
   );
 };

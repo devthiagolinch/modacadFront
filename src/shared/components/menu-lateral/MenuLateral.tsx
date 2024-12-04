@@ -18,6 +18,7 @@ const secondaryLinks = [
   { name: 'chat', path: '/admin/chat', disabled: true },
   { name: 'live', path: '/admin/live', disabled: true },
   { name: 'reunião', path: '/admin/reuniao', disabled: true },
+  { name: 'Ver site', path: '/' },
 ];
 
 export const MenuLateral = () => {

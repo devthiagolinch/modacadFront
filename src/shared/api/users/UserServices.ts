@@ -79,11 +79,20 @@ type bodyUpdate = {
   name: string;
   email: string;
 };
-const updateById = async (id: string, body: bodyUpdate) => {
+const updateById = async (id: string, body: bodyUpdate): Promise<void | Error> => {
   try {
     await api.put(`/admins/${id}`, body);
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido ao atualizar registro';
+    return new Error(errorMessage);
+  }
+};
+
+const deleteById = async (id: string): Promise<void | Error> => {
+  try {
+    await api.delete(`/admins/delete/${id}`);
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido ao deletar registro';
     return new Error(errorMessage);
   }
 };
@@ -93,4 +102,5 @@ export const UsersService = {
   getAllStaff,
   inviteMember,
   updateById,
+  deleteById,
 };
