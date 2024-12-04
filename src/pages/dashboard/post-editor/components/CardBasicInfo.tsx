@@ -2,7 +2,7 @@ import Datepicker from 'react-tailwindcss-datepicker';
 
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 
-import { FaRegSave } from 'react-icons/fa';
+import { FaRegSave, FaRegTrashAlt } from 'react-icons/fa';
 import { FaEye } from 'react-icons/fa';
 import { IPostDataRequest, PostsService } from '../../../../shared/api/posts/PostsService';
 import { useEffect, useState } from 'react';
@@ -10,8 +10,8 @@ import { ITagData, TagsService } from '../../../../shared/api/tags/TagsService';
 import { ISubjectData, SubjectsService } from '../../../../shared/api/subjects/SubjectsService';
 import { TPostsType, TPostsVisibility, types, visibilities } from '../../../../shared/services/postOptions';
 import { IUserData, UsersService } from '../../../../shared/api/users/UserServices';
-import { useParams } from 'react-router-dom';
-import { CreateTag } from '../../../admin/tags/components/CreateTag'
+import { CreateTag } from '../../../admin/tags/components/CreateTag';
+import { useNavigate, useParams } from 'react-router-dom';
 
 interface CardDTO {
   /*   title: string | '';
@@ -53,6 +53,7 @@ const defaultPost: IPostDataRequest = {
 };
 
 export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
+  const navigate = useNavigate();
   const [notification, setNotification] = useState('');
 
   const { postId } = useParams<{ postId: string }>();
@@ -61,7 +62,7 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
   const [isCardVisible, setIsCardVisible] = useState(false);
   const [isCardFaceVisible, setIsCardFaceVisible] = useState(false);
   const [isCardBasicVisible, setCardBasicVisible] = useState(true);
-  const [isCardTagVisibe, setCardTagVisibe] = useState(false)
+  const [isCardTagVisibe, setCardTagVisibe] = useState(false);
 
   const [tagsOptions, setTagsOptions] = useState<ITagData[]>([]);
   const [tags, setTags] = useState<ITagData[]>([]);
@@ -72,7 +73,7 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
   const [usersOptions, setUsersOptions] = useState<IUserData[]>([]);
 
   const toggleCardVisibility = () => {
-    setIsCardVisible((prev) => !prev); 
+    setIsCardVisible((prev) => !prev);
     setCardBasicVisible((prev) => !prev);
     window.scrollTo(0, 0);
   };
@@ -194,6 +195,11 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
     }));
   };
 
+  const handleDeletePost = () => {
+    postId ? PostsService.deletePost(postId) : console.log('nao existe post para ser deletado');
+    navigate('/dashboard/pilula');
+  };
+
   // Tags
   const fetchTags = () => {
     TagsService.getAll().then((response) => {
@@ -202,13 +208,11 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
         return;
       }
       setTags(response); // Atualiza a lista global de tags
-  
+
       // Atualiza as tags associadas ao post
       setPost((prevPost) => ({
         ...prevPost,
-        tags: response.filter((tag) =>
-          prevPost.tags.some((postTag) => postTag.id === tag.id)
-        ),
+        tags: response.filter((tag) => prevPost.tags.some((postTag) => postTag.id === tag.id)),
       }));
     });
   };
@@ -422,7 +426,9 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
               <div className="mt-2 flex flex-wrap">
                 {post.tags.map((tag, index) => (
                   <span
-                    onClick={() => {setSelectedTag(tag)}}
+                    onClick={() => {
+                      setSelectedTag(tag);
+                    }}
                     onDoubleClick={toggleCardTagVisibility}
                     key={index}
                     className="inline-block bg-[#dcdf1e] text-black font-light font-montserrat px-3 py-1 mr-2 mb-2 cursor-pointer text-xs break-all flex items-center"
@@ -468,55 +474,63 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
                       placeholder="Pesquise tags"
                     />
                   </div>
-                  {filteredTags.length > 0 ? (
-                    filteredTags.map((tag) => (
-                      <MenuItem key={tag.id}>
-                        {({ active }) => (
-                          <button
-                            className={`${active ? 'bg-gray-100' : ''} block px-4 py-2 text-sm w-full text-left flex items-center`}
-                            onClick={() => handleChangeTags(tag)}
-                          >
-                            {post.tags.some((selectedTag) => selectedTag.id === tag.id) && (
-                              <svg
-                                className="w-4 h-4 mr-2 text-blue-500"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
-                              </svg>
-                            )}
-                            {tag.name}
-                          </button>
-                        )}
-                      </MenuItem>
-                    ))
-                  ) : (
-                    filteredTags.map((tag) => (
-                      <MenuItem key={tag.id}>
-                        {({ active }) => (
-                          <button
-                            className={`${active ? 'bg-gray-100' : ''} block px-4 py-2 text-sm w-full text-left flex items-center`}
-                            onClick={() => handleChangeTags(tag)}
-                          >
-                            {post.tags.some((selectedTag) => selectedTag.id === tag.id) && (
-                              <svg
-                                className="w-4 h-4 mr-2 text-blue-500"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
-                              </svg>
-                            )}
-                            {tag.name}
-                          </button>
-                        )}
-                      </MenuItem>
-                    ))
-                  )}
+                  {filteredTags.length > 0
+                    ? filteredTags.map((tag) => (
+                        <MenuItem key={tag.id}>
+                          {({ active }) => (
+                            <button
+                              className={`${active ? 'bg-gray-100' : ''} block px-4 py-2 text-sm w-full text-left flex items-center`}
+                              onClick={() => handleChangeTags(tag)}
+                            >
+                              {post.tags.some((selectedTag) => selectedTag.id === tag.id) && (
+                                <svg
+                                  className="w-4 h-4 mr-2 text-blue-500"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  viewBox="0 0 24 24"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M5 13l4 4L19 7"
+                                  />
+                                </svg>
+                              )}
+                              {tag.name}
+                            </button>
+                          )}
+                        </MenuItem>
+                      ))
+                    : filteredTags.map((tag) => (
+                        <MenuItem key={tag.id}>
+                          {({ active }) => (
+                            <button
+                              className={`${active ? 'bg-gray-100' : ''} block px-4 py-2 text-sm w-full text-left flex items-center`}
+                              onClick={() => handleChangeTags(tag)}
+                            >
+                              {post.tags.some((selectedTag) => selectedTag.id === tag.id) && (
+                                <svg
+                                  className="w-4 h-4 mr-2 text-blue-500"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  viewBox="0 0 24 24"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M5 13l4 4L19 7"
+                                  />
+                                </svg>
+                              )}
+                              {tag.name}
+                            </button>
+                          )}
+                        </MenuItem>
+                      ))}
                 </div>
               </MenuItems>
             </Menu>
@@ -529,7 +543,6 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
               <div className="mt-2 flex flex-wrap">
                 {post.subjects.map((subject, index) => (
                   <span
-                    
                     key={index}
                     className="inline-block bg-[#dcdf1e] text-black font-montserrat font-light px-3 py-1 mr-2 mb-2 cursor-pointer text-xs flex items-center"
                   >
@@ -701,7 +714,6 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
                         {({ active }) => (
                           <button
                             className={`${active ? 'bg-gray-100' : ''} block px-4 py-2 text-sm w-full text-left flex items-center`}
-                            
                           >
                             <img src={user.avatar ?? ''} alt={user.name} className="w-6 h-6 mr-2 rounded-full" />
                             {user.name}
@@ -888,11 +900,14 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
           </div>
 
           <div>
-            <button className="w-full border border-zinc-400 mb-5 h-10" onClick={toggleCardVisibility}>
+            <button className="w-full border border-zinc-400 mb-5 h-10 highlight-link" onClick={toggleCardVisibility}>
               MetaDados Google
             </button>
 
-            <button className="w-full border border-zinc-400 mb-5 h-10" onClick={toggleCardFaceVisibility}>
+            <button
+              className="w-full border border-zinc-400 mb-5 h-10 highlight-link"
+              onClick={toggleCardFaceVisibility}
+            >
               MetaDados OG
             </button>
           </div>
@@ -913,6 +928,16 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
               onClick={handleSubmit}
             >
               {post.status === 'published' ? 'Despublicar' : 'Publicar'}
+            </button>
+          </div>
+
+          <div>
+            <button
+              className="border border-red-900 w-full h-12 text-red-800 flex justify-center items-center gap-2"
+              onClick={handleDeletePost}
+            >
+              <FaRegTrashAlt size={22} />
+              EXCLUIR POST
             </button>
           </div>
         </div>
@@ -1010,17 +1035,17 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
         </div>
       </div>
 
-      <div style={{ display: isCardTagVisibe ? 'block' : 'none' }}>        
-        <CreateTag onCreated={onUpdateTag} selectedTag={selectedTag} clearTag={() => setSelectedTag(null)} />  
+      <div style={{ display: isCardTagVisibe ? 'block' : 'none' }}>
+        <CreateTag onCreated={onUpdateTag} selectedTag={selectedTag} clearTag={() => setSelectedTag(null)} />
 
         <button
-            className="px-4 py-2 border-[1px] font-montserrat font-light text-zinc-900 border-zinc-500 hover:bg-gradient-to-t 
+          className="px-4 py-2 border-[1px] font-montserrat font-light text-zinc-900 border-zinc-500 hover:bg-gradient-to-t 
                       from-[#dcdf1e] to-[#dcdf1e] bg-[length:90%_.90em] bg-no-repeat bg-[position:50%_75%] w-full"
-            onClick={toggleCardTagVisibility}
+          onClick={toggleCardTagVisibility}
         >
-            Prontinho
-        </button> 
-      </div>    
+          Prontinho
+        </button>
+      </div>
 
       {notification && <div className="notification">{notification}</div>}
     </div>
