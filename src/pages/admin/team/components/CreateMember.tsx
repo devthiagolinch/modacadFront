@@ -2,6 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import React, { useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { UsersService } from '../../../../shared/api/users/UserServices';
 import * as yup from 'yup';
 
 interface IFormCreateMember {
@@ -19,6 +20,7 @@ export interface IUserPayload {
 }
 interface ICreateMemberProps {
   user: IUserPayload | null;
+  onCreated: () => void;
 }
 
 const initialFormValues: IFormCreateMember = {
@@ -27,13 +29,13 @@ const initialFormValues: IFormCreateMember = {
   image: null,
 };
 
-export const CreateMember: React.FC<ICreateMemberProps> = ({ user }) => {
+export const CreateMember: React.FC<ICreateMemberProps> = ({ user, onCreated }) => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   const createMemberSchema: yup.ObjectSchema<IFormCreateMember> = yup.object({
     email: yup.string().email().required(),
     name: yup.string().required(),
-    image: yup.mixed<File>().required(),
+    image: yup.mixed<File>().nullable().defined(),
   });
 
   const { handleSubmit, register, setValue, control, reset } = useForm<IFormCreateMember>({
@@ -42,7 +44,16 @@ export const CreateMember: React.FC<ICreateMemberProps> = ({ user }) => {
   });
 
   const onSubmit: SubmitHandler<IFormCreateMember> = async (data) => {
-    console.log(data);
+    if (user) {
+      UsersService.updateById(user.id, { name: data.name, email: data.email }).then((response) => {
+        if (response instanceof Error) {
+          console.error(response);
+          return;
+        }
+        onCreated();
+        reset(initialFormValues);
+      });
+    }
   };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -69,25 +80,25 @@ export const CreateMember: React.FC<ICreateMemberProps> = ({ user }) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="mt-2">
-        <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900">
+        <label htmlFor="email-create" className="block mb-2 text-sm font-medium text-gray-900">
           e-mail
         </label>
         <input
           {...register('email')}
           type="text"
-          id="name"
+          id="email-create"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           required
         />
       </div>
       <div className="mt-2">
-        <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900">
+        <label htmlFor="name-create" className="block mb-2 text-sm font-medium text-gray-900">
           nome
         </label>
         <input
           {...register('name')}
           type="text"
-          id="name"
+          id="name-create"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           required
         />

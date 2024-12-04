@@ -75,8 +75,22 @@ const inviteMember = async (email: string, role: string): Promise<void | Error> 
   }
 };
 
+type bodyUpdate = {
+  name: string;
+  email: string;
+};
+const updateById = async (id: string, body: bodyUpdate) => {
+  try {
+    await api.put(`/admins/${id}`, body);
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido ao atualizar registro';
+    return new Error(errorMessage);
+  }
+};
+
 export const UsersService = {
   getAll,
   getAllStaff,
   inviteMember,
+  updateById,
 };

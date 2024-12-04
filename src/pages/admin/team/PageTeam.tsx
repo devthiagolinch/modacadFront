@@ -8,7 +8,7 @@ export const PageTeam = () => {
   const [members, setMembers] = useState<IUserData[]>([]);
   const [selectedUser, setSelectedUser] = useState<IUserPayload | null>(null);
 
-  useEffect(() => {
+  const fetchUsers = () => {
     UsersService.getAllStaff().then((response) => {
       if (response instanceof Error) {
         console.error(response);
@@ -16,7 +16,16 @@ export const PageTeam = () => {
       }
       setMembers(response.staffs);
     });
+  };
+
+  useEffect(() => {
+    fetchUsers();
   }, []);
+
+  const onCreated = () => {
+    setSelectedUser(null);
+    fetchUsers();
+  };
 
   return (
     <LayoutDashboard>
@@ -38,7 +47,7 @@ export const PageTeam = () => {
             </table>
           </div>
         </div>
-        <CreateMember user={selectedUser} />
+        <CreateMember user={selectedUser} onCreated={onCreated} />
       </div>
     </LayoutDashboard>
   );
