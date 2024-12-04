@@ -2,7 +2,7 @@ import Datepicker from 'react-tailwindcss-datepicker';
 
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 
-import { FaRegSave } from 'react-icons/fa';
+import { FaRegSave, FaRegTrashAlt } from 'react-icons/fa';
 import { FaEye } from 'react-icons/fa';
 import { IPostDataRequest, PostsService } from '../../../../shared/api/posts/PostsService';
 import { useEffect, useState } from 'react';
@@ -10,7 +10,11 @@ import { ITagData, TagsService } from '../../../../shared/api/tags/TagsService';
 import { ISubjectData, SubjectsService } from '../../../../shared/api/subjects/SubjectsService';
 import { TPostsType, TPostsVisibility, types, visibilities } from '../../../../shared/services/postOptions';
 import { IUserData, UsersService } from '../../../../shared/api/users/UserServices';
-import { useParams } from 'react-router-dom';
+import { CreateTag } from '../../../admin/tags/components/CreateTag';
+import { useForm } from 'react-hook-form';
+import { FacebookPreview } from './snnipets/FaceSnnipetPreviewl';
+import GoogleSnnipet from './snnipets/GoogleSnnipetsPreview';
+import { useNavigate, useParams } from 'react-router-dom';
 
 interface CardDTO {
   /*   title: string | '';
@@ -18,6 +22,10 @@ interface CardDTO {
   content: string | ''; */
   //isVisible: boolean; // Propriedade para controlar a visibilidade
   props: IPostDataRequest;
+}
+
+interface FormData {
+  meta_description: string;
 }
 
 const defaultPost: IPostDataRequest = {
@@ -52,28 +60,42 @@ const defaultPost: IPostDataRequest = {
 };
 
 export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
+  const navigate = useNavigate();
   const [notification, setNotification] = useState('');
 
   const { postId } = useParams<{ postId: string }>();
   const [post, setPost] = useState<IPostDataRequest>(defaultPost);
 
+  const { register } = useForm<FormData>();
+
   const [isCardVisible, setIsCardVisible] = useState(false);
   const [isCardFaceVisible, setIsCardFaceVisible] = useState(false);
   const [isCardBasicVisible, setCardBasicVisible] = useState(true);
+  const [isCardTagVisibe, setCardTagVisibe] = useState(false);
 
   const [tagsOptions, setTagsOptions] = useState<ITagData[]>([]);
+  const [_tags, setTags] = useState<ITagData[]>([]);
+  const [selectedTag, setSelectedTag] = useState<ITagData | null>(null);
+
   const [subjectsOptions, setSubjectsOptions] = useState<ISubjectData[]>([]);
 
   const [usersOptions, setUsersOptions] = useState<IUserData[]>([]);
 
   const toggleCardVisibility = () => {
-    setIsCardVisible((prev) => !prev); // Alterna a visibilidade do CardBasicInfo
+    setIsCardVisible((prev) => !prev);
     setCardBasicVisible((prev) => !prev);
     window.scrollTo(0, 0);
   };
 
   const toggleCardFaceVisibility = () => {
-    setIsCardFaceVisible((prev) => !prev); // Alterna a visibilidade do CardBasicInfo
+    setIsCardFaceVisible((prev) => !prev);
+    setCardBasicVisible((prev) => !prev);
+    window.scrollTo(0, 0);
+  };
+
+  const toggleCardTagVisibility = () => {
+    fetchTags();
+    setCardTagVisibe((prev) => !prev);
     setCardBasicVisible((prev) => !prev);
     window.scrollTo(0, 0);
   };
@@ -138,7 +160,7 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
         console.error(response.message);
       } else {
         setTagsOptions(response);
-        setFilteredTags(response.slice(0, 5));
+        setFilteredTags(response.slice(0, 30));
       }
     });
 
@@ -149,7 +171,7 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
       }
       setUsersOptions(response);
     });
-  }, []);
+  }, [setSelectedTag]);
 
   // Canonical URL
   let canonicalUrl;
@@ -162,19 +184,6 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
   const handleUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setPost((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleChangeTags = (newTag: ITagData) => {
-    setPost((prevPost) => {
-      let updatedTags: ITagData[] = [];
-      updatedTags = [...prevPost.tags];
-
-      const isSelected = updatedTags.includes(newTag);
-      isSelected ? (updatedTags = updatedTags.filter((tag) => tag !== newTag)) : updatedTags.push(newTag);
-
-      return { ...prevPost, tags: updatedTags };
-    });
-    setSearchTerm('');
   };
 
   const handleDateChange = (value: Date | null | { startDate: Date | null; endDate: Date | null }) => {
@@ -195,7 +204,46 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
     }));
   };
 
+  const handleDeletePost = () => {
+    postId ? PostsService.deletePost(postId) : console.log('nao existe post para ser deletado');
+    navigate('/dashboard/pilula');
+  };
+
   // Tags
+  const fetchTags = () => {
+    TagsService.getAll().then((response) => {
+      if (response instanceof Error) {
+        console.error(response);
+        return;
+      }
+      setTags(response); // Atualiza a lista global de tags
+
+      // Atualiza as tags associadas ao post
+      setPost((prevPost) => ({
+        ...prevPost,
+        tags: response.filter((tag) => prevPost.tags.some((postTag) => postTag.id === tag.id)),
+      }));
+    });
+  };
+
+  // Função chamada após a atualização da tag
+  const onUpdateTag = () => {
+    setSelectedTag(null); // Reseta a tag selecionada
+  };
+
+  const handleChangeTags = (newTag: ITagData) => {
+    setPost((prevPost) => {
+      let updatedTags: ITagData[] = [];
+      updatedTags = [...prevPost.tags];
+
+      const isSelected = updatedTags.includes(newTag);
+      isSelected ? (updatedTags = updatedTags.filter((tag) => tag !== newTag)) : updatedTags.push(newTag);
+
+      return { ...prevPost, tags: updatedTags };
+    });
+    setSearchTerm('');
+  };
+
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredTags, setFilteredTags] = useState<ITagData[]>(tagsOptions);
 
@@ -205,7 +253,7 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
     setFilteredTags(
       tagsOptions
         .filter((tag) => tag.name.toLowerCase().includes(value) || tag.slug.toLowerCase().includes(value))
-        .slice(0, 5)
+        .slice(0, 30)
     );
   };
 
@@ -353,7 +401,7 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
             <span className="text-sm text-zinc-500 font-light font-montserrat">blog.modacad.com.br/{canonicalUrl}</span>
           </div>
 
-          <div className="flex flex-col items-start space-y-2">
+          <div className="flex flex-col items-start space-y-2 mb-6">
             <label htmlFor="publish-date" className="text-sm font-medium text-gray-700">
               Data de Publicação
             </label>
@@ -369,7 +417,10 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
 
           {/* Campo para descrição */}
           <div className="mb-6">
-            <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2">Descrição</label>
+            <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2">
+              Descrição
+              <span className="font-montserrat font-medium text-zinc-400">({post.description?.length || 0}/300)</span>
+            </label>
             <textarea
               name="description"
               value={post.description || ''}
@@ -387,13 +438,17 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
               <div className="mt-2 flex flex-wrap">
                 {post.tags.map((tag, index) => (
                   <span
-                    onClick={() => handleChangeTags(tag)}
+                    onClick={() => {
+                      setSelectedTag(tag);
+                    }}
+                    onDoubleClick={toggleCardTagVisibility}
                     key={index}
-                    className="inline-block bg-[#dcdf1e] text-black font-light font-montserrat px-3 py-1 mr-2 mb-2 cursor-pointer text-xs flex items-center"
+                    className="inline-block bg-[#dcdf1e] text-black font-light font-montserrat px-3 py-1 mr-2 mb-2 cursor-pointer text-xs break-all flex items-center"
                   >
                     {tag.name}
                     <svg
-                      className="ml-2 w-3 h-3"
+                      onClick={() => handleChangeTags(tag)}
+                      className="ml-2 min-w-4 h-4"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -412,11 +467,7 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
             )}
             <Menu as="div" className="relative inline-block text-left w-full">
               <MenuButton className="inline-flex justify-between w-full border shadow-sm px-4 py-2 text-sm font-light font-montserrat bg-white">
-                {post.tags.length > 0
-                  ? post.tags.length > 1
-                    ? `${post.tags[0].name} + ${post.tags.length - 1}`
-                    : post.tags[0].name
-                  : 'Selecione as tags'}
+                Pesquisar Tags
               </MenuButton>
               <MenuItems
                 className="absolute mt-2 w-full shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50"
@@ -435,33 +486,63 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
                       placeholder="Pesquise tags"
                     />
                   </div>
-                  {filteredTags.length > 0 ? (
-                    filteredTags.map((tag) => (
-                      <MenuItem key={tag.id}>
-                        {({ active }) => (
-                          <button
-                            className={`${active ? 'bg-gray-100' : ''} block px-4 py-2 text-sm w-full text-left flex items-center`}
-                            onClick={() => handleChangeTags(tag)}
-                          >
-                            {post.tags.some((selectedTag) => selectedTag.id === tag.id) && (
-                              <svg
-                                className="w-4 h-4 mr-2 text-blue-500"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
-                              </svg>
-                            )}
-                            {tag.name}
-                          </button>
-                        )}
-                      </MenuItem>
-                    ))
-                  ) : (
-                    <div className="px-4 py-2 text-sm text-gray-500">Nenhum item encontrado</div>
-                  )}
+                  {filteredTags.length > 0
+                    ? filteredTags.map((tag) => (
+                        <MenuItem key={tag.id}>
+                          {({ active }) => (
+                            <button
+                              className={`${active ? 'bg-gray-100' : ''} block px-4 py-2 text-sm w-full text-left flex items-center`}
+                              onClick={() => handleChangeTags(tag)}
+                            >
+                              {post.tags.some((selectedTag) => selectedTag.id === tag.id) && (
+                                <svg
+                                  className="w-4 h-4 mr-2 text-blue-500"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  viewBox="0 0 24 24"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M5 13l4 4L19 7"
+                                  />
+                                </svg>
+                              )}
+                              {tag.name}
+                            </button>
+                          )}
+                        </MenuItem>
+                      ))
+                    : filteredTags.map((tag) => (
+                        <MenuItem key={tag.id}>
+                          {({ active }) => (
+                            <button
+                              className={`${active ? 'bg-gray-100' : ''} block px-4 py-2 text-sm w-full text-left flex items-center`}
+                              onClick={() => handleChangeTags(tag)}
+                            >
+                              {post.tags.some((selectedTag) => selectedTag.id === tag.id) && (
+                                <svg
+                                  className="w-4 h-4 mr-2 text-blue-500"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  viewBox="0 0 24 24"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M5 13l4 4L19 7"
+                                  />
+                                </svg>
+                              )}
+                              {tag.name}
+                            </button>
+                          )}
+                        </MenuItem>
+                      ))}
                 </div>
               </MenuItems>
             </Menu>
@@ -474,13 +555,13 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
               <div className="mt-2 flex flex-wrap">
                 {post.subjects.map((subject, index) => (
                   <span
-                    onClick={() => handleSubjectSelect(subject)}
                     key={index}
                     className="inline-block bg-[#dcdf1e] text-black font-montserrat font-light px-3 py-1 mr-2 mb-2 cursor-pointer text-xs flex items-center"
                   >
                     {subject.name}
                     <svg
-                      className="ml-2 w-3 h-3"
+                      onClick={() => handleSubjectSelect(subject)}
+                      className="ml-2 min-w-4 h-4"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -499,11 +580,7 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
             )}
             <Menu as="div" className="relative inline-block text-left w-full">
               <MenuButton className="inline-flex justify-between w-full border shadow-sm px-4 py-2 text-sm font-montserrat font-light bg-white">
-                {post.subjects.length > 0
-                  ? post.subjects.length > 1
-                    ? `${post.subjects[0].name} + ${post.subjects.length - 1}`
-                    : post.subjects[0].name
-                  : 'Selecione os assuntos'}
+                Selecionar Assuntos
               </MenuButton>
               <MenuItems
                 className="absolute mt-2 w-full shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50"
@@ -649,7 +726,6 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
                         {({ active }) => (
                           <button
                             className={`${active ? 'bg-gray-100' : ''} block px-4 py-2 text-sm w-full text-left flex items-center`}
-                            onClick={() => handleUserSelect(user)}
                           >
                             <img src={user.avatar ?? ''} alt={user.name} className="w-6 h-6 mr-2 rounded-full" />
                             {user.name}
@@ -660,6 +736,7 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"
                                 xmlns="http://www.w3.org/2000/svg"
+                                onClick={() => handleUserSelect(user)}
                               >
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                               </svg>
@@ -835,11 +912,14 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
           </div>
 
           <div>
-            <button className="w-full border border-zinc-400 mb-5 h-10" onClick={toggleCardVisibility}>
+            <button className="w-full border border-zinc-400 mb-5 h-10 highlight-link" onClick={toggleCardVisibility}>
               MetaDados Google
             </button>
 
-            <button className="w-full border border-zinc-400 mb-5 h-10" onClick={toggleCardFaceVisibility}>
+            <button
+              className="w-full border border-zinc-400 mb-5 h-10 highlight-link"
+              onClick={toggleCardFaceVisibility}
+            >
               MetaDados OG
             </button>
           </div>
@@ -862,39 +942,70 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
               {post.status === 'published' ? 'Despublicar' : 'Publicar'}
             </button>
           </div>
+
+          <div>
+            <button
+              className="border border-red-900 w-full h-12 text-red-800 flex justify-center items-center gap-2"
+              onClick={handleDeletePost}
+            >
+              <FaRegTrashAlt size={22} />
+              EXCLUIR POST
+            </button>
+          </div>
         </div>
       </div>
 
       {/** CARD META DADOS GOOGLE */}
       <div className="col-span-4" style={{ display: isCardVisible ? 'block' : 'none' }}>
         {/* Informações da Postagem */}
-        <div className="bg-white shadow-md p-6">
+        <div className="bg-white shadow-md">
           <h1 className="text-2xl font-montserrat font-light mb-6">Meta Dados Google</h1>
 
           {/** Campo para URL da publicação */}
           <div className="mb-6">
-            <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2"> Meta Title </label>
+            <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2">
+              {' '}
+              Meta Title{' '}
+              <span className="font-montserrat font-medium text-zinc-400">
+                ({post.meta_title?.length || 0}/60)
+              </span>{' '}
+            </label>
             <input
               type="text"
               name="meta_title"
               value={post?.meta_title}
               onChange={handleInputChange}
+              maxLength={60}
               className=" border p-2 w-full font-montserrat font-light focus-visible:border-[#dcdf1e] focus:outline-none"
             />
           </div>
 
           {/* Campo para descrição */}
           <div className="mb-6">
-            <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2">Meta descrição</label>
+            <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2">
+              Meta descrição
+              <span className="font-montserrat font-medium text-zinc-400">
+                ({post.meta_description?.length || 0}/145)
+              </span>
+            </label>
             <textarea
+              {...register('meta_description')}
+              id="meta_description"
               name="meta_description"
-              value={post.meta_description || ''}
+              value={post.meta_description}
               onChange={handleInputChange}
-              placeholder="Resumo de 300 caracteres"
-              maxLength={300}
+              placeholder="Resumo de 145 caracteres"
+              maxLength={145}
               className="border p-2 w-full font-montserrat font-light focus-visible:border-[#dcdf1e] focus:outline-none min-h-[190px]" // Define um número de linhas padrão
             />
           </div>
+
+          <GoogleSnnipet
+            title={post.meta_title}
+            url={canonicalUrl}
+            description={post.meta_description}
+            publish_date={post.published_at}
+          />
 
           <button
             className="px-4 py-2 border-[1px] font-montserrat font-light text-zinc-900 border-zinc-500 hover:bg-gradient-to-t 
@@ -909,43 +1020,50 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
       {/** CARD META DADOS OG */}
       <div className="col-span-4" style={{ display: isCardFaceVisible ? 'block' : 'none' }}>
         {/* Informações da Postagem */}
-        <div className="bg-white shadow-md p-6">
+        <div className="bg-white shadow-md">
           <h1 className="text-2xl font-montserrat font-light mb-6">Meta Dados Face Instagram</h1>
-
-          <div className="mb-6 w-full bg-transparent justify-center align-middle">
-            {post.og_image && (
-              <img
-                src={post.og_image.toString()}
-                alt="Imagem do Face Instagram"
-                className="mt-4 object-cover w-screen h-64"
-              />
-            )}
-          </div>
 
           {/** Campo para URL da publicação */}
           <div className="mb-6">
-            <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2"> Meta Title </label>
+            <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2">
+              {' '}
+              Meta Title{' '}
+              <span className="font-montserrat font-medium text-zinc-400">({post.og_title?.length || 0}/60)</span>{' '}
+            </label>
             <input
               type="text"
               name="og_title"
               value={post?.og_title}
               onChange={handleInputChange}
               className=" border p-2 w-full font-montserrat font-light focus-visible:border-[#dcdf1e] focus:outline-none"
+              maxLength={60}
             />
           </div>
 
           {/* Campo para descrição */}
           <div className="mb-6">
-            <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2">Meta descrição</label>
+            <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2">
+              Meta descrição
+              <span className="font-montserrat font-medium text-zinc-400">
+                ({post.og_description?.length || 0}/120)
+              </span>
+            </label>
             <textarea
               name="og_description"
               value={post.og_description || ''}
               onChange={handleInputChange}
-              placeholder="Resumo de 300 caracteres"
-              maxLength={300}
+              placeholder="Resumo de 120 caracteres"
+              maxLength={120}
               className="border p-2 w-full font-montserrat font-light focus-visible:border-[#dcdf1e] focus:outline-none min-h-[190px]" // Define um número de linhas padrão
             />
           </div>
+
+          <FacebookPreview
+            imageUrl={post.feature_image}
+            url={canonicalUrl}
+            title={post.og_title}
+            description={post.og_description}
+          />
 
           <button
             className="px-4 py-2 border-[1px] font-montserrat font-light text-zinc-900 border-zinc-500 hover:bg-gradient-to-t 
@@ -955,6 +1073,18 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
             Prontinho
           </button>
         </div>
+      </div>
+
+      <div style={{ display: isCardTagVisibe ? 'block' : 'none' }}>
+        <CreateTag onCreated={onUpdateTag} selectedTag={selectedTag} clearTag={() => setSelectedTag(null)} />
+
+        <button
+          className="px-4 py-2 border-[1px] font-montserrat font-light text-zinc-900 border-zinc-500 hover:bg-gradient-to-t 
+                      from-[#dcdf1e] to-[#dcdf1e] bg-[length:90%_.90em] bg-no-repeat bg-[position:50%_75%] w-full"
+          onClick={toggleCardTagVisibility}
+        >
+          Prontinho
+        </button>
       </div>
 
       {notification && <div className="notification">{notification}</div>}
