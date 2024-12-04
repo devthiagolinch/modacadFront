@@ -6,18 +6,18 @@ export type TPostsType = 'pilula' | 'texto';
 export const statuses: Record<TPostsStatus, { name: string; bgColor: string; textColor: string }> = {
   published: {
     name: 'Publicado',
-    bgColor: 'bg-green-500',
-    textColor: 'text-white',
+    bgColor: 'bg-gray-300',
+    textColor: 'text-black',
   },
   pending: {
     name: 'Pendente',
-    bgColor: 'bg-orange-500',
-    textColor: 'text-white',
+    bgColor: 'bg-gray-300',
+    textColor: 'text-black',
   },
   draft: {
     name: 'Rascunho',
-    bgColor: 'bg-yellow-500',
-    textColor: 'text-black',
+    bgColor: 'bg-gray-300',
+    textColor: 'text-red-500',
   },
 };
 
@@ -25,17 +25,17 @@ export const statuses: Record<TPostsStatus, { name: string; bgColor: string; tex
 export const visibilities: Record<TPostsVisibility, { name: string; bgColor: string; textColor: string }> = {
   public: {
     name: 'Público',
-    bgColor: 'bg-blue-500',
+    bgColor: 'bg-gray-950',
     textColor: 'text-white',
   },
   basic: {
     name: 'Básico',
-    bgColor: 'bg-gray-500',
+    bgColor: 'bg-gray-950',
     textColor: 'text-white',
   },
   pro: {
     name: 'Pro',
-    bgColor: 'bg-purple-500',
+    bgColor: 'bg-gray-950',
     textColor: 'text-white',
   },
 };

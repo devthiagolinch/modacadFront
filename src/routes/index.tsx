@@ -1,4 +1,4 @@
-import { Navigate, Route, RouteProps, Routes } from 'react-router-dom';
+import { Navigate, Outlet, Route, RouteProps, Routes } from 'react-router-dom';
 
 import { useUser } from '../shared/contexts/UserContext';
 
@@ -16,6 +16,7 @@ import { PageMembers } from '../pages/admin/members/PageMembers';
 import { PageSubjects } from '../pages/admin/subjects/PageSubjects';
 import { PostEditor } from '../pages/dashboard/post-editor/PostEditor';
 import { PagePlans } from '../pages/admin/plans/PagePlans';
+import { PageTeam } from '../pages/admin/team/PageTeam';
 
 type TPrivateRouteProps = RouteProps & {
   element: React.ReactNode;
@@ -53,11 +54,16 @@ export const AppRoutes = () => {
       <Route path="/posts/:postId/editar" element={<PrivateRoute element={<PostEditor />} />} />
 
       {/* Login Admin */}
+      <Route path="/admin" element={<PrivateRoute element={<Outlet />} />}>
+        <Route index element={<Navigate to="membros" />} />
+        <Route path="membros" element={<PageMembers />} />
+        <Route path="tags" element={<PageTags />} />
+        <Route path="assuntos" element={<PageSubjects />} />
+        <Route path="planos" element={<PagePlans />} />
+        <Route path="equipe" element={<PageTeam />} />
+      </Route>
+
       <Route path="/admin/login" element={<AdminLogin />} />
-      <Route path="/admin/tags" element={<PrivateRoute element={<PageTags />} />} />
-      <Route path="/admin/membros" element={<PrivateRoute element={<PageMembers />} />} />
-      <Route path="/admin/assuntos" element={<PrivateRoute element={<PageSubjects />} />} />
-      <Route path="/admin/planos" element={<PrivateRoute element={<PagePlans />} />} />
 
       {/* Página em Branco (Para teste ou outro propósito) */}
       <Route path="/blank" element={<BlankPage />} />

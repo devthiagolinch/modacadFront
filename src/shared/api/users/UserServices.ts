@@ -42,10 +42,21 @@ const getAll = async ({ role, status, plan, page }: TGetAllParams): Promise<TGet
   }
 };
 
+type TGetStaffResponse = {
+  currentPage: number;
+  pageSize: number;
+  staffs: IUserData[];
+  totalAdministradores: number;
+  totalAutores: number;
+  totalColaboradores: number;
+  totalEditores: number;
+  totalPages: number;
+  totalStaff: number;
+};
 const getAllStaff = async () => {
   try {
-    const { data } = await api.get<IUserData[]>('/admins/staff');
-    if (data && Array.isArray(data)) {
+    const { data } = await api.get<TGetStaffResponse>('/admins/staff');
+    if (data && data.staffs) {
       return data;
     }
     return new Error('Erro ao listar os registros');
@@ -55,7 +66,41 @@ const getAllStaff = async () => {
   }
 };
 
+const inviteMember = async (email: string, role: string): Promise<void | Error> => {
+  try {
+    await api.post('/admins/staff', { email, role });
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido ao convidar membro';
+    return new Error(errorMessage);
+  }
+};
+
+type bodyUpdate = {
+  name: string;
+  email: string;
+};
+const updateById = async (id: string, body: bodyUpdate): Promise<void | Error> => {
+  try {
+    await api.put(`/admins/${id}`, body);
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido ao atualizar registro';
+    return new Error(errorMessage);
+  }
+};
+
+const deleteById = async (id: string): Promise<void | Error> => {
+  try {
+    await api.delete(`/admins/delete/${id}`);
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido ao deletar registro';
+    return new Error(errorMessage);
+  }
+};
+
 export const UsersService = {
   getAll,
   getAllStaff,
+  inviteMember,
+  updateById,
+  deleteById,
 };
