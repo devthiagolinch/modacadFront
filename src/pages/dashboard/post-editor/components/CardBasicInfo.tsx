@@ -181,12 +181,7 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
       ? post.canonicalUrl.split('https://blog.modacad.com.br/', 2).pop()
       : post.canonicalUrl;
   }
-
-  const handleUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setPost((prev) => ({ ...prev, [name]: value }));
-  };
-
+  
   const handleDateChange = (value: Date | null | { startDate: Date | null; endDate: Date | null }) => {
     let selectedDate;
 
