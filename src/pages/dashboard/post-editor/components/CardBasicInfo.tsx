@@ -10,11 +10,11 @@ import { ITagData, TagsService } from '../../../../shared/api/tags/TagsService';
 import { ISubjectData, SubjectsService } from '../../../../shared/api/subjects/SubjectsService';
 import { TPostsType, TPostsVisibility, types, visibilities } from '../../../../shared/services/postOptions';
 import { IUserData, UsersService } from '../../../../shared/api/users/UserServices';
-import { CreateTag } from '../../../admin/tags/components/CreateTag';
 import { useForm } from 'react-hook-form';
 import { FacebookPreview } from './snnipets/FaceSnnipetPreviewl';
 import GoogleSnnipet from './snnipets/GoogleSnnipetsPreview';
 import { useNavigate, useParams } from 'react-router-dom';
+import { CardTagInfo } from './snnipets/CardTagInfo';
 
 interface CardDTO {
   /*   title: string | '';
@@ -1076,16 +1076,9 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
         </div>
       </div>
 
+      {/** CARD PARA ATUALIZAR TAG */}
       <div style={{ display: isCardTagVisibe ? 'block' : 'none' }}>
-        <CreateTag onCreated={onUpdateTag} selectedTag={selectedTag} clearTag={() => setSelectedTag(null)} />
-
-        <button
-          className="px-4 py-2 border-[1px] font-montserrat font-light text-zinc-900 border-zinc-500 hover:bg-gradient-to-t 
-                      from-[#dcdf1e] to-[#dcdf1e] bg-[length:90%_.90em] bg-no-repeat bg-[position:50%_75%] w-full"
-          onClick={toggleCardTagVisibility}
-        >
-          Prontinho
-        </button>
+        <CardTagInfo onUpdated={onUpdateTag} selectedTag={selectedTag} onClose={() => toggleCardTagVisibility()} />
       </div>
 
       {notification && <div className="notification">{notification}</div>}
