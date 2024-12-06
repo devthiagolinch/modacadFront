@@ -6,14 +6,17 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { ITagData, TagsService } from '../../../../../shared/api/tags/TagsService';
 
-interface IFormCreateTag extends Pick<ITagData, 'name' | 'slug' | 'meta_description' | 'facebook_title' | 'facebook_description'> {}
+interface IFormCreateTag extends Pick<ITagData, 'name' | 'slug' | 'description' | 'meta_title' | 'meta_description' | 'og_title' | 'og_description'> {}
 
 const createTagSchema: yup.ObjectSchema<IFormCreateTag> = yup.object({
   name: yup.string().required(),
   slug: yup.string().required(),
+  description: yup.string().nullable(),
+  meta_title: yup.string().nullable(),
   meta_description: yup.string().nullable(),
-  facebook_title: yup.string().nullable(),
-  facebook_description: yup.string().nullable(),
+  og_title: yup.string().nullable(),
+  og_description: yup.string().nullable(),
+  og_image: yup.string().nullable()
 });
 
 interface ICreateTagProps {
@@ -23,11 +26,14 @@ interface ICreateTagProps {
 }
 
 const initialTag = {
-    name: '',
-    slug: '',
-    meta_description: '',
-    facebook_title: '',
-    facebook_description: '',
+  name: '',
+  slug: '',
+  description: '',
+  meta_title: '',
+  meta_description: '',
+  og_title: '',
+  og_description: '',
+  og_image: ''
 };
 
 type TMessage = { type: 'success' | 'danger'; text: string };
@@ -178,7 +184,7 @@ export const CardTagInfo: React.FC<ICreateTagProps> = ({ onUpdated, selectedTag,
           Título Facebook
         </label>
         <input
-          {...register('facebook_title')}
+          {...register('og_title')}
           type="text"
           id="title_facebook"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -187,10 +193,10 @@ export const CardTagInfo: React.FC<ICreateTagProps> = ({ onUpdated, selectedTag,
       <div className="mt-2">
         <label htmlFor="description_facebook" className="block mb-2 text-sm font-medium text-gray-900">
           Descrição Facebook (até 65 caracteres)
-          <span className="text-gray-500 ml-2">({watch('facebook_description')?.length || 0}/65)</span>
+          <span className="text-gray-500 ml-2">({watch('og_description')?.length || 0}/65)</span>
         </label>
         <textarea
-          {...register('facebook_description')}
+          {...register('og_description')}
           id="description_facebook"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           rows={4}

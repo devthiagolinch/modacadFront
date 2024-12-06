@@ -8,14 +8,17 @@ import { ITagData, TagsService } from '../../../../shared/api/tags/TagsService';
 import { Alert } from '../../../../shared/components/ui/alert/Alert';
 
 interface IFormCreateTag
-  extends Pick<ITagData, 'name' | 'slug' | 'meta_description' | 'facebook_title' | 'facebook_description'> {}
+  extends Pick<ITagData, 'name' | 'slug' | 'description' | 'meta_title' | 'meta_description' | 'og_title' | 'og_description'> {}
 
 const createTagSchema: yup.ObjectSchema<IFormCreateTag> = yup.object({
   name: yup.string().required(),
   slug: yup.string().required(),
+  description: yup.string().nullable(),
+  meta_title: yup.string().nullable(),
   meta_description: yup.string().nullable(),
-  facebook_title: yup.string().nullable(),
-  facebook_description: yup.string().nullable(),
+  og_title: yup.string().nullable(),
+  og_description: yup.string().nullable(),
+  og_image: yup.string().nullable()
 });
 
 interface ICreateTagProps {
@@ -27,15 +30,18 @@ interface ICreateTagProps {
 const initialTag = {
   name: '',
   slug: '',
+  description: '',
+  meta_title: '',
   meta_description: '',
-  facebook_title: '',
-  facebook_description: '',
+  og_title: '',
+  og_description: '',
+  og_image: ''
 };
 
 type TMessage = { type: 'success' | 'danger'; text: string };
 
 export const CreateTag: React.FC<ICreateTagProps> = ({ onCreated, clearTag, selectedTag }) => {
-  const [imageFacebook, setImageFacebook] = useState<File | null>(null);
+  const [og_image, setImageFacebook] = useState<File | null>(null);
   const [message, setMessage] = useState<TMessage>({ type: 'success', text: '' });
 
   const { handleSubmit, register, reset, watch } = useForm<IFormCreateTag>({ resolver: yupResolver(createTagSchema) });
@@ -212,7 +218,7 @@ export const CreateTag: React.FC<ICreateTagProps> = ({ onCreated, clearTag, sele
           Título Facebook
         </label>
         <input
-          {...register('facebook_title')}
+          {...register('og_title')}
           type="text"
           id="title_facebook"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -221,10 +227,10 @@ export const CreateTag: React.FC<ICreateTagProps> = ({ onCreated, clearTag, sele
       <div className="mt-2">
         <label htmlFor="description_facebook" className="block mb-2 text-sm font-medium text-gray-900">
           Descrição Facebook (até 65 caracteres)
-          <span className="text-gray-500 ml-2">({watch('facebook_description')?.length || 0}/65)</span>
+          <span className="text-gray-500 ml-2">({watch('og_description')?.length || 0}/65)</span>
         </label>
         <textarea
-          {...register('facebook_description')}
+          {...register('og_description')}
           id="description_facebook"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           rows={4}
@@ -238,10 +244,10 @@ export const CreateTag: React.FC<ICreateTagProps> = ({ onCreated, clearTag, sele
           className={`flex items-center justify-center rounded-lg w-full overflow-hidden ${isDragActive ? 'bg-gray-100' : 'bg-gray-50'}`}
         >
           <input {...getInputProps()} className="hidden" />
-          {imageFacebook ? (
+          {og_image ? (
             <div className="relative flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed cursor-pointer">
               <img
-                src={URL.createObjectURL(imageFacebook)}
+                src={URL.createObjectURL(og_image)}
                 alt="Imagem do Facebook"
                 className="h-full w-full object-cover"
               />
