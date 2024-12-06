@@ -107,6 +107,7 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
           console.error(response.message);
         } else {
           const meta = Array.isArray(response.meta) && response.meta.length > 0 ? response.meta[0] : {};
+          const canonicalUrl = response.canonicalUrl?.replace('https://blog.modacad.com.br/', '') || '';
 
           setPost({
             title: props.title,
@@ -135,7 +136,7 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
             feature_image_alt: meta.feature_image_alt ?? '',
             email_only: meta.email_only ?? '',
             feature_image_caption: meta.feature_image_caption ?? '',
-            canonicalUrl: response.canonicalUrl,
+            canonicalUrl: canonicalUrl,
             published_at: response.published_at,
           });
         }
@@ -176,9 +177,9 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
   // Canonical URL
   let canonicalUrl;
   if (post.canonicalUrl) {
-    canonicalUrl = post.canonicalUrl.split('https://blog.modacad.com.br/', 2).pop();
-  } else {
-    canonicalUrl = '';
+    canonicalUrl = post.canonicalUrl.includes('https://blog.modacad.com.br/')
+      ? post.canonicalUrl.split('https://blog.modacad.com.br/', 2).pop()
+      : post.canonicalUrl;
   }
 
   const handleUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -260,6 +261,7 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = event.target;
     setPost((prev) => ({ ...prev, [name]: value }));
+    console.log(value)
   };
 
   const handleChangeVisibility = (visibility: TPostsVisibility) => {
@@ -355,6 +357,13 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
   };
 
   const handleSubmit = () => {
+    const adjustedPost = { ...post };
+
+    if (adjustedPost.canonicalUrl?.startsWith('https://blog.modacad.com.br/')) {
+      // Remover o prefixo para enviar apenas o slug
+      adjustedPost.canonicalUrl = adjustedPost.canonicalUrl.replace('https://blog.modacad.com.br/', '');
+    }
+
     if (postId && postId !== 'novo') {
       if (post.status === 'published') {
         post.status = 'draft';
@@ -395,7 +404,7 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
               type="text"
               name="canonicalUrl"
               value={canonicalUrl}
-              onChange={handleUrlChange}
+              onChange={handleInputChange}
               className=" border p-2 w-full font-montserrat font-light focus-visible:border-[#dcdf1e] focus:outline-none"
             />
             <span className="text-sm text-zinc-500 font-light font-montserrat">blog.modacad.com.br/{canonicalUrl}</span>
