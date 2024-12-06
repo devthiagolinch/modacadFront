@@ -35,7 +35,6 @@ type TMessage = { type: 'success' | 'danger'; text: string };
 export const CardTagInfo: React.FC<ICreateTagProps> = ({ onUpdated, selectedTag, onClose }) => {
   const [imageFacebook, setImageFacebook] = useState<File | null>(null);
   const [message, setMessage] = useState<TMessage>({ type: 'success', text: '' });
-  console.log(selectedTag?.name)
 
   const { handleSubmit, register, reset, watch } = useForm<IFormCreateTag>({ resolver: yupResolver(createTagSchema) });
 
