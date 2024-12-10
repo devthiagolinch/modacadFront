@@ -11,7 +11,7 @@ export function PublishedPosts() {
   const [posts, setPosts] = useState<IPostData[]>();
 
   useEffect(() => {
-    PostsService.getAll({ type: 'texto', status: 'published' }).then((response) => {
+    PostsService.getAll({ type: 'texto', status: 'published', order: 'desc' }).then((response) => {
       if (response instanceof Error) {
         console.error(response.message);
         return;

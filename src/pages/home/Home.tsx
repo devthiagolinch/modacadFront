@@ -27,7 +27,7 @@ export function Home() {
       }
       setSubjects(response);
     });
-    PostsService.getAll({ type: 'texto', status: 'published' }).then((response) => {
+    PostsService.getAll({ type: 'texto', status: 'published', order: 'desc' }).then((response) => {
       if (response instanceof Error) {
         console.error(response.message);
         return;
@@ -35,7 +35,7 @@ export function Home() {
       setLastPost(response.posts[0]);
       setPosts(response.posts.slice(1));
     });
-    PostsService.getAll({ type: 'pilula', status: 'published' }).then((response) => {
+    PostsService.getAll({ type: 'pilula', status: 'published', order: 'desc' }).then((response) => {
       if (response instanceof Error) {
         console.error(response.message);
         return;
