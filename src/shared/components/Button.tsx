@@ -5,6 +5,7 @@ interface buttonInterface {
     title: string
     active: Boolean
     link?: string
+    onClick?: () => void; // Permite que `onClick` seja opcional
     // ga_label: string
 }
 // fonte sera montserrat
@@ -23,7 +24,10 @@ export function Button(props: buttonInterface) {
                     font-montserrat_medium text-[22px]
                     flex flex-col justify-center items-center
                     bg-gradient-to-t from-[#dcdf1e] to-[#dcdf1e] bg-[length:90%_.90em] bg-no-repeat bg-[position:50%_75%] hover:bg-[#dcdf1e]
-                ">
+                "
+                    onClick={props.onClick} // Adicione a propriedade onClick aqui
+
+                >
                     {props.title}
                 </button>
             </Link>
