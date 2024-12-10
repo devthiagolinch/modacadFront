@@ -17,6 +17,7 @@ import { PageSubjects } from '../pages/admin/subjects/PageSubjects';
 import { PostEditor } from '../pages/dashboard/post-editor/PostEditor';
 import { PagePlans } from '../pages/admin/plans/PagePlans';
 import { PageTeam } from '../pages/admin/team/PageTeam';
+import { PublishedPosts } from '../pages/posts/PublishedPosts';
 
 type TPrivateRouteProps = RouteProps & {
   element: React.ReactNode;
@@ -45,6 +46,7 @@ export const AppRoutes = () => {
       <Route path="/pilulas/:postId" element={<PillDetails />} />
 
       {/* Rotas para postagens */}
+      <Route path="/posts" element={<PublishedPosts />} />
       <Route path="/posts/popular" element={<PopularPosts />} />
       <Route path="/posts/:postId" element={<PostDetails />} />
 
