@@ -176,6 +176,22 @@ const uploadImage = async (file: File): Promise<string | Error> => {
   }
 };
 
+const lastPost = async (): Promise<IPostResponse | Error> => {
+  try {
+    const urlRelativa = `/post/last/publish`;
+    const { data } = await api.get<IPostResponse>(urlRelativa);
+
+    if (data) {
+      return data;
+    } else {
+      return new Error('Erro ao listar os registros');
+    }
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido ao listar os registros';
+    return new Error(errorMessage);
+  }
+}
+
 export const PostsService = {
   getAll,
   deletePost,
@@ -183,4 +199,5 @@ export const PostsService = {
   getById,
   updateById,
   uploadImage,
+  lastPost
 };

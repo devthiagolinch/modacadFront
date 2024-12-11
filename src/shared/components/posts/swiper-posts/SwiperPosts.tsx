@@ -21,6 +21,16 @@ export const SwiperPosts: React.FC<ISwiperPosts> = ({ posts, postType, title, sl
   const prevRef = useRef<HTMLDivElement | null>(null);
   const nextRef = useRef<HTMLDivElement | null>(null);
 
+  const paginas: Record<string, string> = {
+    'TEXTOS MAIS LIDOS': '/posts/popular',
+    'TEXTOS PUBLICADOS': '/posts',
+    'PILULAS MODACAD': '/pilulas',
+  };
+
+  const navigateTo = () => {
+    window.scrollTo(0, 0);
+  };
+
   useEffect(() => {
     if (prevRef.current && nextRef.current) {
       prevRef.current.classList.add('swiper-button-prev');
@@ -32,7 +42,9 @@ export const SwiperPosts: React.FC<ISwiperPosts> = ({ posts, postType, title, sl
     <div>
       <div className="grid grid-cols-12 gap-4 font-montserrat">
         <div className="col-span-1 flex flex-col justify-center">
-          <h2 className="transform -rotate-90 text-2xl text-nowrap font-light text-gray-700">{title}</h2>
+          <Link to={paginas[title] || '/pagina-padrao'} onClick={() => navigateTo()} className="transform -rotate-90 text-2xl text-nowrap font-light text-gray-700"
+              
+          >{title}</Link>
         </div>
         <div className="col-span-11 border-x border-t border-gray-950">
           <Swiper

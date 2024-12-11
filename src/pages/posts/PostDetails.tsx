@@ -7,12 +7,21 @@ import { IPostData, PostsService } from '../../shared/api/posts/PostsService';
 
 import { Footer } from '../../shared/components/footer';
 import { Header } from '../../shared/components/header';
+import { format } from 'date-fns';
 
 export function PostDetails() {
   const { postId } = useParams<{ postId: string }>();
   const navigate = useNavigate();
 
   const [post, setPost] = useState<IPostData | undefined>(undefined);
+
+  function calculateReadingTime(text: string): string {
+    const wordsPerMinute = 300; // Média de leitura (A velocidade média de leitura de um brasileiro é de 200 a 400 palavras por minuto (PPM). Um leitor comum leva cerca de um minuto para ler uma página, que normalmente tem cerca de 300 palavras. )
+    const wordCount = text.split(/\s+/).length; // Conta palavras separadas por espaços
+    const readingTime = Math.ceil(wordCount / wordsPerMinute); // Tempo em minutos arredondado para cima
+  
+    return `${readingTime} min de leitura`;
+  }
 
   useEffect(() => {
     if (postId) {
@@ -73,9 +82,13 @@ export function PostDetails() {
             </div>
 
             <div className="lg:flex lg:flex-row lg:justify-center lg:items-center text-zinc-800">
-              <p className="text-left lg:mr-2">4/04/2025</p>
+            <p className="text-left lg:mr-2">
+              {post?.published_at ? format(new Date(post.published_at), 'dd/MM/yyyy') : ''}
+            </p>
               <span>•</span>
-              <span className="lg:ml-2"> 10 min de leitura</span>
+              <span className="lg:ml-2">
+                {post?.content ? calculateReadingTime(post.content) : '0 min de leitura'}
+              </span>
 
               <div className="lg:grid lg:items-end"></div>
             </div>

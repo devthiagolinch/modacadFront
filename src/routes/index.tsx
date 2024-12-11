@@ -8,8 +8,8 @@ import { AdminLogin } from '../pages/admin/AdminLogin';
 import { BlankPage } from '../pages/blank';
 import { Dashboard } from '../pages/dashboard/Dashboard';
 import { PopularPosts } from '../pages/posts/PopularPosts';
-import { PublishedPills } from '../pages/posts/PublishedPills';
-import { PillDetails } from '../pages/posts/PillDetails';
+import { PublishedPills } from '../pages/posts/pilula/PublishedPills';
+import { PillDetails } from '../pages/posts/pilula/PillDetails';
 import { PostDetails } from '../pages/posts/PostDetails';
 import { PageTags } from '../pages/admin/tags/PageTags';
 import { PageMembers } from '../pages/admin/members/PageMembers';
@@ -17,6 +17,7 @@ import { PageSubjects } from '../pages/admin/subjects/PageSubjects';
 import { PostEditor } from '../pages/dashboard/post-editor/PostEditor';
 import { PagePlans } from '../pages/admin/plans/PagePlans';
 import { PageTeam } from '../pages/admin/team/PageTeam';
+import { PublishedPosts } from '../pages/posts/PublishedPosts';
 
 type TPrivateRouteProps = RouteProps & {
   element: React.ReactNode;
@@ -45,6 +46,7 @@ export const AppRoutes = () => {
       <Route path="/pilulas/:postId" element={<PillDetails />} />
 
       {/* Rotas para postagens */}
+      <Route path="/posts" element={<PublishedPosts />} />
       <Route path="/posts/popular" element={<PopularPosts />} />
       <Route path="/posts/:postId" element={<PostDetails />} />
 
