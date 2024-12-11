@@ -65,12 +65,12 @@ export function PublishedPosts() {
                 justify-center items-center -mb-[1px]
             "
       >
-        <div className="w-full flex items-center px-[10px] mt-5 lg:px-[115px]">
-          <h1 className="font-butler_ultra_light text-[26px] md:text-[40px]">Textos publicados</h1>
-          <div className="w-[40%] lg:w-[65%] h-0 border-t-[1px] ml-[20px] border-[#202020]"></div>
+        <div className="w-full flex justify-center items-center px-[10px] mt-10 mb-10 lg:px-[115px]">
+          <h1 className="font-butler font-light lg:text-7xl text-3xl md:text-6xl w-full">Textos publicados</h1>
+          <div className="w-svw h-0 border-t-[1px] border-[#202020]"></div>
         </div>
 
-        <div className="lg:grid lg:grid-cols-2 mt-5 flex flex-col justify-center items-center lg:px-20">
+        <div className="lg:grid lg:grid-cols-2 lg:px-20 mt-5 flex flex-col justify-center items-center">
           {posts &&
             posts.map((post) => (
               <Link to={`/posts/${post.id}`} key={post.id}>

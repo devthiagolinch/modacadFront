@@ -65,8 +65,8 @@ export function PopularPosts() {
                 justify-center items-center -mb-[1px]
             "
       >
-        <div className="w-full flex items-center px-[10px] mt-5 lg:px-[115px]">
-          <h1 className="font-butler_ultra_light text-[26px] md:text-[40px]">Textos mais lidos</h1>
+        <div className="w-full flex items-center px-[10px] mt-10 mb-10 lg:px-[115px]">
+          <h1 className="font-butler font-light text-2xl md:text-6xl">Textos mais lidos</h1>
           <div className="w-[40%] lg:w-[65%] h-0 border-t-[1px] ml-[20px] border-[#202020]"></div>
         </div>
 

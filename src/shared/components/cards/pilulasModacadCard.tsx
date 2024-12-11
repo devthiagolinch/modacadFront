@@ -17,28 +17,20 @@ export const PilulaModacadCard: React.FC<PilulaCardDTO> = ({ post }) => {
       </div>
 
       <div className="p-[10px]">
-        <div className="grid">
-          {post.tags &&
-            Array.isArray(post.tags) &&
-            post.tags?.map((t, index) => (
-              <span className="font-montserratLight text-[12px] -mt-[5px]" key={index}>
+        <div className="flex flex-col h-10">
+          {post.subjects &&
+            Array.isArray(post.subjects) &&
+            post.subjects?.map((t, index) => (
+              <span className="font-montserratLight text-sm -mt-1" key={index}>
                 {t.name}
               </span>
             ))}
         </div>
 
-        <h1 className="text-[16px] font-butler_bold leading-[20px] mb-[10px] mt-[8px]">{post.title}</h1>
+        <h1 className="text-lg font-butler_bold leading-5 mb-[10px] mt-3 h-16">{post.title}</h1>
 
-        <p className="text-[14px] font-montserratRegular leading-[15px] h-[45px] overflow-hidden mb-[10px]">
+        <p className="font-montserratRegular text-base leading-5 mb-[10px] h-14 overflow-hidden text-ellipsis line-clamp-3">
           {post.description}
-        </p>
-
-        <p className="text-[14px] font-montserratRegular leading-[15px] h-[45px] overflow-hidden mb-[10px]">
-          {post.tags?.map((t, index) => (
-            <span className="font-montserratLight text-[12px] -mt-[5px]" key={index}>
-              {t.name}
-            </span>
-          ))}
         </p>
       </div>
     </div>
