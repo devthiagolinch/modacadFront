@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useSearchParams, Navigate } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 
 import { LayoutDashboard } from '../../shared/layouts/LayoutDashboard';
 import { IPostData, PostsService } from '../../shared/api/posts/PostsService';
