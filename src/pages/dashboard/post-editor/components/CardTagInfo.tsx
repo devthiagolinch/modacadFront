@@ -4,7 +4,7 @@ import { FaCloudUploadAlt, FaTimes } from 'react-icons/fa';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { ITagData, TagsService } from '../../../../../shared/api/tags/TagsService';
+import { ITagData, TagsService } from '../../../../shared/api/tags/TagsService';
 
 interface IFormCreateTag extends Pick<ITagData, 'name' | 'slug' | 'description' | 'meta_title' | 'meta_description' | 'og_title' | 'og_description'> {}
 
@@ -114,6 +114,7 @@ export const CardTagInfo: React.FC<ICreateTagProps> = ({ onUpdated, selectedTag,
           text: 'Tag excluída com sucesso',
         });
         onUpdated();
+        onClose();
       });
     }
   };
