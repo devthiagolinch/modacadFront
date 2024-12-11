@@ -117,10 +117,10 @@ export const Dashboard: React.FC = () => {
       </div>
       {/* Título */}
       <div className="my-4 border border-gray-200 p-4 bg-white flex gap-4">
-        <button className="bg-bgBtn py-4 px-2 text-1xl text-white flex gap-2 items-center">
+        <Link to={'/posts/novo'} className="bg-bgBtn py-4 px-2 text-1xl text-white flex gap-2 items-center">
           NOVO
           <FaPlusCircle />
-        </button>
+        </Link>
         <button
           className="border border-bgBtn px-2 py-4 text-bgBtn hover:bg-bgBtn hover:text-white"
           onClick={handleClearFilters}
