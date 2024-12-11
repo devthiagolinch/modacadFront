@@ -14,7 +14,7 @@ import { useForm } from 'react-hook-form';
 import { FacebookPreview } from './snnipets/FaceSnnipetPreviewl';
 import GoogleSnnipet from './snnipets/GoogleSnnipetsPreview';
 import { useNavigate, useParams } from 'react-router-dom';
-import { CardTagInfo } from './snnipets/CardTagInfo';
+import { CardTagInfo } from './CardTagInfo';
 
 interface CardDTO {
   /*   title: string | '';
