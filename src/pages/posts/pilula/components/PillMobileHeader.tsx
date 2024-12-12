@@ -53,17 +53,17 @@ export const MobileHeader: React.FC<MobileHeaderInterface> = ({ post }) => {
           </div>
 
           <div className="flex justify-between items-start align-top gap-10 px-5 mb-[20px] text-zinc-800">
-            <div className="flex flex-col font-montserrat_light_italic">
+            <div className="flex flex-col font-montserrat font-extralight">
               {post?.subjects.map((subject) => (
                                   <Link to={"/"} className="-mb-[5px]">{subject.name}</Link>
                               ))}
             </div>
 
             <div className="flex flex-col justify-between items-end">
-            <p className="text-left -mb-[5px]">
+            <p className="text-left -mb-[5px] font-montserrat font-light">
                 {post?.published_at ? format(new Date(post.published_at), 'dd/MM/yyyy') : ''} 
               </p>
-              <span>
+              <span className="font-montserrat font-light">
                 {post?.content ? calculateReadingTime(post.content) : '0 min de leitura'}
               </span>
             </div>

@@ -17,9 +17,9 @@ export const PostMobileHeader: React.FC<PostMobileHeaderInterface> = ({ post }) 
     return (
         <div className="lg:hidden">
           <div className=" pt-16 pb-5 w-full px-5 grid gap-5">
-            <h1 className="text-3xl font-butler_ultra_light">{post?.title}</h1>
+            <h1 className="text-5xl font-butler font-extralight">{post?.title}</h1>
 
-            <p className="text-left leading-[20px]">{post?.description}</p>
+            <p className="text-left leading-[20px] text-lg font-montserrat font-light">{post?.description}</p>
           </div>
 
           <div className="flex flex-col ">
@@ -39,13 +39,13 @@ export const PostMobileHeader: React.FC<PostMobileHeaderInterface> = ({ post }) 
               {post?.admins &&
                 Array.isArray(post.admins) &&
                 post.admins.map((admin, index) => (
-                  <div key={index}>
+                  <div key={index} className="flex justify-center items-center align-middle gap-3">
                     <img
                       src={admin.avatar ?? ''}
                       alt=""
                       className="w-14 h-14 rounded-full flex items-center justify-center bg-black"
                     />
-                    <p className="lg:-ml-3 lg:text-[20px] lg:font-montserratMedium tracking-[0.05em]">{admin.name}</p>
+                    <p className="lg:-ml-3 lg:text-[20px] lg:font-montserrat font-medium tracking-[0.05em]">{admin.name}</p>
                   </div>
                 ))}
             </div>
@@ -62,10 +62,10 @@ export const PostMobileHeader: React.FC<PostMobileHeaderInterface> = ({ post }) 
               </div>
 
               <div className="flex flex-col justify-center items-end">
-                <p className="text-left lg:mr-2">
+                <p className="text-left lg:mr-2 font-montserrat font-light">
                     {post?.published_at ? format(new Date(post.published_at), 'dd/MM/yyyy') : ''} 
                 </p>
-                <span className="lg:ml-2">
+                <span className="lg:ml-2 font-montserrat font-light">
                     {post?.content ? calculateReadingTime(post.content) : '0 min de leitura'}
                 </span>
               </div>
