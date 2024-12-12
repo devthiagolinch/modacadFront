@@ -6,7 +6,7 @@ import { ReadingBox } from '../../shared/components/reagindBox';
 import { ISubjectData, SubjectsService } from '../../shared/api/subjects/SubjectsService';
 
 import banner from '../../assets/imgs/Banner-home.jpg';
-import { PublicHeader } from '../../shared/components/header/PublicHeader';
+import { PublicHeader } from '../../shared/components/header/public-header/PublicHeader';
 import { Link } from 'react-router-dom';
 import { IPostData, PostsService } from '../../shared/api/posts/PostsService';
 import { FeaturedPost } from '../../shared/components/posts/featured-post/FeaturedPost';
@@ -65,7 +65,7 @@ export function Home() {
           <div className="flex flex-wrap gap-4 p-6">
             {subjects.map((sub, index) => (
               <div key={sub.id} className="text-5xl font-butler font-light">
-                <Link to="#" className="highlight-link">
+                <Link to={`/categorias/${sub.id}`} className="highlight-link">
                   {sub.name}
                 </Link>
                 {index < subjects.length - 1 && <span className="ml-4 mr-2">•</span>}
@@ -86,7 +86,7 @@ export function Home() {
       )}
       <CTAApp />
       {/* Sobre a Telma */}
-      <div></div>
+      <div id="contact"></div>
       {/* Rodapé */}
       <Footer />
     </div>
