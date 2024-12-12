@@ -4,13 +4,14 @@ import { IPostData } from '../../../../shared/api/posts/PostsService';
 import { PostList } from './presentation/PostList';
 
 interface IPostPresentationProps {
+  tipo: 'texto' | 'pilula';
   variant?: 'grid' | 'list';
   loading?: boolean;
   error?: boolean;
   posts?: IPostData[];
 }
 
-export const PostPresentation: FC<IPostPresentationProps> = ({ variant = 'grid', posts, loading, error }) => {
+export const PostPresentation: FC<IPostPresentationProps> = ({ tipo, variant = 'grid', posts, loading, error }) => {
   if (loading) {
     return null;
   }
@@ -32,8 +33,8 @@ export const PostPresentation: FC<IPostPresentationProps> = ({ variant = 'grid',
   }
 
   if (variant === 'list') {
-    return <PostList posts={posts} />;
+    return <PostList posts={posts} tipo={tipo} />;
   }
 
-  return <PostGrid posts={posts} />;
+  return <PostGrid posts={posts} tipo={tipo} />;
 };

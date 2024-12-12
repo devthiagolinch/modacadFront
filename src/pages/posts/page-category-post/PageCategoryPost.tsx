@@ -52,11 +52,23 @@ export const PageCategoryPost = () => {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
           <div className="col-span-7">
             <h2 className="font-light text-4xl mb-4">blogModacad</h2>
-            <PostPresentation posts={textos} loading={isLoadingTextos} error={errorTextos} variant="list" />
+            <PostPresentation
+              posts={textos}
+              loading={isLoadingTextos}
+              error={errorTextos}
+              variant="list"
+              tipo="texto"
+            />
           </div>
           <div className="col-span-5">
             <h2 className="font-light text-4xl mb-4">pílulasModacad</h2>
-            <PostPresentation posts={pilulas} loading={isLoadingPilulas} error={errorPilulas} variant="list" />
+            <PostPresentation
+              posts={pilulas}
+              loading={isLoadingPilulas}
+              error={errorPilulas}
+              variant="list"
+              tipo="pilula"
+            />
           </div>
         </div>
       </div>
