@@ -28,6 +28,7 @@ export const PageCategoryPost = () => {
     <div>
       <PublicHeader />
       <div className="container mx-auto p-4">
+        <h1 className="font-butler text-4xl mb-4">Posts por categoria</h1>
         <PostPresentation posts={posts} loading={loading} error={error} />
       </div>
     </div>

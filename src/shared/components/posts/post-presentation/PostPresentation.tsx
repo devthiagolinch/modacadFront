@@ -10,11 +10,7 @@ interface IPostPresentationProps {
 
 export const PostPresentation: FC<IPostPresentationProps> = ({ posts, loading, error }) => {
   if (loading) {
-    return (
-      <div>
-        <h1>Carregando...</h1>
-      </div>
-    );
+    return null;
   }
 
   if (error) {
