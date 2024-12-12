@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { Link } from 'react-router-dom';
 
 interface IDrawerLateralProps {
   isOpen: boolean;
@@ -26,19 +27,14 @@ export const DrawerLateral: FC<IDrawerLateralProps> = ({ isOpen, toggleDrawer })
       </button>
       <ul className="p-4">
         <li className="mb-2">
-          <a href="/" className="block hover:bg-gray-700 p-2 rounded-md">
+          <Link to="/" className="block hover:bg-gray-700 p-2 rounded-md">
             Início
-          </a>
+          </Link>
         </li>
         <li className="mb-2">
-          <a href="/posts/popular" className="block hover:bg-gray-700 p-2 rounded-md">
+          <Link to="/posts/popular" className="block hover:bg-gray-700 p-2 rounded-md">
             Populares
-          </a>
-        </li>
-        <li>
-          <a href="#contact" className="block hover:bg-gray-700 p-2 rounded-md">
-            Contato
-          </a>
+          </Link>
         </li>
       </ul>
     </div>

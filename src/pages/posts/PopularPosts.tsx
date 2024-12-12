@@ -1,10 +1,10 @@
-import { Header } from '../../shared/components/header';
 import { TextoMocadCard } from '../../shared/components/cards/textoModacadCard';
 import { Footer } from '../../shared/components/footer';
 import { Link } from 'react-router-dom';
 import { ReadingBox } from '../../shared/components/reagindBox';
 import { IPostData, PostsService } from '../../shared/api/posts/PostsService';
 import { useEffect, useState } from 'react';
+import { PublicHeader } from '../../shared/components/header/public-header/PublicHeader';
 
 export function PopularPosts() {
   const [posts, setPosts] = useState<IPostData[]>();
@@ -45,9 +45,9 @@ export function PopularPosts() {
       setPage((prevPage) => prevPage + 1); // Incrementa o número da página
     }
   };
-  
+
   useEffect(() => {
-    PostsService.getAll({ type: 'texto', status: 'published', order: "desc" }).then((response) => {
+    PostsService.getAll({ type: 'texto', status: 'published', order: 'desc' }).then((response) => {
       if (response instanceof Error) {
         console.error(response.message);
         return;
@@ -58,7 +58,7 @@ export function PopularPosts() {
 
   return (
     <div className="">
-      <Header />
+      <PublicHeader />
 
       <div
         className="lg:flex lg:flex-col
@@ -79,14 +79,17 @@ export function PopularPosts() {
             ))}
         </div>
         <div className="lg:mb-[80px] lg:mt-[60px] mt-[25px] mb-[50px] justify-center items-center flex">
-        <button
+          <button
             className="min-h-[60px] w-auto min-w-[210px] p-2 px-[25px]
                     border-[1px] border-[#202020]
                     font-montserrat_medium text-[22px]
                     flex flex-col justify-center items-center
                     bg-gradient-to-t from-[#dcdf1e] to-[#dcdf1e] bg-[length:90%_.90em] bg-no-repeat bg-[position:calc(90%_-_var(--p,0%))_900%]  hover:bg-[position:50%_75%]"
             onClick={handleLoadMore}
-          > CARREGAR MAIS</button>
+          >
+            {' '}
+            CARREGAR MAIS
+          </button>
         </div>
       </div>
 

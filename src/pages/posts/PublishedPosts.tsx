@@ -1,10 +1,10 @@
-import { Header } from '../../shared/components/header';
 import { TextoMocadCard } from '../../shared/components/cards/textoModacadCard';
 import { Footer } from '../../shared/components/footer';
 import { Link } from 'react-router-dom';
 import { ReadingBox } from '../../shared/components/reagindBox';
 import { IPostData, PostsService } from '../../shared/api/posts/PostsService';
 import { useEffect, useState } from 'react';
+import { PublicHeader } from '../../shared/components/header/public-header/PublicHeader';
 
 export function PublishedPosts() {
   const [posts, setPosts] = useState<IPostData[]>();
@@ -58,7 +58,7 @@ export function PublishedPosts() {
 
   return (
     <div className="">
-      <Header />
+      <PublicHeader />
 
       <div
         className="lg:flex lg:flex-col
@@ -86,7 +86,10 @@ export function PublishedPosts() {
                     flex flex-col justify-center items-center
                     bg-gradient-to-t from-[#dcdf1e] to-[#dcdf1e] bg-[length:90%_.90em] bg-no-repeat bg-[position:calc(90%_-_var(--p,0%))_900%]  hover:bg-[position:50%_75%]"
             onClick={handleLoadMore}
-          > CARREGAR MAIS</button>
+          >
+            {' '}
+            CARREGAR MAIS
+          </button>
         </div>
       </div>
 
