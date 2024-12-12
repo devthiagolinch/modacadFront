@@ -5,22 +5,39 @@ import { PublicHeader } from '../../../shared/components/header/public-header/Pu
 import { IPostData, PostsService } from '../../../shared/api/posts/PostsService';
 
 export const PageCategoryPost = () => {
-  const [posts, setPosts] = useState<IPostData[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  // Textos
+  const [textos, setTextos] = useState<IPostData[]>([]);
+  const [isLoadingTextos, setIsLoadingTextos] = useState(false);
+  const [errorTextos, setErrorTextos] = useState(false);
+
+  // Pílulas
+  const [pilulas, setPilulas] = useState<IPostData[]>([]);
+  const [isLoadingPilulas, setIsLoadingPilulas] = useState(false);
+  const [errorPilulas, setErrorPilulas] = useState(false);
 
   useEffect(() => {
-    setLoading(true);
+    setIsLoadingTextos(true);
     PostsService.getAll({ type: 'texto', status: 'published', order: 'desc' }).then((response) => {
       if (response instanceof Error) {
         console.error(response.message);
-        setError(true);
-        setLoading(false);
+        setErrorTextos(true);
+        setIsLoadingTextos(false);
         return;
       }
-      setPosts(response.posts);
-      setLoading(false);
-      setError(false);
+      setTextos(response.posts);
+      setIsLoadingTextos(false);
+      setErrorTextos(false);
+    });
+    PostsService.getAll({ type: 'pilula', status: 'published', order: 'desc' }).then((response) => {
+      if (response instanceof Error) {
+        console.error(response.message);
+        setErrorPilulas(true);
+        setIsLoadingPilulas(false);
+        return;
+      }
+      setPilulas(response.posts);
+      setIsLoadingPilulas(false);
+      setErrorPilulas(false);
     });
   }, []);
 
@@ -28,8 +45,20 @@ export const PageCategoryPost = () => {
     <div>
       <PublicHeader />
       <div className="container mx-auto p-4">
-        <h1 className="font-butler text-4xl mb-4">Posts por categoria</h1>
-        <PostPresentation posts={posts} loading={loading} error={error} />
+        <div className="flex gap-2 items-center">
+          <h1 className="font-butler text-5xl mb-4">Categoria</h1>
+          <hr className="grow border-t border-gray-950" />
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
+          <div className="col-span-7">
+            <h2 className="font-light text-4xl mb-4">blogModacad</h2>
+            <PostPresentation posts={textos} loading={isLoadingTextos} error={errorTextos} variant="list" />
+          </div>
+          <div className="col-span-5">
+            <h2 className="font-light text-4xl mb-4">pílulasModacad</h2>
+            <PostPresentation posts={pilulas} loading={isLoadingPilulas} error={errorPilulas} variant="list" />
+          </div>
+        </div>
       </div>
     </div>
   );
