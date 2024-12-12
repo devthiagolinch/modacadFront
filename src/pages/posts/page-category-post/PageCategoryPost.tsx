@@ -27,7 +27,9 @@ export const PageCategoryPost = () => {
   return (
     <div>
       <PublicHeader />
-      <PostPresentation posts={posts} loading={loading} error={error} />
+      <div className="container mx-auto p-4">
+        <PostPresentation posts={posts} loading={loading} error={error} />
+      </div>
     </div>
   );
 };

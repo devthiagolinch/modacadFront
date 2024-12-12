@@ -10,7 +10,11 @@ interface IPostCardProps {
 export const PostCard: FC<IPostCardProps> = ({ post }) => {
   return (
     <div className="border border-gray-950 font-montserrat">
-      <img src={post.feature_image ?? defaultImage} alt={post.title} className="w-full aspect-video object-cover" />
+      <img
+        src={post.feature_image ?? defaultImage}
+        alt={post.title}
+        className="w-full aspect-video object-cover border-b border-gray-950"
+      />
       <div className="p-4">
         <ul>
           {post.subjects.slice(0, 3).map((subject) => (
@@ -19,7 +23,7 @@ export const PostCard: FC<IPostCardProps> = ({ post }) => {
             </li>
           ))}
         </ul>
-        <h1 className="font-butler text-2xl leading-7 my-3">{post.title}</h1>
+        <h1 className="font-butler text-2xl leading-7 my-3 line-clamp-2">{post.title}</h1>
         <p className="font-light line-clamp-3">{post.description}</p>
       </div>
     </div>
