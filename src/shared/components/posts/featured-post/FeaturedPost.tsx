@@ -27,7 +27,7 @@ export const FeaturedPost: React.FC<IFeaturedPost> = ({ post, postType, title })
               </span>
             ))}
           {/* Título da publicação */}
-          <h3 className="text-6xl mb-8 font-butler font-light">{post.title}</h3>
+          <h3 className="text-6xl my-8 font-butler font-light">{post.title}</h3>
           {/* Descrição da publicação */}
           <p className="text-gray-700 line-clamp-4 text-2xl font-light">{post.description}</p>
         </div>
