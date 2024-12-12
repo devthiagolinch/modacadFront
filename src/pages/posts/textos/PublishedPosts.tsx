@@ -1,12 +1,12 @@
-import { TextoMocadCard } from '../../shared/components/cards/textoModacadCard';
-import { Footer } from '../../shared/components/footer';
+import { TextoMocadCard } from '../../../shared/components/cards/textoModacadCard';
+import { Footer } from '../../../shared/components/footer';
 import { Link } from 'react-router-dom';
-import { ReadingBox } from '../../shared/components/reagindBox';
-import { IPostData, PostsService } from '../../shared/api/posts/PostsService';
+import { ReadingBox } from '../../../shared/components/reagindBox';
+import { IPostData, PostsService } from '../../../shared/api/posts/PostsService';
 import { useEffect, useState } from 'react';
-import { PublicHeader } from '../../shared/components/header/public-header/PublicHeader';
+import { PublicHeader } from '../../../shared/components/header/public-header/PublicHeader';
 
-export function PopularPosts() {
+export function PublishedPosts() {
   const [posts, setPosts] = useState<IPostData[]>();
   const [page, setPage] = useState(2); // Página atual
   const [hasMore, setHasMore] = useState(true); // Controle de mais dados para carregar
@@ -65,12 +65,12 @@ export function PopularPosts() {
                 justify-center items-center -mb-[1px]
             "
       >
-        <div className="w-full flex items-center px-[10px] mt-10 mb-10 lg:px-[115px]">
-          <h1 className="font-butler font-light text-2xl md:text-6xl">Textos mais lidos</h1>
-          <div className="w-[40%] lg:w-[65%] h-0 border-t-[1px] ml-[20px] border-[#202020]"></div>
+        <div className="w-full flex justify-center items-center px-[10px] mt-10 mb-10 lg:px-[115px]">
+          <h1 className="font-butler font-light lg:text-7xl text-3xl md:text-6xl w-full">Textos publicados</h1>
+          <div className="w-svw h-0 border-t-[1px] border-[#202020]"></div>
         </div>
 
-        <div className="lg:grid lg:grid-cols-2 mt-5 flex flex-col justify-center items-center lg:px-20">
+        <div className="lg:grid lg:grid-cols-2 lg:px-20 mt-5 flex flex-col justify-center items-center">
           {posts &&
             posts.map((post) => (
               <Link to={`/posts/${post.id}`} key={post.id}>
