@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 import { IPostData, PostsService } from '../../shared/api/posts/PostsService';
 import { FeaturedPost } from '../../shared/components/posts/featured-post/FeaturedPost';
 import { SwiperPosts } from '../../shared/components/posts/swiper-posts/SwiperPosts';
+import { CTAApp } from '../../shared/components/cta-app/CTAApp';
 
 export function Home() {
   const [subjects, setSubjects] = useState<ISubjectData[]>([]);
@@ -83,6 +84,7 @@ export function Home() {
       {pilulas.length > 0 && (
         <SwiperPosts posts={pilulas} postType="pilula" title="PILULAS MODACAD" slidesPerView={4} />
       )}
+      <CTAApp />
       {/* Sobre a Telma */}
       <div></div>
       {/* Rodapé */}
