@@ -4,10 +4,14 @@ import telmaLogoDesk from '../../../../assets/svg/HOME logo TELMA BARCELLOS moda
 import telmaLogoDMobile from '../../../../assets/svg/MOBILE Logo TELMA BARCELLOS modacad.svg';
 import { useState } from 'react';
 import { DrawerLateral } from './DrawerLateral';
+import { SearchDialog } from '../../search-dialog/SearchDialog';
 
 export const PublicHeader = () => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleDrawer = () => setIsOpen((prev) => !prev);
+
+  const [isOpenSearch, setIsOpenSearch] = useState(false);
+  const toggleDialog = () => setIsOpenSearch((prev) => !prev);
 
   return (
     <div className="flex lg:items-center w-[100%] h-[90px] border-b-[1px] border-l-[1px] border-r-[1px] border-[#202020] bg-[#f1ece8] shadow-read">
@@ -55,9 +59,9 @@ export const PublicHeader = () => {
               />
             </svg>
           </Link> */}
-          <Link
-            to="" // To-do - Criar funcionalidade de busca
+          <button
             className="font-medium text-sm border border-r-0 border-b-0 border-t-0 border-zinc-950 w-50 h-20 px-6 py-[30px] hover:bg-[#dcdf1e]"
+            onClick={toggleDialog}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -73,7 +77,7 @@ export const PublicHeader = () => {
                 d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
               />
             </svg>
-          </Link>
+          </button>
           <button
             className="font-medium text-sm border border-r-0 border-b-0 border-t-0 border-zinc-950 w-50 h-20 px-6 py-7 hover:bg-[#dcdf1e] block sm:hidden"
             onClick={toggleDrawer}
@@ -92,6 +96,7 @@ export const PublicHeader = () => {
         </nav>
       </div>
       <DrawerLateral isOpen={isOpen} toggleDrawer={toggleDrawer} />
+      <SearchDialog isOpen={isOpenSearch} toggleDialog={toggleDialog} />
     </div>
   );
 };
