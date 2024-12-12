@@ -18,6 +18,7 @@ import { PostEditor } from '../pages/dashboard/post-editor/PostEditor';
 import { PagePlans } from '../pages/admin/plans/PagePlans';
 import { PageTeam } from '../pages/admin/team/PageTeam';
 import { PublishedPosts } from '../pages/posts/PublishedPosts';
+import { PageCategoryPost } from '../pages/posts/page-category-post/PageCategoryPost';
 
 type TPrivateRouteProps = RouteProps & {
   element: React.ReactNode;
@@ -41,6 +42,8 @@ export const AppRoutes = () => {
       {/* Rotas Públicas */}
       <Route path="/" element={<Home />} />
       <Route path="/planos" element={<Plans />} />
+
+      <Route path="/categorias/:categoryId" element={<PageCategoryPost />} />
 
       <Route path="/pilulas" element={<PublishedPills />} />
       <Route path="/pilulas/:postId" element={<PillDetails />} />
