@@ -6,7 +6,7 @@ import { ReadingBox } from '../../shared/components/reagindBox';
 import { ISubjectData, SubjectsService } from '../../shared/api/subjects/SubjectsService';
 
 import banner from '../../assets/imgs/Banner-home.jpg';
-import { PublicHeader } from '../../shared/components/header/PublicHeader';
+import { PublicHeader } from '../../shared/components/header/public-header/PublicHeader';
 import { Link } from 'react-router-dom';
 import { IPostData, PostsService } from '../../shared/api/posts/PostsService';
 import { FeaturedPost } from '../../shared/components/posts/featured-post/FeaturedPost';
@@ -86,7 +86,7 @@ export function Home() {
       )}
       <CTAApp />
       {/* Sobre a Telma */}
-      <div></div>
+      <div id="contact"></div>
       {/* Rodapé */}
       <Footer />
     </div>
