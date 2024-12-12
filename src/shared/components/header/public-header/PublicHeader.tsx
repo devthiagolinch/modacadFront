@@ -13,7 +13,7 @@ export const PublicHeader = () => {
     <div className="flex lg:items-center w-[100%] h-[90px] border-b-[1px] border-l-[1px] border-r-[1px] border-[#202020] bg-[#f1ece8] shadow-read">
       <div className="flex w-screen justify-between ">
         {/* Logo */}
-        <div className="flex-1 justify-center items-center flex">
+        <div className="flex-1 justify-center items-center flex px-2">
           <Link to={'/'} className="h-[60px] lg:h-auto">
             <img src={telmaLogoDesk} className="hidden lg:block h-full" alt="Logo Desktop" />
             <img src={telmaLogoDMobile} className="block lg:hidden h-full" alt="Logo Mobile" />
