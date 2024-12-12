@@ -9,43 +9,64 @@ is-editor-empty {
   color: #7d7d7d;
 }
 
+.tiptap h1 {
+  font-size: 1.6rem;
+  margin-top: 3.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.tiptap h2 {
+  font-size: 1.4rem;
+  margin-top: 3.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.tiptap h3 {
+  font-size: 1.3rem;
+}
+
+.tiptap h4,
+.tiptap h5,
+.tiptap h6 {
+  font-size: 1rem;
+}
+
+
 .tiptap {
   font-family: montserrat;
-  font-size: 16px;
+  font-size: 20px;
   /* Heading styles */
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
   h6 {
     line-height: 1.1;
     margin-top: 2.5rem;
     text-wrap: pretty;
+  }
 
-    h1,
-    h2 {
-      margin-top: 3.5rem;
-      margin-bottom: 1.5rem;
-    }
+  h1 {
+    font-size: 1.6rem;
+  }
 
-    h1 {
-      font-size: 1.4rem;
-    }
+  h2 {
+    margin-top: 3.5rem;
+    margin-bottom: 1.5rem;
+  }
 
-    h2 {
-      font-size: 1.2rem;
-    }
+  h1 {
+    
+  }
 
-    h3 {
-      font-size: 1.1rem;
-    }
+  h2 {
+    font-size: 1.2rem;
+  }
 
-    h4,
-    h5,
-    h6 {
-      font-size: 1rem;
-    }
+  h3 {
+    font-size: 1.1rem;
+  }
+
+  h4,
+  h5,
+  h6 {
+    font-size: 1rem;
   }
 
   img {
@@ -54,24 +75,34 @@ is-editor-empty {
     margin: 1.5rem 0;
     max-width: 80%;
   }
+}
 
-  blockquote {
-    quotes: none;
-    border-left: 4px solid #dcdf1e;
-    margin: 1.5rem 2rem;
-    padding-left: 1rem;
-  }
-  custom-blockquote::before,
-  custom-blockquote::after {
-    content: '';
-  }
+.tiptap blockquote {
+  quotes: none;
+  border-left: 4px solid #dcdf1e;
+  margin: 1.5rem 2rem;
+  padding-left: 1rem;
+}
+.tiptap custom-blockquote::before,
+.tiptap custom-blockquote::after {
+  content: '';
+}
 
-  .prose blockquote {
-    border-left: 4px solid #ccc;
-    padding-left: 1em;
-    color: #555;
-    font-style: italic;
-  }
+.tiptap a {
+  color: #368391;
+  font-size: 1rem;
+}
+
+.tiptap iframe {
+  border: none;
+  max-width: 100%;
+}
+
+.prose .tiptap blockquote {
+  border-left: 4px solid #ccc;
+  padding-left: 1em;
+  color: #555;
+  font-style: italic;
 }
 
 /* Character count */
