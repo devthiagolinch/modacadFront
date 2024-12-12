@@ -35,7 +35,7 @@ export const PillDetails = () => {
 
       <div className="lg:pt-12 lg:w-full flex justify-center items-center">
         <p
-          className="text-justify lg:text-xl lg:min-w-[980px] w-full px-5 font-montserrat font-light prose tiptap"
+          className="text-justify lg:text-xl lg:min-w-[980px] w-full px-5 font-montserrat font-normal prose tiptap"
           dangerouslySetInnerHTML={{ __html: pilula?.content ?? '' }}
         />
       </div>

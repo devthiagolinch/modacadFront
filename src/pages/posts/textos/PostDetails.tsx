@@ -62,7 +62,7 @@ export function PostDetails() {
 
       <div className="lg:pt-12 lg:w-full flex justify-center items-center">
         <p
-          className="text-justify md:text-7xl lg:min-w-[970px] w-full px-5 font-montserrat overflow-hidden font-light prose tiptap"
+          className="text-justify md:text-7xl lg:min-w-[970px] w-full px-5 font-montserrat leading-10 overflow-hidden font-normal prose tiptap"
           dangerouslySetInnerHTML={{ __html: post?.content ?? '' }}
         />
       </div>

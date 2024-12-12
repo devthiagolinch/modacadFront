@@ -10,13 +10,13 @@ is-editor-empty {
 }
 
 .tiptap h1 {
-  font-size: 1.6rem;
+  font-size: 2rem;
   margin-top: 3.5rem;
   margin-bottom: 1.5rem;
 }
 
 .tiptap h2 {
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   margin-top: 3.5rem;
   margin-bottom: 1.5rem;
 }
@@ -31,6 +31,11 @@ is-editor-empty {
   font-size: 1rem;
 }
 
+.tiptap p {
+  line-height: 2.2rem;
+  color: #202020;
+}
+
 
 .tiptap {
   font-family: montserrat;
@@ -43,30 +48,35 @@ is-editor-empty {
   }
 
   h1 {
-    font-size: 1.6rem;
+    font-size: 3rem;
   }
 
   h2 {
-    margin-top: 3.5rem;
+    margin-top: 2.5rem;
     margin-bottom: 1.5rem;
   }
 
   h1 {
-    
+    font-size: 4rem;
   }
 
+  // TITULO 01
   h2 {
-    font-size: 1.2rem;
+    font-size: 3rem;
   }
-
+  // TITULO 02
   h3 {
-    font-size: 1.1rem;
+    font-size: 2.2rem;
   }
 
-  h4,
-  h5,
+  h4 {
+    font-size: 2rem;
+  },
+  h5 {
+    font-size: 2rem
+  },
   h6 {
-    font-size: 1rem;
+    font-size: 2rem;
   }
 
   img {
