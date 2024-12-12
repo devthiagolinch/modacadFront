@@ -3,6 +3,9 @@ import { useEffect, useState } from 'react';
 import { PostPresentation } from '../../../shared/components/posts/post-presentation/PostPresentation';
 import { PublicHeader } from '../../../shared/components/header/public-header/PublicHeader';
 import { IPostData, PostsService } from '../../../shared/api/posts/PostsService';
+import { Footer } from '../../../shared/components/footer';
+import { ReadingBox } from '../../../shared/components/reagindBox';
+import { CTAApp } from '../../../shared/components/cta-app/CTAApp';
 
 export const PageCategoryPost = () => {
   // Textos
@@ -46,12 +49,12 @@ export const PageCategoryPost = () => {
       <PublicHeader />
       <div className="container mx-auto p-4">
         <div className="flex gap-2 items-center">
-          <h1 className="font-butler text-5xl mb-4">Categoria</h1>
+          <h1 className="font-butler text-4xl md:text-6xl mb-4">Tecidos e Materiais</h1>
           <hr className="grow border-t border-gray-950" />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
           <div className="col-span-7">
-            <h2 className="font-light text-4xl mb-4">blogModacad</h2>
+            <h2 className="font-light text-3xl md:text-4xl mb-4">blogModacad</h2>
             <PostPresentation
               posts={textos}
               loading={isLoadingTextos}
@@ -61,7 +64,7 @@ export const PageCategoryPost = () => {
             />
           </div>
           <div className="col-span-5">
-            <h2 className="font-light text-4xl mb-4">pílulasModacad</h2>
+            <h2 className="font-light text-3xl md:text-4xl mb-4">pílulasModacad</h2>
             <PostPresentation
               posts={pilulas}
               loading={isLoadingPilulas}
@@ -72,6 +75,9 @@ export const PageCategoryPost = () => {
           </div>
         </div>
       </div>
+      <ReadingBox />
+      <CTAApp />
+      <Footer />
     </div>
   );
 };
