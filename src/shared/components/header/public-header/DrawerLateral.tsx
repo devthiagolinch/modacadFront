@@ -9,11 +9,11 @@ interface IDrawerLateralProps {
 export const DrawerLateral: FC<IDrawerLateralProps> = ({ isOpen, toggleDrawer }) => {
   return (
     <div
-      className={`fixed top-0 left-0 h-full bg-gray-900 text-white w-64 transform transition-transform ${
+      className={`fixed top-0 left-0 h-full bg-white w-64 transform transition-transform ${
         isOpen ? 'translate-x-0' : '-translate-x-full'
       } sm:hidden z-50`}
     >
-      <button className="absolute top-4 right-4 p-2 bg-gray-700 rounded-md" onClick={toggleDrawer}>
+      <button className="absolute top-4 right-4 p-2 border border-gray-950" onClick={toggleDrawer}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -27,12 +27,12 @@ export const DrawerLateral: FC<IDrawerLateralProps> = ({ isOpen, toggleDrawer })
       </button>
       <ul className="p-4">
         <li className="mb-2">
-          <Link to="/" className="block hover:bg-gray-700 p-2 rounded-md">
+          <Link to="/" className="block hover:bg-primary p-2">
             Início
           </Link>
         </li>
         <li className="mb-2">
-          <Link to="/posts/popular" className="block hover:bg-gray-700 p-2 rounded-md">
+          <Link to="/posts/popular" className="block hover:bg-primary p-2">
             Populares
           </Link>
         </li>
