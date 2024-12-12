@@ -33,20 +33,23 @@ export const DeskTopHeader: React.FC<DeskTopHeaderInterface> = ({ post }) => {
             </div>
 
             <div className="flex align-middle lg:justify-evenly gap-32">
-                <div className="flex lg:p-5 lg:gap-5 lg:items-center lg:justify-start">
-                    {post?.admins &&
-                    Array.isArray(post.admins) &&
-                    post.admins.map((admin, index) => (
-                        <div key={index} className="flex align-middle justify-center items-center gap-7">
-                        <img
-                            src={admin.avatar ?? ''}
-                            alt=""
-                            className="w-14 h-14 rounded-full flex items-center justify-center bg-black"
-                        />
-                        <p className="lg:-ml-3 lg:text-[20px] lg:font-montserrat font-medium tracking-[0.05em]">{admin.name}</p>
-                        </div>
-                    ))}
+                <div>
+                    <div className="flex lg:p-5 lg:gap-5 lg:items-center lg:justify-start">
+                        {post?.admins &&
+                        Array.isArray(post.admins) &&
+                        post.admins.map((admin, index) => (
+                            <div key={index} className="flex align-middle justify-center items-center gap-7">
+                            <img
+                                src={admin.avatar ?? ''}
+                                alt=""
+                                className="w-14 h-14 rounded-full flex items-center justify-center bg-black"
+                            />
+                            <p className="lg:-ml-3 lg:text-[20px] lg:font-montserrat font-medium tracking-[0.05em]">{admin.name}</p>
+                            </div>
+                        ))}
+                    </div>
                 </div>
+
 
                     <div className="lg:flex lg:flex-row lg:justify-center lg:items-center text-zinc-800">
                         <p className="text-left lg:mr-2">
@@ -65,6 +68,20 @@ export const DeskTopHeader: React.FC<DeskTopHeaderInterface> = ({ post }) => {
                     
                 </div>
                 <img src={post?.feature_image ?? ''} className="w-[400px] h-[400px] object-cover " />
+            </div>
+            <div className="flex w-full justify-center align-middle items-center gap-5 mt-5">
+                {post?.editors && Array.isArray(post.editors) &&
+                    post.editors.map((editor, index) => (
+                    <div key={index} className="flex align-middle justify-center items-center gap-7">
+                        <span className="lg:-ml-3 lg:text-2 lg:font-montserrat font-medium tracking-[0.05em]">Editor: {editor.name}</span>
+                    </div>
+                ))}
+                {post?.curadors && Array.isArray(post.editors) &&
+                    post.curadors.map((curador, index) => (
+                    <div key={index} className="flex align-middle justify-center items-center gap-7">
+                        <span className="lg:-ml-3 lg:text-2 lg:font-montserrat font-medium tracking-[0.05em]">Curador: {curador.name}</span>
+                    </div>
+                ))}
             </div>
         </div>
     )

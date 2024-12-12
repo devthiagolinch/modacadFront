@@ -68,6 +68,20 @@ export const PostDeskTopHeader: React.FC<PostDeskTopHeaderInterface> = ({ post }
             <div className="lg:h-[370px] lg:w-[730px] border-[1px] border-[#f1ece8] absolute "></div>
             <img src={post?.feature_image ?? ''} alt="" className="lg:h-[400px] lg:w-[760px] object-cover" />
           </div>
+          <div className="flex w-full justify-center align-middle items-center gap-5 mt-5">
+                {post?.editors && Array.isArray(post.editors) &&
+                    post.editors.map((editor, index) => (
+                    <div key={index} className="flex align-middle justify-center items-center gap-7">
+                        <span className="lg:-ml-3 lg:text-2 lg:font-montserrat font-medium tracking-[0.05em]">Editor: {editor.name}</span>
+                    </div>
+                ))}
+                {post?.curadors && Array.isArray(post.editors) &&
+                    post.curadors.map((curador, index) => (
+                    <div key={index} className="flex align-middle justify-center items-center gap-7">
+                        <span className="lg:-ml-3 lg:text-2 lg:font-montserrat font-medium tracking-[0.05em]">Curador: {curador.name}</span>
+                    </div>
+                ))}
+            </div>
         </div>
     )
 }
