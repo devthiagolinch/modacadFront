@@ -1,9 +1,9 @@
-import { Header } from '../../shared/components/header';
-import { TextoMocadCard } from '../../shared/components/cards/textoModacadCard';
-import { Footer } from '../../shared/components/footer';
+import { Header } from '../../../shared/components/header';
+import { TextoMocadCard } from '../../../shared/components/cards/textoModacadCard';
+import { Footer } from '../../../shared/components/footer';
 import { Link } from 'react-router-dom';
-import { ReadingBox } from '../../shared/components/reagindBox';
-import { IPostData, PostsService } from '../../shared/api/posts/PostsService';
+import { ReadingBox } from '../../../shared/components/reagindBox';
+import { IPostData, PostsService } from '../../../shared/api/posts/PostsService';
 import { useEffect, useState } from 'react';
 
 export function PopularPosts() {

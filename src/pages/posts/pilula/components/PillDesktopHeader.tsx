@@ -17,20 +17,19 @@ export const DeskTopHeader: React.FC<DeskTopHeaderInterface> = ({ post }) => {
 
     return (
         <div className="hidden lg:flex lg:flex-col  lg:w-full">
-            <div className="lg:flex  lg:pb-5 2xl:gap-[14.5%] lg:gap-[12%] lg:justify-between">
-            {/** tentar subir um pouco as subjects para ficar alinhado com a descrição */}
-            <div className="lg:flex lg:pl-[55px] lg:flex-row lg:align-middle lg:items-end lg:w-auto">
-                {post?.subjects.map((subject) => (
-                <span className=" w-[22px] lg:transform: -rotate-90 text-nowrap">{subject.name.toUpperCase()}</span>
-                ))}
-            </div>
-            <div className="lg:flex lg:flex-col lg:pr-[20%] w-full px-10 justify-center">
-                <h1 className="lg:text-7xl lg:font-butler font-light lg:my-14 lg:mb-[30px] lg:leading-[80px]">
-                {post?.title}
-                </h1>
+            <div className="lg:flex  lg:pb-5 2xl:gap-[14.5%] lg:gap-32 lg:justify-between">
+                <div className="lg:flex lg:pl-[55px] lg:flex-row lg:align-middle lg:items-end lg:w-40">
+                    {post?.subjects.map((subject) => (
+                    <span className=" w-5 lg:transform: -rotate-90 text-nowrap">{subject.name.toUpperCase()}</span>
+                    ))}
+                </div>
+                <div className="lg:flex lg:flex-col lg:pr-[20%] w-full px-10 justify-center">
+                    <h1 className="lg:text-6xl lg:font-butler font-light lg:my-14 lg:mb-[30px] lg:leading-[80px]">
+                    {post?.title}
+                    </h1>
 
-                <p className="lg:text-justify lg:text-[20px] w-[100%] font-montserrat font-light">{post?.description}</p>
-            </div>
+                    <p className="lg:text-justify text-xl w-[100%] font-montserrat font-light">{post?.description}</p>
+                </div>
             </div>
 
             <div className="flex align-middle lg:justify-evenly gap-32">
@@ -50,7 +49,7 @@ export const DeskTopHeader: React.FC<DeskTopHeaderInterface> = ({ post }) => {
                 </div>
 
                     <div className="lg:flex lg:flex-row lg:justify-center lg:items-center text-zinc-800">
-                    <p className="text-left lg:mr-2">
+                        <p className="text-left lg:mr-2">
                         {post?.published_at ? format(new Date(post.published_at), 'dd/MM/yyyy') : ''} 
                         </p>
                         <span>•</span>
