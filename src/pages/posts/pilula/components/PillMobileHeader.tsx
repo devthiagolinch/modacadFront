@@ -52,6 +52,21 @@ export const MobileHeader: React.FC<MobileHeaderInterface> = ({ post }) => {
               ))}
           </div>
 
+          <div className="grid justify-start px-5 mb-5">
+            {post?.editors && Array.isArray(post.editors) &&
+                  post.editors.map((editor, index) => (
+                  <div key={index} className="flex align-middle gap-7">
+                      <span className="text-base font-montserrat font-medium tracking-[0.05em]">Editor: {editor.name}</span>
+                  </div>
+                ))}
+                {post?.curadors && Array.isArray(post.editors) &&
+                  post.curadors.map((curador, index) => (
+                  <div key={index} className="flex align-middle justify-center items-center gap-7">
+                      <span className="text-base font-montserrat font-medium tracking-[0.05em]">Curador: {curador.name}</span>
+                  </div>
+                ))}
+            </div>
+
           <div className="flex justify-between items-start align-top gap-10 px-5 mb-[20px] text-zinc-800">
             <div className="flex flex-col font-montserrat font-extralight">
               {post?.subjects.map((subject) => (
