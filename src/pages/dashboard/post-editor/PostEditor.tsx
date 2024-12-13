@@ -11,14 +11,15 @@ import TextStyle from '@tiptap/extension-text-style';
 import Image from '@tiptap/extension-image';
 
 import { FaImage } from 'react-icons/fa6';
-import { TbBlockquote } from 'react-icons/tb';
 import { FiDownload } from 'react-icons/fi';
 
 import { IPostDataRequest, PostsService } from '../../../shared/api/posts/PostsService';
 import { LayoutDashboard } from '../../../shared/layouts';
-import { FaBold, FaItalic, FaStrikethrough } from 'react-icons/fa';
+import { FaBold, FaItalic, FaLink, FaList, FaQuoteLeft } from 'react-icons/fa';
 import Placeholder from '@tiptap/extension-placeholder';
 import { CardBasicInfo } from './components/CardBasicInfo';
+
+
 
 const defaultPost: IPostDataRequest = {
   title: '',
@@ -64,6 +65,7 @@ export const PostEditor = () => {
   const editor = useEditor({
     extensions: [
       StarterKit,
+      /* InstagramEmbed, */
       Image.configure({
         inline: true,
         allowBase64: true,
@@ -94,7 +96,7 @@ export const PostEditor = () => {
           return 'Escreva o conteúdo do post aqui...'; // Placeholder para o conteúdo principal
         },
         emptyEditorClass: 'is-editor-empty', // Classe CSS para o editor vazio
-      }),
+      })
     ],
     editorProps: {
       attributes: {
@@ -307,29 +309,29 @@ export const PostEditor = () => {
 
           {editor && (
             <FloatingMenu editor={editor} tippyOptions={{ duration: 100 }}>
-              <div className="flex gap-2 p-2 bg-zinc-600 text-white font-montserrat font-medium text-md">
+              <div className="flex gap-4 p-2 px-5 rounded-full justify-center align-middle bg-zinc-600 text-white font-montserrat font-medium text-md">
                 <button
-                  onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-                  className={editor.isActive('heading', { level: 1 }) ? 'text-yellow-400' : 'hover:text-yellow-400'}
+                  onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
+                  className={editor.isActive('heading', { level: 3 }) ? 'text-yellow-400 text-2xl align-middle' : 'hover:text-yellow-400 text-2xl'}
                 >
-                  H1
+                  H
                 </button>
                 <button
-                  onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-                  className={editor.isActive('heading', { level: 2 }) ? 'text-yellow-400' : 'hover:text-yellow-400'}
+                  onClick={() => editor.chain().focus().toggleHeading({ level: 4 }).run()}
+                  className={editor.isActive('heading text-base', { level: 4 }) ? 'text-yellow-400 text-lg' : 'hover:text-yellow-400 text-lg'}
                 >
-                  H2
+                  H
                 </button>
                 <button
                   onClick={() => editor.chain().focus().toggleBulletList().run()}
-                  className={editor.isActive('bulletList') ? 'text-yellow-400' : 'hover:text-yellow-400'}
+                  className={editor.isActive('bulletList') ? 'text-yellow-400 text-lg' : 'hover:text-yellow-400 text-lg'}
                 >
-                  Bullet list
+                  <FaList />
                 </button>
                 {/* Botão de upload de imagem */}
                 <button
                   onClick={() => document.getElementById('imageUpload')?.click()}
-                  className="hover:text-yellow-400"
+                  className="hover:text-yellow-400 text-lg"
                 >
                   <FaImage />
                 </button>
@@ -340,13 +342,24 @@ export const PostEditor = () => {
                   accept="image/*"
                   onChange={handleImageUpload}
                 />
+                {/* <button
+                  onClick={() => {
+                    const url = window.prompt('Insira o URL do Instagram Embed:');
+                    if (url) {
+                      editor.commands.setInstagramEmbed(url)
+                    }
+                  }}
+                  className="hover:text-yellow-400"
+                >
+                  Embed Instagram
+                </button> */}
               </div>
             </FloatingMenu>
           )}
 
           {editor && (
             <BubbleMenu editor={editor} tippyOptions={{ duration: 100 }}>
-              <div className="flex p-2 gap-2 bg-gray-950 drop-shadow-xl text-zinc-300 text-sm overflow-hidden leading-none">
+              <div className="flex gap-4 p-2 px-5 rounded-full justify-center align-middle bg-zinc-600 text-white font-montserrat font-medium text-md">
                 <button
                   onClick={() => editor.chain().focus().toggleBold().run()}
                   className={editor.isActive('bold') ? 'text-yellow-400 p-1' : 'p-1 items-center'}
@@ -360,17 +373,25 @@ export const PostEditor = () => {
                   <FaItalic />
                 </button>
                 <button
-                  onClick={() => editor.chain().focus().toggleStrike().run()}
-                  className={editor.isActive('strike') ? 'text-yellow-400 p-1' : 'p-1'}
+                  onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
+                  className={editor.isActive('heading', { level: 3 }) ? 'text-yellow-400 text-2xl align-middle' : 'hover:text-yellow-400 text-2xl'}
                 >
-                  <FaStrikethrough />
+                  H
                 </button>
-                <button onClick={setLink}>link</button>
+                <button
+                  onClick={() => editor.chain().focus().toggleHeading({ level: 4 }).run()}
+                  className={editor.isActive('heading', { level: 4 }) ? 'text-yellow-400 text-lg' : 'hover:text-yellow-400 text-lg'}
+                >
+                  H
+                </button>
+                <button onClick={setLink}>
+                  <FaLink />
+                </button>
                 <button
                   onClick={() => editor.chain().focus().toggleBlockquote().run()}
                   className={editor.isActive('blockquote') ? 'is-active' : ''}
                 >
-                  <TbBlockquote />
+                  <FaQuoteLeft />
                 </button>
               </div>
             </BubbleMenu>
