@@ -22,10 +22,13 @@ is-editor-empty {
 }
 
 .tiptap h3 {
-  font-size: 1.3rem;
+  font-size: 2.2rem;
 }
 
-.tiptap h4,
+.tiptap h4 {
+  font-size: 2rem;
+}
+
 .tiptap h5,
 .tiptap h6 {
   font-size: 1rem;
