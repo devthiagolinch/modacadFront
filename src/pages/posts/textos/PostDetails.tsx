@@ -7,11 +7,11 @@ import "../../../assets/css/tiptap.css";
 import { IPostData, PostsService } from '../../../shared/api/posts/PostsService';
 
 import { Footer } from '../../../shared/components/footer';
-import { Header } from '../../../shared/components/header';
 import { PostDeskTopHeader } from './components/PostDesktopHeader';
 import { PostMobileHeader } from './components/PostMobileHeader';
 
-import "../../../assets/css/tiptap.css"
+import "../../../assets/css/tiptap.css";
+import { PublicHeader } from '../../../shared/components/header/public-header/PublicHeader';
 
 export function PostDetails() {
   const { postId } = useParams<{ postId: string }>();
@@ -56,7 +56,7 @@ export function PostDetails() {
 
   return (
     <div className="mx-auto h-screen">
-      <Header />
+      <PublicHeader />
       <PostDeskTopHeader post={post} />
       <PostMobileHeader post={post} />
 
