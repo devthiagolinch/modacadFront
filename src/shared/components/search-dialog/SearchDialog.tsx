@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import { PostsService } from '../../../shared/api/posts/PostsService';
 import { Link } from 'react-router-dom';
 
