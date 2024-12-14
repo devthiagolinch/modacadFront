@@ -82,7 +82,9 @@ export const SearchDialog: FC<ISearchDialogProps> = ({ isOpen, toggleDialog }) =
               <div className='flex-grow md:h-auto mt-4 font-montserrat font-medium overflow-y-auto overflow-x-hidden'>
                 <ul className="divide-y divide-gray-200 flex flex-col">
                   {results.map((item) => (
-                    <Link key={item.id} className="py-2 highlight-link" to={item.type === 'texto' ? `/posts/${item.id}` : `/pilulas/${item.id}`}>
+                    <Link key={item.id} className="py-2 highlight-link" to={item.type === 'texto' ? `/posts/${item.id}` : `/pilulas/${item.id}`}
+                      onClick={toggleDialog}
+                    >
                       <p className="font-medium">{item.title}</p>
                     </Link>
                   ))}
