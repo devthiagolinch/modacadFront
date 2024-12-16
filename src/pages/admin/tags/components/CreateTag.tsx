@@ -41,6 +41,7 @@ const initialTag = {
 type TMessage = { type: 'success' | 'danger'; text: string };
 
 export const CreateTag: React.FC<ICreateTagProps> = ({ onCreated, clearTag, selectedTag }) => {
+  const [slug, setSlug] = useState('')
   const [og_image, setImageFacebook] = useState<File | null>(null);
   const [message, setMessage] = useState<TMessage>({ type: 'success', text: '' });
 
@@ -90,8 +91,10 @@ export const CreateTag: React.FC<ICreateTagProps> = ({ onCreated, clearTag, sele
   // Atualiza o formulário com os dados da tag se estiver selecionada
   useEffect(() => {
     if (selectedTag) {
+      setSlug(selectedTag.slug)
       reset(selectedTag);
     } else {
+      setSlug('');
       reset(initialTag);
     }
   }, [selectedTag, reset]);
@@ -195,7 +198,9 @@ export const CreateTag: React.FC<ICreateTagProps> = ({ onCreated, clearTag, sele
           id="slug"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           required
+          onChange={(e) => setSlug(e.target.value)} // Atualiza o estado ao digitar
         />
+        <span className="text-sm text-zinc-500 font-light font-montserrat">blog.modacad.com.br/{slug}</span>
       </div>
       <div className="mt-2">
         <label className="block mb-2 text-sm font-medium text-gray-900">

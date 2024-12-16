@@ -39,10 +39,12 @@ const initialTag = {
 type TMessage = { type: 'success' | 'danger'; text: string };
 
 export const CardTagInfo: React.FC<ICreateTagProps> = ({ onUpdated, selectedTag, onClose }) => {
+  const [slug, setSlug] = useState('');
   const [imageFacebook, setImageFacebook] = useState<File | null>(null);
   const [message, setMessage] = useState<TMessage>({ type: 'success', text: '' });
 
   const { handleSubmit, register, reset, watch } = useForm<IFormCreateTag>({ resolver: yupResolver(createTagSchema) });
+  
 
   const onSubmit: SubmitHandler<IFormCreateTag> = async (data) => {
     // Se houver tag selecionada, atualiza. Senão, cria uma nova
@@ -67,13 +69,6 @@ export const CardTagInfo: React.FC<ICreateTagProps> = ({ onUpdated, selectedTag,
     }
   };
 
-    // Atualiza o formulário com os dados da tag se estiver selecionada
-    useEffect(() => {
-    if (selectedTag) {
-    } else {
-    }
-    }, [selectedTag, reset]);
-
   // Adicionar imagens
   const onDrop = (acceptedFiles: File[]) => {
     if (acceptedFiles.length > 0) {
@@ -91,6 +86,7 @@ export const CardTagInfo: React.FC<ICreateTagProps> = ({ onUpdated, selectedTag,
 
   useEffect(() => {
     if (selectedTag) {
+      setSlug(selectedTag.slug)
       reset(selectedTag);
     } else {
       reset(initialTag);
@@ -162,7 +158,9 @@ export const CardTagInfo: React.FC<ICreateTagProps> = ({ onUpdated, selectedTag,
           id="slug"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           required
+          onChange={(e) => setSlug(e.target.value)} // Atualiza o estado ao digitar
         />
+        <span className="text-sm text-zinc-500 font-light font-montserrat">blog.modacad.com.br/{slug}</span>
       </div>
       <div className="mt-2">
         <label className="block mb-2 text-sm font-medium text-gray-900">
