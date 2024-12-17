@@ -26,7 +26,7 @@ is-editor-empty {
 }
 
 .tiptap h4 {
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 
 .tiptap h5,
@@ -69,11 +69,13 @@ is-editor-empty {
   }
   // TITULO 02
   h3 {
+    font-family: montserrat;
     font-size: 2.2rem;
   }
 
   h4 {
-    font-size: 2rem;
+    font-family: montserrat;
+    font-size: 1.8rem;
   },
   h5 {
     font-size: 2rem
