@@ -96,6 +96,27 @@
     font-weight: 500;
     font-display: swap;
   }
+
+  /* Estilizando a barra de rolagem */
+  /* Chrome, Safari, Edge */
+  ::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+    border: 3px solid #f1f1f1;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
 }
 
 @layer components {

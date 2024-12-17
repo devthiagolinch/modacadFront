@@ -1,4 +1,4 @@
-import { IPostData } from "src/shared/api/posts/PostsService";
+import { IPostData } from "../../../../shared/api/posts/PostsService";
 import React from 'react';
 import { format } from "date-fns";
 import { Link } from "react-router-dom";

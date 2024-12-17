@@ -94,6 +94,26 @@ type TPostFilters = {
   limit?: number;
   page?: number;
 };
+
+interface ISearchData {
+  id: number;
+  title: string;
+  type: string;
+}
+
+export interface IPostSearchResponse {
+  currentPage: number;
+  pageSize: number;
+  totalItems: number;
+  totalPages: number;
+  posts: ISearchData[];
+}
+
+type TPostSearch = {
+  term: string;
+  page?: number;
+  limit?: number
+}
 const getAll = async ({
   type,
   limit,
@@ -194,6 +214,26 @@ const lastPost = async (): Promise<IPostResponse | Error> => {
   }
 }
 
+const searchPost = async ({
+  term,
+  page,
+  limit
+}: TPostSearch): Promise<IPostSearchResponse | Error> => {
+  try {
+    const urlRelativa = `/post/search?term=${term ?? ''}&limit=${limit ?? 30}&page=${page ?? 1}`;
+    const { data } = await api.post<IPostSearchResponse>(urlRelativa);
+
+    if (data) {
+      return data;
+    } else {
+      return new Error('Erro ao listar os registros');
+    }
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido ao listar os registros';
+    return new Error(errorMessage);
+  }
+}
+
 export const PostsService = {
   getAll,
   deletePost,
@@ -201,5 +241,6 @@ export const PostsService = {
   getById,
   updateById,
   uploadImage,
-  lastPost
+  lastPost,
+  searchPost
 };
