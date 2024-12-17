@@ -17,11 +17,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { CardTagInfo } from './CardTagInfo';
 
 interface CardDTO {
-  /*   title: string | '';
+  title: string | '';
   feature_image: string | null;
-  content: string | ''; */
-  //isVisible: boolean; // Propriedade para controlar a visibilidade
-  props: IPostDataRequest;
+  content: string | '';
 }
 
 interface FormData {
@@ -59,7 +57,7 @@ const defaultPost: IPostDataRequest = {
   canonicalUrl: '',
 };
 
-export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
+export const CardBasicInfo: React.FC<CardDTO> = ({ title, feature_image, content }) => {
   const navigate = useNavigate();
   const [notification, setNotification] = useState('');
 
@@ -110,11 +108,11 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
           const canonicalUrl = response.canonicalUrl?.replace('https://blog.modacad.com.br/', '') || '';
 
           setPost({
-            title: props.title,
+            title: title,
             description: response.description,
-            feature_image: props.feature_image,
+            feature_image: feature_image,
             type: response.type,
-            content: props.content,
+            content: content,
             status: response.status,
             images: response.images ? response.images.join(',') : null,
             visibility: response.visibility,
@@ -142,10 +140,20 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ props }) => {
         }
       });
     } else {
-      setPost(props);
-      post.og_image = props?.feature_image;
+      setPost(defaultPost);
+      post.og_image = feature_image;
     }
-  }, [postId, props]);
+  }, [postId]);
+
+  // Preserve o estado atual ao carregar novos dados
+  useEffect(() => {
+    setPost((prev) => ({
+      ...prev,
+      title: title || prev.title,
+      feature_image: feature_image || prev.feature_image,
+      content: content || prev.content,
+    }));
+  }, [title, feature_image, content]);
 
   useEffect(() => {
     SubjectsService.getAll().then((response) => {

@@ -60,7 +60,7 @@ export const PostEditor = () => {
   const [featureImageUrl, setFeatureImageUrl] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
 
-  const [openCard, setOpenCard] = useState(true);
+  const [openCard, setOpenCard] = useState(false);
 
   const editor = useEditor({
     extensions: [
@@ -407,7 +407,7 @@ export const PostEditor = () => {
         </div>
         {openCard && (
           <div className="col-span-4 fixed top-0 right-0 w-1/4 h-full bg-white shadow-lg p-4 overflow-auto">
-            <CardBasicInfo props={post} />
+            <CardBasicInfo title={post.title} feature_image={post.feature_image} content={post.content} />
           </div>
         )}
       </div>
