@@ -20,13 +20,13 @@ export const PageCategoryPost = () => {
   // Textos
   const [textos, setTextos] = useState<IPostData[]>([]);
   const [isLoadingTextos, setIsLoadingTextos] = useState(false);
-  const [hasMoreTexto, setHasMoreTexto] = useState(true); // Controle de mais dados para carregar
+  const [hasMoreTexto] = useState(true); // Controle de mais dados para carregar
   const [errorTextos, setErrorTextos] = useState(false);
 
   // Pílulas
   const [pilulas, setPilulas] = useState<IPostData[]>([]);
   const [isLoadingPilulas, setIsLoadingPilulas] = useState(false);
-  const [hasMorePilulas, setHasMorePilulas] = useState(true); // Controle de mais dados para carregar
+  const [hasMorePilulas] = useState(true); // Controle de mais dados para carregar
   const [errorPilulas, setErrorPilulas] = useState(false);
 
   useEffect(() => {
