@@ -1,10 +1,10 @@
-import { Header } from '../../../shared/components/header';
 import { Footer } from '../../../shared/components/footer';
 import { Link } from 'react-router-dom';
 import { ReadingBox } from '../../../shared/components/reagindBox';
 import { PilulaModacadCard } from '../../../shared/components/cards/pilulasModacadCard';
 import { useEffect, useState } from 'react';
 import { IPostData, PostsService } from '../../../shared/api/posts/PostsService';
+import { PublicHeader } from '../../../shared/components/header/public-header/PublicHeader';
 
 export function PublishedPills() {
   const [posts, setPosts] = useState<IPostData[]>([]);
@@ -58,7 +58,7 @@ export function PublishedPills() {
 
   return (
     <div className="">
-      <Header />
+      <PublicHeader />
 
       <div
         className="lg:flex lg:flex-col

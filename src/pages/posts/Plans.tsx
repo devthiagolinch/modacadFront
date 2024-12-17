@@ -1,10 +1,10 @@
 import { Footer } from '../../shared/components/footer';
-import { Header } from '../../shared/components/header';
 import { Button } from '../../shared/components/Button';
 
 import checkListIcon from '../../assets/icons/check-mark.svg';
 import { useEffect, useState } from 'react';
 import { api } from '../../shared/services/axios';
+import { PublicHeader } from '../../shared/components/header/public-header/PublicHeader';
 
 interface Planos {
   id: string;
@@ -24,7 +24,7 @@ export function Plans() {
 
   return (
     <div>
-      <Header />
+      <PublicHeader />
 
       <div
         className="

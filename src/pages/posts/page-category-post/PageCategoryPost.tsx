@@ -6,21 +6,32 @@ import { IPostData, PostsService } from '../../../shared/api/posts/PostsService'
 import { Footer } from '../../../shared/components/footer';
 import { ReadingBox } from '../../../shared/components/reagindBox';
 import { CTAApp } from '../../../shared/components/cta-app/CTAApp';
+import { useParams } from 'react-router-dom';
 
 export const PageCategoryPost = () => {
+  window.scrollTo(0,0)
+  const { categoryId } = useParams<{ categoryId: string }>();
+
+  // PAGINAÇÃO
+  const [page, setPage] = useState(1); // Página atual
+  const [totalTextoPage, setTotalTextoPage] = useState<number>() // Controle de paginas dos textos
+  const [totalPiluaPage, setTotalPilulaPage] = useState<number>() // Controle de paginas das pilulas
+
   // Textos
   const [textos, setTextos] = useState<IPostData[]>([]);
   const [isLoadingTextos, setIsLoadingTextos] = useState(false);
+  const [hasMoreTexto, setHasMoreTexto] = useState(true); // Controle de mais dados para carregar
   const [errorTextos, setErrorTextos] = useState(false);
 
   // Pílulas
   const [pilulas, setPilulas] = useState<IPostData[]>([]);
   const [isLoadingPilulas, setIsLoadingPilulas] = useState(false);
+  const [hasMorePilulas, setHasMorePilulas] = useState(true); // Controle de mais dados para carregar
   const [errorPilulas, setErrorPilulas] = useState(false);
 
   useEffect(() => {
     setIsLoadingTextos(true);
-    PostsService.getAll({ type: 'texto', status: 'published', order: 'desc' }).then((response) => {
+    PostsService.getAll({ type: 'texto', status: 'published', order: 'desc', page: page, subject: categoryId }).then((response) => {
       if (response instanceof Error) {
         console.error(response.message);
         setErrorTextos(true);
@@ -28,10 +39,11 @@ export const PageCategoryPost = () => {
         return;
       }
       setTextos(response.posts);
+      setTotalTextoPage(response.totalPages)
       setIsLoadingTextos(false);
       setErrorTextos(false);
     });
-    PostsService.getAll({ type: 'pilula', status: 'published', order: 'desc' }).then((response) => {
+    PostsService.getAll({ type: 'pilula', status: 'published', order: 'desc', page: page, subject: categoryId }).then((response) => {
       if (response instanceof Error) {
         console.error(response.message);
         setErrorPilulas(true);
@@ -39,10 +51,17 @@ export const PageCategoryPost = () => {
         return;
       }
       setPilulas(response.posts);
+      setTotalPilulaPage(response.totalPages)
       setIsLoadingPilulas(false);
       setErrorPilulas(false);
     });
   }, []);
+
+  const handleLoadMore = () => {
+    if (hasMorePilulas && hasMoreTexto) {
+      setPage((prevPage) => prevPage + 1); // Incrementa o número da página
+    }
+  };
 
   return (
     <div>
@@ -73,6 +92,24 @@ export const PageCategoryPost = () => {
               tipo="pilula"
             />
           </div>
+        </div>
+        <div className="lg:mb-[80px] lg:mt-[60px] mt-[25px] mb-[50px] justify-center items-center flex">
+          {
+            totalPiluaPage && totalTextoPage != undefined? totalPiluaPage && totalTextoPage > 1 ? 
+              <button
+                className="min-h-[60px] w-auto min-w-[210px] p-2 px-[25px]
+                        border-[1px] border-[#202020]
+                        font-montserrat_medium text-[22px]
+                        flex flex-col justify-center items-center
+                        bg-gradient-to-t from-[#dcdf1e] to-[#dcdf1e] bg-[length:90%_.90em] bg-no-repeat bg-[position:calc(90%_-_var(--p,0%))_900%]  hover:bg-[position:50%_75%]"
+                onClick={handleLoadMore}
+              >
+                {' '}
+                CARREGAR MAIS
+              </button>
+              : ''
+            :  ''
+          }
         </div>
       </div>
       <ReadingBox />
