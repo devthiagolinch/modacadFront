@@ -88,6 +88,7 @@ interface IPostResponse {
 type TPostFilters = {
   type: TPostsType;
   status?: TPostsStatus;
+  subject?: string;
   visibility?: string;
   order?: 'asc' | 'desc';
   limit?: number;
@@ -99,10 +100,11 @@ const getAll = async ({
   order,
   page,
   status,
+  subject,
   visibility,
 }: TPostFilters): Promise<IPostResponse | Error> => {
   try {
-    const urlRelativa = `/post?type=${type ?? 'texto'}&statusId=${status ?? ''}&visibility=${visibility ?? ''}&order=${order ?? ''}&limit=${limit ?? 20}&page=${page ?? 1}`;
+    const urlRelativa = `/post?type=${type ?? 'texto'}&statusId=${status ?? ''}&visibility=${visibility ?? ''}&order=${order ?? ''}&limit=${limit ?? 20}&page=${page ?? 1}&subjectId=${subject ?? ''}`;
     const { data } = await api.get<IPostResponse>(urlRelativa);
 
     if (data) {

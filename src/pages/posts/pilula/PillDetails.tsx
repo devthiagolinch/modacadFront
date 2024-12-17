@@ -1,13 +1,14 @@
 import { Footer } from '../../../shared/components/footer';
-import { Header } from '../../../shared/components/header';
 
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { IPostData, PostsService } from '../../../shared/api/posts/PostsService';
 import { DeskTopHeader } from './components/PillDesktopHeader';
 import { MobileHeader } from './components/PillMobileHeader';
+import { PublicHeader } from '../../../shared/components/header/public-header/PublicHeader';
 
 export const PillDetails = () => {
+  window.scrollTo(0,0)
   const { postId } = useParams<{ postId: string }>();
   const navigate = useNavigate();
 
@@ -29,7 +30,7 @@ export const PillDetails = () => {
 
   return (
     <div className="mx-auto h-screen">
-      <Header />
+      <PublicHeader />
       <DeskTopHeader post={pilula} />
       <MobileHeader post={pilula} />
 

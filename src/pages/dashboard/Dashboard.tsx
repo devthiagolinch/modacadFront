@@ -21,7 +21,7 @@ export const Dashboard: React.FC = () => {
       setLoading(true);
       const data = await PostsService.getAll({
         type: type || 'texto',
-        status: searchParams.get('status') as TPostsStatus,
+        status: searchParams.get('status') as TPostsStatus || 'published',
         visibility: searchParams.get('visibility') as TPostsVisibility,
         order: searchParams.get('order') as 'asc' | 'desc',
         page: Number(searchParams.get('page')) || 1,
