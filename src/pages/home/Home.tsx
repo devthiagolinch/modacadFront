@@ -51,20 +51,20 @@ export function Home() {
       {/* Banner da página inicial */}
       <div
         style={{ backgroundImage: `url(${banner})` }}
-        className="relative py-4 bg-cover bg-center min-h-[80vh] flex items-center"
+        className="relative py-4 bg-cover bg-center min-h-[70vh] flex items-center"
       >
         {/* Hashtag Vertical Esquerda */}
-        <div className="absolute top-1/2 left-0 -translate-y-1/2 -rotate-90 text-2xl font-light text-gray-600">
+        <div className="absolute top-1/2 left-0 -translate-y-1/2 -rotate-90 text-2xl font-light text-gray-600 hidden md:block">
           #BLOGMODACAD
         </div>
 
         {/* Hashtag Vertical Direita */}
-        <div className="absolute top-1/2 right-0 -translate-y-1/2 -rotate-90 text-2xl font-light text-gray-600">
+        <div className="absolute top-1/2 right-0 -translate-y-1/2 -rotate-90 text-2xl font-light text-gray-600 hidden md:block">
           #BLOGMODACAD
         </div>
-        <div className="container mx-auto font-montserrat font-light text-2xl">
-          <div className="max-w-[50%]">
-            <h1 className="font-butler font-regular text-8xl mb-8">blogModacad</h1>
+        <div className="container px-4 ml-auto md:ml-[150px] mr-auto md:mr-[150px] font-montserrat font-light text-1xl md:text-2xl">
+          <div className="max-w-[100%] lg:max-w-[70%]">
+            <h1 className="font-butler font-regular text-5xl md:text-8xl mb-8">blogModacad</h1>
             <p className="mb-2">
               O Propósito. Gerar sucesso para negócios de moda, multiplicando os benefícios da produtividade eficiente e
               do sucesso de mercado para estes negócios e para a sociedade à nossa volta.
