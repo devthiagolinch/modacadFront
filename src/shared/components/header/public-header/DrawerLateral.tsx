@@ -39,27 +39,27 @@ export const DrawerLateral: FC<IDrawerLateralProps> = ({ isOpen, toggleDrawer })
           </Link>
         </li> */}
         <li className="mb-2">
-          <Link to="/" className="block p-2 highlight-link">
+          <Link to="/posts" className="block p-2 highlight-link">
             Textos Publicados
           </Link>
         </li>
         <li className="mb-2">
-          <Link to="/" className="block p-2 highlight-link">
+          <Link to="/posts/popular" className="block p-2 highlight-link">
             Textos Mais Lidos
           </Link>
         </li>
         <li className="mb-2">
-          <Link to="/posts/popular" className="block p-2 highlight-link">
+          <Link to="/pilulas" className="block p-2 highlight-link">
             Pílulas
           </Link>
         </li>
         <li className="mb-2">
-          <Link to="/posts/popular" className="block p-2 highlight-link">
+          <Link to="#" className="block p-2 highlight-link">
             Moldes Modacad
           </Link>
         </li>
         <li className="mb-2">
-          <Link to="/posts/popular" className="block p-2 highlight-link">
+          <Link to="/" className="block p-2 highlight-link">
             Contatos
           </Link>
         </li>
