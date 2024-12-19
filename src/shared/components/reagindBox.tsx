@@ -36,7 +36,7 @@ export function ReadingBox() {
           <img src={setaCurvaIcon} alt="" className="max-h-[40px]" />
 
           <div className="hidden lg:flex  lg:flex-col lg:justify-center lg:items-center md:my-10  px-[20px] lg:mr-12 mb-[40px] h-[100%] w-[29%]">
-            <Button title="Conheça os planos" active={false} link="plans" />
+            <Button title="Conheça os planos" active={false} link="planos" />
           </div>
         </div>
 
