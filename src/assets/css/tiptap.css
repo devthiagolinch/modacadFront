@@ -96,6 +96,7 @@ is-editor-empty {
   quotes: none;
   border-left: 4px solid #dcdf1e;
   margin: 1.5rem 2rem;
+  line-height: 2.2rem;
   padding-left: 1rem;
 }
 .tiptap custom-blockquote::before,
@@ -105,7 +106,7 @@ is-editor-empty {
 
 .tiptap a {
   color: #368391;
-  font-size: 1rem;
+  font-size: 1.3rem;
 }
 
 .tiptap iframe {

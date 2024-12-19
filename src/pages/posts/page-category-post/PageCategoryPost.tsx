@@ -68,7 +68,7 @@ export const PageCategoryPost = () => {
       <PublicHeader />
       <div className="container mx-auto p-4">
         <div className="flex gap-2 items-center">
-          <h1 className="font-butler text-4xl md:text-6xl mb-4">Tecidos e Materiais</h1>
+          <h1 className="font-butler text-4xl md:text-6xl mb-4 mt-10">Tecidos e Materiais</h1>
           <hr className="grow border-t border-gray-950" />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
