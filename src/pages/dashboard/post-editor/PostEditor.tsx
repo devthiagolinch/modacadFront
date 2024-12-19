@@ -18,6 +18,7 @@ import { LayoutDashboard } from '../../../shared/layouts';
 import { FaBold, FaItalic, FaLink, FaList, FaQuoteLeft } from 'react-icons/fa';
 import Placeholder from '@tiptap/extension-placeholder';
 import { CardBasicInfo } from './components/CardBasicInfo';
+import InstagramEmbed from '../../../assets/tiptapExtensao/embed';
 
 
 
@@ -65,7 +66,7 @@ export const PostEditor = () => {
   const editor = useEditor({
     extensions: [
       StarterKit,
-      /* InstagramEmbed, */
+      InstagramEmbed,
       Image.configure({
         inline: true,
         allowBase64: true,
@@ -342,17 +343,17 @@ export const PostEditor = () => {
                   accept="image/*"
                   onChange={handleImageUpload}
                 />
-                {/* <button
+                <button
                   onClick={() => {
-                    const url = window.prompt('Insira o URL do Instagram Embed:');
-                    if (url) {
-                      editor.commands.setInstagramEmbed(url)
+                    const urlinsta = window.prompt('Insira o URL do Instagram Embed:');
+                    if (urlinsta) {
+                      editor.commands.setInstagramEmbed({src: urlinsta }).run()
                     }
                   }}
                   className="hover:text-yellow-400"
                 >
                   Embed Instagram
-                </button> */}
+                </button>
               </div>
             </FloatingMenu>
           )}

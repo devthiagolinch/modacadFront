@@ -27,11 +27,11 @@ export const PostDeskTopHeader: React.FC<PostDeskTopHeaderInterface> = ({ post }
             ))}
         </div>
         <div className="lg:flex lg:flex-col lg:pr-[20%] ">
-          <h1 className="lg:text-7xl lg:font-butler_ultra_light lg:my-14 lg:mb-[30px] lg:leading-[80px]  ">
+          <h1 className="lg:text-7xl font-butler font-light my-14 mb-[30px] lg:leading-[1.1em]">
             {post?.title}
           </h1>
 
-          <p className="lg:text-left lg:text-[20px] w-[100%] lg:font-montserrat_regular">{post?.description}</p>
+          <p className="lg:text-left lg:text-[20px] w-[100%] lg:font-montserrat font-light">{post?.description}</p>
         </div>
       </div>
 

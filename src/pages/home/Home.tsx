@@ -51,7 +51,7 @@ export function Home() {
       {/* Banner da página inicial */}
       <div
         style={{ backgroundImage: `url(${banner})` }}
-        className="relative py-4 bg-cover bg-center min-h-[70vh] flex items-center"
+        className="relative py-10 lg:py-4 bg-center bg-cover md:min-h-[60vh] lg:min-h-[80vh] lg:h-[85vh] flex items-center "
       >
         {/* Hashtag Vertical Esquerda */}
         <div className="absolute top-1/2 left-0 -translate-y-1/2 -rotate-90 text-2xl font-light text-gray-600 hidden md:block">
@@ -63,15 +63,18 @@ export function Home() {
           #BLOGMODACAD
         </div>
         <div className="container px-4 ml-auto md:ml-[150px] mr-auto md:mr-[150px] font-montserrat font-light text-1xl md:text-2xl">
-          <div className="max-w-[100%] lg:max-w-[70%]">
+          <div className="max-w-[70%] lg:max-w-[65%] md:text-justify">
             <h1 className="font-butler font-regular text-5xl md:text-8xl mb-8">blogModacad</h1>
             <p className="mb-2">
-              O Propósito. Gerar sucesso para negócios de moda, multiplicando os benefícios da produtividade eficiente e
-              do sucesso de mercado para estes negócios e para a sociedade à nossa volta.
+              Textos e pílulas para confecção de moda sobre tendências, tecnologia têxtil, sustentabilidade, história da moda e muito mais.
             </p>
-            <p>
-              Propósito de Alma? Trabalhar através da criação de moda para o reconhecimento da cultura brasileira “raíz”
-              na nossa própria sociedade e no mundo.
+            <p className='mb-2'>
+              moldesModacad para agilizar a produção da indústria de confecção e beneficiar as vendas. Descubra como transformar sua confecção com 
+              praticidade e eficiência.
+            </p>
+            <p className='hidden md:hidden lg:flex'>
+              Trabalhamos para o sucesso de negócios de moda, multiplicando os benefícios da produtividade eficiente e do sucesso de mercado 
+              para estes negócios e para a sociedade à nossa volta.
             </p>
           </div>
         </div>
@@ -86,9 +89,9 @@ export function Home() {
           <div className="flex justify-start items-center">
             <p className="transform -rotate-90 text-2xl text-nowrap font-light text-gray-700">ASSUNTOS</p>
           </div>
-          <div className="flex flex-wrap gap-4 p-6">
+          <div className="flex flex-col-reverse lg:flex-wrap gap-4 p-6">
             {subjects.map((sub, index) => (
-              <div key={sub.id} className="text-5xl font-butler font-light">
+              <div key={sub.id} className="text-2xl font-butler font-light">
                 <Link to={`/categorias/${sub.id}`} className="highlight-link">
                   {sub.name}
                 </Link>
