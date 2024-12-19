@@ -5,7 +5,7 @@ import logotipo from '../../../assets/logos/modacad-logotipo.svg';
 export const CTAApp = () => {
   return (
     <div className="border-b border-gray-950">
-      <div className="container mx-auto font-montserrat px-4 py-16 grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="container mx-auto font-montserrat px-4 py-16 grid grid-cols-1 md:grid-cols-3 gap-8">
         <div className="flex flex-col justify-center items-center md:items-start">
           <p className="text-6xl md:text-7xl font-butler font-light">
             moldes
