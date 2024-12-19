@@ -49,8 +49,32 @@ export function Home() {
     <div className="mx-auto h-screen">
       <PublicHeader />
       {/* Banner da página inicial */}
-      <div>
-        <img src={banner} alt="" className="min-w-full max-h-[650px] object-cover" />
+      <div
+        style={{ backgroundImage: `url(${banner})` }}
+        className="relative py-4 bg-cover bg-center min-h-[80vh] flex items-center"
+      >
+        {/* Hashtag Vertical Esquerda */}
+        <div className="absolute top-1/2 left-0 -translate-y-1/2 -rotate-90 text-2xl font-light text-gray-600">
+          #BLOGMODACAD
+        </div>
+
+        {/* Hashtag Vertical Direita */}
+        <div className="absolute top-1/2 right-0 -translate-y-1/2 -rotate-90 text-2xl font-light text-gray-600">
+          #BLOGMODACAD
+        </div>
+        <div className="container mx-auto font-montserrat font-light text-2xl">
+          <div className="max-w-[50%]">
+            <h1 className="font-butler font-regular text-8xl mb-8">blogModacad</h1>
+            <p className="mb-2">
+              O Propósito. Gerar sucesso para negócios de moda, multiplicando os benefícios da produtividade eficiente e
+              do sucesso de mercado para estes negócios e para a sociedade à nossa volta.
+            </p>
+            <p>
+              Propósito de Alma? Trabalhar através da criação de moda para o reconhecimento da cultura brasileira “raíz”
+              na nossa própria sociedade e no mundo.
+            </p>
+          </div>
+        </div>
       </div>
       {/* CTA - Planos */}
       <ReadingBox />
