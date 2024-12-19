@@ -16,15 +16,19 @@ export const CTAApp = () => {
       <div className="flex gap-2 items-center">
         <div>
           <p className="font-light text-2xl mb-2">Como funciona</p>
-          <div className="border-2 border-gray-950 p-4">
-            <img src={logoEstendida} className="object-contain w-full h-full" />
-          </div>
+          <a href="https://www.modacad.com.br/#como-funciona" target="_blank" rel="noopener noreferrer">
+            <div className="border-2 border-gray-950 p-4 hover:bg-primary">
+              <img src={logoEstendida} className="object-contain w-full h-full" />
+            </div>
+          </a>
         </div>
         <div>
           <p className="font-light text-2xl mb-2">Conheça o app</p>
-          <div className="border-2 border-gray-950 p-4">
-            <img src={logotipo} className="object-contain w-full h-full" />
-          </div>
+          <a href="https://app.modacad.com.br/" target="_blank" rel="noopener noreferrer">
+            <div className="border-2 border-gray-950 p-4 hover:bg-primary">
+              <img src={logotipo} className="object-contain w-full h-full" />
+            </div>
+          </a>
         </div>
       </div>
     </div>
