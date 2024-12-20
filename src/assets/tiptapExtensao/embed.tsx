@@ -1,5 +1,4 @@
-import { CommandProps, Node, RawCommands, mergeAttributes } from '@tiptap/core';
-import { ReactNodeViewRenderer } from '@tiptap/react';
+import { CommandProps, Node, RawCommands } from '@tiptap/core';
 
 const InstagramEmbed = Node.create({
   name: 'instagramEmbed',
@@ -25,9 +24,9 @@ const InstagramEmbed = Node.create({
     };
   },
 
-  addNodeView() {
+  /* addNodeView() {
     return ReactNodeViewRenderer()
-  },
+  }, */
 
   parseHTML() {
     return [
@@ -37,7 +36,7 @@ const InstagramEmbed = Node.create({
     ];
   },
 
-  renderHTML({ node, HTMLAttributes }) {
+  renderHTML({ node }) {
     const src = node.attrs.src || 'https://example.com'; // Use um valor padrão caso `src` esteja ausente
 
    return ['div', { innerHTML: src }];

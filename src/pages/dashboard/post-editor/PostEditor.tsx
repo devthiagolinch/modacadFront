@@ -342,7 +342,7 @@ export const PostEditor = () => {
                   style={{ display: 'none' }}
                   accept="image/*"
                   onChange={handleImageUpload}
-                />
+                />{/* 
                 <button
                   onClick={() => {
                     const urlinsta = window.prompt('Insira o URL do Instagram Embed:');
@@ -353,7 +353,7 @@ export const PostEditor = () => {
                   className="hover:text-yellow-400"
                 >
                   Embed Instagram
-                </button>
+                </button> */}
               </div>
             </FloatingMenu>
           )}
