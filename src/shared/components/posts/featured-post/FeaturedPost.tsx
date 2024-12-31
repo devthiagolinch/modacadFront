@@ -10,15 +10,15 @@ export const FeaturedPost: React.FC<IFeaturedPost> = ({ post }) => {
   return (
     <Link to={`/${post.type === 'texto' ? 'posts' : 'pilulas'}/${post.id}`}>
       <div className="flex flex-col-reverse md:flex-row gap-2 font-montserrat">
-        <div className="py-8 px-4 flex flex-col justify-center gap-2">
+        <div className="py-8 px-4 flex flex-col justify-center gap-4">
           {post.subjects.length > 0 &&
             post.subjects.slice(0, 3).map((subject) => (
               <span className="font-light text-2xl" key={subject.id}>
                 {subject.name}
               </span>
             ))}
-          <h3 className="text-4xl md:text-6xl font-butler font-light">{post.title}</h3>
-          <p className="text-gray-700 line-clamp-4 text-2xl font-light">{post.description}</p>
+          <h3 className="text-4xl md:text-6xl font-butler font-light line-clamp-2">{post.title}</h3>
+          <p className="text-gray-700 line-clamp-4 text-2xl font-light line-clamp-4">{post.description}</p>
         </div>
         <div className="relative">
           <img src={post.feature_image ?? ''} alt={`Imagem do ${post.title}`} className="w-full h-full object-cover" />
