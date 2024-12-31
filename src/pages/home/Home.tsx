@@ -12,6 +12,7 @@ import { IPostData, PostsService } from '../../shared/api/posts/PostsService';
 import { FeaturedPost } from '../../shared/components/posts/featured-post/FeaturedPost';
 import { SwiperPosts } from '../../shared/components/posts/swiper-posts/SwiperPosts';
 import { CTAApp } from '../../shared/components/cta-app/CTAApp';
+import { MySection } from '../../shared/components/ui/my-section/MySection';
 
 export function Home() {
   const [subjects, setSubjects] = useState<ISubjectData[]>([]);
@@ -66,15 +67,16 @@ export function Home() {
           <div className="max-w-[70%] lg:max-w-[65%] md:text-justify">
             <h1 className="font-butler font-regular text-5xl md:text-8xl mb-8">blogModacad</h1>
             <p className="mb-2">
-              Textos e pílulas para confecção de moda sobre tendências, tecnologia têxtil, sustentabilidade, história da moda e muito mais.
+              Textos e pílulas para confecção de moda sobre tendências, tecnologia têxtil, sustentabilidade, história da
+              moda e muito mais.
             </p>
-            <p className='mb-2'>
-              moldesModacad para agilizar a produção da indústria de confecção e beneficiar as vendas. Descubra como transformar sua confecção com 
-              praticidade e eficiência.
+            <p className="mb-2">
+              moldesModacad para agilizar a produção da indústria de confecção e beneficiar as vendas. Descubra como
+              transformar sua confecção com praticidade e eficiência.
             </p>
-            <p className='hidden md:hidden lg:flex'>
-              Trabalhamos para o sucesso de negócios de moda, multiplicando os benefícios da produtividade eficiente e do sucesso de mercado 
-              para estes negócios e para a sociedade à nossa volta.
+            <p className="hidden md:hidden lg:flex">
+              Trabalhamos para o sucesso de negócios de moda, multiplicando os benefícios da produtividade eficiente e
+              do sucesso de mercado para estes negócios e para a sociedade à nossa volta.
             </p>
           </div>
         </div>
@@ -82,24 +84,33 @@ export function Home() {
       {/* CTA - Planos */}
       <ReadingBox />
       {/* Último post */}
-      {lastPost && <FeaturedPost post={lastPost} postType="texto" title="ÚLTIMO TEXTO" />}
-      {/* Assuntos */}
+      {lastPost && (
+        <MySection
+          title="Último Texto"
+          titleLink={`/posts/${lastPost.id}`}
+          featuredTitle
+          invisibleBottomBorder
+          disableInternalPadding
+        >
+          <FeaturedPost post={lastPost} />
+        </MySection>
+      )}
       {subjects.length > 0 && (
-        <div className="flex border border-gray-800 mb-[-1px] py-16">
-          <div className="flex justify-start items-center">
-            <p className="transform -rotate-90 text-2xl text-nowrap font-light text-gray-700">ASSUNTOS</p>
-          </div>
-          <div className="flex flex-col-reverse lg:flex-wrap gap-4 p-6">
-            {subjects.map((sub, index) => (
-              <div key={sub.id} className="text-2xl font-butler font-light">
-                <Link to={`/categorias/${sub.id}`} className="highlight-link">
-                  {sub.name}
+        <MySection title="Assuntos">
+          <div className="flex gap-2 flex-wrap">
+            {subjects.map((subject, index) => (
+              <div key={subject.id} className="text-2xl md:text-4xl font-butler font-light flex items-center">
+                <Link
+                  to={`/categorias/${subject.id}`}
+                  className={`highlight-link ${index === 0 || index === subjects.length - 1 ? 'font-medium' : ''}`}
+                >
+                  {subject.name}
                 </Link>
                 {index < subjects.length - 1 && <span className="ml-4 mr-2">•</span>}
               </div>
             ))}
           </div>
-        </div>
+        </MySection>
       )}
       {/* Textos mais lidos */}
       {posts.length > 0 && <SwiperPosts posts={posts} postType="texto" title="TEXTOS MAIS LIDOS" />}
