@@ -46,6 +46,20 @@ export function Home() {
     });
   }, []);
 
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 767px)');
+    const handler = () => setIsSmallScreen(mediaQuery.matches);
+
+    mediaQuery.addEventListener('change', handler);
+    handler();
+
+    return () => mediaQuery.removeEventListener('change', handler);
+  }, []);
+
+  console.log(isSmallScreen);
+
   return (
     <div className="mx-auto h-screen">
       <PublicHeader />
@@ -88,7 +102,7 @@ export function Home() {
         <MySection
           title="Último Texto"
           titleLink={`/posts/${lastPost.id}`}
-          featuredTitle
+          featuredTitle={isSmallScreen}
           invisibleBottomBorder
           disableInternalPadding
         >

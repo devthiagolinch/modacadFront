@@ -26,9 +26,9 @@ export const SwiperSlidePost: React.FC<ISwiperSlidePost> = ({ post }) => {
           )}
         </ul>
         {/* Título */}
-        <h1 className="font-butler text-4xl font-light">{post.title}</h1>
+        <h1 className="font-butler text-2xl md:text-4xl font-light line-clamp-2">{post.title}</h1>
         {/* Descrição */}
-        <p className="font-light text-gray-800">{post.description}</p>
+        <p className="font-light text-gray-800 line-clamp-4">{post.description}</p>
       </div>
     </div>
   );
