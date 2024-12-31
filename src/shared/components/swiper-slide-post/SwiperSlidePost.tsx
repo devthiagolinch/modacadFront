@@ -7,13 +7,13 @@ interface ISwiperSlidePost {
 
 export const SwiperSlidePost: React.FC<ISwiperSlidePost> = ({ post }) => {
   return (
-    <div className={`border-r border-gray-950 font-montserrat font-medium h-full`}>
+    <div className={`border-r border-gray-950 font-montserrat font-medium h-full overflow-hidden`}>
       {/* Imagem da publicação */}
       <div className="border-b-[1px] border-[#202020]">
         <img src={post.feature_image ?? ''} alt={`Imagem do ${post.title}`} className="h-[400px] object-cover w-full" />
       </div>
       {/* Conteúdo da publicação */}
-      <div className="flex flex-col gap-4 p-8">
+      <div className="flex flex-col gap-4 p-4 md:p-8">
         {/* Assuntos */}
         <ul className="flex flex-col">
           {post?.subjects && post.subjects.length > 0 && (
@@ -26,7 +26,7 @@ export const SwiperSlidePost: React.FC<ISwiperSlidePost> = ({ post }) => {
           )}
         </ul>
         {/* Título */}
-        <h1 className="font-butler text-2xl md:text-4xl font-light line-clamp-2">{post.title}</h1>
+        <h1 className="font-butler text-2xl md:text-4xl font-light line-clamp-3">{post.title}</h1>
         {/* Descrição */}
         <p className="font-light text-gray-800 line-clamp-4">{post.description}</p>
       </div>

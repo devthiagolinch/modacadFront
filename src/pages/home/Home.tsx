@@ -48,6 +48,7 @@ export function Home() {
 
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
+  // Hook para verificar o tamanho da tela
   useEffect(() => {
     const mediaQuery = window.matchMedia('(max-width: 767px)');
     const handler = () => setIsSmallScreen(mediaQuery.matches);
@@ -110,7 +111,7 @@ export function Home() {
         </MySection>
       )}
       {subjects.length > 0 && (
-        <MySection title="Assuntos" featuredSection>
+        <MySection title="Assuntos" featuredSection invisibleBottomBorder>
           <div className="flex gap-1 md:gap-2 flex-wrap">
             {subjects.map((subject, index) => (
               <div key={subject.id} className="text-2xl md:text-4xl font-butler font-light flex items-center">
@@ -127,14 +128,24 @@ export function Home() {
         </MySection>
       )}
       {/* Textos mais lidos */}
-      {posts.length > 0 && <SwiperPosts posts={posts} postType="texto" title="TEXTOS MAIS LIDOS" />}
+      {posts.length > 0 && (
+        <MySection title="Textos mais lidos" titleLink="/posts/popular" disableInternalPadding invisibleBottomBorder>
+          <SwiperPosts posts={posts} slidesPerView={isSmallScreen ? 1 : 2} />
+        </MySection>
+      )}
       {/* Textos publicados */}
-      {posts.length > 0 && <SwiperPosts posts={posts} postType="texto" title="TEXTOS PUBLICADOS"></SwiperPosts>}
+      {posts.length > 0 && (
+        <MySection title="Textos Publicados" titleLink="/posts" disableInternalPadding invisibleBottomBorder>
+          <SwiperPosts posts={posts} slidesPerView={isSmallScreen ? 1 : 2} />
+        </MySection>
+      )}
       {/* CTA - Planos */}
       <ReadingBox />
       {/* Pilulas */}
       {pilulas.length > 0 && (
-        <SwiperPosts posts={pilulas} postType="pilula" title="PILULAS MODACAD" slidesPerView={4} />
+        <MySection title="PÍLULAS MODACAD" titleLink="/pilulas" disableInternalPadding>
+          <SwiperPosts posts={pilulas} slidesPerView={isSmallScreen ? 2 : 4} />
+        </MySection>
       )}
       <CTAApp />
       {/* Sobre a Telma */}
