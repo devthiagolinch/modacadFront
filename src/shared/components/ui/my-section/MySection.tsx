@@ -8,6 +8,7 @@ interface IMySectionProps {
   featuredTitle?: boolean;
   invisibleBottomBorder?: boolean;
   disableInternalPadding?: boolean;
+  featuredSection?: boolean;
 }
 export const MySection: FC<IMySectionProps> = ({
   children,
@@ -16,6 +17,7 @@ export const MySection: FC<IMySectionProps> = ({
   featuredTitle,
   invisibleBottomBorder,
   disableInternalPadding,
+  featuredSection,
 }) => {
   const renderTitle = (title: string) => (
     <h3 className="transform -rotate-90 text-2xl text-nowrap font-light text-gray-700 text-center">
@@ -24,7 +26,13 @@ export const MySection: FC<IMySectionProps> = ({
   );
 
   return (
-    <section className={'border border-gray-800 grid grid-cols-12' + (invisibleBottomBorder ? ' border-b-0' : '')}>
+    <section
+      className={
+        'border border-gray-800 grid grid-cols-12' +
+        (invisibleBottomBorder ? ' border-b-0' : '') +
+        (featuredSection ? ' shadow-read' : '')
+      }
+    >
       {title ? (
         <div
           className={`col-span-2 md:col-span-1 flex flex-col justify-center ${featuredTitle ? 'border-r border-gray-800' : ''} overflow-hidden`}

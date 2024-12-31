@@ -96,8 +96,8 @@ export function Home() {
         </MySection>
       )}
       {subjects.length > 0 && (
-        <MySection title="Assuntos">
-          <div className="flex gap-2 flex-wrap">
+        <MySection title="Assuntos" featuredSection>
+          <div className="flex gap-1 md:gap-2 flex-wrap">
             {subjects.map((subject, index) => (
               <div key={subject.id} className="text-2xl md:text-4xl font-butler font-light flex items-center">
                 <Link
@@ -106,7 +106,7 @@ export function Home() {
                 >
                   {subject.name}
                 </Link>
-                {index < subjects.length - 1 && <span className="ml-4 mr-2">•</span>}
+                {index < subjects.length - 1 && <span className="ml-1 md:ml-2 md:mr-1">•</span>}
               </div>
             ))}
           </div>
