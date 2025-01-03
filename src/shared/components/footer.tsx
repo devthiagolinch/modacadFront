@@ -56,7 +56,7 @@ export function Footer() {
         <div className="flex flex-col justify-center items-center">
           <img src={setaCurvaIcon} className="transform -scale-x-90 rotate-[216deg] md:scale-x-100 md:rotate-0" />
         </div>
-        <div className="flex items-center">
+        <div className="flex items-center overflow-hidden">
           <ul>
             <li className="flex gap-2 md:text-2xl font-medium highlight-link mb-2 items-center">
               <img src={emailIcon} alt="" className="max-w-[24px]" />
