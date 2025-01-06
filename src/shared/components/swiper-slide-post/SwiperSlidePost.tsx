@@ -10,7 +10,11 @@ export const SwiperSlidePost: React.FC<ISwiperSlidePost> = ({ post }) => {
     <div className={`border-r border-gray-950 font-montserrat font-medium h-full overflow-hidden`}>
       {/* Imagem da publicação */}
       <div className="border-b-[1px] border-[#202020]">
-        <img src={post.feature_image ?? ''} alt={`Imagem do ${post.title}`} className="h-[400px] object-cover w-full" />
+        <img
+          src={post.feature_image ?? ''}
+          alt={`Imagem do ${post.title}`}
+          className={`w-full  object-cover border-b border-gray-950 ${post.type === 'texto' ? 'aspect-video' : 'aspect-square'}`}
+        />
       </div>
       {/* Conteúdo da publicação */}
       <div className="flex flex-col gap-4 p-4 md:p-8">
