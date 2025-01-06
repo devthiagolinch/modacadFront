@@ -9,7 +9,7 @@ interface IPostListProps {
 
 export const PostList: FC<IPostListProps> = ({ posts, tipo }) => {
   return (
-    <div className="grid grid-cols-1 gap-4">
+    <div className={`grid gap-4 grid-cols-${tipo === 'texto' ? 1 : 2}`}>
       {posts.map((post) => (
         <PostCard post={post} key={post.id} tipo={tipo} />
       ))}
