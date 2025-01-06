@@ -24,7 +24,6 @@ export const SwiperPosts: React.FC<ISwiperPosts> = ({ posts, slidesPerView = 2 }
         <Swiper
           slidesPerView={Math.min(posts.length, slidesPerView)}
           modules={[Navigation]}
-          loop={true}
           navigation={{
             prevEl: prevRef.current,
             nextEl: nextRef.current,

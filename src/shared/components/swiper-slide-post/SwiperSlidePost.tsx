@@ -13,7 +13,7 @@ export const SwiperSlidePost: React.FC<ISwiperSlidePost> = ({ post }) => {
         <img
           src={post.feature_image ?? ''}
           alt={`Imagem do ${post.title}`}
-          className={`w-full  object-cover border-b border-gray-950 ${post.type === 'texto' ? 'aspect-video' : 'aspect-square'}`}
+          className={`w-full object-cover ${post.type === 'texto' ? 'aspect-video' : 'aspect-square'}`}
         />
       </div>
       {/* Conteúdo da publicação */}
