@@ -14,11 +14,11 @@ export const PostCard: FC<IPostCardProps> = ({ post, tipo }) => {
 
   return (
     <Link to={link}>
-      <div className="border border-gray-950 font-montserrat">
+      <div className="border border-gray-950 font-montserrat h-full">
         <img
           src={post.feature_image ?? defaultImage}
           alt={post.title}
-          className="w-full aspect-video object-cover border-b border-gray-950"
+          className={`w-full  object-cover border-b border-gray-950 ${tipo === 'texto' ? 'aspect-video' : 'aspect-square'}`}
         />
         <div className="p-4">
           <ul>
