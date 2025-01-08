@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { Footer } from '../../shared/components/footer';
-import { ReadingBox } from '../../shared/components/reagindBox';
+import { ReadingBox } from '../../shared/components/cta/CTAPlans';
 
 import { ISubjectData, SubjectsService } from '../../shared/api/subjects/SubjectsService';
 
@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 import { IPostData, PostsService } from '../../shared/api/posts/PostsService';
 import { FeaturedPost } from '../../shared/components/posts/featured/FeaturedPost';
 import { SwiperPosts } from '../../shared/components/posts/view-formats/PostSwiper';
-import { CTAApp } from '../../shared/components/cta-app/CTAApp';
+import { CTAApp } from '../../shared/components/cta/CTAApp';
 import { MySection } from '../../shared/components/ui/my-section/MySection';
 
 export function Home() {
