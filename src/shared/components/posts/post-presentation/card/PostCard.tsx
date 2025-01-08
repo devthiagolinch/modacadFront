@@ -5,12 +5,11 @@ import defaultImage from '../../../../../assets/imgs/default_image_300_300.jpg';
 import { Link } from 'react-router-dom';
 
 interface IPostCardProps {
-  tipo: 'texto' | 'pilula';
   post: IPostData;
 }
 
-export const PostCard: FC<IPostCardProps> = ({ post, tipo }) => {
-  const link = tipo === 'texto' ? `/posts/${post.id}` : `/pilulas/${post.id}`;
+export const PostCard: FC<IPostCardProps> = ({ post }) => {
+  const link = post.type === 'texto' ? `/posts/${post.id}` : `/pilulas/${post.id}`;
 
   return (
     <Link to={link}>
@@ -18,7 +17,7 @@ export const PostCard: FC<IPostCardProps> = ({ post, tipo }) => {
         <img
           src={post.feature_image ?? defaultImage}
           alt={post.title}
-          className={`w-full  object-cover border-b border-gray-950 ${tipo === 'texto' ? 'aspect-video' : 'aspect-square'}`}
+          className={`w-full  object-cover border-b border-gray-950 ${post.type === 'texto' ? 'aspect-video' : 'aspect-square'}`}
         />
         <div className="p-4">
           <ul>

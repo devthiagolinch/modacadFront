@@ -1,25 +1,26 @@
 import { FC } from 'react';
-import { PostGrid } from './presentation/PostGrid';
+import { PostGrid } from './view-formats/PostGrid';
 import { IPostData } from '../../../../shared/api/posts/PostsService';
-import { PostList } from './presentation/PostList';
+import { PostList } from './view-formats/PostList';
 
 interface IPostPresentationProps {
-  tipo: 'texto' | 'pilula';
-  variant?: 'grid' | 'list';
+  variant?: 'grid' | 'list' | 'swiper';
   loading?: boolean;
   error?: boolean;
   posts?: IPostData[];
 }
 
-export const PostPresentation: FC<IPostPresentationProps> = ({ tipo, variant = 'grid', posts, loading, error }) => {
+export const PostPresentation: FC<IPostPresentationProps> = ({ variant = 'grid', posts, loading, error }) => {
   if (loading) {
-    return null;
+    <div>
+      <p>Carregando</p>
+    </div>;
   }
 
   if (error) {
     return (
       <div>
-        <h1>Erro ao carregar os posts</h1>
+        <p>Erro ao carregar os posts</p>
       </div>
     );
   }
@@ -32,9 +33,12 @@ export const PostPresentation: FC<IPostPresentationProps> = ({ tipo, variant = '
     );
   }
 
-  if (variant === 'list') {
-    return <PostList posts={posts} tipo={tipo} />;
+  switch (variant) {
+    case 'list':
+      return <PostList posts={posts} />;
+    case 'swiper':
+      return <p>Testando</p>;
+    default:
+      return <PostGrid posts={posts} />;
   }
-
-  return <PostGrid posts={posts} tipo={tipo} />;
 };
