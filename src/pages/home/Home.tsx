@@ -141,11 +141,13 @@ export function Home() {
       <CTAPlans />
       {/* Pilulas */}
       {pilulas.length > 0 && (
-        <MySection title="PÍLULAS MODACAD" titleLink="/pilulas" disableInternalPadding>
+        <MySection title="PÍLULAS MODACAD" titleLink="/pilulas" disableInternalPadding invisibleBottomBorder>
           <SwiperPosts posts={pilulas} slidesPerView={isSmallScreen ? 1.25 : 4} />
         </MySection>
       )}
-      <CTAApp />
+      <MySection invisibleBottomBorder>
+        <CTAApp />
+      </MySection>
       {/* Sobre a Telma */}
       <div id="contact"></div>
       {/* Rodapé */}
