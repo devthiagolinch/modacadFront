@@ -1,6 +1,6 @@
 import { ArrowLongLeftIcon, ArrowLongRightIcon } from '@heroicons/react/24/outline';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
+import { Autoplay, Navigation } from 'swiper/modules';
 import { Link } from 'react-router-dom';
 
 import { IPostData } from '../../../api/posts/PostsService';
@@ -25,11 +25,12 @@ export const SwiperPosts: React.FC<ISwiperPosts> = ({ posts, slidesPerView = 2 }
       <div className="border-x border-gray-800">
         <Swiper
           slidesPerView={Math.min(posts.length, slidesPerView)}
-          modules={[Navigation]}
+          modules={[Navigation, Autoplay]}
           navigation={{
             nextEl: `.${nextButtonClass}`,
             prevEl: `.${prevButtonClass}`,
           }}
+          autoplay={{ delay: 5000 }}
         >
           {posts.map((post) => (
             <SwiperSlide key={post.id} style={{ height: 'auto' }}>
