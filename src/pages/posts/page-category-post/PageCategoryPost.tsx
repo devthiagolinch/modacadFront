@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 
-import { PostPresentation } from '../../../shared/components/posts/post-presentation/PostPresentation';
 import { PublicHeader } from '../../../shared/components/header/public-header/PublicHeader';
 import { IPostData, PostsService } from '../../../shared/api/posts/PostsService';
 import { Footer } from '../../../shared/components/footer';
 import { ReadingBox } from '../../../shared/components/reagindBox';
 import { CTAApp } from '../../../shared/components/cta-app/CTAApp';
 import { useParams } from 'react-router-dom';
+import { PostGrid } from '../../../shared/components/posts/post-presentation/view-formats/PostGrid';
 
 export const PageCategoryPost = () => {
   window.scrollTo(0, 0);
@@ -14,49 +14,36 @@ export const PageCategoryPost = () => {
 
   // PAGINAÇÃO
   const [page, setPage] = useState(1); // Página atual
-  const [totalTextoPage, setTotalTextoPage] = useState<number>(); // Controle de paginas dos textos
-  const [totalPiluaPage, setTotalPilulaPage] = useState<number>(); // Controle de paginas das pilulas
+  const [totalTextoPage, setTotalTextoPage] = useState<number>();
+  const [totalPiluaPage, setTotalPilulaPage] = useState<number>();
 
   // Textos
   const [textos, setTextos] = useState<IPostData[]>([]);
-  const [isLoadingTextos, setIsLoadingTextos] = useState(false);
-  const [hasMoreTexto] = useState(true); // Controle de mais dados para carregar
-  const [errorTextos, setErrorTextos] = useState(false);
+  const [hasMoreTexto] = useState(true);
 
   // Pílulas
   const [pilulas, setPilulas] = useState<IPostData[]>([]);
-  const [isLoadingPilulas, setIsLoadingPilulas] = useState(false);
-  const [hasMorePilulas] = useState(true); // Controle de mais dados para carregar
-  const [errorPilulas, setErrorPilulas] = useState(false);
+  const [hasMorePilulas] = useState(true);
 
   useEffect(() => {
-    setIsLoadingTextos(true);
     PostsService.getAll({ type: 'texto', status: 'published', order: 'desc', page: page, subject: categoryId }).then(
       (response) => {
         if (response instanceof Error) {
           console.error(response.message);
-          setErrorTextos(true);
-          setIsLoadingTextos(false);
           return;
         }
         setTextos(response.posts);
         setTotalTextoPage(response.totalPages);
-        setIsLoadingTextos(false);
-        setErrorTextos(false);
       }
     );
     PostsService.getAll({ type: 'pilula', status: 'published', order: 'desc', page: page, subject: categoryId }).then(
       (response) => {
         if (response instanceof Error) {
           console.error(response.message);
-          setErrorPilulas(true);
-          setIsLoadingPilulas(false);
           return;
         }
         setPilulas(response.posts);
         setTotalPilulaPage(response.totalPages);
-        setIsLoadingPilulas(false);
-        setErrorPilulas(false);
       }
     );
   }, []);
@@ -78,23 +65,11 @@ export const PageCategoryPost = () => {
         <div className="grid grid-cols-12 gap-4">
           <div className="col-span-12 md:col-span-7">
             <h2 className="font-light text-3xl md:text-4xl mb-4">blogModacad</h2>
-            <PostPresentation
-              posts={textos}
-              loading={isLoadingTextos}
-              error={errorTextos}
-              variant="list"
-              tipo="texto"
-            />
+            <PostGrid posts={textos} columns={{ xs: 1 }} />
           </div>
           <div className="col-span-12 md:col-span-5">
             <h2 className="font-light text-3xl md:text-4xl mb-4">pílulasModacad</h2>
-            <PostPresentation
-              posts={pilulas}
-              loading={isLoadingPilulas}
-              error={errorPilulas}
-              variant="list"
-              tipo="pilula"
-            />
+            <PostGrid posts={pilulas} columns={{ xs: 2 }} />
           </div>
         </div>
         <div className="lg:mb-[80px] lg:mt-[60px] mt-[25px] mb-[50px] justify-center items-center flex">
