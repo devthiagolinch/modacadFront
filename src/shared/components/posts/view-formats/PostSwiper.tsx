@@ -1,5 +1,3 @@
-import { useRef } from 'react';
-
 import { ArrowLongLeftIcon, ArrowLongRightIcon } from '@heroicons/react/24/outline';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
@@ -9,6 +7,7 @@ import { IPostData } from '../../../api/posts/PostsService';
 import { SwiperSlidePost } from '../single/PostSlide';
 
 import 'swiper/css';
+import { useId } from 'react';
 
 interface ISwiperPosts {
   posts: IPostData[];
@@ -16,8 +15,10 @@ interface ISwiperPosts {
 }
 
 export const SwiperPosts: React.FC<ISwiperPosts> = ({ posts, slidesPerView = 2 }) => {
-  const prevRef = useRef<HTMLDivElement | null>(null);
-  const nextRef = useRef<HTMLDivElement | null>(null);
+  const rawId = useId();
+  const sanitizedId = rawId.replace(/[:.]/g, '-');
+  const prevButtonClass = `swiper-button-prev-${sanitizedId}`;
+  const nextButtonClass = `swiper-button-next-${sanitizedId}`;
 
   return (
     <div>
@@ -26,18 +27,8 @@ export const SwiperPosts: React.FC<ISwiperPosts> = ({ posts, slidesPerView = 2 }
           slidesPerView={Math.min(posts.length, slidesPerView)}
           modules={[Navigation]}
           navigation={{
-            prevEl: prevRef.current,
-            nextEl: nextRef.current,
-          }}
-          onBeforeInit={(swiper) => {
-            if (typeof swiper.params.navigation !== 'boolean') {
-              const navigation = swiper.params.navigation;
-              if (navigation) {
-                console.log('prevRef:', prevRef.current, 'nextRef:', nextRef.current);
-                navigation.prevEl = prevRef.current;
-                navigation.nextEl = nextRef.current;
-              }
-            }
+            nextEl: `.${nextButtonClass}`,
+            prevEl: `.${prevButtonClass}`,
           }}
         >
           {posts.map((post) => (
@@ -52,14 +43,12 @@ export const SwiperPosts: React.FC<ISwiperPosts> = ({ posts, slidesPerView = 2 }
       {/* Menu de navegação */}
       <div className="swiper-navigation flex">
         <div
-          ref={prevRef}
-          className="swiper-button-prev flex grow justify-center hover:bg-primary cursor-pointer py-6 border-t border-l border-r border-gray-950"
+          className={`${prevButtonClass} flex grow justify-center hover:bg-primary cursor-pointer py-6 border-t border-l border-r border-gray-950`}
         >
           <ArrowLongLeftIcon className="size-12" />
         </div>
         <div
-          ref={nextRef}
-          className="swiper-button-next flex grow justify-center hover:bg-primary cursor-pointer py-6 border-t border-r border-gray-950"
+          className={`${nextButtonClass} flex grow justify-center hover:bg-primary cursor-pointer py-6 border-t border-r border-gray-950`}
         >
           <ArrowLongRightIcon className="size-12" />
         </div>
