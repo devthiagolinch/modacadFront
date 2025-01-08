@@ -40,7 +40,11 @@ export const MySection: FC<IMySectionProps> = ({
           {titleLink ? <Link to={titleLink}>{renderTitle(title)}</Link> : renderTitle(title)}
         </div>
       ) : null}
-      <div className={'col-span-10 md:col-span-11' + (!disableInternalPadding ? 'px-4 py-8' : '')}>{children}</div>
+      <div
+        className={title ? 'col-span-10 md:col-span-11' : 'col-span-12' + (!disableInternalPadding ? ' px-4 py-8' : '')}
+      >
+        {children}
+      </div>
     </section>
   );
 };

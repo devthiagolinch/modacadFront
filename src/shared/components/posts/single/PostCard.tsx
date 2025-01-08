@@ -1,24 +1,25 @@
 import { FC } from 'react';
-import { IPostData } from '../../../../../shared/api/posts/PostsService';
 
-import defaultImage from '../../../../../assets/imgs/default_image_300_300.jpg';
 import { Link } from 'react-router-dom';
 
+import { IPostData } from '../../../api/posts/PostsService';
+
+import defaultImage from '../../../../assets/imgs/default_image_300_300.jpg';
+
 interface IPostCardProps {
-  tipo: 'texto' | 'pilula';
   post: IPostData;
 }
 
-export const PostCard: FC<IPostCardProps> = ({ post, tipo }) => {
-  const link = tipo === 'texto' ? `/posts/${post.id}` : `/pilulas/${post.id}`;
+export const PostCard: FC<IPostCardProps> = ({ post }) => {
+  const link = post.type === 'texto' ? `/posts/${post.id}` : `/pilulas/${post.id}`;
 
   return (
     <Link to={link}>
-      <div className="border border-gray-950 font-montserrat">
+      <div className="border border-gray-950 font-montserrat h-full">
         <img
           src={post.feature_image ?? defaultImage}
           alt={post.title}
-          className="w-full aspect-video object-cover border-b border-gray-950"
+          className={`w-full object-cover border-b border-gray-950 ${post.type === 'texto' ? 'aspect-video' : 'aspect-square'}`}
         />
         <div className="p-4">
           <ul>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { Footer } from '../../shared/components/footer';
-import { ReadingBox } from '../../shared/components/reagindBox';
+import { CTAPlans } from '../../shared/components/cta/CTAPlans';
 
 import { ISubjectData, SubjectsService } from '../../shared/api/subjects/SubjectsService';
 
@@ -9,9 +9,9 @@ import banner from '../../assets/imgs/Banner-home.jpg';
 import { PublicHeader } from '../../shared/components/header/public-header/PublicHeader';
 import { Link } from 'react-router-dom';
 import { IPostData, PostsService } from '../../shared/api/posts/PostsService';
-import { FeaturedPost } from '../../shared/components/posts/featured-post/FeaturedPost';
-import { SwiperPosts } from '../../shared/components/posts/swiper-posts/SwiperPosts';
-import { CTAApp } from '../../shared/components/cta-app/CTAApp';
+import { FeaturedPost } from '../../shared/components/posts/featured/FeaturedPost';
+import { SwiperPosts } from '../../shared/components/posts/view-formats/PostSwiper';
+import { CTAApp } from '../../shared/components/cta/CTAApp';
 import { MySection } from '../../shared/components/ui/my-section/MySection';
 
 export function Home() {
@@ -59,8 +59,6 @@ export function Home() {
     return () => mediaQuery.removeEventListener('change', handler);
   }, []);
 
-  console.log(isSmallScreen);
-
   return (
     <div className="mx-auto h-screen">
       <PublicHeader />
@@ -97,7 +95,7 @@ export function Home() {
         </div>
       </div>
       {/* CTA - Planos */}
-      <ReadingBox />
+      <CTAPlans />
       {/* Último post */}
       {lastPost && (
         <MySection
@@ -112,7 +110,7 @@ export function Home() {
       )}
       {subjects.length > 0 && (
         <MySection title="Assuntos" featuredSection invisibleBottomBorder>
-          <div className="flex gap-1 md:gap-2 flex-wrap">
+          <div className="flex gap-1 md:gap-2 flex-wrap py-8">
             {subjects.map((subject, index) => (
               <div key={subject.id} className="text-2xl md:text-4xl font-butler font-light flex items-center">
                 <Link
@@ -130,24 +128,26 @@ export function Home() {
       {/* Textos mais lidos */}
       {posts.length > 0 && (
         <MySection title="Textos mais lidos" titleLink="/posts/popular" disableInternalPadding invisibleBottomBorder>
-          <SwiperPosts posts={posts} slidesPerView={isSmallScreen ? 1 : 2} />
+          <SwiperPosts posts={posts} slidesPerView={isSmallScreen ? 1.25 : 2} />
         </MySection>
       )}
       {/* Textos publicados */}
       {posts.length > 0 && (
         <MySection title="Textos Publicados" titleLink="/posts" disableInternalPadding invisibleBottomBorder>
-          <SwiperPosts posts={posts} slidesPerView={isSmallScreen ? 1 : 2} />
+          <SwiperPosts posts={posts} slidesPerView={isSmallScreen ? 1.25 : 2} />
         </MySection>
       )}
       {/* CTA - Planos */}
-      <ReadingBox />
+      <CTAPlans />
       {/* Pilulas */}
       {pilulas.length > 0 && (
-        <MySection title="PÍLULAS MODACAD" titleLink="/pilulas" disableInternalPadding>
-          <SwiperPosts posts={pilulas} slidesPerView={isSmallScreen ? 2 : 4} />
+        <MySection title="PÍLULAS MODACAD" titleLink="/pilulas" disableInternalPadding invisibleBottomBorder>
+          <SwiperPosts posts={pilulas} slidesPerView={isSmallScreen ? 1.25 : 4} />
         </MySection>
       )}
-      <CTAApp />
+      <MySection invisibleBottomBorder>
+        <CTAApp />
+      </MySection>
       {/* Sobre a Telma */}
       <div id="contact"></div>
       {/* Rodapé */}

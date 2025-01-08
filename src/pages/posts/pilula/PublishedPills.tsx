@@ -1,6 +1,6 @@
 import { Footer } from '../../../shared/components/footer';
 import { Link } from 'react-router-dom';
-import { ReadingBox } from '../../../shared/components/reagindBox';
+import { CTAPlans } from '../../../shared/components/cta/CTAPlans';
 import { PilulaModacadCard } from '../../../shared/components/cards/pilulasModacadCard';
 import { useEffect, useState } from 'react';
 import { IPostData, PostsService } from '../../../shared/api/posts/PostsService';
@@ -89,11 +89,14 @@ export function PublishedPills() {
                     flex flex-col justify-center items-center
                     bg-gradient-to-t from-[#dcdf1e] to-[#dcdf1e] bg-[length:90%_.90em] bg-no-repeat bg-[position:calc(90%_-_var(--p,0%))_900%]  hover:bg-[position:50%_75%]"
             onClick={handleLoadMore}
-          > CARREGAR MAIS</button>
+          >
+            {' '}
+            CARREGAR MAIS
+          </button>
         </div>
       </div>
 
-      <ReadingBox />
+      <CTAPlans />
       <Footer />
     </div>
   );
