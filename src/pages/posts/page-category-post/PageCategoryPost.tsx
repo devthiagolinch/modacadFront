@@ -7,10 +7,14 @@ import { ReadingBox } from '../../../shared/components/reagindBox';
 import { CTAApp } from '../../../shared/components/cta-app/CTAApp';
 import { useParams } from 'react-router-dom';
 import { PostGrid } from '../../../shared/components/posts/view-formats/PostGrid';
+import { ISubjectData, SubjectsService } from '../../../shared/api/subjects/SubjectsService';
 
 export const PageCategoryPost = () => {
   window.scrollTo(0, 0);
   const { categoryId } = useParams<{ categoryId: string }>();
+
+  // Categoria
+  const [category, setCategory] = useState<ISubjectData | null>(null);
 
   // PAGINAÇÃO
   const [page, setPage] = useState(1); // Página atual
@@ -46,7 +50,14 @@ export const PageCategoryPost = () => {
         setTotalPilulaPage(response.totalPages);
       }
     );
-  }, []);
+    SubjectsService.getAll().then((response) => {
+      if (response instanceof Error) {
+        console.error(response.message);
+        return;
+      }
+      setCategory(response.find((subject) => subject.id === categoryId) || null);
+    });
+  }, [categoryId]);
 
   const handleLoadMore = () => {
     if (hasMorePilulas && hasMoreTexto) {
@@ -59,7 +70,7 @@ export const PageCategoryPost = () => {
       <PublicHeader />
       <div className="container mx-auto p-4">
         <div className="flex gap-2 items-center">
-          <h1 className="font-butler text-4xl md:text-6xl mb-4 mt-10">Tecidos e Materiais</h1>
+          <h1 className="font-butler text-4xl md:text-6xl mb-4 mt-10">{category?.name}</h1>
           <hr className="grow border-t border-gray-950" />
         </div>
         <div className="grid grid-cols-12 gap-4">
