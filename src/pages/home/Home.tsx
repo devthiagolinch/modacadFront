@@ -59,8 +59,6 @@ export function Home() {
     return () => mediaQuery.removeEventListener('change', handler);
   }, []);
 
-  console.log(isSmallScreen);
-
   return (
     <div className="mx-auto h-screen">
       <PublicHeader />

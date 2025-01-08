@@ -33,6 +33,7 @@ export const SwiperPosts: React.FC<ISwiperPosts> = ({ posts, slidesPerView = 2 }
             if (typeof swiper.params.navigation !== 'boolean') {
               const navigation = swiper.params.navigation;
               if (navigation) {
+                console.log('prevRef:', prevRef.current, 'nextRef:', nextRef.current);
                 navigation.prevEl = prevRef.current;
                 navigation.nextEl = nextRef.current;
               }
