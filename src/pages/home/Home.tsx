@@ -130,13 +130,13 @@ export function Home() {
       {/* Textos mais lidos */}
       {posts.length > 0 && (
         <MySection title="Textos mais lidos" titleLink="/posts/popular" disableInternalPadding invisibleBottomBorder>
-          <SwiperPosts posts={posts} slidesPerView={isSmallScreen ? 1 : 2} />
+          <SwiperPosts posts={posts} slidesPerView={isSmallScreen ? 1.25 : 2} />
         </MySection>
       )}
       {/* Textos publicados */}
       {posts.length > 0 && (
         <MySection title="Textos Publicados" titleLink="/posts" disableInternalPadding invisibleBottomBorder>
-          <SwiperPosts posts={posts} slidesPerView={isSmallScreen ? 1 : 2} />
+          <SwiperPosts posts={posts} slidesPerView={isSmallScreen ? 1.25 : 2} />
         </MySection>
       )}
       {/* CTA - Planos */}
@@ -144,7 +144,7 @@ export function Home() {
       {/* Pilulas */}
       {pilulas.length > 0 && (
         <MySection title="PÍLULAS MODACAD" titleLink="/pilulas" disableInternalPadding>
-          <SwiperPosts posts={pilulas} slidesPerView={isSmallScreen ? 2 : 4} />
+          <SwiperPosts posts={pilulas} slidesPerView={isSmallScreen ? 1.25 : 4} />
         </MySection>
       )}
       <CTAApp />
