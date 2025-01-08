@@ -1,6 +1,7 @@
 import { FC } from 'react';
-import { IPostData } from '../../../../api/posts/PostsService';
-import { PostCard } from '../card/PostCard';
+
+import { IPostData } from '../../../api/posts/PostsService';
+import { PostCard } from '../single/PostCard';
 
 interface IGridColumns {
   xs?: number;

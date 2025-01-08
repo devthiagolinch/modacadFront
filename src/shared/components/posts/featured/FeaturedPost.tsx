@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { IPostData } from '../../../../shared/api/posts/PostsService';
+import { IPostData } from '../../../api/posts/PostsService';
 
 interface IFeaturedPost {
   post: IPostData;

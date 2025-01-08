@@ -1,8 +1,10 @@
 import { FC } from 'react';
-import { IPostData } from '../../../../../shared/api/posts/PostsService';
 
-import defaultImage from '../../../../../assets/imgs/default_image_300_300.jpg';
 import { Link } from 'react-router-dom';
+
+import { IPostData } from '../../../api/posts/PostsService';
+
+import defaultImage from '../../../../assets/imgs/default_image_300_300.jpg';
 
 interface IPostCardProps {
   post: IPostData;
@@ -17,7 +19,7 @@ export const PostCard: FC<IPostCardProps> = ({ post }) => {
         <img
           src={post.feature_image ?? defaultImage}
           alt={post.title}
-          className={`w-full  object-cover border-b border-gray-950 ${post.type === 'texto' ? 'aspect-video' : 'aspect-square'}`}
+          className={`w-full object-cover border-b border-gray-950 ${post.type === 'texto' ? 'aspect-video' : 'aspect-square'}`}
         />
         <div className="p-4">
           <ul>

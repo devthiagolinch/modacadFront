@@ -1,13 +1,14 @@
+import { useRef } from 'react';
+
+import { ArrowLongLeftIcon, ArrowLongRightIcon } from '@heroicons/react/24/outline';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper/modules';
 import { Link } from 'react-router-dom';
 
-import { SwiperSlidePost } from '../../swiper-slide-post/SwiperSlidePost';
-import { IPostData } from '../../../../shared/api/posts/PostsService';
+import { IPostData } from '../../../api/posts/PostsService';
+import { SwiperSlidePost } from '../single/PostSlide';
 
 import 'swiper/css';
-import { ArrowLongLeftIcon, ArrowLongRightIcon } from '@heroicons/react/24/outline';
-import { Navigation } from 'swiper/modules';
-import { useRef } from 'react';
 
 interface ISwiperPosts {
   posts: IPostData[];

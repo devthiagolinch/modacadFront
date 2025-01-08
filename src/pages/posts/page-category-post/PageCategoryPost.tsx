@@ -6,7 +6,7 @@ import { Footer } from '../../../shared/components/footer';
 import { ReadingBox } from '../../../shared/components/reagindBox';
 import { CTAApp } from '../../../shared/components/cta-app/CTAApp';
 import { useParams } from 'react-router-dom';
-import { PostGrid } from '../../../shared/components/posts/post-presentation/view-formats/PostGrid';
+import { PostGrid } from '../../../shared/components/posts/view-formats/PostGrid';
 
 export const PageCategoryPost = () => {
   window.scrollTo(0, 0);
