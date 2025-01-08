@@ -1,6 +1,6 @@
 import { Footer } from '../../../shared/components/footer';
 import { Link } from 'react-router-dom';
-import { ReadingBox } from '../../../shared/components/cta/CTAPlans';
+import { CTAPlans } from '../../../shared/components/cta/CTAPlans';
 import { PilulaModacadCard } from '../../../shared/components/cards/pilulasModacadCard';
 import { useEffect, useState } from 'react';
 import { IPostData, PostsService } from '../../../shared/api/posts/PostsService';
@@ -96,7 +96,7 @@ export function PublishedPills() {
         </div>
       </div>
 
-      <ReadingBox />
+      <CTAPlans />
       <Footer />
     </div>
   );

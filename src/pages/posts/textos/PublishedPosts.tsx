@@ -1,7 +1,7 @@
 import { TextoMocadCard } from '../../../shared/components/cards/textoModacadCard';
 import { Footer } from '../../../shared/components/footer';
 import { Link } from 'react-router-dom';
-import { ReadingBox } from '../../../shared/components/cta/CTAPlans';
+import { CTAPlans } from '../../../shared/components/cta/CTAPlans';
 import { IPostData, PostsService } from '../../../shared/api/posts/PostsService';
 import { useEffect, useState } from 'react';
 import { PublicHeader } from '../../../shared/components/header/public-header/PublicHeader';
@@ -93,7 +93,7 @@ export function PublishedPosts() {
         </div>
       </div>
 
-      <ReadingBox />
+      <CTAPlans />
       <Footer />
     </div>
   );

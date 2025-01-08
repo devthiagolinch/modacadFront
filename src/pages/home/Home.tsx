@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { Footer } from '../../shared/components/footer';
-import { ReadingBox } from '../../shared/components/cta/CTAPlans';
+import { CTAPlans } from '../../shared/components/cta/CTAPlans';
 
 import { ISubjectData, SubjectsService } from '../../shared/api/subjects/SubjectsService';
 
@@ -95,7 +95,7 @@ export function Home() {
         </div>
       </div>
       {/* CTA - Planos */}
-      <ReadingBox />
+      <CTAPlans />
       {/* Último post */}
       {lastPost && (
         <MySection
@@ -138,7 +138,7 @@ export function Home() {
         </MySection>
       )}
       {/* CTA - Planos */}
-      <ReadingBox />
+      <CTAPlans />
       {/* Pilulas */}
       {pilulas.length > 0 && (
         <MySection title="PÍLULAS MODACAD" titleLink="/pilulas" disableInternalPadding>
