@@ -52,13 +52,13 @@ export const SwiperPosts: React.FC<ISwiperPosts> = ({ posts, slidesPerView = 2 }
       <div className="swiper-navigation flex">
         <div
           ref={prevRef}
-          className="swiper-button-prev flex grow justify-center hover:bg-primary cursor-pointer py-6 border border-gray-950"
+          className="swiper-button-prev flex grow justify-center hover:bg-primary cursor-pointer py-6 border-t border-l border-r border-gray-950"
         >
           <ArrowLongLeftIcon className="size-12" />
         </div>
         <div
           ref={nextRef}
-          className="swiper-button-next flex grow justify-center hover:bg-primary cursor-pointer py-6 border-y border-r border-gray-950"
+          className="swiper-button-next flex grow justify-center hover:bg-primary cursor-pointer py-6 border-t border-r border-gray-950"
         >
           <ArrowLongRightIcon className="size-12" />
         </div>
