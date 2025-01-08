@@ -110,7 +110,7 @@ export function Home() {
       )}
       {subjects.length > 0 && (
         <MySection title="Assuntos" featuredSection invisibleBottomBorder>
-          <div className="flex gap-1 md:gap-2 flex-wrap">
+          <div className="flex gap-1 md:gap-2 flex-wrap py-8">
             {subjects.map((subject, index) => (
               <div key={subject.id} className="text-2xl md:text-4xl font-butler font-light flex items-center">
                 <Link
