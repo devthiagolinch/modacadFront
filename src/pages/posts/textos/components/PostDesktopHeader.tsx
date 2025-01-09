@@ -1,11 +1,12 @@
 import { format } from 'date-fns';
-import { IPostData } from '../../../../shared/api/posts/PostsService';
+import { IMetaData, IPostData } from '../../../../shared/api/posts/PostsService';
 
 interface PostDeskTopHeaderInterface {
   post: IPostData | undefined;
+  feature_image_caption: string;
 }
 
-export const PostDeskTopHeader: React.FC<PostDeskTopHeaderInterface> = ({ post }) => {
+export const PostDeskTopHeader: React.FC<PostDeskTopHeaderInterface> = ({ post, feature_image_caption }) => {
   function calculateReadingTime(text: string): string {
     const wordsPerMinute = 300; // Média de leitura (A velocidade média de leitura de um brasileiro é de 200 a 400 palavras por minuto (PPM). Um leitor comum leva cerca de um minuto para ler uma página, que normalmente tem cerca de 300 palavras. )
     const wordCount = text.split(/\s+/).length; // Conta palavras separadas por espaços
@@ -62,10 +63,18 @@ export const PostDeskTopHeader: React.FC<PostDeskTopHeaderInterface> = ({ post }
         </div>
       </div>
 
-      <div className="flex justify-center items-center pl-[20px]">
-        <div className="lg:h-[370px] lg:w-[730px] border-[1px] border-[#f1ece8] absolute "></div>
-        <img src={post?.feature_image ?? ''} alt="" className="lg:h-[400px] lg:w-[760px] object-cover" />
+      <div className='flex flex-col justify-center items-center'>
+        <div className="flex justify-center items-center pl-[20px]">
+          <div className="lg:h-[370px] lg:w-[730px] border-[1px] border-[#f1ece8] absolute "></div>
+          <img src={post?.feature_image ?? ''} alt="" className="lg:h-[400px] lg:w-[760px] object-cover" />
+        </div>        
+        <span
+          className="mt-2"
+          dangerouslySetInnerHTML={{ __html: feature_image_caption ?? '' }}
+        />
       </div>
+
+      
       <div className="flex w-full justify-center align-middle items-center gap-5 mt-5">
         {post?.editors &&
           Array.isArray(post.editors) &&

@@ -3,9 +3,10 @@ import { IPostData } from 'src/shared/api/posts/PostsService';
 
 interface PostMobileHeaderInterface {
   post: IPostData | undefined;
+  feature_image_caption: string;
 }
 
-export const PostMobileHeader: React.FC<PostMobileHeaderInterface> = ({ post }) => {
+export const PostMobileHeader: React.FC<PostMobileHeaderInterface> = ({ post, feature_image_caption }) => {
   function calculateReadingTime(text: string): string {
     const wordsPerMinute = 300; // Média de leitura (A velocidade média de leitura de um brasileiro é de 200 a 400 palavras por minuto (PPM). Um leitor comum leva cerca de um minuto para ler uma página, que normalmente tem cerca de 300 palavras. )
     const wordCount = text.split(/\s+/).length; // Conta palavras separadas por espaços
@@ -22,16 +23,23 @@ export const PostMobileHeader: React.FC<PostMobileHeaderInterface> = ({ post }) 
         <p className="text-left leading-[20px] text-lg font-montserrat font-light">{post?.description}</p>
       </div>
 
-      <div className="flex flex-col ">
-        <div className="flex w-full justify-center items-center">
-          <div className="w-[95%] h-[180px] border-[1px] border-[#f1ece8] absolute "></div>
-          <img
-            src={post?.feature_image ?? ''}
-            alt=""
-            className="max-h-[200px] w-[100%]
-                                border-[1px] border-inherit border-white
-                                object-cover
-                            "
+      <div className="flex flex-col">
+        <div className='flex flex-col justify-center items-center'>
+          <div className="flex w-full justify-center items-center">
+            <div className="w-[95%] h-[180px] border-[1px] border-[#f1ece8] absolute "></div>
+            <img
+              src={post?.feature_image ?? ''}
+              alt=""
+              className="max-h-[200px] w-[100%]
+                                  border-[1px] border-inherit border-white
+                                  object-cover
+                              "
+            />
+          
+          </div>
+          <span
+            className="mt-2"
+            dangerouslySetInnerHTML={{ __html: feature_image_caption ?? '' }}
           />
         </div>
 

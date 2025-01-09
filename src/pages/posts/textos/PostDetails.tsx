@@ -20,6 +20,9 @@ export function PostDetails() {
 
   const [post, setPost] = useState<IPostData | undefined>(undefined);
 
+  const meta = Array.isArray(post?.meta) && post?.meta.length > 0 ? post?.meta[0] : {};
+  const feature_image_caption = meta.feature_image_caption;
+
   useEffect(() => {
     if (postId) {
       PostsService.getById(postId).then((response) => {
@@ -58,8 +61,8 @@ export function PostDetails() {
   return (
     <div className="mx-auto h-screen">
       <PublicHeader />
-      <PostDeskTopHeader post={post} />
-      <PostMobileHeader post={post} />
+      <PostDeskTopHeader post={post} feature_image_caption={feature_image_caption} />
+      <PostMobileHeader post={post} feature_image_caption={feature_image_caption} />
 
       <div className="lg:pt-12 lg:w-full flex justify-center items-center">
         <p

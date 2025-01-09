@@ -14,6 +14,9 @@ export const PillDetails = () => {
 
   const [pilula, setPilula] = useState<IPostData>();
 
+  const meta = Array.isArray(pilula?.meta) && pilula?.meta.length > 0 ? pilula?.meta[0] : {};
+  const feature_image_caption = meta.feature_image_caption;
+
   useEffect(() => {
     if (postId) {
       PostsService.getById(postId).then((response) => {
@@ -31,8 +34,8 @@ export const PillDetails = () => {
   return (
     <div className="mx-auto h-screen">
       <PublicHeader />
-      <DeskTopHeader post={pilula} />
-      <MobileHeader post={pilula} />
+      <DeskTopHeader post={pilula} feature_image_caption={feature_image_caption} />
+      <MobileHeader post={pilula} feature_image_caption={feature_image_caption} />
 
       <div className="lg:pt-12 lg:w-full flex justify-center items-center">
         <p

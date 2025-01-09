@@ -4,9 +4,10 @@ import { format } from 'date-fns';
 
 interface DeskTopHeaderInterface {
   post: IPostData | undefined;
+  feature_image_caption: string;
 }
 
-export const DeskTopHeader: React.FC<DeskTopHeaderInterface> = ({ post }) => {
+export const DeskTopHeader: React.FC<DeskTopHeaderInterface> = ({ post, feature_image_caption }) => {
   function calculateReadingTime(text: string): string {
     const wordsPerMinute = 300; // Média de leitura (A velocidade média de leitura de um brasileiro é de 200 a 400 palavras por minuto (PPM). Um leitor comum leva cerca de um minuto para ler uma página, que normalmente tem cerca de 300 palavras. )
     const wordCount = text.split(/\s+/).length; // Conta palavras separadas por espaços
@@ -62,9 +63,15 @@ export const DeskTopHeader: React.FC<DeskTopHeaderInterface> = ({ post }) => {
         </div>
       </div>
 
-      <div className="flex w-full justify-center items-center bg-contain bg-center">
-        <div className="w-[380px] h-[380px] border-[1px] border-[#f1ece8] absolute "></div>
-        <img src={post?.feature_image ?? ''} className="w-[400px] h-[400px] object-cover " />
+      <div className="flex flex-col justify-center items-center">
+        <div className='flex justify-center items-center'>
+          <div className="w-[380px] h-[380px] border-[1px] border-[#f1ece8] absolute "></div>
+          <img src={post?.feature_image ?? ''} className="w-[400px] h-[400px] object-cover " />
+        </div>        
+        <span
+          className="mt-2"
+          dangerouslySetInnerHTML={{ __html: feature_image_caption ?? '' }}
+        />
       </div>
       <div className="flex w-full justify-center align-middle items-center gap-5 mt-5">
         {post?.editors &&

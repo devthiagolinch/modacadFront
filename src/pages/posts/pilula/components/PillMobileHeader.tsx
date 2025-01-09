@@ -5,9 +5,10 @@ import { Link } from 'react-router-dom';
 
 interface MobileHeaderInterface {
   post: IPostData | undefined;
+  feature_image_caption: string;
 }
 
-export const MobileHeader: React.FC<MobileHeaderInterface> = ({ post }) => {
+export const MobileHeader: React.FC<MobileHeaderInterface> = ({ post, feature_image_caption }) => {
   function calculateReadingTime(text: string): string {
     const wordsPerMinute = 300; // Média de leitura (A velocidade média de leitura de um brasileiro é de 200 a 400 palavras por minuto (PPM). Um leitor comum leva cerca de um minuto para ler uma página, que normalmente tem cerca de 300 palavras. )
     const wordCount = text.split(/\s+/).length; // Conta palavras separadas por espaços
@@ -25,15 +26,21 @@ export const MobileHeader: React.FC<MobileHeaderInterface> = ({ post }) => {
       </div>
 
       <div className="flex flex-col ">
-        <div className="flex justify-center items-center">
-          <div className="w-[220px] h-[220px] border-[1px] border-[#f1ece8] absolute "></div>
-          <img
-            src={post?.feature_image ?? ''}
-            alt=""
-            className="min-h-60 max-h-60 max-w-60
-                              border-[1px] border-inherit border-white
-                              object-cover
-                          "
+        <div className="flex flex-col justify-center items-center">
+          <div className='flex w-full justify-center items-center'>
+            <div className="w-[220px] h-[220px] border-[1px] border-[#f1ece8] absolute "></div>
+            <img
+              src={post?.feature_image ?? ''}
+              alt=""
+              className="min-h-60 max-h-60 max-w-60
+                                border-[1px] border-inherit border-white
+                                object-cover
+                            "
+            />
+          </div>
+          <span
+            className="mt-2"
+            dangerouslySetInnerHTML={{ __html: feature_image_caption ?? '' }}
           />
         </div>
 
