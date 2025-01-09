@@ -24,7 +24,7 @@ export const SwiperSlidePost: React.FC<ISwiperSlidePost> = ({ post }) => {
         {/* Assuntos */}
         <ul className="flex flex-col">
           {post?.subjects && post.subjects.length > 0 && (
-            <li className="font-light text-xl">
+            <li className="font-light leading-4">
               {post.subjects
                 .slice(0, 3)
                 .map((subject) => subject.name)
@@ -33,7 +33,7 @@ export const SwiperSlidePost: React.FC<ISwiperSlidePost> = ({ post }) => {
           )}
         </ul>
         {/* Título */}
-        <h1 className="font-butler text-2xl md:text-4xl font-light line-clamp-3">{post.title}</h1>
+        <h1 className="font-butler text-3xl md:text-4xl font-light line-clamp-4">{post.title}</h1>
         {/* Descrição */}
         <p className="font-light text-gray-800 line-clamp-4">{post.description}</p>
       </div>
