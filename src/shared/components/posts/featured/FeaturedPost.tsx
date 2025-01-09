@@ -13,20 +13,20 @@ interface IFeaturedPost {
 export const FeaturedPost: React.FC<IFeaturedPost> = ({ post }) => {
   return (
     <Link to={`/${post.type === 'texto' ? 'posts' : 'pilulas'}/${post.id}`}>
-      <div className="grid grid-cols-1 md:grid-cols-2 font-montserrat">
-        <div className="p-4 flex flex-col justify-center gap-4 order-1 md:order-[-1]">
-          <div className="flex flex-col gap-2">
+      <div className="grid grid-cols-1 md:grid-cols-12 font-montserrat gap-4">
+        <div className="px-4 py-8 flex flex-col justify-center gap-4 order-1 md:order-[-1] col-span-5">
+          <div className="flex flex-col gap-0">
             {post.subjects.length > 0 &&
               post.subjects.slice(0, 3).map((subject) => (
-                <span className="font-light text-2xl" key={subject.id}>
+                <span className="font-medium" key={subject.id}>
                   {subject.name}
                 </span>
               ))}
           </div>
-          <h3 className="text-4xl md:text-6xl font-butler font-light line-clamp-2">{post.title}</h3>
-          <p className="text-gray-700 line-clamp-4 text-2xl font-light line-clamp-4">{post.description}</p>
+          <h3 className="text-5xl xl:text-6xl font-butler font-light">{post.title}</h3>
+          <p className="text-gray-700 line-clamp-4 font-light line-clamp-5">{post.description}</p>
         </div>
-        <div className="relative">
+        <div className="relative col-span-7">
           <img
             src={post.feature_image ?? defaultImage}
             alt={`Imagem do ${post.title}`}
