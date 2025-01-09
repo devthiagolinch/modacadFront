@@ -11,7 +11,6 @@ import { Link } from 'react-router-dom';
 import { IPostData, PostsService } from '../../shared/api/posts/PostsService';
 import { FeaturedPost } from '../../shared/components/posts/featured/FeaturedPost';
 import { SwiperPosts } from '../../shared/components/posts/view-formats/PostSwiper';
-import { CTAApp } from '../../shared/components/cta/CTAApp';
 import { MySection } from '../../shared/components/ui/my-section/MySection';
 
 export function Home() {
@@ -142,9 +141,6 @@ export function Home() {
           <SwiperPosts posts={pilulas} slidesPerView={isSmallScreen ? 1.25 : 4} />
         </MySection>
       )}
-      <MySection invisibleBottomBorder>
-        <CTAApp />
-      </MySection>
       {/* Sobre a Telma */}
       <div id="contact"></div>
       {/* Rodapé */}

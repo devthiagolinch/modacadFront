@@ -3,8 +3,6 @@ import { useEffect, useState } from 'react';
 import { PublicHeader } from '../../../shared/components/header/public-header/PublicHeader';
 import { IPostData, PostsService } from '../../../shared/api/posts/PostsService';
 import { Footer } from '../../../shared/components/footer';
-import { CTAPlans } from '../../../shared/components/cta/CTAPlans';
-import { CTAApp } from '../../../shared/components/cta/CTAApp';
 import { useParams } from 'react-router-dom';
 import { PostGrid } from '../../../shared/components/posts/view-formats/PostGrid';
 import { ISubjectData, SubjectsService } from '../../../shared/api/subjects/SubjectsService';
@@ -105,9 +103,7 @@ export const PageCategoryPost = () => {
           )}
         </div>
       </div>
-      <CTAPlans />
-      <CTAApp />
-      <Footer />
+      <Footer showPlans showContact={false} />
     </div>
   );
 };

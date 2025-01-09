@@ -8,7 +8,7 @@ import { MobileHeader } from './components/PillMobileHeader';
 import { PublicHeader } from '../../../shared/components/header/public-header/PublicHeader';
 
 export const PillDetails = () => {
-  window.scrollTo(0,0)
+  window.scrollTo(0, 0);
   const { postId } = useParams<{ postId: string }>();
   const navigate = useNavigate();
 
@@ -34,13 +34,13 @@ export const PillDetails = () => {
       <DeskTopHeader post={pilula} />
       <MobileHeader post={pilula} />
 
-      <div className="lg:pt-12 lg:w-full flex justify-center items-center">
+      <div className="lg:pt-12 lg:w-full flex justify-center items-center mb-16">
         <p
           className="text-justify lg:text-xl lg:min-w-[980px] w-full px-5 font-montserrat font-normal prose tiptap"
           dangerouslySetInnerHTML={{ __html: pilula?.content ?? '' }}
         />
       </div>
-      <Footer />
+      <Footer showPlans showContact={false} />
     </div>
   );
 };
