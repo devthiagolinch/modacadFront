@@ -59,7 +59,7 @@ export interface IPostDataRequest {
   canonicalUrl: string;
 }
 
-interface IMetaData {
+export interface IMetaData {
   id: string;
   post_id: string;
   og_image: string;

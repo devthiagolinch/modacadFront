@@ -57,6 +57,7 @@ export const PostEditor = () => {
   const { postId } = useParams<{ postId: string }>();
 
   const [post, setPost] = useState(defaultPost);
+  const feature_image_caption = post.feature_image_caption.replace(/<\/?[^>]+(>|$)/g, "");
 
   const [featureImageUrl, setFeatureImageUrl] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
@@ -116,6 +117,8 @@ export const PostEditor = () => {
         if (response instanceof Error) {
           console.error(response.message);
         } else {
+          const meta = Array.isArray(response.meta) && response.meta.length > 0 ? response.meta[0] : {};
+
           setPost({
             title: response.title,
             description: response.description,
@@ -144,10 +147,10 @@ export const PostEditor = () => {
             frontmatter: response.meta?.frontmatter ?? '',
             feature_image_alt: response.meta?.feature_image_alt ?? '',
             email_only: response.meta?.email_only ?? '',
-            feature_image_caption: response.meta?.feature_image_caption ?? '',
+            feature_image_caption: meta?.feature_image_caption ?? '',
           });
           editor?.commands.setContent(response.content);
-          setFeatureImageUrl(response.feature_image);
+          setFeatureImageUrl(response.feature_image)
         }
       });
     }
@@ -283,6 +286,18 @@ export const PostEditor = () => {
             {featureImageUrl && (
               <img src={featureImageUrl} alt="Imagem destacada" className="mt-4 object-contain w-screen h-[400px]" />
             )}
+
+                      {/** CAMPO PARA CREDITOS DA IMAGEM EM DESTAQUE */}
+          <div className='w-full justify-center items-center flex'>
+              <input
+                type="text"
+                name="feature_image_caption"
+                value={feature_image_caption}
+                onChange={handleInputChange}
+                placeholder="Insira os creditos da imagem aqui..."
+                className="border-0 border-b p-2 mt-2 w-2/4 font-montserrat font-medium focus-visible:border-[#202020] bg-transparent focus:outline-none text-md"
+              />
+            </div>
           </div>
           {/* Campo para título */}
           <div className="mb-6">
