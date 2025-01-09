@@ -4,7 +4,7 @@ import { MySection } from './ui/my-section/MySection';
 
 export function Footer() {
   return (
-    <>
+    <div className="pt-16">
       <MySection invisibleBottomBorder>
         <CTARedesSociais />
       </MySection>
@@ -16,6 +16,6 @@ export function Footer() {
           <p className="font-montserrat font-medium">Copyright 2024 Modacad</p>
         </div>
       </MySection>
-    </>
+    </div>
   );
 }
