@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { useNavigate, useParams } from 'react-router-dom';
-import "../../../assets/css/tiptap.css";
-
+import '../../../assets/css/tiptap.css';
 
 import { IPostData, PostsService } from '../../../shared/api/posts/PostsService';
 
@@ -10,11 +9,11 @@ import { Footer } from '../../../shared/components/footer';
 import { PostDeskTopHeader } from './components/PostDesktopHeader';
 import { PostMobileHeader } from './components/PostMobileHeader';
 
-import "../../../assets/css/tiptap.css";
+import '../../../assets/css/tiptap.css';
 import { PublicHeader } from '../../../shared/components/header/public-header/PublicHeader';
 
 export function PostDetails() {
-  window.scrollTo(0,0)
+  window.scrollTo(0, 0);
   const { postId } = useParams<{ postId: string }>();
   const navigate = useNavigate();
 
@@ -35,11 +34,11 @@ export function PostDetails() {
   }, [postId, navigate]);
 
   useEffect(() => {
-    const scriptSrc = "//www.instagram.com/embed.js";
+    const scriptSrc = '//www.instagram.com/embed.js';
     const existingScript = document.querySelector(`script[src='${scriptSrc}']`);
 
     if (!existingScript) {
-      const script = document.createElement("script");
+      const script = document.createElement('script');
       script.src = scriptSrc;
       script.async = true;
       script.onload = () => {
@@ -61,14 +60,13 @@ export function PostDetails() {
       <PostDeskTopHeader post={post} />
       <PostMobileHeader post={post} />
 
-      <div className="lg:pt-12 lg:w-full flex justify-center items-center">
+      <div className="lg:pt-12 lg:w-full flex justify-center items-center mb-16">
         <p
           className="text-justify md:text-7xl lg:min-w-[970px] w-full px-5 font-montserrat leading-10 overflow-hidden font-normal prose tiptap"
           dangerouslySetInnerHTML={{ __html: post?.content ?? '' }}
         />
       </div>
-      <Footer />
+      <Footer showPlans showContact={false} />
     </div>
   );
-
 }

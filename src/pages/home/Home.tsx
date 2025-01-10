@@ -11,7 +11,6 @@ import { Link } from 'react-router-dom';
 import { IPostData, PostsService } from '../../shared/api/posts/PostsService';
 import { FeaturedPost } from '../../shared/components/posts/featured/FeaturedPost';
 import { SwiperPosts } from '../../shared/components/posts/view-formats/PostSwiper';
-import { CTAApp } from '../../shared/components/cta/CTAApp';
 import { MySection } from '../../shared/components/ui/my-section/MySection';
 
 export function Home() {
@@ -110,13 +109,10 @@ export function Home() {
       )}
       {subjects.length > 0 && (
         <MySection title="Assuntos" featuredSection invisibleBottomBorder>
-          <div className="flex gap-1 md:gap-2 flex-wrap py-8">
+          <div className="flex gap-1 md:gap-2 flex-wrap py-16">
             {subjects.map((subject, index) => (
               <div key={subject.id} className="text-2xl md:text-4xl font-butler font-light flex items-center">
-                <Link
-                  to={`/categorias/${subject.id}`}
-                  className={`highlight-link ${index === 0 || index === subjects.length - 1 ? 'font-medium' : ''}`}
-                >
+                <Link to={`/categorias/${subject.id}`} className={`highlight-link ${index === 0 ? 'font-medium' : ''}`}>
                   {subject.name}
                 </Link>
                 {index < subjects.length - 1 && <span className="ml-1 md:ml-2 md:mr-1">•</span>}
@@ -145,9 +141,6 @@ export function Home() {
           <SwiperPosts posts={pilulas} slidesPerView={isSmallScreen ? 1.25 : 4} />
         </MySection>
       )}
-      <MySection invisibleBottomBorder>
-        <CTAApp />
-      </MySection>
       {/* Sobre a Telma */}
       <div id="contact"></div>
       {/* Rodapé */}
