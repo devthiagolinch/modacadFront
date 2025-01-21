@@ -3,7 +3,7 @@ import { Navigate, Outlet, Route, RouteProps, Routes } from 'react-router-dom';
 import { useUser } from '../shared/contexts/UserContext';
 
 import { Home } from '../pages/home/Home';
-import { Plans } from '../pages/posts/Plans';
+import { PlansPage } from '../pages/plans/PlansPage';
 import { AdminLogin } from '../pages/admin/AdminLogin';
 import { BlankPage } from '../pages/blank';
 import { Dashboard } from '../pages/dashboard/Dashboard';
@@ -41,7 +41,7 @@ export const AppRoutes = () => {
     <Routes>
       {/* Rotas Públicas */}
       <Route path="/" element={<Home />} />
-      <Route path="/planos" element={<Plans />} />
+      <Route path="/planos" element={<PlansPage />} />
 
       <Route path="/categorias/:categoryId" element={<PageCategoryPost />} />
 

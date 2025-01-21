@@ -3,45 +3,46 @@ import { api } from '../../../shared/services/axios';
 export interface IPlanData {
   id: string;
   title: string;
-  price: string;
   description: string;
-  topics: { id: number; value: string }[];
+  price: number;
+  frequency: number;
+  topics: string[];
+  sort: number;
+  mp_url: string;
 }
 
-export interface IPlanDataNotFormatted {
-  id: string;
-  price: string;
+export interface IPlanDataCreate {
+  price: number;
   title: string;
+  description: string;
   topics: string[];
+  sort: number;
+  frequency: number;
+  frequency_type: string;
+  currency_id: 'BRL';
+  isRecurrence: true;
 }
 
 const getAll = async (): Promise<IPlanData[] | Error> => {
   try {
-    const { data } = await api.get<IPlanDataNotFormatted[]>('/plan/list');
-    const plansWithIds = data.map((plan) => ({
-      ...plan,
-      description: 'Uma bela descrição',
-      topics: plan.topics.map((topic, index) => ({ value: topic, id: index + 1 })),
-    }));
-    return plansWithIds as IPlanData[];
+    const { data } = await api.get<IPlanData[]>('/plan/list');
+    return data ?? new Error('Erro ao buscar os planos');
   } catch (error) {
     console.error(error);
     return error as Error;
   }
 };
 
-// /plan/create
-const create = async (plan: Omit<IPlanDataNotFormatted, 'id'>): Promise<void | Error> => {
+const create = async (plan: IPlanDataCreate): Promise<void | Error> => {
   try {
-    await api.post('/plan/create', plan);
+    await api.post('/plan', plan);
   } catch (error) {
     console.error(error);
     return error as Error;
   }
 };
 
-// /update/:id
-const updateById = async (id: string, plan: Omit<IPlanDataNotFormatted, 'id'>): Promise<void | Error> => {
+const updateById = async (id: string, plan: IPlanDataCreate): Promise<void | Error> => {
   try {
     await api.patch(`/plan/update/${id}`, plan);
   } catch (error) {
@@ -50,16 +51,10 @@ const updateById = async (id: string, plan: Omit<IPlanDataNotFormatted, 'id'>): 
   }
 };
 
-// /view/:id
 const getById = async (id: string) => {
   try {
     const { data } = await api.get<IPlanData>(`/view/${id}`);
-    const planWithIds = {
-      ...data,
-      description: 'Uma bela descrição',
-      topics: data.topics.map((topic, index) => ({ ...topic, id: index + 1 })),
-    };
-    return planWithIds;
+    return data ?? new Error('Erro ao buscar o plano');
   } catch (error) {
     console.error(error);
     return error as Error;
