@@ -2,7 +2,6 @@ import { FC } from 'react';
 import checkListIcon from '../../../assets/icons/check-mark.svg';
 
 import { IPlanData } from '../../../shared/api/plans/PlansService';
-import { Button } from '../../../shared/components/Button';
 
 interface IPlanCardProps {
   plan: IPlanData;
@@ -38,8 +37,12 @@ export const PlanCard: FC<IPlanCardProps> = ({ plan, highlight = false }) => {
           ))}
         </ul>
       </div>
-      <a href={plan.mp_url} target="_blank">
-        <Button title="Quero este" active={false} />
+      <a
+        href={plan.mp_url}
+        target="_blank"
+        className="border border-gray-950 p-4 font-montserrat font-medium hover:bg-[#dcdf1e]"
+      >
+        Quero este
       </a>
     </div>
   );

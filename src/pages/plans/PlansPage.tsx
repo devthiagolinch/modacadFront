@@ -39,7 +39,7 @@ export const PlansPage = () => {
       </div>
 
       <div className="lg:flex lg:justify-center">
-        {plans.map((plan, index) => (
+        {plans.slice(0, 3).map((plan, index) => (
           <PlanCard key={plan.id} plan={plan} highlight={index === 1 ? true : false} />
         ))}
       </div>
