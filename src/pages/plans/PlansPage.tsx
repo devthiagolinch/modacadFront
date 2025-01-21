@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
-import checkListIcon from '../../assets/icons/check-mark.svg';
 
 import { Footer } from '../../shared/components/footer';
-import { Button } from '../../shared/components/Button';
 
 import { PublicHeader } from '../../shared/components/header/public-header/PublicHeader';
 import { IPlanData, PlansService } from '../../shared/api/plans/PlansService';
