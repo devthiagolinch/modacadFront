@@ -16,7 +16,6 @@ export const PlansPage = () => {
         return;
       }
       setPlans(response);
-      console.log(response);
     });
   }, []);
 
@@ -32,10 +31,11 @@ export const PlansPage = () => {
       </div>
 
       <div className="hidden lg:flex lg:w-full lg:justify-center lg:items-center lg:my-">
-        <p className="lg:text-[18px] lg:font-medium lg:flex items-center justify-center gap-2 w-full">
-          <div className="border-t-[1px] border-[#202020] w-[10.5%]"></div>MELHOR PLANO
+        <div className="lg:text-[18px] lg:font-medium lg:flex items-center justify-center gap-2 w-full">
           <div className="border-t-[1px] border-[#202020] w-[10.5%]"></div>
-        </p>
+          <span>MELHOR PLANO</span>
+          <div className="border-t-[1px] border-[#202020] w-[10.5%]"></div>
+        </div>
       </div>
 
       <div className="lg:flex lg:justify-center">

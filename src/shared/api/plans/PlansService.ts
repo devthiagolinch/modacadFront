@@ -4,29 +4,40 @@ export interface IPlanData {
   id: string;
   title: string;
   description: string;
-  price: number;
+  price: string;
   frequency: number;
-  topics: string[];
+  topics: { id: number; value: string }[];
   sort: number;
   mp_url: string;
 }
 
+export interface IPlanDataReceived extends Omit<IPlanData, 'topics'> {
+  topics: string[];
+}
+
 export interface IPlanDataCreate {
-  price: number;
+  price: string;
   title: string;
   description: string;
-  topics: string[];
+  topics: { id: number; value: string }[];
   sort: number;
   frequency: number;
   frequency_type: string;
-  currency_id: 'BRL';
-  isRecurrence: true;
+  currency_id: string;
+  isRecurrence: boolean;
 }
 
 const getAll = async (): Promise<IPlanData[] | Error> => {
   try {
-    const { data } = await api.get<IPlanData[]>('/plan/list');
-    return data ?? new Error('Erro ao buscar os planos');
+    const { data } = await api.get<IPlanDataReceived[]>('/plan/list');
+
+    // Antes de retornar, preciso transformar o elemento 'topics' de string[] para { id: number, value: string }[]
+    const dataWithTopics = data.map((plan) => ({
+      ...plan,
+      topics: plan.topics.map((topic, index) => ({ id: index, value: topic })),
+    }));
+
+    return dataWithTopics ?? new Error('Erro ao buscar os planos');
   } catch (error) {
     console.error(error);
     return error as Error;
@@ -35,7 +46,10 @@ const getAll = async (): Promise<IPlanData[] | Error> => {
 
 const create = async (plan: IPlanDataCreate): Promise<void | Error> => {
   try {
-    await api.post('/plan', plan);
+    // Antes de salvar, preciso transformar o elemento 'topics' de { id: number, value: string }[] para string[]
+    const newPlan = { ...plan, topics: plan.topics.map((topic) => topic.value) };
+
+    await api.post('/plan', newPlan);
   } catch (error) {
     console.error(error);
     return error as Error;
@@ -53,8 +67,24 @@ const updateById = async (id: string, plan: IPlanDataCreate): Promise<void | Err
 
 const getById = async (id: string) => {
   try {
-    const { data } = await api.get<IPlanData>(`/view/${id}`);
-    return data ?? new Error('Erro ao buscar o plano');
+    const { data } = await api.get<IPlanDataReceived>(`/view/${id}`);
+
+    // Antes de retornar, preciso transformar o elemento 'topics' de string[] para { id: number, value: string }[]
+    const dataWithTopics = {
+      ...data,
+      topics: data.topics.map((topic, index) => ({ id: index, value: topic })),
+    };
+
+    return dataWithTopics ?? new Error('Erro ao buscar o plano');
+  } catch (error) {
+    console.error(error);
+    return error as Error;
+  }
+};
+
+const deleteById = async (id: string): Promise<void | Error> => {
+  try {
+    await api.delete(`/plan/delete/${id}`);
   } catch (error) {
     console.error(error);
     return error as Error;
@@ -66,4 +96,5 @@ export const PlansService = {
   create,
   updateById,
   getById,
+  deleteById,
 };

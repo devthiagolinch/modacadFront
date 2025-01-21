@@ -32,7 +32,7 @@ export const PlanCard: FC<IPlanCardProps> = ({ plan, highlight = false }) => {
           {plan.topics.map((topic, index) => (
             <li className="flex gap-4 text-[22px] items-stretch align-middle leading-tight" key={index}>
               <img src={checkListIcon} alt="" className="h-[30px]" />
-              {topic}
+              {topic.value}
             </li>
           ))}
         </ul>
