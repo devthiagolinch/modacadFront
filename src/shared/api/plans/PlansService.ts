@@ -58,7 +58,10 @@ const create = async (plan: IPlanDataCreate): Promise<void | Error> => {
 
 const updateById = async (id: string, plan: IPlanDataCreate): Promise<void | Error> => {
   try {
-    await api.patch(`/plan/update/${id}`, plan);
+    // Antes de salvar, preciso transformar o elemento 'topics' de { id: number, value: string }[] para string[]
+    const newPlan = { ...plan, topics: plan.topics.map((topic) => topic.value) };
+
+    await api.patch(`/plan/update/${id}`, newPlan);
   } catch (error) {
     console.error(error);
     return error as Error;

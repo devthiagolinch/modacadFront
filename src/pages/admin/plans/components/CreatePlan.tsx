@@ -17,7 +17,7 @@ const initialPlanForm: IPlanDataCreate = {
   topics: [{ id: 1, value: '' }],
   currency_id: 'BRL',
   frequency: 1,
-  frequency_type: 'month',
+  frequency_type: 'months',
   isRecurrence: true,
   sort: 1,
 };
@@ -68,6 +68,10 @@ export const CreatePlan: React.FC<ICreatePlanProps> = ({ selectedPlan, onCreated
         description: selectedPlan.description,
         topics: selectedPlan.topics,
         frequency: selectedPlan.frequency,
+        currency_id: 'BRL',
+        frequency_type: 'months',
+        isRecurrence: true,
+        sort: 1,
       });
     } else {
       reset(initialPlanForm);
@@ -129,6 +133,9 @@ export const CreatePlan: React.FC<ICreatePlanProps> = ({ selectedPlan, onCreated
   };
 
   const frequency = watch('frequency');
+
+  console.log(selectedPlan);
+  console.log(errors);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
