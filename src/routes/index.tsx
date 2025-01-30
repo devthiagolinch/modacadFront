@@ -9,8 +9,6 @@ import { BlankPage } from '../pages/blank';
 import { Dashboard } from '../pages/dashboard/Dashboard';
 import { PopularPosts } from '../pages/posts/textos/PopularPosts';
 import { PublishedPills } from '../pages/posts/pilula/PublishedPills';
-import { PillDetails } from '../pages/posts/pilula/PillDetails';
-import { PostDetails } from '../pages/posts/textos/PostDetails';
 import { PageTags } from '../pages/admin/tags/PageTags';
 import { PageMembers } from '../pages/admin/members/PageMembers';
 import { PageSubjects } from '../pages/admin/subjects/PageSubjects';
@@ -19,6 +17,7 @@ import { PagePlans } from '../pages/admin/plans/PagePlans';
 import { PageTeam } from '../pages/admin/team/PageTeam';
 import { PageCategoryPost } from '../pages/posts/page-category-post/PageCategoryPost';
 import { PublishedPosts } from '../pages/posts/textos/PublishedPosts';
+import { PostDetails } from '../pages/posts/post-details/PostDetails';
 
 type TPrivateRouteProps = RouteProps & {
   element: React.ReactNode;
@@ -46,7 +45,7 @@ export const AppRoutes = () => {
       <Route path="/categorias/:categoryId" element={<PageCategoryPost />} />
 
       <Route path="/pilulas" element={<PublishedPills />} />
-      <Route path="/pilulas/:postId" element={<PillDetails />} />
+      <Route path="/pilulas/:postId" element={<PostDetails />} />
 
       {/* Rotas para postagens */}
       <Route path="/posts" element={<PublishedPosts />} />
