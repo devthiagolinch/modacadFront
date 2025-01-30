@@ -59,6 +59,12 @@ is-editor-empty {
   }
 }
 
+div[data-instagram-embed] {
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+}
+
 .tiptap blockquote {
   quotes: none;
   border-left: 4px solid #dcdf1e;
