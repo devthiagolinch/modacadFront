@@ -1,4 +1,4 @@
-import { Node, RawCommands } from '@tiptap/core';
+import { Node } from '@tiptap/core';
 
 export const InstagramEmbed = Node.create({
   name: 'instagramEmbed',
@@ -53,12 +53,23 @@ export const InstagramEmbed = Node.create({
 
   addCommands() {
     return {
-      setInstagramEmbed: (url: string) => ({ commands }: { commands: any }) => {
-        return commands.insertContent({
-          type: this.name,
-          attrs: { url },
-        });
+      setInstagramEmbed:
+        (url) =>
+        ({ commands }: { commands: any }) => {
+          return commands.insertContent({
+            type: this.name,
+            attrs: { url },
+          });
+        },
+    };
+  },
+
+  // Adicionar serialização para salvar o nó no JSON
+  toJSON() {
+    return {
+      attrs: {
+        url: this.options.url,
       },
-    } as Partial<RawCommands>;
+    };
   },
 });

@@ -106,7 +106,9 @@ export const PostEditor = () => {
     },
     content: post.content,
     onUpdate: ({ editor }) => {
-      setPost((prev) => ({ ...prev, content: editor.getHTML() }));
+      // Salva o conteúdo como JSON
+      const jsonContent = editor.getHTML();
+      setPost((prev) => ({ ...prev, content: jsonContent }));
     },
   });
 
@@ -347,13 +349,7 @@ export const PostEditor = () => {
                   onClick={() => {
                     const urlinsta = window.prompt('Insira o URL do Instagram Embed:');
                     if (urlinsta) {
-                      // Extrai o ID do post do URL do Instagram
-                      const postId = urlinsta.split('/').filter(Boolean).pop();
-                      if (postId) {
-                        editor.commands.setInstagramEmbed(postId);
-                      } else {
-                        alert('URL do Instagram inválido.');
-                      }
+                      editor.commands.setInstagramEmbed(urlinsta);
                     }
                   }}
                   className="hover:text-yellow-400"
