@@ -8,7 +8,7 @@ interface IDrawerLateralProps {
 }
 
 export const DrawerLateral: FC<IDrawerLateralProps> = ({ isOpen, toggleDrawer }) => {
-  const { user } = useUser();
+  const { user, logout } = useUser();
   return (
     <div
       className={`fixed top-0 left-0 h-full bg-white w-full md:w-[600px] transform transition-transform ${
@@ -58,9 +58,16 @@ export const DrawerLateral: FC<IDrawerLateralProps> = ({ isOpen, toggleDrawer })
       </ul>
       <div className="p-4 font-montserrat">
         {user ? (
-          <div className="border border-gray-950 p-4">
-            <p className="text-gray-950 font-light">Olá, {user.name}</p>
-            <p>Não é você? Sair</p>
+          <div className="border border-gray-950 p-4 font-montserrat font-light text-gray-950">
+            <p>
+              Olá, <span className="font-medium">{user.name}</span>
+            </p>
+            <p>
+              Não é você?{' '}
+              <button className="text-blue-600 font-medium hover:text-blue-400" onClick={logout}>
+                Sair
+              </button>
+            </p>
           </div>
         ) : (
           <div className="border border-gray-950 p-4">
