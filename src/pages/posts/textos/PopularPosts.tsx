@@ -55,7 +55,7 @@ export function PopularPosts() {
   }, []);
 
   return (
-    <div className="">
+    <div>
       <PublicHeader />
       <div className="flex items-center px-4 my-8 container mx-auto gap-4">
         <h1 className="font-butler font-light text-2xl md:text-6xl">Textos mais lidos</h1>
