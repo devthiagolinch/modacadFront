@@ -23,25 +23,25 @@ export const PlansPage = () => {
     <div>
       <PublicHeader />
 
-      <div className="flex flex-col justify-center align-center pt-28 pb-10 md:ml-32 md:w-auto ml-[5%]">
-        <h1 className="font-butler_ultra_light md:text-[80px] text-[50px] leading-none -mb-3 md:-mb-0">
-          Planos de Leitura
-        </h1>
-        <span className="md:text-[30px] text-[32px]  text-[#202020] font-extralight ">Plano básico gratuito</span>
+      <div className="flex flex-col justify-center align-center container mx-auto px-4 my-12">
+        <h1 className="font-butler text-7xl -mb-3 md:-mb-0">Planos de Leitura</h1>
+        <span className="text-3xl text-gray-950 font-montserrat font-light mt-2">Plano básico gratuito</span>
       </div>
 
-      <div className="hidden lg:flex lg:w-full lg:justify-center lg:items-center lg:my-">
-        <div className="lg:text-[18px] lg:font-medium lg:flex items-center justify-center gap-2 w-full">
-          <div className="border-t-[1px] border-[#202020] w-[10.5%]"></div>
-          <span>MELHOR PLANO</span>
-          <div className="border-t-[1px] border-[#202020] w-[10.5%]"></div>
+      <div className="hidden lg:flex lg:w-full lg:justify-center lg:items-center lg:mb-4">
+        <div className="text-lg flex items-center justify-center gap-2 w-full">
+          <div className="border-t border-gray-950 w-[10.5%]"></div>
+          <span className="font-montserrat">MELHOR PLANO</span>
+          <div className="border-t border-gray-950 w-[10.5%]"></div>
         </div>
       </div>
 
-      <div className="lg:flex lg:justify-center">
-        {plans.slice(0, 3).map((plan, index) => (
-          <PlanCard key={plan.id} plan={plan} highlight={index === 1 ? true : false} />
-        ))}
+      <div className="container mx-auto px-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+          {plans.map((plan, index) => (
+            <PlanCard key={plan.id} plan={plan} highlight={index === 1 ? true : false} isFirst={index === 0} />
+          ))}
+        </div>
       </div>
 
       <div className="flex flex-col gap-2 justify-center items-start mx-[20px] md:px-32 md:mx-0 md:pb-[70px] md:border-l-[1px] md:border-r-[1px] border-zinc-950">

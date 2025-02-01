@@ -1,36 +1,32 @@
 import { FC } from 'react';
-import checkListIcon from '../../../assets/icons/check-mark.svg';
 
 import { IPlanData } from '../../../shared/api/plans/PlansService';
+
+import checkListIcon from '../../../assets/icons/check-mark.svg';
 
 interface IPlanCardProps {
   plan: IPlanData;
   highlight?: boolean;
+  isFirst: boolean;
 }
 
-export const PlanCard: FC<IPlanCardProps> = ({ plan, highlight = false }) => {
+export const PlanCard: FC<IPlanCardProps> = ({ plan, highlight = false, isFirst = false }) => {
   return (
     <div
-      className={
-        'w-full h-auto flex flex-col justify-center items-center pt-[30px] pb-[40px] border-[1px] border-b-0 md:border-b-[1px] md:border-r-0 border-zinc-950' +
-        (highlight ? ' shadow-read' : '')
-      }
+      className={`flex flex-col items-center p-8 ${!isFirst ? 'border-l-0' : ''} ${highlight ? ' shadow-read' : ''} border border-zinc-950`}
     >
-      <div className="flex items-center justify-center">
-        <p className="font-butler_ultra_light text-[30px]">{plan.title}</p>
+      <p className="font-butler text-5xl text-center">{plan.title}</p>
+      <div className="flex items-center leading-none items-center gap-2 mt-12">
+        <span className="text-5xl font-butler self-start mt-3 font-light">R$</span>
+        <p className="font-butler text-9xl">{plan.price}</p>
+        <span className="text-5xl font-butler self-end mb-3 font-light">{plan.frequency > 1 ? '/ano' : '/mês'}</span>
       </div>
-      <div className="flex justify-center items-end">
-        <div className="flex -mb-12">
-          <span className="text-[50px] font-butler_ultra_light">R$</span>
-          <p className="text-[150px] font-butler_ultra_light">{plan.price}</p>
-        </div>
-        <p className="justify-self-end text-[50px] font-butler_ultra_light">{plan.frequency > 1 ? '/ano' : '/mês'}</p>
-      </div>
-      <p className="text-[25px] font-butler_ultra_light mt-[30px] mb-[40px]">{plan.description}</p>
-      <div className="mb-[40px] px-5">
-        <ul className="flex flex-col gap-[15px]">
+      <p className="font-butler font-medium text-3xl mt-4">Escolha flexível</p>
+      <hr className="my-8 h-1 border-t border-gray-950 w-full" />
+      <div>
+        <ul className="flex gap-2 flex-col mb-8">
           {plan.topics.map((topic, index) => (
-            <li className="flex gap-4 text-[22px] items-stretch align-middle leading-tight" key={index}>
+            <li className="flex gap-2 text-lg leading-tight font-montserrat font-light items-center" key={index}>
               <img src={checkListIcon} alt="" className="h-[30px]" />
               {topic.value}
             </li>
@@ -40,7 +36,7 @@ export const PlanCard: FC<IPlanCardProps> = ({ plan, highlight = false }) => {
       <a
         href={plan.mp_url}
         target="_blank"
-        className="border border-gray-950 p-4 font-montserrat font-medium hover:bg-[#dcdf1e]"
+        className="border border-gray-950 p-4 font-montserrat text-lg hover:bg-[#dcdf1e]"
       >
         Quero este
       </a>
