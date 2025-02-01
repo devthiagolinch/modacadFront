@@ -17,30 +17,43 @@ export const PostInfo: FC<IPostInfoProps> = ({ post }) => {
   };
 
   const renderAuthors = () => (
-    <div className="flex gap-4 flex-wrap mt-5 items-center">
-      {/* Autores */}
-      {post.admins.map((admin) => (
-        <div key={admin.id} className="flex items-center gap-5">
-          <img
-            src={admin.avatar ?? ''}
-            alt={`Autor ${admin.name}`}
-            className="w-14 h-14 rounded-full bg-black object-cover"
-          />
-          <div className="flex gap-0 flex-col">
-            <p className="font-montserrat text-sm text-zinc-500 leading-3">Autor(a)</p>
-            <p className="font-montserrat text-lg font-regular tracking-tighter">{admin.name}</p>
-          </div>
+    <div>
+      <div className="flex gap-4 flex-wrap mt-5 items-center justify-between">
+        <div>
+          {/* Autores */}
+          {post.admins.map((admin) => (
+            <div key={admin.id} className="flex items-center gap-5">
+              <img
+                src={admin.avatar ?? ''}
+                alt={`Autor ${admin.name}`}
+                className="w-14 h-14 rounded-full bg-black object-cover"
+              />
+              <div className="flex gap-0 flex-col">
+                <p className="font-montserrat text-sm text-zinc-500 leading-3">Autor(a)</p>
+                <p className="font-montserrat text-lg font-regular tracking-tighter">{admin.name}</p>
+              </div>
+            </div>
+          ))}
         </div>
-      ))}
-      {/* Data de publicação e tempo de leitura */}
-      <div className="flex flex-row text-zinc-800 flex-wrap text-sm font-montserrat font-light">
-        <p className="mr-2">{post.published_at ? format(new Date(post.published_at), 'dd/MM/yyyy') : ''}</p>
-        <span className="mr-2">•</span>
-        <span>{calculateReadingTime(post.content)}</span>
-        <span className="mx-2">•</span>
-        <p>
-          Atualizado{' '}
-          {post.updated_at ? formatDistanceToNow(new Date(post.updated_at), { locale: ptBR, addSuffix: true }) : ''}
+        {/* Data de publicação e tempo de leitura */}
+        <div className="flex flex-col text-zinc-800 flex-wrap text-sm font-montserrat font-light">
+          <p className="text-left sm:text-right">
+            {post.published_at ? format(new Date(post.published_at), 'dd/MM/yyyy') : ''}
+          </p>
+          <span className="text-left sm:text-right">{calculateReadingTime(post.content)}</span>
+          <p className="text-left sm:text-right">
+            Atualizado{' '}
+            {post.updated_at ? formatDistanceToNow(new Date(post.updated_at), { locale: ptBR, addSuffix: true }) : ''}
+          </p>
+        </div>
+      </div>
+      <div className="flex gap-1 sm:gap-2 flex-wrap my-4 items center font-montserrat text-zinc-500 items-center">
+        <p className="text-sm leading-3">
+          Editor(a) <span>Telma Barcelos</span>
+        </p>
+        <span>•</span>
+        <p className="text-sm leading-3">
+          Curador(a) <span>Jaqueline Lorenzoni</span>
         </p>
       </div>
     </div>
