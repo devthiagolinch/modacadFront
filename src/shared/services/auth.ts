@@ -2,7 +2,7 @@ const LOCAL_STORAGE_KEY__ACCESS_TOKEN = 'ACCESS_TOKEN';
 const LOCAL_STORAGE_USER_DATA = 'USER_DATA';
 
 export interface IAdminData {
-  id: string;
+  subject: string;
   name: string;
   role: string;
 }

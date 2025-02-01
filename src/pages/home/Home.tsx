@@ -59,7 +59,7 @@ export function Home() {
   }, []);
 
   return (
-    <div className="mx-auto h-screen">
+    <div className="mx-auto h-screen relative">
       <PublicHeader />
       {/* Banner da página inicial */}
       <div

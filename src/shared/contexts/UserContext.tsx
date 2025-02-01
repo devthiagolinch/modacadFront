@@ -13,7 +13,7 @@ interface IUserProviderProps {
 }
 
 interface IUserData {
-  id: string;
+  subject: string;
   name: string;
   role: string;
 }

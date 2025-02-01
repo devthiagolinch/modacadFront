@@ -1,5 +1,7 @@
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
+
+import { useAuthDialog } from '../../../../shared/contexts/AuthDialogContext';
 import { useUser } from '../../../../shared/contexts';
 
 interface IDrawerLateralProps {
@@ -9,6 +11,8 @@ interface IDrawerLateralProps {
 
 export const DrawerLateral: FC<IDrawerLateralProps> = ({ isOpen, toggleDrawer }) => {
   const { user, logout } = useUser();
+  const { openDialog } = useAuthDialog();
+
   return (
     <div
       className={`fixed top-0 left-0 h-full bg-white w-full md:w-[600px] transform transition-transform ${
@@ -72,7 +76,9 @@ export const DrawerLateral: FC<IDrawerLateralProps> = ({ isOpen, toggleDrawer })
         ) : (
           <div className="border border-gray-950 p-4">
             <p className="text-gray-950 font-light">Faça login para aproveitar ao máximo nosso site.</p>
-            <button className="bg-primary px-4 py-2 border border-gray-950 mt-2">ENTRAR</button>
+            <button className="bg-primary px-4 py-2 border border-gray-950 mt-2" onClick={openDialog}>
+              ENTRAR
+            </button>
           </div>
         )}
       </div>
