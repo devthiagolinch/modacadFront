@@ -7,6 +7,7 @@ import { Footer } from '../../../shared/components/footer';
 import { PostInfo } from './components/PostInfo';
 
 export const PostDetails = () => {
+  window.scrollTo(0, 0);
   const navigate = useNavigate();
   const { postId } = useParams<{ postId: string }>();
 

@@ -16,6 +16,9 @@ export const PostInfo: FC<IPostInfoProps> = ({ post }) => {
     return `${readingTime} min de leitura`;
   };
 
+  const meta = Array.isArray(post?.meta) && post?.meta.length > 0 ? post?.meta[0] : {};
+  const feature_image_caption = meta.feature_image_caption;
+
   const renderAuthors = () => (
     <div>
       <div className="flex gap-4 flex-wrap mt-5 items-center justify-between">
@@ -85,6 +88,10 @@ export const PostInfo: FC<IPostInfoProps> = ({ post }) => {
           src={post.feature_image ?? ''}
           alt=""
           className={`w-full object-cover ${post.type === 'pilula' ? 'aspect-square' : 'aspect-video'}`}
+        />
+       <span
+          className="mt-2 mx-auto w-full justify-center items-center flex"
+          dangerouslySetInnerHTML={{ __html: feature_image_caption ?? '' }}
         />
       </div>
       <div className="container mx-auto max-w-[800px] px-4 block lg:hidden">{renderAuthors()}</div>
