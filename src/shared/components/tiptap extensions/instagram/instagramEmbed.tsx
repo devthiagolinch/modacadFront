@@ -16,18 +16,52 @@ export const InstagramEmbed = Node.create({
   parseHTML() {
     return [
       {
-        tag: 'div[data-instagram-embed]',
+        tag: 'blockquote',
         getAttrs: (dom) => {
-          return {
-            url: dom.getAttribute('data-instagram-embed'),
-          };
+          const anchor = dom.querySelector('a');
+          if (anchor) {
+            const url = anchor.getAttribute('href');
+            if (url && url.includes('instagram.com')) {
+              return { url };
+            }
+          }
+          return null;
         },
       },
     ];
   },
 
   renderHTML({ node }) {
-    return ['div', { 'data-instagram-embed': node.attrs.url }];
+    return [
+      'blockquote',
+      {},
+      [
+        'p',
+        {},
+        [
+          'a',
+          {
+            href: node.attrs.url,
+            target: '_blank',
+            rel: 'noopener noreferrer nofollow',
+          },
+          'Ver essa foto no Instagram',
+        ],
+      ],
+      [
+        'p',
+        {},
+        [
+          'a',
+          {
+            href: node.attrs.url,
+            target: '_blank',
+            rel: 'noopener noreferrer nofollow',
+          },
+          'Uma publicação compartilhada por Instagram',
+        ],
+      ],
+    ];
   },
 
   addNodeView() {
@@ -37,9 +71,9 @@ export const InstagramEmbed = Node.create({
 
       // Cria um iframe para o embed do Instagram
       const iframe = document.createElement('iframe');
-      iframe.src = `https://www.instagram.com/p/${embedUrl}/embed`;
-      iframe.width = '50%';
-      iframe.height = 'auto';
+      iframe.src = `https://www.instagram.com/p/${embedUrl.split('/').pop()}/embed`;
+      iframe.width = '100%';
+      iframe.height = '500';
       iframe.frameBorder = '0';
       iframe.scrolling = 'no';
 
@@ -64,7 +98,6 @@ export const InstagramEmbed = Node.create({
     };
   },
 
-  // Adicionar serialização para salvar o nó no JSON
   toJSON() {
     return {
       attrs: {

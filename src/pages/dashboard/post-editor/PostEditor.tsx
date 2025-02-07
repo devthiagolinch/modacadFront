@@ -347,9 +347,9 @@ export const PostEditor = () => {
                 /> 
                 <button
                   onClick={() => {
-                    const urlinsta = window.prompt('Insira o URL do Instagram Embed:');
-                    if (urlinsta) {
-                      editor.commands.setInstagramEmbed(urlinsta);
+                    const instagramUrl = window.prompt('Cole o URL do post do Instagram:');
+                    if (instagramUrl) {
+                      editor.commands.setInstagramEmbed(instagramUrl);
                     }
                   }}
                   className="hover:text-yellow-400"
