@@ -94,10 +94,26 @@ const deleteById = async (id: string): Promise<void | Error> => {
   }
 };
 
+const generatePaymentLink = async (planId: string) => {
+  try {
+    const { data } = await api.post<{ url: string }>('/payment/create', { plan_id: planId });
+
+    if (data.url) {
+      return data.url;
+    }
+
+    return new Error('Erro ao gerar o link de pagamento');
+  } catch (error) {
+    console.error(error);
+    return error as Error;
+  }
+};
+
 export const PlansService = {
   getAll,
   create,
   updateById,
   getById,
   deleteById,
+  generatePaymentLink,
 };
