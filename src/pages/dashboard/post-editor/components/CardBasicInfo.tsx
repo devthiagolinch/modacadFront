@@ -189,7 +189,7 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ title, feature_image, content
       ? post.canonicalUrl.split('https://blog.modacad.com.br/', 2).pop()
       : post.canonicalUrl;
   }
-  
+
   const handleDateChange = (value: Date | null | { startDate: Date | null; endDate: Date | null }) => {
     let selectedDate;
 
@@ -200,16 +200,18 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ title, feature_image, content
       // Caso seja uma data única ou null
       selectedDate = value as Date | null;
     }
-    console.log('selected date', selectedDate);
-
     setPost((prevPost) => ({
       ...prevPost,
       published_at: selectedDate,
     }));
   };
 
-  const handleDeletePost = () => {
-    postId ? PostsService.deletePost(postId) : console.log('nao existe post para ser deletado');
+  const handleDeletePost = async () => {
+    if (!postId) {
+      console.error('postId não encontrado');
+      return;
+    }
+    await PostsService.deletePost(postId);
     navigate('/dashboard/pilula');
   };
 
@@ -264,7 +266,6 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ title, feature_image, content
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = event.target;
     setPost((prev) => ({ ...prev, [name]: value }));
-    console.log(value)
   };
 
   const handleChangeVisibility = (visibility: TPostsVisibility) => {

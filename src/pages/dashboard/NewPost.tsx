@@ -101,7 +101,6 @@ function NewPost() {
     content: '',
     onUpdate({ editor }) {
       setEditorContent(editor.getHTML());
-      console.log(editorContent);
     },
     editorProps: {
       attributes: {
