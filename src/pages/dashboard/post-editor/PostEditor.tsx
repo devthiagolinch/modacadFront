@@ -20,8 +20,6 @@ import Placeholder from '@tiptap/extension-placeholder';
 import { CardBasicInfo } from './components/CardBasicInfo';
 import InstagramEmbed from '../../../assets/tiptapExtensao/embed';
 
-
-
 const defaultPost: IPostDataRequest = {
   title: '',
   description: '',
@@ -97,7 +95,7 @@ export const PostEditor = () => {
           return 'Escreva o conteúdo do post aqui...'; // Placeholder para o conteúdo principal
         },
         emptyEditorClass: 'is-editor-empty', // Classe CSS para o editor vazio
-      })
+      }),
     ],
     editorProps: {
       attributes: {
@@ -191,8 +189,6 @@ export const PostEditor = () => {
     setUploading(true);
 
     const result = await PostsService.uploadImage(file);
-
-    console.log(result);
 
     if (result instanceof Error) {
       console.error(result.message);
@@ -313,19 +309,29 @@ export const PostEditor = () => {
               <div className="flex gap-4 p-2 px-5 rounded-full justify-center align-middle bg-zinc-600 text-white font-montserrat font-medium text-md">
                 <button
                   onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
-                  className={editor.isActive('heading', { level: 3 }) ? 'text-yellow-400 text-2xl align-middle' : 'hover:text-yellow-400 text-2xl'}
+                  className={
+                    editor.isActive('heading', { level: 3 })
+                      ? 'text-yellow-400 text-2xl align-middle'
+                      : 'hover:text-yellow-400 text-2xl'
+                  }
                 >
                   H
                 </button>
                 <button
                   onClick={() => editor.chain().focus().toggleHeading({ level: 4 }).run()}
-                  className={editor.isActive('heading text-base', { level: 4 }) ? 'text-yellow-400 text-lg' : 'hover:text-yellow-400 text-lg'}
+                  className={
+                    editor.isActive('heading text-base', { level: 4 })
+                      ? 'text-yellow-400 text-lg'
+                      : 'hover:text-yellow-400 text-lg'
+                  }
                 >
                   H
                 </button>
                 <button
                   onClick={() => editor.chain().focus().toggleBulletList().run()}
-                  className={editor.isActive('bulletList') ? 'text-yellow-400 text-lg' : 'hover:text-yellow-400 text-lg'}
+                  className={
+                    editor.isActive('bulletList') ? 'text-yellow-400 text-lg' : 'hover:text-yellow-400 text-lg'
+                  }
                 >
                   <FaList />
                 </button>
@@ -342,7 +348,8 @@ export const PostEditor = () => {
                   style={{ display: 'none' }}
                   accept="image/*"
                   onChange={handleImageUpload}
-                />{/* 
+                />
+                {/* 
                 <button
                   onClick={() => {
                     const urlinsta = window.prompt('Insira o URL do Instagram Embed:');
@@ -375,13 +382,21 @@ export const PostEditor = () => {
                 </button>
                 <button
                   onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
-                  className={editor.isActive('heading', { level: 3 }) ? 'text-yellow-400 text-2xl align-middle' : 'hover:text-yellow-400 text-2xl'}
+                  className={
+                    editor.isActive('heading', { level: 3 })
+                      ? 'text-yellow-400 text-2xl align-middle'
+                      : 'hover:text-yellow-400 text-2xl'
+                  }
                 >
                   H
                 </button>
                 <button
                   onClick={() => editor.chain().focus().toggleHeading({ level: 4 }).run()}
-                  className={editor.isActive('heading', { level: 4 }) ? 'text-yellow-400 text-lg' : 'hover:text-yellow-400 text-lg'}
+                  className={
+                    editor.isActive('heading', { level: 4 })
+                      ? 'text-yellow-400 text-lg'
+                      : 'hover:text-yellow-400 text-lg'
+                  }
                 >
                   H
                 </button>

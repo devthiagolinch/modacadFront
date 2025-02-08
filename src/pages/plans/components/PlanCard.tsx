@@ -11,6 +11,11 @@ interface IPlanCardProps {
 }
 
 export const PlanCard: FC<IPlanCardProps> = ({ plan, highlight = false, isFirst = false }) => {
+  const installmentPrice = Number(plan.price) / plan.frequency;
+  const priceParts = Number(installmentPrice).toFixed(2).split('.');
+  const integerPart = priceParts[0];
+  const decimalPart = priceParts[1];
+
   const handleGeneratePaymentLink = async (planId: string) => {
     const paymentLink = await PlansService.generatePaymentLink(planId);
 
@@ -27,12 +32,20 @@ export const PlanCard: FC<IPlanCardProps> = ({ plan, highlight = false, isFirst 
       className={`flex flex-col items-center p-8 ${!isFirst ? 'border-l-0' : ''} ${highlight ? ' shadow-read' : ''} border border-zinc-950`}
     >
       <p className="font-butler text-5xl text-center">{plan.title}</p>
-      <div className="flex items-center leading-none items-center gap-2 mt-12">
-        <span className="text-5xl font-butler self-start mt-3 font-light">R$</span>
-        <p className="font-butler text-9xl">{plan.price}</p>
-        <span className="text-5xl font-butler self-end mb-3 font-light">{plan.frequency > 1 ? '/ano' : '/mês'}</span>
+      <div
+        className={`rounded-md bg-cyan-600 py-1 px-3 border border-transparent text-sm text-white transition-all shadow-sm font-montserrat mt-8 ${
+          plan.frequency == 12 ? 'visible' : 'invisible'
+        }`}
+      >
+        41% de desconto
       </div>
-      <p className="font-butler font-medium text-3xl mt-4">Escolha flexível</p>
+      <div className="flex items-center leading-none items-center mt-4">
+        <span className="text-5xl font-butler self-start mt-3 font-light mr-2">R$</span>
+        <p className="font-butler text-9xl">{integerPart}</p>
+        <span className="text-4xl font-butler self-start mt-3 font-light">{decimalPart}</span>
+        <span className="text-5xl font-butler self-end mb-3 font-light">/mês</span>
+      </div>
+      <p className="font-butler font-medium text-3xl mt-4">{plan.description}</p>
       <hr className="my-8 h-1 border-t border-gray-950 w-full" />
       <div>
         <ul className="flex gap-2 flex-col mb-8">
