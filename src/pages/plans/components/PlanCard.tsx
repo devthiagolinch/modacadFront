@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { IPlanData } from '../../../shared/api/plans/PlansService';
+import { IPlanData, PlansService } from '../../../shared/api/plans/PlansService';
 
 import checkListIcon from '../../../assets/icons/check-mark.svg';
 
@@ -11,6 +11,17 @@ interface IPlanCardProps {
 }
 
 export const PlanCard: FC<IPlanCardProps> = ({ plan, highlight = false, isFirst = false }) => {
+  const handleGeneratePaymentLink = async (planId: string) => {
+    const paymentLink = await PlansService.generatePaymentLink(planId);
+
+    if (paymentLink instanceof Error) {
+      console.error(paymentLink);
+      return;
+    }
+
+    window.location.href = paymentLink;
+  };
+
   return (
     <div
       className={`flex flex-col items-center p-8 ${!isFirst ? 'border-l-0' : ''} ${highlight ? ' shadow-read' : ''} border border-zinc-950`}
@@ -33,13 +44,14 @@ export const PlanCard: FC<IPlanCardProps> = ({ plan, highlight = false, isFirst 
           ))}
         </ul>
       </div>
-      <a
-        href={plan.mp_url}
-        target="_blank"
-        className="border border-gray-950 p-4 font-montserrat text-lg hover:bg-[#dcdf1e]"
-      >
-        Quero este
-      </a>
+      <div>
+        <button
+          onClick={() => handleGeneratePaymentLink(plan.id)}
+          className="px-8 py-4 border border-gray-950 font-montserrat text-lg hover:bg-[#dcdf1e]"
+        >
+          Quero este
+        </button>
+      </div>
     </div>
   );
 };
