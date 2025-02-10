@@ -1,6 +1,9 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 
 import { IPlanData, PlansService } from '../../../shared/api/plans/PlansService';
+import { useAuthDialog } from '../../../shared/contexts/AuthDialogContext';
+import { transformPrice } from '../../../shared/utils/priceUtils';
+import { useUser } from '../../../shared/contexts';
 
 import checkListIcon from '../../../assets/icons/check-mark.svg';
 
@@ -11,12 +14,20 @@ interface IPlanCardProps {
 }
 
 export const PlanCard: FC<IPlanCardProps> = ({ plan, highlight = false, isFirst = false }) => {
-  const installmentPrice = Number(plan.price) / plan.frequency;
-  const priceParts = Number(installmentPrice).toFixed(2).split('.');
-  const integerPart = priceParts[0];
-  const decimalPart = priceParts[1];
+  const { user } = useUser();
+  const { openDialog } = useAuthDialog();
+
+  const [storedPlanId, setStoredPlanId] = useState<string | null>(null);
+
+  const priceParts = transformPrice(Number(plan.price), plan.frequency);
 
   const handleGeneratePaymentLink = async (planId: string) => {
+    if (!user) {
+      setStoredPlanId(planId);
+      openDialog();
+      return;
+    }
+
     const paymentLink = await PlansService.generatePaymentLink(planId);
 
     if (paymentLink instanceof Error) {
@@ -26,6 +37,13 @@ export const PlanCard: FC<IPlanCardProps> = ({ plan, highlight = false, isFirst 
 
     window.location.href = paymentLink;
   };
+
+  useEffect(() => {
+    if (user && storedPlanId) {
+      handleGeneratePaymentLink(storedPlanId);
+      setStoredPlanId(null);
+    }
+  }, [user, storedPlanId]);
 
   return (
     <div
@@ -41,8 +59,8 @@ export const PlanCard: FC<IPlanCardProps> = ({ plan, highlight = false, isFirst 
       </div>
       <div className="flex items-center leading-none items-center mt-4">
         <span className="text-5xl font-butler self-start mt-3 font-light mr-2">R$</span>
-        <p className="font-butler text-9xl">{integerPart}</p>
-        <span className="text-4xl font-butler self-start mt-3 font-light">{decimalPart}</span>
+        <p className="font-butler text-9xl">{priceParts.integerPart}</p>
+        <span className="text-4xl font-butler self-start mt-3 font-light">{priceParts.decimalPart}</span>
         <span className="text-5xl font-butler self-end mb-3 font-light">/mês</span>
       </div>
       <p className="font-butler font-medium text-3xl mt-4">{plan.description}</p>
