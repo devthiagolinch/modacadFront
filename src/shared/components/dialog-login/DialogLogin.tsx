@@ -83,9 +83,7 @@ export const DialogLogin = () => {
             Entrar
           </button>
         </form>
-        <button onClick={closeDialog} className="mt-4 w-full text-sm text-gray-500 hover:text-gray-700">
-          Fazer cadastro
-        </button>
+        <button className="mt-4 w-full text-sm text-gray-500 hover:text-gray-700">Fazer cadastro</button>
       </div>
     </div>
   );
