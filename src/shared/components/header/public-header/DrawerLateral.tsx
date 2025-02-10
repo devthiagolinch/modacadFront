@@ -9,6 +9,15 @@ interface IDrawerLateralProps {
   toggleDrawer: () => void;
 }
 
+const menuItems = [
+  { label: 'Textos Publicados', link: '/posts' },
+  { label: 'Textos Mais Lidos', link: '/posts/popular' },
+  { label: 'Pílulas', link: '/pilulas' },
+  { label: 'Planos', link: '/planos' },
+  // { label: 'Moldes Modacad', link: '#' },
+  // { label: 'Contatos', link: '#' },
+];
+
 export const DrawerLateral: FC<IDrawerLateralProps> = ({ isOpen, toggleDrawer }) => {
   const { user, logout } = useUser();
   const { openDialog } = useAuthDialog();
@@ -34,31 +43,13 @@ export const DrawerLateral: FC<IDrawerLateralProps> = ({ isOpen, toggleDrawer })
         </button>
       </div>
       <ul className="p-4 font-butler text-2xl">
-        <li className="mb-2">
-          <Link to="/posts" className="block p-2 highlight-link">
-            Textos Publicados
-          </Link>
-        </li>
-        <li className="mb-2">
-          <Link to="/posts/popular" className="block p-2 highlight-link">
-            Textos Mais Lidos
-          </Link>
-        </li>
-        <li className="mb-2">
-          <Link to="/pilulas" className="block p-2 highlight-link">
-            Pílulas
-          </Link>
-        </li>
-        <li className="mb-2">
-          <Link to="#" className="block p-2 highlight-link">
-            Moldes Modacad
-          </Link>
-        </li>
-        <li className="mb-2">
-          <Link to="/" className="block p-2 highlight-link">
-            Contatos
-          </Link>
-        </li>
+        {menuItems.map((item, index) => (
+          <li className="mb-2" key={index}>
+            <Link to={item.link} className="block p-2 highlight-link">
+              {item.label}
+            </Link>
+          </li>
+        ))}
       </ul>
       <div className="p-4 font-montserrat">
         {user ? (
