@@ -57,8 +57,8 @@ export const DialogLogin = () => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="bg-white p-6 rounded-2xl shadow-lg w-96">
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50" onClick={closeDialog}>
+      <div className="bg-white p-6 rounded-2xl shadow-lg w-96" onClick={(e) => e.stopPropagation()}>
         <h2 className="text-xl font-semibold text-center mb-4">Login</h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
