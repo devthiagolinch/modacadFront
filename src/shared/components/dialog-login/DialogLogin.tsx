@@ -5,6 +5,7 @@ import * as yup from 'yup';
 import { useAuthDialog } from '../../../shared/contexts/AuthDialogContext';
 import { AuthService } from '../../../shared/api/auth/AuthService';
 import { useUser } from '../../../shared/contexts';
+import { useEffect } from 'react';
 
 interface ILoginForm {
   email: string;
@@ -16,6 +17,11 @@ const loginSchema: yup.ObjectSchema<ILoginForm> = yup.object({
   password: yup.string().required(),
 });
 
+const initialFormValues: ILoginForm = {
+  email: '',
+  password: '',
+};
+
 export const DialogLogin = () => {
   const { isOpen, closeDialog } = useAuthDialog();
 
@@ -23,9 +29,11 @@ export const DialogLogin = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<ILoginForm>({
     resolver: yupResolver(loginSchema),
   });
+
   const { login } = useUser();
 
   const onSubmit = (data: ILoginForm) => {
@@ -35,9 +43,16 @@ export const DialogLogin = () => {
         return;
       }
       login(response.token, response.admin);
+      reset(initialFormValues);
       closeDialog();
     });
   };
+
+  useEffect(() => {
+    if (isOpen) {
+      reset(initialFormValues);
+    }
+  }, [isOpen, reset]);
 
   if (!isOpen) return null;
 
