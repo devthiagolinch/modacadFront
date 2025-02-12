@@ -19,7 +19,6 @@ import { FaBold, FaItalic, FaLink, FaList, FaQuoteLeft } from 'react-icons/fa';
 import Placeholder from '@tiptap/extension-placeholder';
 import { CardBasicInfo } from './components/CardBasicInfo';
 import { InstagramEmbed } from '../../../shared/components/tiptap extensions/instagram/instagramEmbed';
-import IFrame from '../../../shared/components/tiptap extensions/instagram/iFrame';
 
 
 
@@ -89,7 +88,6 @@ export const PostEditor = () => {
           };
         },
       }),
-      IFrame,
       InstagramEmbed,
       Placeholder.configure({
         placeholder: ({ node }) => {

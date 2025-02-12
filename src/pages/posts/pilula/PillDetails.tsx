@@ -13,7 +13,7 @@ export const PillDetails = () => {
   const navigate = useNavigate();
 
   const [pilula, setPilula] = useState<IPostData>();
-  const [instagramImage, setInstagramImage] = useState<string | null>(null);
+  const [, setInstagramImage] = useState<string | null>(null);
 
   useEffect(() => {
     if (postId) {
