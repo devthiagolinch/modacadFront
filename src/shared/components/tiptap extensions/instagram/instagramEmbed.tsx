@@ -1,4 +1,3 @@
-// FAVOR NAO MEXER EM NADA, SO DEUS SABE COMO FUNIONOU
 import { Node, mergeAttributes } from "@tiptap/core";
 
 export const InstagramEmbed = Node.create({
@@ -15,7 +14,7 @@ export const InstagramEmbed = Node.create({
   },
 
   parseHTML() {
-    return [{ tag: "blockquote.instagram-media" }];
+    return [ { tag: 'iframe' }, { tag: "blockquote.instagram-media" } ];
   },
 
   renderHTML({ HTMLAttributes }) {
@@ -40,11 +39,9 @@ export const InstagramEmbed = Node.create({
         </blockquote>
       `;
 
-      // Recarregar script do Instagram para processar embeds
-      setTimeout(() => {
-        if (typeof window !== "undefined" && window.instgrm?.Embeds?.process) {
-          window.instgrm.Embeds.process();
-        } else {
+      // Função para carregar o script do Instagram apenas uma vez
+      const loadInstagramScript = () => {
+        if (!window.instgrm) {
           const script = document.createElement("script");
           script.src = "https://www.instagram.com/embed.js";
           script.async = true;
@@ -54,9 +51,12 @@ export const InstagramEmbed = Node.create({
             }
           };
           document.body.appendChild(script);
+        } else {
+          window.instgrm.Embeds.process();
         }
-      }, 100);
-      
+      };
+
+      setTimeout(loadInstagramScript, 500);
 
       return {
         dom: container,

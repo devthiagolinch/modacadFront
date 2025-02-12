@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-
 import { useNavigate, useParams } from 'react-router-dom';
 import '../../../assets/css/tiptap.css';
 
@@ -9,7 +8,6 @@ import { Footer } from '../../../shared/components/footer';
 import { PostDeskTopHeader } from './components/PostDesktopHeader';
 import { PostMobileHeader } from './components/PostMobileHeader';
 
-import '../../../assets/css/tiptap.css';
 import { PublicHeader } from '../../../shared/components/header/public-header/PublicHeader';
 
 export function PostDetails() {
@@ -34,24 +32,24 @@ export function PostDetails() {
   }, [postId, navigate]);
 
   useEffect(() => {
-    const scriptSrc = '//www.instagram.com/embed.js';
-    const existingScript = document.querySelector(`script[src='${scriptSrc}']`);
+    if (!post?.content) return;
 
-    if (!existingScript) {
-      const script = document.createElement('script');
-      script.src = scriptSrc;
-      script.async = true;
-      script.onload = () => {
-        if (window.instgrm) {
-          window.instgrm.Embeds.process();
-        }
-      };
-      document.body.appendChild(script);
-    } else {
+    // Aguarde um pequeno delay para garantir que o conteúdo foi renderizado
+    setTimeout(() => {
       if (window.instgrm) {
         window.instgrm.Embeds.process();
+      } else {
+        const script = document.createElement('script');
+        script.src = '//www.instagram.com/embed.js';
+        script.async = true;
+        script.onload = () => {
+          if (window.instgrm) {
+            window.instgrm.Embeds.process();
+          }
+        };
+        document.body.appendChild(script);
       }
-    }
+    }, 500);
   }, [post?.content]);
 
   return (
@@ -61,7 +59,7 @@ export function PostDetails() {
       <PostMobileHeader post={post} />
 
       <div className="lg:pt-12 lg:w-full flex justify-center items-center mb-16">
-        <p
+        <div
           className="text-justify md:text-7xl lg:min-w-[970px] w-full px-5 font-montserrat leading-10 overflow-hidden font-normal prose tiptap"
           dangerouslySetInnerHTML={{ __html: post?.content ?? '' }}
         />

@@ -18,7 +18,8 @@ import { LayoutDashboard } from '../../../shared/layouts';
 import { FaBold, FaItalic, FaLink, FaList, FaQuoteLeft } from 'react-icons/fa';
 import Placeholder from '@tiptap/extension-placeholder';
 import { CardBasicInfo } from './components/CardBasicInfo';
-import { InstagramEmbed } from '../../../shared/components/tiptap extensions/instagram/instagramEmbed'
+import { InstagramEmbed } from '../../../shared/components/tiptap extensions/instagram/instagramEmbed';
+import IFrame from '../../../shared/components/tiptap extensions/instagram/iFrame';
 
 
 
@@ -88,7 +89,7 @@ export const PostEditor = () => {
           };
         },
       }),
-      // iframe,
+      IFrame,
       InstagramEmbed,
       Placeholder.configure({
         placeholder: ({ node }) => {
@@ -150,23 +151,27 @@ export const PostEditor = () => {
             email_only: response.meta?.email_only ?? '',
             feature_image_caption: response.meta?.feature_image_caption ?? '',
           });
-          editor?.commands.setContent(response.content);
           setFeatureImageUrl(response.feature_image);
         }
       });
     }
   }, [postId, editor]);
 
+  editor?.on("update", () => {
+    // Recarregar o script do Instagram e processar todos os embeds
+    if (typeof window !== "undefined" && window.instgrm?.Embeds?.process) {
+      window.instgrm.Embeds.process();
+    }
+  });
+
   useEffect(() => {
     if (editor) {
       editor.commands.setContent(post.content);
       setTimeout(() => {
-        if (window.instgrm?.Embeds?.process) {
-          window.instgrm.Embeds.process();
-        }
-      }, 500);
+        window.instgrm?.Embeds?.process();
+      }, 1000); // Aumentei o tempo para garantir que o DOM foi atualizado
     }
-  }, [post]);
+  }, [post.content]); // Alterado para garantir que apenas o conteúdo do post seja o gatilho  
   
   const insertInstagramEmbed = () => {
     const url = window.prompt("Cole a URL do Instagram");
