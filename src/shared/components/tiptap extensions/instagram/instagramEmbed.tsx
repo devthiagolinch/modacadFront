@@ -1,8 +1,9 @@
-import { Node } from '@tiptap/core';
+// FAVOR NAO MEXER EM NADA, SO DEUS SABE COMO FUNIONOU
+import { Node, mergeAttributes } from "@tiptap/core";
 
 export const InstagramEmbed = Node.create({
-  name: 'instagramEmbed',
-  group: 'block',
+  name: "instagramEmbed",
+  group: "block",
   atom: true,
 
   addAttributes() {
@@ -14,95 +15,52 @@ export const InstagramEmbed = Node.create({
   },
 
   parseHTML() {
-    return [
-      {
-        tag: 'blockquote',
-        getAttrs: (dom) => {
-          const anchor = dom.querySelector('a');
-          if (anchor) {
-            const url = anchor.getAttribute('href');
-            if (url && url.includes('instagram.com')) {
-              return { url };
-            }
-          }
-          return null;
-        },
-      },
-    ];
+    return [{ tag: "blockquote.instagram-media" }];
   },
 
-  renderHTML({ node }) {
+  renderHTML({ HTMLAttributes }) {
     return [
-      'blockquote',
-      {},
-      [
-        'p',
-        {},
-        [
-          'a',
-          {
-            href: node.attrs.url,
-            target: '_blank',
-            rel: 'noopener noreferrer nofollow',
-          },
-          'Ver essa foto no Instagram',
-        ],
-      ],
-      [
-        'p',
-        {},
-        [
-          'a',
-          {
-            href: node.attrs.url,
-            target: '_blank',
-            rel: 'noopener noreferrer nofollow',
-          },
-          'Uma publicação compartilhada por Instagram',
-        ],
-      ],
+      "blockquote",
+      mergeAttributes(HTMLAttributes, {
+        class: "instagram-media",
+        "data-instgrm-permalink": HTMLAttributes.url,
+        "data-instgrm-version": "14",
+      }),
+      ["a", { href: HTMLAttributes.url }, HTMLAttributes.url],
     ];
   },
 
   addNodeView() {
     return ({ node }) => {
-      const container = document.createElement('div');
-      const embedUrl = node.attrs.url;
+      const container = document.createElement("div");
 
-      // Cria um iframe para o embed do Instagram
-      const iframe = document.createElement('iframe');
-      iframe.src = `https://www.instagram.com/p/${embedUrl.split('/').pop()}/embed`;
-      iframe.width = '100%';
-      iframe.height = '500';
-      iframe.frameBorder = '0';
-      iframe.scrolling = 'no';
+      container.innerHTML = `
+        <blockquote class="instagram-media" data-instgrm-permalink="${node.attrs.url}" data-instgrm-version="14">
+          <a href="${node.attrs.url}">${node.attrs.url}</a>
+        </blockquote>
+      `;
 
-      container.appendChild(iframe);
+      // Recarregar script do Instagram para processar embeds
+      setTimeout(() => {
+        if (typeof window !== "undefined" && window.instgrm?.Embeds?.process) {
+          window.instgrm.Embeds.process();
+        } else {
+          const script = document.createElement("script");
+          script.src = "https://www.instagram.com/embed.js";
+          script.async = true;
+          script.onload = () => {
+            if (window.instgrm?.Embeds?.process) {
+              window.instgrm.Embeds.process();
+            }
+          };
+          document.body.appendChild(script);
+        }
+      }, 100);
+      
 
       return {
         dom: container,
       };
-    };
-  },
-
-  addCommands() {
-    return {
-      setInstagramEmbed:
-        (url) =>
-        ({ commands }: { commands: any }) => {
-          return commands.insertContent({
-            type: this.name,
-            attrs: { url },
-          });
-        },
-    };
-  },
-
-  toJSON() {
-    return {
-      attrs: {
-        url: this.options.url,
-      },
     };
   },
 });

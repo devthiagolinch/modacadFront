@@ -18,7 +18,7 @@ import { LayoutDashboard } from '../../../shared/layouts';
 import { FaBold, FaItalic, FaLink, FaList, FaQuoteLeft } from 'react-icons/fa';
 import Placeholder from '@tiptap/extension-placeholder';
 import { CardBasicInfo } from './components/CardBasicInfo';
-import {InstagramEmbed} from '../../../shared/components/tiptap extensions/instagram/instagramEmbed';
+import { InstagramEmbed } from '../../../shared/components/tiptap extensions/instagram/instagramEmbed'
 
 
 
@@ -66,7 +66,6 @@ export const PostEditor = () => {
   const editor = useEditor({
     extensions: [
       StarterKit,
-      InstagramEmbed,
       Image.configure({
         inline: true,
         allowBase64: true,
@@ -89,6 +88,8 @@ export const PostEditor = () => {
           };
         },
       }),
+      // iframe,
+      InstagramEmbed,
       Placeholder.configure({
         placeholder: ({ node }) => {
           if (node.type.name === 'heading') {
@@ -104,6 +105,7 @@ export const PostEditor = () => {
         class: 'prose-2xl focus:outline-none w-full min-h-screen-2 font-monteserrat text-[12px]',
       },
     },
+
     content: post.content,
     onUpdate: ({ editor }) => {
       // Salva o conteúdo como JSON
@@ -155,6 +157,34 @@ export const PostEditor = () => {
     }
   }, [postId, editor]);
 
+  useEffect(() => {
+    if (editor) {
+      editor.commands.setContent(post.content);
+      setTimeout(() => {
+        if (window.instgrm?.Embeds?.process) {
+          window.instgrm.Embeds.process();
+        }
+      }, 500);
+    }
+  }, [post]);
+  
+  const insertInstagramEmbed = () => {
+    const url = window.prompt("Cole a URL do Instagram");
+  
+    if (url && editor && url.includes("instagram.com")) {
+      editor
+        .chain()
+        .focus()
+        .insertContent({
+          type: "instagramEmbed",
+          attrs: { url },
+        })
+        .run();
+    } else {
+      alert("URL inválida.");
+    }
+  };
+  
   const setLink = useCallback(() => {
     if (!editor?.getAttributes('link').href) {
       editor?.chain().focus().extendMarkRange('link').unsetLink().run();
@@ -344,18 +374,11 @@ export const PostEditor = () => {
                   style={{ display: 'none' }}
                   accept="image/*"
                   onChange={handleImageUpload}
-                /> 
-                <button
-                  onClick={() => {
-                    const instagramUrl = window.prompt('Cole o URL do post do Instagram:');
-                    if (instagramUrl) {
-                      editor.commands.setInstagramEmbed(instagramUrl);
-                    }
-                  }}
-                  className="hover:text-yellow-400"
-                >
-                  Embed Instagram
+                />
+                <button onClick={insertInstagramEmbed}>
+                  Adicionar Instagram Embed
                 </button>
+              
               </div>
             </FloatingMenu>
           )}

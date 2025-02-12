@@ -104,6 +104,22 @@ is-editor-empty {
   max-width: 100%;
 }
 
+.iframe-wrapper {
+  position: relative;
+  padding-bottom: 56.25%; /* Proporção 16:9 */
+  height: 0;
+  overflow: hidden;
+  width: 50%;
+}
+
+.iframe-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 75%;
+  height: 100%;
+}
+
 .prose .tiptap blockquote {
   border-left: 4px solid #ccc;
   padding-left: 1em;
