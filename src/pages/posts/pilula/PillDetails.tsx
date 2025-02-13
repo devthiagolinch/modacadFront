@@ -13,7 +13,6 @@ export const PillDetails = () => {
   const navigate = useNavigate();
 
   const [pilula, setPilula] = useState<IPostData>();
-  const [, setInstagramImage] = useState<string | null>(null);
 
   useEffect(() => {
     if (postId) {
@@ -23,30 +22,17 @@ export const PillDetails = () => {
           return;
         }
         setPilula(response);
-
-        // Extrair a URL da imagem do post do Instagram
-        const instagramUrl = response.content.match(/https:\/\/www\.instagram\.com\/p\/[^\/]+\//)?.[0];
-        if (instagramUrl) {
-          getInstagramPostImage(instagramUrl).then((imageUrl) => {
-            setInstagramImage(imageUrl);
-          });
-        }
       });
     } else {
       navigate('/pilulas');
     }
   }, [postId]);
 
-  const getInstagramPostImage = async (postUrl: string) => {
-    try {
-      const response = await fetch(`https://api.instagram.com/oembed?url=${postUrl}`);
-      const data = await response.json();
-      return data.thumbnail_url; // URL da imagem do post
-    } catch (error) {
-      console.error('Erro ao buscar a imagem do Instagram:', error);
-      return null;
+  useEffect(() => {
+    if (typeof window.instgrm !== 'undefined') {
+      window.instgrm.Embeds.process();
     }
-  };
+  }, [pilula?.content]); // Reexecuta quando o conteúdo mudar
 
   return (
     <div className="mx-auto h-screen">

@@ -169,9 +169,9 @@ export const PostEditor = () => {
       editor.commands.setContent(post.content);
       setTimeout(() => {
         window.instgrm?.Embeds?.process();
-      }, 1000); // Aumentei o tempo para garantir que o DOM foi atualizado
+      }, 1000);
     }
-  }, [post.content]); // Alterado para garantir que apenas o conteúdo do post seja o gatilho  
+  }, [post.content]);
   
   const insertInstagramEmbed = () => {
     const url = window.prompt("Cole a URL do Instagram");
@@ -228,8 +228,6 @@ export const PostEditor = () => {
     setUploading(true);
 
     const result = await PostsService.uploadImage(file);
-
-    console.log(result);
 
     if (result instanceof Error) {
       console.error(result.message);
@@ -381,7 +379,7 @@ export const PostEditor = () => {
                   onChange={handleImageUpload}
                 />
                 <button onClick={insertInstagramEmbed}>
-                  Adicionar Instagram Embed
+                  Post Instagram
                 </button>
               
               </div>

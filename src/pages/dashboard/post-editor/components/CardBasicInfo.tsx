@@ -58,7 +58,6 @@ const defaultPost: IPostDataRequest = {
 };
 
 export const CardBasicInfo: React.FC<CardDTO> = ({ title, feature_image, content }) => {
-  console.log(content)
   const navigate = useNavigate();
   const [notification, setNotification] = useState('');
 
@@ -265,7 +264,6 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ title, feature_image, content
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = event.target;
     setPost((prev) => ({ ...prev, [name]: value }));
-    console.log(value)
   };
 
   const handleChangeVisibility = (visibility: TPostsVisibility) => {
