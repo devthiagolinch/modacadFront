@@ -49,9 +49,11 @@ export const PlansPage = () => {
         <div className="md:w-[100%]">
           <div className="md:flex md:flex-col py-[30px] border-t-[1px] border-zinc-950 md:w-[100%]">
             <h1 className="font-butler_ultra_light text-[30px]">
-              Como recebo meu comprovante de pagamento e minha nota fiscal?
+            Quais são as formas de pagamento?
             </h1>
-            <p className="text-[20px] font-regular">Você pode pagar via PIX, boleto ou cartão de crédito.</p>
+            <p className="text-[20px] font-regular">
+              Trabalhamos com as soluções de pagamento Mercado Pago, permitindo que você pague com cartão de crédito com a segurança e conforto.
+            </p>
           </div>
         </div>
 
@@ -60,16 +62,22 @@ export const PlansPage = () => {
             <h1 className="font-butler_ultra_light text-[30px]">
               Como recebo meu comprovante de pagamento e minha nota fiscal?
             </h1>
-            <p className="text-[20px] font-regular">Você pode pagar via PIX, boleto ou cartão de crédito.</p>
+            <p className="text-[20px] font-regular">
+              Você recebe esta documentação por email a cada etapa concluída no sistema Mercado pago.
+            </p>
           </div>
         </div>
 
         <div className="md:w-[100%]">
           <div className="md:flex md:flex-col py-[30px] border-t-[1px] border-zinc-950 md:w-[100%]">
             <h1 className="font-butler_ultra_light text-[30px]">
-              Como recebo meu comprovante de pagamento e minha nota fiscal?
+              Como posso falar com vocês?
             </h1>
-            <p className="text-[20px] font-regular">Você pode pagar via PIX, boleto ou cartão de crédito.</p>
+            <p className="text-[20px] font-regular">
+              Você pode entrar em contato conosco pelo WhatsApp 31 99616 7573
+              ou pelo email para telmabarcellos@modacad.com.br.
+              Responderemos o mais breve possível.
+            </p>
           </div>
         </div>
       </div>
