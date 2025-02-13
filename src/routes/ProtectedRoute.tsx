@@ -16,7 +16,12 @@ export const ProtectedRoute: React.FC<IProtectedRouteProps> = ({
   restrictToTeamRoles = false,
   redirectTo = '/',
 }) => {
-  const { user } = useUser();
+  const { user, loading } = useUser();
+
+  // Se ainda estiver carregando, não faz nada (pode exibir um loading spinner)
+  if (loading) {
+    return null; // Ou um componente de loading, como <LoadingSpinner />
+  }
 
   // Verifica se o usuário está autenticado
   if (!user) {
