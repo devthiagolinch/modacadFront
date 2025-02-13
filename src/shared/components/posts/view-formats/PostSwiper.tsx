@@ -7,14 +7,29 @@ import { IPostData } from '../../../api/posts/PostsService';
 import { SwiperSlidePost } from '../single/PostSlide';
 
 import 'swiper/css';
-import { useId } from 'react';
+import React, { useId } from 'react';
+
+interface ISwiperSeeMoreProps {
+  redirect: string;
+}
+
+export const SwiperSeeMore: React.FC<ISwiperSeeMoreProps> = ({ redirect }) => {
+  return (
+    <Link to={redirect} className="text-center flex h-full items-center justify-center p-6">
+      <p className="font-montserrat font-medium text-2xl md:text-3xl font-light highlight-link">
+        Ver todas as publicações
+      </p>
+    </Link>
+  );
+};
 
 interface ISwiperPosts {
   posts: IPostData[];
   slidesPerView?: number;
+  redirectSeeMore?: string;
 }
 
-export const SwiperPosts: React.FC<ISwiperPosts> = ({ posts, slidesPerView = 2 }) => {
+export const SwiperPosts: React.FC<ISwiperPosts> = ({ posts, slidesPerView = 2, redirectSeeMore = '/posts' }) => {
   const rawId = useId();
   const sanitizedId = rawId.replace(/[:.]/g, '-');
   const prevButtonClass = `swiper-button-prev-${sanitizedId}`;
@@ -39,6 +54,9 @@ export const SwiperPosts: React.FC<ISwiperPosts> = ({ posts, slidesPerView = 2 }
               </Link>
             </SwiperSlide>
           ))}
+          <SwiperSlide style={{ height: 'auto' }}>
+            <SwiperSeeMore redirect={redirectSeeMore} />
+          </SwiperSlide>
         </Swiper>
       </div>
       {/* Menu de navegação */}
