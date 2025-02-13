@@ -4,10 +4,15 @@ import { Footer } from '../../shared/components/footer';
 
 import { PublicHeader } from '../../shared/components/header/public-header/PublicHeader';
 import { IPlanData, PlansService } from '../../shared/api/plans/PlansService';
+import { UsersService } from '../../shared/api/users/UserServices';
 import { PlanCard } from './components/PlanCard';
+import { useUser } from '../../shared/contexts';
 
 export const PlansPage = () => {
   const [plans, setPlans] = useState<IPlanData[]>([]);
+  const [currentPlanId, setCurrentPlanId] = useState<string | null>(null);
+
+  const { user } = useUser();
 
   useEffect(() => {
     PlansService.getAll().then((response) => {
@@ -18,6 +23,28 @@ export const PlansPage = () => {
       setPlans(response);
     });
   }, []);
+
+  useEffect(() => {
+    if (!user) {
+      return;
+    }
+
+    UsersService.getProfile().then((response) => {
+      if (response instanceof Error) {
+        console.error(response);
+        return;
+      }
+
+      if (response?.plans?.id) {
+        setCurrentPlanId(response.plans.id);
+      } else {
+        const freePlan = plans.find((plan) => Number(plan.price) === 0);
+        if (freePlan) {
+          setCurrentPlanId(freePlan.id);
+        }
+      }
+    });
+  }, [user, plans]);
 
   return (
     <div>
@@ -39,7 +66,13 @@ export const PlansPage = () => {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {plans.map((plan, index) => (
-            <PlanCard key={plan.id} plan={plan} highlight={index === 1 ? true : false} isFirst={index === 0} />
+            <PlanCard
+              key={plan.id}
+              plan={plan}
+              highlight={index === 1 ? true : false}
+              isFirst={index === 0}
+              currentPlan={currentPlanId === plan.id}
+            />
           ))}
         </div>
       </div>

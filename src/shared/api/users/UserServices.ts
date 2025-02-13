@@ -97,10 +97,31 @@ const deleteById = async (id: string): Promise<void | Error> => {
   }
 };
 
+type TProfile = {
+  id: string;
+  plans: {
+    id: string;
+  } | null;
+};
+
+const getProfile = async () => {
+  try {
+    const { data } = await api.get<TProfile>('/admins/profile');
+    if (data) {
+      return data;
+    }
+    return new Error('Erro ao buscar o perfil do usuário');
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido ao buscar o perfil do usuário';
+    return new Error(errorMessage);
+  }
+};
+
 export const UsersService = {
   getAll,
   getAllStaff,
   inviteMember,
   updateById,
   deleteById,
+  getProfile,
 };
