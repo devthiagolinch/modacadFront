@@ -112,8 +112,8 @@ export interface IPostSearchResponse {
 type TPostSearch = {
   term: string;
   page?: number;
-  limit?: number
-}
+  limit?: number;
+};
 const getAll = async ({
   type,
   limit,
@@ -142,10 +142,10 @@ const deletePost = async (postId: string): Promise<void | Error> => {
   try {
     await api.delete(`/post/${postId}`);
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido ao deletar o registro'
-    return new Error(errorMessage)
+    const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido ao deletar o registro';
+    return new Error(errorMessage);
   }
-}
+};
 
 const create = async (post: IPostDataRequest): Promise<IPostData | Error> => {
   try {
@@ -212,13 +212,9 @@ const lastPost = async (): Promise<IPostResponse | Error> => {
     const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido ao listar os registros';
     return new Error(errorMessage);
   }
-}
+};
 
-const searchPost = async ({
-  term,
-  page,
-  limit
-}: TPostSearch): Promise<IPostSearchResponse | Error> => {
+const searchPost = async ({ term, page, limit }: TPostSearch): Promise<IPostSearchResponse | Error> => {
   try {
     const urlRelativa = `/post/search?term=${term ?? ''}&limit=${limit ?? 30}&page=${page ?? 1}`;
     const { data } = await api.post<IPostSearchResponse>(urlRelativa);
@@ -232,7 +228,20 @@ const searchPost = async ({
     const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido ao listar os registros';
     return new Error(errorMessage);
   }
-}
+};
+
+const getMostReadPosts = async () => {
+  try {
+    const { data } = await api.get<IPostResponse>('/post/list/mais-lidos');
+    if (data) {
+      return data;
+    }
+    return new Error('Erro ao listar os registros');
+  } catch (error) {
+    console.error(error);
+    return new Error('Erro desconhecido ao listar os registros');
+  }
+};
 
 export const PostsService = {
   getAll,
@@ -242,5 +251,6 @@ export const PostsService = {
   updateById,
   uploadImage,
   lastPost,
-  searchPost
+  searchPost,
+  getMostReadPosts,
 };
