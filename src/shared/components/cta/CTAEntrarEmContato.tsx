@@ -1,7 +1,6 @@
+import mailIcon from '../../../assets/icons/email.svg';
+import whatsappIcon from '../../../assets/icons/whatsapp.svg';
 import setaCurvaIcon from '../../../assets/icons/seta-curva.svg';
-
-import emailIcon from '../../../assets/icons/email.svg';
-import wppIcon from '../../../assets/icons/whatsapp.svg';
 
 export const CTAEntrarEmContato = () => {
   return (
@@ -18,13 +17,30 @@ export const CTAEntrarEmContato = () => {
       </div>
       <div className="flex items-center overflow-hidden">
         <ul>
+          {/* E-mail */}
           <li className="flex gap-2 md:text-2xl font-medium highlight-link mb-2 items-center">
-            <img src={emailIcon} alt="" className="max-w-[24px]" />
-            <p className="">telmabarcellos@modacad.com.br</p>
+            <a
+              href="mailto:telmabarcellos@modacad.com.br"
+              className="flex gap-2 items-center"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img src={mailIcon} alt="Ícone de e-mail" className="max-w-[24px]" />
+              <p>telmabarcellos@modacad.com.br</p>
+            </a>
           </li>
+
+          {/* WhatsApp */}
           <li className="flex gap-2 md:text-2xl font-medium highlight-link mb-2 items-center">
-            <img src={wppIcon} alt="" className="max-h-[24px]" />
-            31 99616 7573
+            <a
+              href="https://wa.me/5531996167573"
+              className="flex gap-2 items-center"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img src={whatsappIcon} alt="Ícone do WhatsApp" className="max-h-[24px]" />
+              <p>31 99616 7573</p>
+            </a>
           </li>
         </ul>
       </div>
