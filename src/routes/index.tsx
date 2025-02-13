@@ -1,4 +1,7 @@
-import { Navigate, Outlet, Route, Routes } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Navigate, Outlet, Route, Routes, useLocation } from 'react-router-dom';
+
+import { ProtectedRoute } from './ProtectedRoute';
 
 import { Home } from '../pages/home/Home';
 import { PlansPage } from '../pages/plans/PlansPage';
@@ -16,9 +19,14 @@ import { PageTeam } from '../pages/admin/team/PageTeam';
 import { PageCategoryPost } from '../pages/posts/page-category-post/PageCategoryPost';
 import { PublishedPosts } from '../pages/posts/textos/PublishedPosts';
 import { PostDetails } from '../pages/posts/post-details/PostDetails';
-import { ProtectedRoute } from './ProtectedRoute';
 
 export const AppRoutes = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
   return (
     <Routes>
       {/* Rotas Públicas */}
