@@ -16,6 +16,7 @@ interface Planos {
 
 export function Plans() {
   const [plan, setPlan] = useState<Planos>();
+  console.log(plan)
 
   useEffect(() => {
     api.get('/planos').then((response) => setPlan(response.data));
