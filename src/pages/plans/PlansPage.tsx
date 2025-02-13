@@ -25,6 +25,10 @@ export const PlansPage = () => {
   }, []);
 
   useEffect(() => {
+    if (!user) {
+      return;
+    }
+
     UsersService.getProfile().then((response) => {
       if (response instanceof Error) {
         console.error(response);
