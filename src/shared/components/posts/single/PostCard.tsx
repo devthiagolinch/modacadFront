@@ -11,7 +11,7 @@ interface IPostCardProps {
 }
 
 export const PostCard: FC<IPostCardProps> = ({ post }) => {
-  const link = post.type === 'texto' ? `/posts/${post.id}` : `/pilulas/${post.id}`;
+  const link = post.type === 'texto' ? `/posts/${post.slug}` : `/pilulas/${post.slug}`;
 
   return (
     <Link to={link}>
