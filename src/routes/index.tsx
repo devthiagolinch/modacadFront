@@ -1,6 +1,4 @@
-import { Navigate, Outlet, Route, RouteProps, Routes } from 'react-router-dom';
-
-import { useUser } from '../shared/contexts/UserContext';
+import { Navigate, Outlet, Route, Routes } from 'react-router-dom';
 
 import { Home } from '../pages/home/Home';
 import { PlansPage } from '../pages/plans/PlansPage';
@@ -18,24 +16,9 @@ import { PageTeam } from '../pages/admin/team/PageTeam';
 import { PageCategoryPost } from '../pages/posts/page-category-post/PageCategoryPost';
 import { PublishedPosts } from '../pages/posts/textos/PublishedPosts';
 import { PostDetails } from '../pages/posts/post-details/PostDetails';
-
-type TPrivateRouteProps = RouteProps & {
-  element: React.ReactNode;
-};
+import { ProtectedRoute } from './ProtectedRoute';
 
 export const AppRoutes = () => {
-  const { user, loading } = useUser();
-
-  const PrivateRoute: React.FC<TPrivateRouteProps> = ({ element }) => {
-    if (loading) {
-      return <div>Carregando...</div>;
-    }
-
-    const isAuthenticated = !!user;
-
-    return isAuthenticated ? element : <Navigate to="/admin/login" />;
-  };
-
   return (
     <Routes>
       {/* Rotas Públicas */}
@@ -53,12 +36,40 @@ export const AppRoutes = () => {
       <Route path="/posts/:postId" element={<PostDetails />} />
 
       {/* Rotas Protegidas (Privadas) */}
-      <Route path="/dashboard/:type" element={<PrivateRoute element={<Dashboard />} />} />
-      <Route path="/posts/novo" element={<PrivateRoute element={<PostEditor />} />} />
-      <Route path="/posts/:postId/editar" element={<PrivateRoute element={<PostEditor />} />} />
+      <Route
+        path="/dashboard/:type"
+        element={
+          <ProtectedRoute restrictToTeamRoles>
+            <Dashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/posts/novo"
+        element={
+          <ProtectedRoute restrictToTeamRoles>
+            <PostEditor />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/posts/:postId/editar"
+        element={
+          <ProtectedRoute restrictToTeamRoles>
+            <PostEditor />
+          </ProtectedRoute>
+        }
+      />
 
       {/* Login Admin */}
-      <Route path="/admin" element={<PrivateRoute element={<Outlet />} />}>
+      <Route
+        path="/admin"
+        element={
+          <ProtectedRoute restrictToTeamRoles>
+            <Outlet />
+          </ProtectedRoute>
+        }
+      >
         <Route index element={<Navigate to="membros" />} />
         <Route path="membros" element={<PageMembers />} />
         <Route path="tags" element={<PageTags />} />
