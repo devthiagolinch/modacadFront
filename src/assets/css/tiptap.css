@@ -12,6 +12,7 @@ is-editor-empty {
 .tiptap {
   font-size: 20px;
   line-height: 2rem;
+  max-width: 100% !important;
 
   h1,
   h2,

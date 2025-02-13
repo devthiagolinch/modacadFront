@@ -1,7 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import React, { useEffect, useState } from 'react';
 import { Controller, SubmitHandler, useFieldArray, useForm } from 'react-hook-form';
-import { IPlanData, PlansService } from '../../../../shared/api/plans/PlansService';
+import { IPlanData, IPlanDataCreate, PlansService } from '../../../../shared/api/plans/PlansService';
 import * as yup from 'yup';
 import { Alert } from '../../../../shared/components/ui/alert/Alert';
 
@@ -10,16 +10,19 @@ interface ICreatePlanProps {
   onCreated: () => void;
 }
 
-interface IPlanForm extends Omit<IPlanData, 'id'> {}
-
-const initialPlanForm: IPlanForm = {
+const initialPlanForm: IPlanDataCreate = {
   title: '',
   price: '',
   description: '',
-  topics: [],
+  topics: [{ id: 1, value: '' }],
+  currency_id: 'BRL',
+  frequency: 1,
+  frequency_type: 'months',
+  isRecurrence: true,
+  sort: 1,
 };
 
-const createPlansSchema: yup.ObjectSchema<IPlanForm> = yup.object({
+const createPlansSchema: yup.ObjectSchema<IPlanDataCreate> = yup.object({
   title: yup.string().required('Nome é obrigatório'),
   price: yup.string().required('Preço é obrigatório'),
   description: yup.string().required('Descrição é obrigatória'),
@@ -32,6 +35,11 @@ const createPlansSchema: yup.ObjectSchema<IPlanForm> = yup.object({
       })
     )
     .required('Vantagens são obrigatórias'),
+  currency_id: yup.string().required(),
+  frequency: yup.number().required(),
+  frequency_type: yup.string().required(),
+  isRecurrence: yup.boolean().required(),
+  sort: yup.number().required(),
 });
 
 type TMessage = { type: 'success' | 'danger'; text: string };
@@ -45,7 +53,9 @@ export const CreatePlan: React.FC<ICreatePlanProps> = ({ selectedPlan, onCreated
     register,
     reset,
     formState: { errors },
-  } = useForm<IPlanForm>({
+    setValue,
+    watch,
+  } = useForm<IPlanDataCreate>({
     resolver: yupResolver(createPlansSchema),
     defaultValues: initialPlanForm,
   });
@@ -57,6 +67,11 @@ export const CreatePlan: React.FC<ICreatePlanProps> = ({ selectedPlan, onCreated
         price: selectedPlan.price,
         description: selectedPlan.description,
         topics: selectedPlan.topics,
+        frequency: selectedPlan.frequency,
+        currency_id: 'BRL',
+        frequency_type: 'months',
+        isRecurrence: true,
+        sort: 1,
       });
     } else {
       reset(initialPlanForm);
@@ -79,12 +94,9 @@ export const CreatePlan: React.FC<ICreatePlanProps> = ({ selectedPlan, onCreated
     name: 'topics',
   });
 
-  const onSubmit: SubmitHandler<IPlanForm> = (data) => {
-    // Se houver plano selecionado é então para atualizar
-    const formattedData = { ...data, topics: data.topics.map((topic) => topic.value) };
-
+  const onSubmit: SubmitHandler<IPlanDataCreate> = (data) => {
     if (selectedPlan) {
-      PlansService.updateById(selectedPlan.id, formattedData).then((response) => {
+      PlansService.updateById(selectedPlan.id, data).then((response) => {
         if (response instanceof Error) {
           console.error(response);
           setMessage({
@@ -101,7 +113,7 @@ export const CreatePlan: React.FC<ICreatePlanProps> = ({ selectedPlan, onCreated
         onCreated();
       });
     } else {
-      PlansService.create(formattedData).then((response) => {
+      PlansService.create(data).then((response) => {
         if (response instanceof Error) {
           console.error(response);
           return;
@@ -115,6 +127,15 @@ export const CreatePlan: React.FC<ICreatePlanProps> = ({ selectedPlan, onCreated
       });
     }
   };
+
+  const toggleFrequency = (value: number) => {
+    setValue('frequency', value);
+  };
+
+  const frequency = watch('frequency');
+
+  console.log(selectedPlan);
+  console.log(errors);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -194,6 +215,30 @@ export const CreatePlan: React.FC<ICreatePlanProps> = ({ selectedPlan, onCreated
             >
               Adicionar
             </button>
+          </div>
+        </div>
+        <div>
+          {/* Frequência */}
+          <div className="mt-2">
+            <label htmlFor="frequency" className="block mb-2 text-sm font-medium text-gray-900">
+              Frequência
+            </label>
+            <div className="flex items-center">
+              <button
+                type="button"
+                onClick={() => toggleFrequency(1)}
+                className={`px-4 py-2 ${frequency == 1 ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-900'}`}
+              >
+                Mensal
+              </button>
+              <button
+                type="button"
+                onClick={() => toggleFrequency(12)}
+                className={`ml-2 px-4 py-2 ${frequency == 12 ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-900'}`}
+              >
+                Anual
+              </button>
+            </div>
           </div>
         </div>
       </div>

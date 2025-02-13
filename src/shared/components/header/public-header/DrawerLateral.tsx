@@ -1,17 +1,23 @@
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
 
+import { useAuthDialog } from '../../../../shared/contexts/AuthDialogContext';
+import { useUser } from '../../../../shared/contexts';
+
 interface IDrawerLateralProps {
   isOpen: boolean;
   toggleDrawer: () => void;
 }
 
 export const DrawerLateral: FC<IDrawerLateralProps> = ({ isOpen, toggleDrawer }) => {
+  const { user, logout } = useUser();
+  const { openDialog } = useAuthDialog();
+
   return (
     <div
-      className={`fixed top-0 left-0 h-full bg-white w-full transform transition-transform ${
+      className={`fixed top-0 left-0 h-full bg-white w-full md:w-[600px] transform transition-transform ${
         isOpen ? 'translate-x-0' : '-translate-x-full'
-      } sm:hidden z-50`}
+      } z-50`}
     >
       <div className="flex justify-end px-4 pt-4">
         <button className="p-2 border border-gray-950" onClick={toggleDrawer}>
@@ -28,16 +34,6 @@ export const DrawerLateral: FC<IDrawerLateralProps> = ({ isOpen, toggleDrawer })
         </button>
       </div>
       <ul className="p-4 font-butler text-2xl">
-        {/* <li className="mb-2">
-          <Link to="/" className="block p-2 highlight-link">
-            Meu perfil
-          </Link>
-        </li> */}
-        {/* <li className="mb-2">
-          <Link to="/" className="block p-2 highlight-link">
-            Planos de leitura
-          </Link>
-        </li> */}
         <li className="mb-2">
           <Link to="/posts" className="block p-2 highlight-link">
             Textos Publicados
@@ -65,10 +61,26 @@ export const DrawerLateral: FC<IDrawerLateralProps> = ({ isOpen, toggleDrawer })
         </li>
       </ul>
       <div className="p-4 font-montserrat">
-        <div className="border border-gray-950 p-4">
-          <p className="text-gray-950 font-light">Faça login para aproveitar ao máximo nosso site.</p>
-          <button className="bg-primary px-4 py-2 border border-gray-950 mt-2">ENTRAR</button>
-        </div>
+        {user ? (
+          <div className="border border-gray-950 p-4 font-montserrat font-light text-gray-950">
+            <p>
+              Olá, <span className="font-medium">{user.name}</span>
+            </p>
+            <p>
+              Não é você?{' '}
+              <button className="text-blue-600 font-medium hover:text-blue-400" onClick={logout}>
+                Sair
+              </button>
+            </p>
+          </div>
+        ) : (
+          <div className="border border-gray-950 p-4">
+            <p className="text-gray-950 font-light">Faça login para aproveitar ao máximo nosso site.</p>
+            <button className="bg-primary px-4 py-2 border border-gray-950 mt-2" onClick={openDialog}>
+              ENTRAR
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

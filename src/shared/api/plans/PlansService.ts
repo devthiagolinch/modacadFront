@@ -3,63 +3,91 @@ import { api } from '../../../shared/services/axios';
 export interface IPlanData {
   id: string;
   title: string;
-  price: string;
   description: string;
+  price: string;
+  frequency: number;
   topics: { id: number; value: string }[];
+  sort: number;
+  mp_url: string;
 }
 
-export interface IPlanDataNotFormatted {
-  id: string;
+export interface IPlanDataReceived extends Omit<IPlanData, 'topics'> {
+  topics: string[];
+}
+
+export interface IPlanDataCreate {
   price: string;
   title: string;
-  topics: string[];
+  description: string;
+  topics: { id: number; value: string }[];
+  sort: number;
+  frequency: number;
+  frequency_type: string;
+  currency_id: string;
+  isRecurrence: boolean;
 }
 
 const getAll = async (): Promise<IPlanData[] | Error> => {
   try {
-    const { data } = await api.get<IPlanDataNotFormatted[]>('/plan/list');
-    const plansWithIds = data.map((plan) => ({
+    const { data } = await api.get<IPlanDataReceived[]>('/plan/list');
+
+    // Antes de retornar, preciso transformar o elemento 'topics' de string[] para { id: number, value: string }[]
+    const dataWithTopics = data.map((plan) => ({
       ...plan,
-      description: 'Uma bela descrição',
-      topics: plan.topics.map((topic, index) => ({ value: topic, id: index + 1 })),
+      topics: plan.topics.map((topic, index) => ({ id: index, value: topic })),
     }));
-    return plansWithIds as IPlanData[];
+
+    return dataWithTopics ?? new Error('Erro ao buscar os planos');
   } catch (error) {
     console.error(error);
     return error as Error;
   }
 };
 
-// /plan/create
-const create = async (plan: Omit<IPlanDataNotFormatted, 'id'>): Promise<void | Error> => {
+const create = async (plan: IPlanDataCreate): Promise<void | Error> => {
   try {
-    await api.post('/plan/create', plan);
+    // Antes de salvar, preciso transformar o elemento 'topics' de { id: number, value: string }[] para string[]
+    const newPlan = { ...plan, topics: plan.topics.map((topic) => topic.value) };
+
+    await api.post('/plan', newPlan);
   } catch (error) {
     console.error(error);
     return error as Error;
   }
 };
 
-// /update/:id
-const updateById = async (id: string, plan: Omit<IPlanDataNotFormatted, 'id'>): Promise<void | Error> => {
+const updateById = async (id: string, plan: IPlanDataCreate): Promise<void | Error> => {
   try {
-    await api.patch(`/plan/update/${id}`, plan);
+    // Antes de salvar, preciso transformar o elemento 'topics' de { id: number, value: string }[] para string[]
+    const newPlan = { ...plan, topics: plan.topics.map((topic) => topic.value) };
+
+    await api.patch(`/plan/update/${id}`, newPlan);
   } catch (error) {
     console.error(error);
     return error as Error;
   }
 };
 
-// /view/:id
 const getById = async (id: string) => {
   try {
-    const { data } = await api.get<IPlanData>(`/view/${id}`);
-    const planWithIds = {
+    const { data } = await api.get<IPlanDataReceived>(`/view/${id}`);
+
+    // Antes de retornar, preciso transformar o elemento 'topics' de string[] para { id: number, value: string }[]
+    const dataWithTopics = {
       ...data,
-      description: 'Uma bela descrição',
-      topics: data.topics.map((topic, index) => ({ ...topic, id: index + 1 })),
+      topics: data.topics.map((topic, index) => ({ id: index, value: topic })),
     };
-    return planWithIds;
+
+    return dataWithTopics ?? new Error('Erro ao buscar o plano');
+  } catch (error) {
+    console.error(error);
+    return error as Error;
+  }
+};
+
+const deleteById = async (id: string): Promise<void | Error> => {
+  try {
+    await api.delete(`/plan/delete/${id}`);
   } catch (error) {
     console.error(error);
     return error as Error;
@@ -71,4 +99,5 @@ export const PlansService = {
   create,
   updateById,
   getById,
+  deleteById,
 };
