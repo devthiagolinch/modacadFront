@@ -11,9 +11,10 @@ interface IPlanCardProps {
   plan: IPlanData;
   highlight?: boolean;
   isFirst: boolean;
+  currentPlan?: boolean;
 }
 
-export const PlanCard: FC<IPlanCardProps> = ({ plan, highlight = false, isFirst = false }) => {
+export const PlanCard: FC<IPlanCardProps> = ({ plan, highlight = false, isFirst = false, currentPlan = false }) => {
   const { user } = useUser();
   const { openDialog } = useAuthDialog();
 
@@ -80,7 +81,7 @@ export const PlanCard: FC<IPlanCardProps> = ({ plan, highlight = false, isFirst 
           onClick={() => handleGeneratePaymentLink(plan.id)}
           className="px-8 py-4 border border-gray-950 font-montserrat text-lg hover:bg-[#dcdf1e]"
         >
-          Quero este
+          {currentPlan ? 'Plano atual' : 'Quero este'}
         </button>
       </div>
     </div>
