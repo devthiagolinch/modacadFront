@@ -18,7 +18,7 @@ import { LayoutDashboard } from '../../../shared/layouts';
 import { FaBold, FaItalic, FaLink, FaList, FaQuoteLeft } from 'react-icons/fa';
 import Placeholder from '@tiptap/extension-placeholder';
 import { CardBasicInfo } from './components/CardBasicInfo';
-import InstagramEmbed from '../../../assets/tiptapExtensao/embed';
+import { InstagramEmbed } from '../../../shared/components/tiptap extensions/instagram/instagramEmbed';
 
 const defaultPost: IPostDataRequest = {
   title: '',
@@ -64,7 +64,6 @@ export const PostEditor = () => {
   const editor = useEditor({
     extensions: [
       StarterKit,
-      InstagramEmbed,
       Image.configure({
         inline: true,
         allowBase64: true,
@@ -87,6 +86,7 @@ export const PostEditor = () => {
           };
         },
       }),
+      InstagramEmbed,
       Placeholder.configure({
         placeholder: ({ node }) => {
           if (node.type.name === 'heading') {
@@ -102,9 +102,21 @@ export const PostEditor = () => {
         class: 'prose-2xl focus:outline-none w-full min-h-screen-2 font-monteserrat text-[12px]',
       },
     },
+
     content: post.content,
     onUpdate: ({ editor }) => {
-      setPost((prev) => ({ ...prev, content: editor.getHTML() }));
+      const jsonContent = editor.getHTML();
+      // Verifica e corrige qualquer tag <blockquote> errada
+      const fixedHtml = jsonContent.replace(/<blockquote.*?>(.*?)<\/blockquote>/g, (match, content) => {
+        // Se encontrar um link do Instagram, converta de volta para embed
+        if (content.includes('instagram.com')) {
+          return `<blockquote class="instagram-media">${content}</blockquote>`;
+        }
+        return match;
+      });
+
+      setPost((prev) => ({ ...prev, content: fixedHtml }));
+      // setPost((prev) => ({ ...prev, content: jsonContent }));
     },
   });
 
@@ -144,13 +156,38 @@ export const PostEditor = () => {
             email_only: response.meta?.email_only ?? '',
             feature_image_caption: response.meta?.feature_image_caption ?? '',
           });
-          editor?.commands.setContent(response.content);
           setFeatureImageUrl(response.feature_image);
         }
       });
     }
   }, [postId, editor]);
 
+  useEffect(() => {
+    if (editor) {
+      editor.commands.setContent(post.content);
+      setTimeout(() => {
+        window.instgrm?.Embeds?.process();
+      }, 1000);
+    }
+  }, [post.content]);
+  
+  const insertInstagramEmbed = () => {
+    const url = window.prompt("Cole a URL do Instagram");
+  
+    if (url && editor && url.includes("instagram.com")) {
+      editor
+        .chain()
+        .focus()
+        .insertContent({
+          type: "instagramEmbed",
+          attrs: { url },
+        })
+        .run();
+    } else {
+      alert("URL inválida.");
+    }
+  };
+  
   const setLink = useCallback(() => {
     if (!editor?.getAttributes('link').href) {
       editor?.chain().focus().extendMarkRange('link').unsetLink().run();
@@ -349,18 +386,9 @@ export const PostEditor = () => {
                   accept="image/*"
                   onChange={handleImageUpload}
                 />
-                {/* 
-                <button
-                  onClick={() => {
-                    const urlinsta = window.prompt('Insira o URL do Instagram Embed:');
-                    if (urlinsta) {
-                      editor.commands.setInstagramEmbed({src: urlinsta }).run()
-                    }
-                  }}
-                  className="hover:text-yellow-400"
-                >
-                  Embed Instagram
-                </button> */}
+                <button onClick={insertInstagramEmbed}>
+                  Post Instagram
+                </button>
               </div>
             </FloatingMenu>
           )}

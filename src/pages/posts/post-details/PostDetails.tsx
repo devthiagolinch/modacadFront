@@ -95,6 +95,11 @@ export const PostDetails = () => {
     });
   }, [postId, navigate]);
 
+  useEffect(() => {
+    if (typeof window.instgrm !== 'undefined') {
+      window.instgrm.Embeds.process();
+    }
+  }, [post?.content]); // Reexecuta quando o conteúdo mudar
   const accessLevel = checkPostAccess(user, post?.visibility ?? 'pro');
 
   return (

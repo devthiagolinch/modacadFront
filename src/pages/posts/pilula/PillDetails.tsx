@@ -28,6 +28,12 @@ export const PillDetails = () => {
     }
   }, [postId]);
 
+  useEffect(() => {
+    if (typeof window.instgrm !== 'undefined') {
+      window.instgrm.Embeds.process();
+    }
+  }, [pilula?.content]); // Reexecuta quando o conteúdo mudar
+
   return (
     <div className="mx-auto h-screen">
       <PublicHeader />
