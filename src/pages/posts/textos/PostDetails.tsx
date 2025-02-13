@@ -32,25 +32,11 @@ export function PostDetails() {
   }, [postId, navigate]);
 
   useEffect(() => {
-    if (!post?.content) return;
-
-    // Aguarde um pequeno delay para garantir que o conteúdo foi renderizado
-    setTimeout(() => {
-      if (window.instgrm) {
-        window.instgrm.Embeds.process();
-      } else {
-        const script = document.createElement('script');
-        script.src = '//www.instagram.com/embed.js';
-        script.async = true;
-        script.onload = () => {
-          if (window.instgrm) {
-            window.instgrm.Embeds.process();
-          }
-        };
-        document.body.appendChild(script);
-      }
-    }, 500);
-  }, [post?.content]);
+    if (typeof window.instgrm !== 'undefined') {
+      window.instgrm.Embeds.process();
+    }
+  }, [post?.content]); // Reexecuta quando o conteúdo mudar
+  
 
   return (
     <div className="mx-auto h-screen">

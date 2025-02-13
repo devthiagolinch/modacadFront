@@ -107,9 +107,18 @@ export const PostEditor = () => {
 
     content: post.content,
     onUpdate: ({ editor }) => {
-      // Salva o conteúdo como JSON
       const jsonContent = editor.getHTML();
-      setPost((prev) => ({ ...prev, content: jsonContent }));
+      // Verifica e corrige qualquer tag <blockquote> errada
+      const fixedHtml = jsonContent.replace(/<blockquote.*?>(.*?)<\/blockquote>/g, (match, content) => {
+        // Se encontrar um link do Instagram, converta de volta para embed
+        if (content.includes('instagram.com')) {
+          return `<blockquote class="instagram-media">${content}</blockquote>`;
+        }
+        return match;
+      });
+
+      setPost((prev) => ({ ...prev, content: fixedHtml }));
+      // setPost((prev) => ({ ...prev, content: jsonContent }));
     },
   });
 
@@ -154,13 +163,6 @@ export const PostEditor = () => {
       });
     }
   }, [postId, editor]);
-
-  editor?.on("update", () => {
-    // Recarregar o script do Instagram e processar todos os embeds
-    if (typeof window !== "undefined" && window.instgrm?.Embeds?.process) {
-      window.instgrm.Embeds.process();
-    }
-  });
 
   useEffect(() => {
     if (editor) {

@@ -58,6 +58,7 @@ const defaultPost: IPostDataRequest = {
 };
 
 export const CardBasicInfo: React.FC<CardDTO> = ({ title, feature_image, content }) => {
+  console.log(content)
   const navigate = useNavigate();
   const [notification, setNotification] = useState('');
 
