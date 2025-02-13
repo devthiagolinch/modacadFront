@@ -5,6 +5,7 @@ import * as yup from 'yup';
 import { useAuthDialog } from '../../../shared/contexts/AuthDialogContext';
 import { AuthService } from '../../../shared/api/auth/AuthService';
 import { useUser } from '../../../shared/contexts';
+import { useEffect } from 'react';
 
 interface ILoginForm {
   email: string;
@@ -16,6 +17,11 @@ const loginSchema: yup.ObjectSchema<ILoginForm> = yup.object({
   password: yup.string().required(),
 });
 
+const initialFormValues: ILoginForm = {
+  email: '',
+  password: '',
+};
+
 export const DialogLogin = () => {
   const { isOpen, closeDialog } = useAuthDialog();
 
@@ -23,9 +29,11 @@ export const DialogLogin = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<ILoginForm>({
     resolver: yupResolver(loginSchema),
   });
+
   const { login } = useUser();
 
   const onSubmit = (data: ILoginForm) => {
@@ -35,15 +43,22 @@ export const DialogLogin = () => {
         return;
       }
       login(response.token, response.admin);
+      reset(initialFormValues);
       closeDialog();
     });
   };
 
+  useEffect(() => {
+    if (isOpen) {
+      reset(initialFormValues);
+    }
+  }, [isOpen, reset]);
+
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="bg-white p-6 rounded-2xl shadow-lg w-96">
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50" onClick={closeDialog}>
+      <div className="bg-white p-6 rounded-2xl shadow-lg w-96" onClick={(e) => e.stopPropagation()}>
         <h2 className="text-xl font-semibold text-center mb-4">Login</h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
@@ -68,7 +83,7 @@ export const DialogLogin = () => {
             Entrar
           </button>
         </form>
-        <button onClick={closeDialog} className="mt-4 w-full text-sm text-gray-500 hover:text-gray-700">
+        <button className="mt-4 w-full text-sm text-gray-500 hover:text-gray-700" onClick={closeDialog}>
           Fechar
         </button>
       </div>
