@@ -42,7 +42,7 @@ export function CTAPlans() {
 
         {/** MOBILE */}
         <div className="lg:hidden flex flex-col justify-center items-center w-full px-[20px]">
-          <Button title="Conheça os planos" active={false} />
+          <Button title="Conheça os planos" active={false} link="planos" />
         </div>
       </div>
     </div>
