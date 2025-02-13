@@ -134,9 +134,6 @@ export const CreatePlan: React.FC<ICreatePlanProps> = ({ selectedPlan, onCreated
 
   const frequency = watch('frequency');
 
-  console.log(selectedPlan);
-  console.log(errors);
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       {message.text && <Alert color={message.type}>{message.text}</Alert>}

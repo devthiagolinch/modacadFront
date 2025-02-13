@@ -28,11 +28,11 @@ export const PlansPage = () => {
         <span className="text-3xl text-gray-950 font-montserrat font-light mt-2">Plano básico gratuito</span>
       </div>
 
-      <div className="hidden lg:flex lg:w-full lg:justify-center lg:items-center lg:mb-4">
+      <div className="hidden lg:flex lg:w-full lg:justify-center lg:items-center lg:mb-5">
         <div className="text-lg flex items-center justify-center gap-2 w-full">
-          <div className="border-t border-gray-950 w-[10.5%]"></div>
-          <span className="font-montserrat">MELHOR PLANO</span>
-          <div className="border-t border-gray-950 w-[10.5%]"></div>
+          <div className="border-t border-gray-950 w-[8%]"></div>
+          <span className="font-montserrat text-[20px]">MELHOR PLANO</span>
+          <div className="border-t border-gray-950 w-[8%]"></div>
         </div>
       </div>
 

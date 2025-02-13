@@ -19,6 +19,9 @@ export const PostInfo: FC<IPostInfoProps> = ({ post }) => {
   const meta = Array.isArray(post?.meta) && post?.meta.length > 0 ? post?.meta[0] : {};
   const feature_image_caption = meta.feature_image_caption;
 
+  const editors = post.editors.map((editor) => editor.name).join(', ');
+  const curators = post.curadors.map((curador) => curador.name).join(', ');
+
   const renderAuthors = () => (
     <div>
       <div className="flex gap-4 flex-wrap mt-5 items-center justify-between">
@@ -32,7 +35,7 @@ export const PostInfo: FC<IPostInfoProps> = ({ post }) => {
                 className="w-14 h-14 rounded-full bg-black object-cover"
               />
               <div className="flex gap-0 flex-col">
-                <p className="font-montserrat text-sm text-zinc-500 leading-3">Autor(a)</p>
+                <p className="font-montserrat text-sm text-zinc-500 leading-3">Autora</p>
                 <p className="font-montserrat text-lg font-regular tracking-tighter">{admin.name}</p>
               </div>
             </div>
@@ -50,14 +53,18 @@ export const PostInfo: FC<IPostInfoProps> = ({ post }) => {
           </p>
         </div>
       </div>
-      <div className="flex gap-1 sm:gap-2 flex-wrap my-4 items center font-montserrat text-zinc-500 items-center">
-        <p className="text-sm leading-3">
-          Editor(a) <span>Telma Barcelos</span>
-        </p>
-        <span>•</span>
-        <p className="text-sm leading-3">
-          Curador(a) <span>Jaqueline Lorenzoni</span>
-        </p>
+      <div className="flex gap-1 sm:gap-2 flex-wrap my-4 items-center font-montserrat text-zinc-500">
+        {editors && (
+          <p className="text-sm leading-3">
+            Editora{post.editors.length > 1 ? 's' : ''} <span>{editors}</span>
+          </p>
+        )}
+        {editors && curators && <span>•</span>}
+        {curators && (
+          <p className="text-sm leading-3">
+            Curadora{post.curadors.length > 1 ? 's' : ''} <span>{curators}</span>
+          </p>
+        )}
       </div>
     </div>
   );
@@ -89,11 +96,11 @@ export const PostInfo: FC<IPostInfoProps> = ({ post }) => {
           alt=""
           className={`w-full object-cover ${post.type === 'pilula' ? 'aspect-square' : 'aspect-video'}`}
         />
-       <span
-          className="mt-2 mx-auto w-full justify-center items-center flex"
-          dangerouslySetInnerHTML={{ __html: feature_image_caption ?? '' }}
-        />
       </div>
+      <div
+        className="mt-2 container max-w-[800px] mx-auto px-4 flex justify-center flex-wrap"
+        dangerouslySetInnerHTML={{ __html: feature_image_caption ?? '' }}
+      />
       <div className="container mx-auto max-w-[800px] px-4 block lg:hidden">{renderAuthors()}</div>
     </div>
   );

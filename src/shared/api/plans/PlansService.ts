@@ -60,7 +60,7 @@ const updateById = async (id: string, plan: IPlanDataCreate): Promise<void | Err
   try {
     // Antes de salvar, preciso transformar o elemento 'topics' de { id: number, value: string }[] para string[]
     const newPlan = { ...plan, topics: plan.topics.map((topic) => topic.value) };
-
+    console.log(newPlan);
     await api.patch(`/plan/update/${id}`, newPlan);
   } catch (error) {
     console.error(error);
@@ -94,10 +94,26 @@ const deleteById = async (id: string): Promise<void | Error> => {
   }
 };
 
+const generatePaymentLink = async (planId: string) => {
+  try {
+    const { data } = await api.post<{ url: string }>('/payment/create', { plan_id: planId });
+
+    if (data.url) {
+      return data.url;
+    }
+
+    return new Error('Erro ao gerar o link de pagamento');
+  } catch (error) {
+    console.error(error);
+    return error as Error;
+  }
+};
+
 export const PlansService = {
   getAll,
   create,
   updateById,
   getById,
   deleteById,
+  generatePaymentLink,
 };

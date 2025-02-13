@@ -2,9 +2,9 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { LOCAL_STORAGE_USER_DATA, login as authLogin, logout as authLogout } from '../services/auth';
 
 interface IUserContextData {
-  user: IUserData | null;
+  user: IUserLogin | null;
   loading: boolean;
-  login: (token: string, userData: IUserData) => void;
+  login: (token: string, userData: IUserLogin) => void;
   logout: () => void;
 }
 
@@ -12,7 +12,7 @@ interface IUserProviderProps {
   children: React.ReactNode;
 }
 
-interface IUserData {
+export interface IUserLogin {
   subject: string;
   name: string;
   role: string;
@@ -25,7 +25,7 @@ export const useUser = () => {
 };
 
 export const UserProvider: React.FC<IUserProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<IUserData | null>(null);
+  const [user, setUser] = useState<IUserLogin | null>(null);
   const [loading, isLoading] = useState(true);
 
   useEffect(() => {
@@ -37,7 +37,7 @@ export const UserProvider: React.FC<IUserProviderProps> = ({ children }) => {
     isLoading(false);
   }, []);
 
-  const handleLogin = (token: string, userData: IUserData) => {
+  const handleLogin = (token: string, userData: IUserLogin) => {
     authLogin({ token, admin: userData });
     setUser(userData);
   };

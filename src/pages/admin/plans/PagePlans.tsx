@@ -34,7 +34,7 @@ export const PagePlans = () => {
   return (
     <LayoutDashboard>
       {/* Listagem de planos */}
-      <div className="grid grid-cols-4 gap-4 font-butler">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 font-butler">
         {plans.map((plan) => (
           <div
             key={plan.id}

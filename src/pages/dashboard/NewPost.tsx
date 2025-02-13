@@ -28,6 +28,8 @@ function NewPost() {
   const image = { preview: '', data: '' };
   const [status, setStatus] = useState('');
 
+  console.log(editorContent);
+
   const handleSubmitImage = async (e: FormEvent) => {
     e.preventDefault();
     let formData = new FormData();
@@ -101,7 +103,6 @@ function NewPost() {
     content: '',
     onUpdate({ editor }) {
       setEditorContent(editor.getHTML());
-      console.log(editorContent);
     },
     editorProps: {
       attributes: {
