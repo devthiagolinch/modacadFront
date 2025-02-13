@@ -45,12 +45,12 @@ export const AppRoutes = () => {
       <Route path="/categorias/:categoryId" element={<PageCategoryPost />} />
 
       <Route path="/pilulas" element={<PublishedPills />} />
-      <Route path="/pilulas/:postId" element={<PostDetails />} />
+      <Route path="/pilulas/:slug" element={<PostDetails />} />
 
       {/* Rotas para postagens */}
       <Route path="/posts" element={<PublishedPosts />} />
       <Route path="/posts/popular" element={<PopularPosts />} />
-      <Route path="/posts/:postId" element={<PostDetails />} />
+      <Route path="/posts/:slug" element={<PostDetails />} />
 
       {/* Rotas Protegidas (Privadas) */}
       <Route path="/dashboard/:type" element={<PrivateRoute element={<Dashboard />} />} />

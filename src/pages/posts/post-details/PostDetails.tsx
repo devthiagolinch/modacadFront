@@ -75,25 +75,25 @@ const PostContent = ({ post, accessLevel }: { post: IPostData; accessLevel: stri
 export const PostDetails = () => {
   window.scrollTo(0, 0);
   const navigate = useNavigate();
-  const { postId } = useParams<{ postId: string }>();
+  const { slug } = useParams<{ slug: string }>();
 
   const [post, setPost] = useState<IPostData>();
 
   const { user } = useUser();
 
   useEffect(() => {
-    if (!postId) {
+    if (!slug) {
       navigate('/');
       return;
     }
-    PostsService.getById(postId).then((response) => {
+    PostsService.getById(slug).then((response) => {
       if (response instanceof Error) {
         console.error(response.message);
         return;
       }
       setPost(response);
     });
-  }, [postId, navigate]);
+  }, [slug, navigate]);
 
   useEffect(() => {
     if (typeof window.instgrm !== 'undefined') {
