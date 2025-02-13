@@ -79,7 +79,15 @@ export const PlanCard: FC<IPlanCardProps> = ({ plan, highlight = false, isFirst 
       <div>
         <button
           onClick={() => handleGeneratePaymentLink(plan.id)}
-          className="px-8 py-4 border border-gray-950 font-montserrat text-lg hover:bg-[#dcdf1e]"
+          disabled={currentPlan} // Desabilita o botão se for o plano atual
+          className={`
+            px-8 py-4 border border-gray-950 font-montserrat text-lg
+            ${
+              currentPlan
+                ? 'cursor-not-allowed opacity-50' // Efeito de desabilitado
+                : 'hover:bg-[#dcdf1e]' // Efeito de hover apenas se não estiver desabilitado
+            }
+          `}
         >
           {currentPlan ? 'Plano atual' : 'Quero este'}
         </button>
