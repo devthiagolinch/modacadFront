@@ -17,6 +17,7 @@ export function Home() {
   const [subjects, setSubjects] = useState<ISubjectData[]>([]);
   const [lastPost, setLastPost] = useState<IPostData>();
   const [posts, setPosts] = useState<IPostData[]>([]);
+  const [mostReadPosts, setMostReadPosts] = useState<IPostData[]>([]);
   const [pilulas, setPilulas] = useState<IPostData[]>([]);
 
   // Busca os dados da API
@@ -42,6 +43,13 @@ export function Home() {
         return;
       }
       setPilulas(response.posts);
+    });
+    PostsService.getMostReadPosts().then((response) => {
+      if (response instanceof Error) {
+        console.error(response.message);
+        return;
+      }
+      setMostReadPosts(response.posts);
     });
   }, []);
 
@@ -122,9 +130,13 @@ export function Home() {
         </MySection>
       )}
       {/* Textos mais lidos */}
-      {posts.length > 0 && (
+      {mostReadPosts.length > 0 && (
         <MySection title="Textos mais lidos" titleLink="/posts/popular" disableInternalPadding invisibleBottomBorder>
-          <SwiperPosts posts={posts} slidesPerView={isSmallScreen ? 1.25 : 2} redirectSeeMore="/posts/popular" />
+          <SwiperPosts
+            posts={mostReadPosts}
+            slidesPerView={isSmallScreen ? 1.25 : 2}
+            redirectSeeMore="/posts/popular"
+          />
         </MySection>
       )}
       {/* Textos publicados */}
