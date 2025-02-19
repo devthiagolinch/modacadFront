@@ -3,12 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
 import { useAuthDialog } from '../../../contexts/AuthDialogContext';
-
-interface ICadastroForm {
-  name: string;
-  email: string;
-  password: string;
-}
+import { AuthService, ICadastroForm } from '../../../../shared/api/auth/AuthService';
 
 const cadastroSchema: yup.ObjectSchema<ICadastroForm> = yup.object({
   name: yup.string().required(),
@@ -28,7 +23,7 @@ export const DialogCadastro = () => {
   });
 
   const onSubmit: SubmitHandler<ICadastroForm> = (data) => {
-    console.log(data);
+    AuthService.cadastro(data);
   };
 
   if (!isOpen) return null;
