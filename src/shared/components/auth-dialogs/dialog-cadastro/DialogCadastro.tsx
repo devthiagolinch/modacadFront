@@ -1,7 +1,8 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import * as yup from 'yup';
+
+import { useAuthDialog } from '../../../contexts/AuthDialogContext';
 
 interface ICadastroForm {
   email: string;
@@ -13,12 +14,9 @@ const cadastroSchema: yup.ObjectSchema<ICadastroForm> = yup.object({
   password: yup.string().required(),
 });
 
-interface IDialogCadastroProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
+export const DialogCadastro = () => {
+  const { isOpen, closeDialog, openDialog } = useAuthDialog();
 
-export const DialogCadastro: React.FC<IDialogCadastroProps> = ({ isOpen, onClose }) => {
   const {
     register,
     handleSubmit,
@@ -34,7 +32,7 @@ export const DialogCadastro: React.FC<IDialogCadastroProps> = ({ isOpen, onClose
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50" onClick={onClose}>
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50" onClick={closeDialog}>
       <div className="bg-white p-6 rounded-2xl shadow-lg w-96" onClick={(e) => e.stopPropagation()}>
         <h2 className="text-xl font-semibold text-center mb-4">Cadastro</h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -60,9 +58,12 @@ export const DialogCadastro: React.FC<IDialogCadastroProps> = ({ isOpen, onClose
             Entrar
           </button>
         </form>
-        <button className="mt-4 w-full text-sm text-gray-500 hover:text-gray-700" onClick={onClose}>
-          Fechar
-        </button>
+        <div className="flex gap-2 items-center justify-center mt-4">
+          <p className="text-sm text-gray-500">Já tem uma conta?</p>
+          <button className="text-sm text-blue-600 hover:text-blue-800" onClick={() => openDialog('login')}>
+            Fazer login
+          </button>
+        </div>
       </div>
     </div>
   );

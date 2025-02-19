@@ -4,7 +4,7 @@ import { UserProvider } from './shared/contexts';
 import { ToastContainer } from 'react-toastify';
 import { AppRoutes } from './routes/index';
 import { AuthDialogProvider } from './shared/contexts/AuthDialogContext';
-import { DialogLogin } from './shared/components/dialog-login/DialogLogin';
+import { AuthDialogs } from './shared/components/auth-dialogs/AuthDialogs';
 
 import './index.css';
 
@@ -16,7 +16,7 @@ function App() {
           <ToastContainer />
           <AppRoutes />
         </BrowserRouter>
-        <DialogLogin />
+        <AuthDialogs />
       </AuthDialogProvider>
     </UserProvider>
   );

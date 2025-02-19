@@ -2,9 +2,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
-import { useAuthDialog } from '../../../shared/contexts/AuthDialogContext';
-import { AuthService } from '../../../shared/api/auth/AuthService';
-import { useUser } from '../../../shared/contexts';
+import { useAuthDialog } from '../../../contexts/AuthDialogContext';
+import { AuthService } from '../../../api/auth/AuthService';
+import { useUser } from '../../../contexts';
 import { useEffect } from 'react';
 
 interface ILoginForm {
@@ -23,7 +23,7 @@ const initialFormValues: ILoginForm = {
 };
 
 export const DialogLogin = () => {
-  const { isOpen, closeDialog } = useAuthDialog();
+  const { isOpen, closeDialog, openDialog } = useAuthDialog();
 
   const {
     register,
@@ -85,7 +85,9 @@ export const DialogLogin = () => {
         </form>
         <div className="flex gap-2 items-center justify-center mt-4">
           <p className="text-sm text-gray-500">Não tem conta?</p>
-          <button className="text-sm text-blue-600 hover:text-blue-800">Criar uma conta</button>
+          <button className="text-sm text-blue-600 hover:text-blue-800" onClick={() => openDialog('cadastro')}>
+            Criar uma conta
+          </button>
         </div>
       </div>
     </div>

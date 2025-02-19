@@ -67,7 +67,7 @@ export const DrawerLateral: FC<IDrawerLateralProps> = ({ isOpen, toggleDrawer })
         ) : (
           <div className="border border-gray-950 p-4">
             <p className="text-gray-950 font-light">Faça login para aproveitar ao máximo nosso site.</p>
-            <button className="bg-primary px-4 py-2 border border-gray-950 mt-2" onClick={openDialog}>
+            <button className="bg-primary px-4 py-2 border border-gray-950 mt-2" onClick={() => openDialog('login')}>
               ENTRAR
             </button>
           </div>

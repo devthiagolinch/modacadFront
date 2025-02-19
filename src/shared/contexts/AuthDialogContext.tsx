@@ -1,8 +1,11 @@
 import { createContext, useContext, useState } from 'react';
 
+type TType = 'login' | 'cadastro';
+
 interface IAuthDialogContextType {
   isOpen: boolean;
-  openDialog: () => void;
+  type: 'login' | 'cadastro';
+  openDialog: (type: TType) => void;
   closeDialog: () => void;
 }
 
@@ -14,12 +17,21 @@ interface IAuthDialogProviderProps {
 
 export const AuthDialogProvider: React.FC<IAuthDialogProviderProps> = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [type, setType] = useState<TType>('login');
 
-  const openDialog = () => setIsOpen(true);
-  const closeDialog = () => setIsOpen(false);
+  const openDialog = (dialogType: TType) => {
+    setType(dialogType);
+    setIsOpen(true);
+  };
+
+  const closeDialog = () => {
+    setIsOpen(false);
+  };
 
   return (
-    <AuthDialogContext.Provider value={{ isOpen, openDialog, closeDialog }}>{children}</AuthDialogContext.Provider>
+    <AuthDialogContext.Provider value={{ isOpen, type, openDialog, closeDialog }}>
+      {children}
+    </AuthDialogContext.Provider>
   );
 };
 
