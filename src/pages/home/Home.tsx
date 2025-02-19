@@ -149,7 +149,7 @@ export function Home() {
       <MySection title="QUEM É TELMA BARCELLOS?" invisibleBottomBorder disableInternalPadding featuredTitle>
         <div className="grid grid-cols-12 gap-4">
           <div className="col-span-12 lg:col-span-4">
-            <img src={imagemTelma} alt="" className="aspect-square object-cover" />
+            <img src={imagemTelma} alt="" className="aspect-square h-full object-cover" />
           </div>
           <div className="col-span-12 lg:col-span-8 flex justify-center flex-col gap-4 font-montserrat font-light text-1xl p-2 md:p-8">
             <h3 className="font-butler text-4xl">Quem é Telma Barcellos?</h3>
