@@ -28,9 +28,9 @@ export interface ICadastroForm {
   password: string;
 }
 
-const cadastro = async ({ name, email, password }: ICadastroForm) => {
+const cadastro = async ({ name, email, password }: ICadastroForm): Promise<void | Error> => {
   try {
-    console.log({ name, email, password });
+    await api.post('/admins', { name, email, password });
   } catch (error) {
     console.error(error);
     return new Error('Erro ao fazer login');

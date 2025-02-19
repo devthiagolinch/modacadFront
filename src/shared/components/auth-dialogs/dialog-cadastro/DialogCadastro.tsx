@@ -2,8 +2,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
-import { useAuthDialog } from '../../../contexts/AuthDialogContext';
 import { AuthService, ICadastroForm } from '../../../../shared/api/auth/AuthService';
+import { useAuthDialog } from '../../../contexts/AuthDialogContext';
+import { useUser } from '../../../../shared/contexts';
 
 const cadastroSchema: yup.ObjectSchema<ICadastroForm> = yup.object({
   name: yup.string().required(),
@@ -11,19 +12,47 @@ const cadastroSchema: yup.ObjectSchema<ICadastroForm> = yup.object({
   password: yup.string().required(),
 });
 
+const initialFormValues: ICadastroForm = {
+  name: '',
+  email: '',
+  password: '',
+};
+
 export const DialogCadastro = () => {
   const { isOpen, closeDialog, openDialog } = useAuthDialog();
+  const { login } = useUser();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<ICadastroForm>({
     resolver: yupResolver(cadastroSchema),
   });
 
-  const onSubmit: SubmitHandler<ICadastroForm> = (data) => {
-    AuthService.cadastro(data);
+  const onSubmit: SubmitHandler<ICadastroForm> = async (data) => {
+    try {
+      const cadastroResponse = await AuthService.cadastro(data);
+
+      if (cadastroResponse instanceof Error) {
+        console.error(cadastroResponse);
+        return;
+      }
+
+      const loginResponse = await AuthService.login(data.email, data.password);
+
+      if (loginResponse instanceof Error) {
+        console.error(loginResponse);
+        return;
+      }
+
+      login(loginResponse.token, loginResponse.admin);
+      reset(initialFormValues);
+      closeDialog();
+    } catch (error) {
+      console.error('Erro inesperado', error);
+    }
   };
 
   if (!isOpen) return null;
