@@ -20,9 +20,9 @@ export const MySection: FC<IMySectionProps> = ({
   featuredSection,
 }) => {
   const renderTitle = (title: string) => (
-    <h3 className="transform -rotate-90 text-2xl text-nowrap font-light text-gray-700 text-center">
-      {title.toUpperCase()}
-    </h3>
+    <div className="flex items-center justify-center h-full">
+      <h3 className="-rotate-90 text-2xl text-nowrap font-light text-gray-700">{title.toUpperCase()}</h3>
+    </div>
   );
 
   return (
