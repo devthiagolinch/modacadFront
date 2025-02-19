@@ -1,65 +1,42 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from 'react-hook-form';
+import React from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
-import { useAuthDialog } from '../../../shared/contexts/AuthDialogContext';
-import { AuthService } from '../../../shared/api/auth/AuthService';
-import { useUser } from '../../../shared/contexts';
-import { useEffect } from 'react';
-
-interface ILoginForm {
+interface ICadastroForm {
   email: string;
   password: string;
 }
 
-const loginSchema: yup.ObjectSchema<ILoginForm> = yup.object({
+const cadastroSchema: yup.ObjectSchema<ICadastroForm> = yup.object({
   email: yup.string().email().required(),
   password: yup.string().required(),
 });
 
-const initialFormValues: ILoginForm = {
-  email: '',
-  password: '',
-};
+interface IDialogCadastroProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
 
-export const DialogLogin = () => {
-  const { isOpen, closeDialog } = useAuthDialog();
-
+export const DialogCadastro: React.FC<IDialogCadastroProps> = ({ isOpen, onClose }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
-  } = useForm<ILoginForm>({
-    resolver: yupResolver(loginSchema),
+  } = useForm<ICadastroForm>({
+    resolver: yupResolver(cadastroSchema),
   });
 
-  const { login } = useUser();
-
-  const onSubmit = (data: ILoginForm) => {
-    AuthService.login(data.email, data.password).then((response) => {
-      if (response instanceof Error) {
-        console.error(response);
-        return;
-      }
-      login(response.token, response.admin);
-      reset(initialFormValues);
-      closeDialog();
-    });
+  const onSubmit: SubmitHandler<ICadastroForm> = (data) => {
+    console.log(data);
   };
-
-  useEffect(() => {
-    if (isOpen) {
-      reset(initialFormValues);
-    }
-  }, [isOpen, reset]);
 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50" onClick={closeDialog}>
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50" onClick={onClose}>
       <div className="bg-white p-6 rounded-2xl shadow-lg w-96" onClick={(e) => e.stopPropagation()}>
-        <h2 className="text-xl font-semibold text-center mb-4">Login</h2>
+        <h2 className="text-xl font-semibold text-center mb-4">Cadastro</h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
             <label className="block text-sm font-medium">Email</label>
@@ -83,10 +60,9 @@ export const DialogLogin = () => {
             Entrar
           </button>
         </form>
-        <div className="flex gap-2 items-center justify-center mt-4">
-          <p className="text-sm text-gray-500">Não tem conta?</p>
-          <button className="text-sm text-blue-600 hover:text-blue-800">Criar uma conta</button>
-        </div>
+        <button className="mt-4 w-full text-sm text-gray-500 hover:text-gray-700" onClick={onClose}>
+          Fechar
+        </button>
       </div>
     </div>
   );
