@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
-
-import { Footer } from '../../shared/components/footer';
-import { CTAPlans } from '../../shared/components/cta/CTAPlans';
+import { Link } from 'react-router-dom';
 
 import { ISubjectData, SubjectsService } from '../../shared/api/subjects/SubjectsService';
+import { PublicHeader } from '../../shared/components/header/public-header/PublicHeader';
+import { SwiperPosts } from '../../shared/components/posts/view-formats/PostSwiper';
+import { FeaturedPost } from '../../shared/components/posts/featured/FeaturedPost';
+import { IPostData, PostsService } from '../../shared/api/posts/PostsService';
+import { MySection } from '../../shared/components/ui/my-section/MySection';
+import { CTAPlans } from '../../shared/components/cta/CTAPlans';
+import { Footer } from '../../shared/components/footer';
 
 import banner from '../../assets/imgs/Banner-home.jpg';
-import { PublicHeader } from '../../shared/components/header/public-header/PublicHeader';
-import { Link } from 'react-router-dom';
-import { IPostData, PostsService } from '../../shared/api/posts/PostsService';
-import { FeaturedPost } from '../../shared/components/posts/featured/FeaturedPost';
-import { SwiperPosts } from '../../shared/components/posts/view-formats/PostSwiper';
-import { MySection } from '../../shared/components/ui/my-section/MySection';
+import imagemTelma from '../../assets/imgs/model.jpg';
 
 export function Home() {
   const [subjects, setSubjects] = useState<ISubjectData[]>([]);
@@ -154,7 +154,33 @@ export function Home() {
         </MySection>
       )}
       {/* Sobre a Telma */}
-      <div id="contact"></div>
+      <MySection title="QUEM É TELMA BARCELLOS?" invisibleBottomBorder disableInternalPadding featuredTitle>
+        <div className="grid grid-cols-12 gap-4">
+          <div className="col-span-4">
+            <img src={imagemTelma} alt="" className="aspect-square object-cover" />
+          </div>
+          <div className="col-span-8 flex justify-center flex-col gap-4 font-montserrat font-light text-1xl">
+            <h3 className="font-butler text-4xl">Quem é Telma Barcellos?</h3>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vitae varius velit. Integer risus ligula,
+              varius at varius lobortis, vestibulum ac eros. In justo tellus, mollis ac quam eget, ornare laoreet elit.
+              Suspendisse potenti. Aenean augue lectus, fringilla sed scelerisque nec, elementum at nisi. Ut porttitor
+              fringilla turpis a elementum. Sed consequat sapien et augue posuere, vestibulum interdum velit venenatis.
+              Vivamus id mauris euismod, iaculis felis vitae, imperdiet neque.
+            </p>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vitae varius velit. Integer risus ligula,
+              varius at varius lobortis, vestibulum ac eros. In justo tellus, mollis ac quam eget, ornare laoreet elit.
+              Suspendisse potenti. Aenean augue lectus, fringilla sed scelerisque nec, elementum at nisi. Ut porttitor
+              fringilla turpis a elementum. Sed consequat sapien et augue posuere, vestibulum interdum velit venenatis.
+              Vivamus id mauris euismod, iaculis felis vitae, imperdiet neque.
+            </p>
+            <div>
+              <button className="border border-gray-950 px-4 py-2 font-medium highlight-link">Saber mais</button>
+            </div>
+          </div>
+        </div>
+      </MySection>
       {/* Rodapé */}
       <Footer />
     </div>

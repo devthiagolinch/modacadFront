@@ -41,7 +41,7 @@ export const MySection: FC<IMySectionProps> = ({
         </div>
       ) : null}
       <div
-        className={title ? 'col-span-10 md:col-span-11' : 'col-span-12' + (!disableInternalPadding ? ' px-4 py-8' : '')}
+        className={`${title ? 'col-span-10 md:col-span-11' : 'col-span-12'} ${!disableInternalPadding ? 'px-4 py-8' : ''}`}
       >
         {children}
       </div>
