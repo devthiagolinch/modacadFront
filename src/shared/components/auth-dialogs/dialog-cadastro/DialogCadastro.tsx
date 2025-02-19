@@ -5,11 +5,13 @@ import * as yup from 'yup';
 import { useAuthDialog } from '../../../contexts/AuthDialogContext';
 
 interface ICadastroForm {
+  name: string;
   email: string;
   password: string;
 }
 
 const cadastroSchema: yup.ObjectSchema<ICadastroForm> = yup.object({
+  name: yup.string().required(),
   email: yup.string().email().required(),
   password: yup.string().required(),
 });
@@ -36,6 +38,15 @@ export const DialogCadastro = () => {
       <div className="bg-white p-6 rounded-2xl shadow-lg w-96" onClick={(e) => e.stopPropagation()}>
         <h2 className="text-xl font-semibold text-center mb-4">Cadastro</h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium">Nome</label>
+            <input
+              {...register('name')}
+              type="text"
+              className="w-full p-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-400"
+            />
+            {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
+          </div>
           <div>
             <label className="block text-sm font-medium">Email</label>
             <input
