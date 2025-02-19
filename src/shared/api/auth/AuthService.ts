@@ -22,6 +22,22 @@ const login = async (email: string, password: string) => {
   }
 };
 
+export interface ICadastroForm {
+  name: string;
+  email: string;
+  password: string;
+}
+
+const cadastro = async ({ name, email, password }: ICadastroForm) => {
+  try {
+    console.log({ name, email, password });
+  } catch (error) {
+    console.error(error);
+    return new Error('Erro ao fazer login');
+  }
+};
+
 export const AuthService = {
   login,
+  cadastro,
 };
