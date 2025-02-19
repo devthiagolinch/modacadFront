@@ -25,7 +25,7 @@ export const PlanCard: FC<IPlanCardProps> = ({ plan, highlight = false, isFirst 
   const handleGeneratePaymentLink = async (planId: string) => {
     if (!user) {
       setStoredPlanId(planId);
-      openDialog();
+      openDialog('login');
       return;
     }
 
