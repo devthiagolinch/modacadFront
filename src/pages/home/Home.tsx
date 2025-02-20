@@ -13,7 +13,7 @@ import { useScreenSize } from '../../shared/hook/useScreenSize';
 
 import bannerDesktop from '../../assets/imgs/hero/telma-foto-topo-3-corte.jpg';
 import bannerMobile from '../../assets/imgs/hero/mobile-telma-foto-topo.jpg';
-import imagemTelma from '../../assets/imgs/model.jpg';
+import imagemTelma from '../../assets/imgs/sobre-telma/telma-foto-quem-1.png';
 
 export function Home() {
   const { isSmallScreen, isTablet } = useScreenSize();
