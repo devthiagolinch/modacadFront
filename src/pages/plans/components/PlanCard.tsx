@@ -59,10 +59,10 @@ export const PlanCard: FC<IPlanCardProps> = ({ plan, highlight = false, isFirst 
         41% de desconto
       </div>
       <div className="flex items-center leading-none items-center mt-4">
-        <span className="text-5xl font-butler self-start mt-3 font-light mr-2">R$</span>
-        <p className="font-butler text-9xl">{priceParts.integerPart}</p>
-        <span className="text-4xl font-butler self-start mt-3 font-light">{priceParts.decimalPart}</span>
-        <span className="text-5xl font-butler self-end mb-3 font-light">/mês</span>
+        <span className="text-4xl font-butler self-start mt-3 font-light mr-2">R$</span>
+        <p className="font-butler text-8xl">{priceParts.integerPart}</p>
+        <span className="text-3xl font-butler self-start mt-3 font-light">{priceParts.decimalPart}</span>
+        <span className="text-4xl font-butler self-end mb-3 font-light">/mês</span>
       </div>
       <p className="font-butler font-medium text-3xl mt-4">{plan.description}</p>
       <hr className="my-8 h-1 border-t border-gray-950 w-full" />
