@@ -99,7 +99,7 @@ export const PostInfo: FC<IPostInfoProps> = ({ post }) => {
         </div>
       </div>
       <div
-        className="mt-2 container max-w-[800px] mx-auto px-4 flex justify-center flex-wrap"
+        className="mt-2 container max-w-[800px] mx-auto px-4 flex justify-center flex-wrap text-sm md:text-base text-center"
         dangerouslySetInnerHTML={{ __html: feature_image_caption ?? '' }}
       />
       <div className="container mx-auto max-w-[800px] px-4 block lg:hidden">{renderAuthors()}</div>
