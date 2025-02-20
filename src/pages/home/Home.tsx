@@ -1,20 +1,19 @@
 import { useEffect, useState } from 'react';
-
-import { Footer } from '../../shared/components/footer';
-import { CTAPlans } from '../../shared/components/cta/CTAPlans';
+import { Link } from 'react-router-dom';
 
 import { ISubjectData, SubjectsService } from '../../shared/api/subjects/SubjectsService';
-
 import { PublicHeader } from '../../shared/components/header/public-header/PublicHeader';
-import { Link } from 'react-router-dom';
-import { IPostData, PostsService } from '../../shared/api/posts/PostsService';
-import { FeaturedPost } from '../../shared/components/posts/featured/FeaturedPost';
 import { SwiperPosts } from '../../shared/components/posts/view-formats/PostSwiper';
+import { FeaturedPost } from '../../shared/components/posts/featured/FeaturedPost';
+import { IPostData, PostsService } from '../../shared/api/posts/PostsService';
 import { MySection } from '../../shared/components/ui/my-section/MySection';
+import { CTAPlans } from '../../shared/components/cta/CTAPlans';
+import { Footer } from '../../shared/components/footer';
 import { useScreenSize } from '../../shared/hook/useScreenSize';
 
 import bannerDesktop from '../../assets/imgs/hero/telma-foto-topo-3-corte.jpg';
 import bannerMobile from '../../assets/imgs/hero/mobile-telma-foto-topo.jpg';
+import imagemTelma from '../../assets/imgs/sobre-telma/telma-foto-quem-1.png';
 
 export function Home() {
   const { isSmallScreen, isTablet } = useScreenSize();
@@ -147,7 +146,25 @@ export function Home() {
         </MySection>
       )}
       {/* Sobre a Telma */}
-      <div id="contact"></div>
+      <MySection title="QUEM É TELMA BARCELLOS?" invisibleBottomBorder disableInternalPadding featuredTitle>
+        <div className="grid grid-cols-12 gap-0 lg:gap-4">
+          <div className="col-span-12 lg:col-span-5">
+            <img src={imagemTelma} alt="" className="h-full w-full object-cover" />
+          </div>
+          <div className="col-span-12 lg:col-span-7 flex justify-center flex-col gap-4 font-montserrat font-light text-1xl px-4 py-8 md:p-8">
+            <p className="text-base md:text-2xl/[2.5rem] mb-4">
+              Telma acredita no poder transformador da moda para gerar oportunidades e crescimento sustentável. Seu
+              trabalho potencializa a produtividade e o sucesso nas vendas de negócios de moda de todos os portes,
+              tornando o acesso à qualificação mais democrático. Além disso, busca fortalecer a identidade cultural
+              brasileira na moda, promovendo a valorização das raízes e consolidando a representatividade do país no
+              cenário global.
+            </p>
+            <div>
+              <button className="border border-gray-950 px-4 py-4 font-medium highlight-link">Saber mais</button>
+            </div>
+          </div>
+        </div>
+      </MySection>
       {/* Rodapé */}
       <Footer />
     </div>
