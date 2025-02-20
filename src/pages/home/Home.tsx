@@ -5,13 +5,14 @@ import { CTAPlans } from '../../shared/components/cta/CTAPlans';
 
 import { ISubjectData, SubjectsService } from '../../shared/api/subjects/SubjectsService';
 
-import banner from '../../assets/imgs/Banner-home.jpg';
 import { PublicHeader } from '../../shared/components/header/public-header/PublicHeader';
 import { Link } from 'react-router-dom';
 import { IPostData, PostsService } from '../../shared/api/posts/PostsService';
 import { FeaturedPost } from '../../shared/components/posts/featured/FeaturedPost';
 import { SwiperPosts } from '../../shared/components/posts/view-formats/PostSwiper';
 import { MySection } from '../../shared/components/ui/my-section/MySection';
+
+import banner from '../../assets/imgs/hero/telma-foto-topo-3-corte.jpg';
 
 export function Home() {
   const [subjects, setSubjects] = useState<ISubjectData[]>([]);
@@ -72,15 +73,15 @@ export function Home() {
       {/* Banner da página inicial */}
       <div
         style={{ backgroundImage: `url(${banner})` }}
-        className="relative py-10 lg:py-4 bg-center bg-cover md:min-h-[60vh] lg:min-h-[80vh] lg:h-[85vh] flex items-center "
+        className="relative py-10 lg:py-4 bg-center bg-contain bg-right-bottom bg-no-repeat md:min-h-[60vh] lg:min-h-[80vh] lg:h-[85vh] flex items-center z-[-1]"
       >
         {/* Hashtag Vertical Esquerda */}
-        <div className="absolute top-1/2 left-0 -translate-y-1/2 -rotate-90 text-2xl font-light text-gray-600 hidden md:block">
+        <div className="absolute top-1/2 left-0 -translate-y-1/2 font-montserrat -rotate-90 text-lg text-gray-600 hidden md:block">
           #BLOGMODACAD
         </div>
 
         {/* Hashtag Vertical Direita */}
-        <div className="absolute top-1/2 right-0 -translate-y-1/2 -rotate-90 text-2xl font-light text-gray-600 hidden md:block">
+        <div className="absolute top-1/2 right-0 -translate-y-1/2 -rotate-90 text-lg font-montserrat text-gray-600 hidden md:block">
           #BLOGMODACAD
         </div>
         <div className="container px-4 ml-auto md:ml-[150px] mr-auto md:mr-[150px] font-montserrat font-light text-1xl md:text-2xl">
@@ -94,7 +95,7 @@ export function Home() {
               moldesModacad para agilizar a produção da indústria de confecção e beneficiar as vendas. Descubra como
               transformar sua confecção com praticidade e eficiência.
             </p>
-            <p className="hidden md:hidden lg:flex">
+            <p className="hidden lg:flex">
               Trabalhamos para o sucesso de negócios de moda, multiplicando os benefícios da produtividade eficiente e
               do sucesso de mercado para estes negócios e para a sociedade à nossa volta.
             </p>
