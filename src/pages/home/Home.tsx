@@ -11,10 +11,14 @@ import { IPostData, PostsService } from '../../shared/api/posts/PostsService';
 import { FeaturedPost } from '../../shared/components/posts/featured/FeaturedPost';
 import { SwiperPosts } from '../../shared/components/posts/view-formats/PostSwiper';
 import { MySection } from '../../shared/components/ui/my-section/MySection';
+import { useScreenSize } from '../../shared/hook/useScreenSize';
 
-import banner from '../../assets/imgs/hero/telma-foto-topo-3-corte.jpg';
+import bannerDesktop from '../../assets/imgs/hero/telma-foto-topo-3-corte.jpg';
+import bannerMobile from '../../assets/imgs/hero/mobile-telma-foto-topo.jpg';
 
 export function Home() {
+  const { isSmallScreen, isTablet } = useScreenSize();
+
   const [subjects, setSubjects] = useState<ISubjectData[]>([]);
   const [lastPost, setLastPost] = useState<IPostData>();
   const [posts, setPosts] = useState<IPostData[]>([]);
@@ -54,25 +58,12 @@ export function Home() {
     });
   }, []);
 
-  const [isSmallScreen, setIsSmallScreen] = useState(false);
-
-  // Hook para verificar o tamanho da tela
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(max-width: 767px)');
-    const handler = () => setIsSmallScreen(mediaQuery.matches);
-
-    mediaQuery.addEventListener('change', handler);
-    handler();
-
-    return () => mediaQuery.removeEventListener('change', handler);
-  }, []);
-
   return (
     <div className="mx-auto h-screen relative">
       <PublicHeader />
       {/* Banner da página inicial */}
       <div
-        style={{ backgroundImage: `url(${banner})` }}
+        style={{ backgroundImage: `url(${isTablet ? bannerMobile : bannerDesktop})` }}
         className="relative py-10 lg:py-4 bg-center bg-contain bg-right-bottom bg-no-repeat md:min-h-[60vh] lg:min-h-[80vh] lg:h-[85vh] flex items-center z-[-1]"
       >
         {/* Hashtag Vertical Esquerda */}
