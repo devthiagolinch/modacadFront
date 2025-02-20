@@ -24,13 +24,13 @@ export const PostCard: FC<IPostCardProps> = ({ post }) => {
         <div className="p-4">
           <ul>
             {post.subjects.slice(0, 3).map((subject) => (
-              <li className="font-light md:text-xl" key={subject.id}>
+              <li className="font-light md:text-lg" key={subject.id}>
                 {subject.name}
               </li>
             ))}
           </ul>
-          <h1 className="font-butler text-3xl md:text-5xl my-3 line-clamp-2">{post.title}</h1>
-          <p className="font-light text-xl md:text-2xl line-clamp-3">{post.description}</p>
+          <h1 className="font-butler text-3xl my-3">{post.title}</h1>
+          <p className="font-light text-lg line-clamp-4">{post.description}</p>
         </div>
       </div>
     </Link>
