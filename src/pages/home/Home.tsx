@@ -64,32 +64,33 @@ export function Home() {
       {/* Banner da página inicial */}
       <div
         style={{ backgroundImage: `url(${isTablet ? bannerMobile : bannerDesktop})` }}
-        className="relative py-10 lg:py-4 bg-center bg-contain bg-right-bottom bg-no-repeat md:min-h-[60vh] lg:min-h-[80vh] lg:h-[85vh] flex items-center z-[-1]"
+        className="relative py-8 bg-contain bg-right-bottom bg-no-repeat z-[-1] min-h-[80vh] flex items-center"
       >
-        {/* Hashtag Vertical Esquerda */}
-        <div className="absolute top-1/2 left-0 -translate-y-1/2 font-montserrat -rotate-90 text-lg text-gray-600 hidden md:block">
-          #BLOGMODACAD
-        </div>
-
-        {/* Hashtag Vertical Direita */}
-        <div className="absolute top-1/2 right-0 -translate-y-1/2 -rotate-90 text-lg font-montserrat text-gray-600 hidden md:block">
-          #BLOGMODACAD
-        </div>
-        <div className="container px-4 ml-auto md:ml-[150px] mr-auto md:mr-[150px] font-montserrat font-light text-1xl md:text-2xl">
-          <div className="max-w-[70%] lg:max-w-[65%] md:text-justify">
-            <h1 className="font-butler font-regular text-5xl md:text-8xl mb-8">blogModacad</h1>
-            <p className="mb-2">
-              Textos e pílulas para confecção de moda sobre tendências, tecnologia têxtil, sustentabilidade, história da
-              moda e muito mais.
-            </p>
-            <p className="mb-2">
-              moldesModacad para agilizar a produção da indústria de confecção e beneficiar as vendas. Descubra como
-              transformar sua confecção com praticidade e eficiência.
-            </p>
-            <p className="hidden lg:flex">
-              Trabalhamos para o sucesso de negócios de moda, multiplicando os benefícios da produtividade eficiente e
-              do sucesso de mercado para estes negócios e para a sociedade à nossa volta.
-            </p>
+        <div className="grid grid-cols-12">
+          <div className="relative col-span-2 md:col-span-1 flex items-center justify-center hidden md:flex">
+            <div className="-rotate-90 font-montserrat text-lg text-gray-600">#BLOGMODACAD</div>
+          </div>
+          <div className="relative col-span-12 md:col-span-10">
+            <div className="max-w-[70%] px-8 md:px-4">
+              <h1 className="font-butler font-regular text-4xl md:text-8xl mb-8">blogModacad</h1>
+              <div className="font-montserrat font-light text-base md:text-2xl text-gray-800">
+                <p className="mb-2">
+                  Textos e pílulas para confecção de moda sobre tendências, tecnologia têxtil, sustentabilidade,
+                  história da moda e muito mais.
+                </p>
+                <p className="mb-2">
+                  moldesModacad para agilizar a produção da indústria de confecção e beneficiar as vendas. Descubra como
+                  transformar sua confecção com praticidade e eficiência.
+                </p>
+                <p className="hidden lg:flex">
+                  Trabalhamos para o sucesso de negócios de moda, multiplicando os benefícios da produtividade eficiente
+                  e do sucesso de mercado para estes negócios e para a sociedade à nossa volta.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="relative col-span-2 md:col-span-1 flex items-center justify-center hidden md:flex">
+            <div className="-rotate-90 text-lg font-montserrat text-gray-600">#BLOGMODACAD</div>
           </div>
         </div>
       </div>
