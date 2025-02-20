@@ -89,8 +89,8 @@ export const PostInfo: FC<IPostInfoProps> = ({ post }) => {
           <div className="hidden lg:block">{renderAuthors()}</div>
         </div>
       </div>
-      <div className="px-0 lg:px-4">
-        <div className="container mx-auto max-w-[800px] relative before:absolute before:inset-4 before:border before:border-[#f1ece8] before:content-['']">
+      <div className="px-4 container mx-auto max-w-[800px]">
+        <div className="relative before:absolute before:inset-4 before:border before:border-[#f1ece8] before:content-['']">
           <img
             src={post.feature_image ?? ''}
             alt=""
