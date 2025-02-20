@@ -89,16 +89,17 @@ export const PostInfo: FC<IPostInfoProps> = ({ post }) => {
           <div className="hidden lg:block">{renderAuthors()}</div>
         </div>
       </div>
-      <div className="container mx-auto max-w-[800px] relative lg:px-4">
-        <div className="absolute inset-8 border border-[#f1ece8]"></div>
-        <img
-          src={post.feature_image ?? ''}
-          alt=""
-          className={`w-full object-cover ${post.type === 'pilula' ? 'aspect-square' : 'aspect-video'}`}
-        />
+      <div className="px-4 container mx-auto max-w-[800px]">
+        <div className="relative before:absolute before:inset-4 before:border before:border-[#f1ece8] before:content-['']">
+          <img
+            src={post.feature_image ?? ''}
+            alt=""
+            className={`w-full object-cover ${post.type === 'pilula' ? 'aspect-square' : 'aspect-video'}`}
+          />
+        </div>
       </div>
       <div
-        className="mt-2 container max-w-[800px] mx-auto px-4 flex justify-center flex-wrap"
+        className="mt-2 container max-w-[800px] mx-auto px-4 flex justify-center flex-wrap text-sm md:text-base text-center"
         dangerouslySetInnerHTML={{ __html: feature_image_caption ?? '' }}
       />
       <div className="container mx-auto max-w-[800px] px-4 block lg:hidden">{renderAuthors()}</div>

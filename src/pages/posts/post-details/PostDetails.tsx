@@ -44,7 +44,7 @@ const PostContent = ({ post, accessLevel }: { post: IPostData; accessLevel: stri
     return (
       <div>
         <p
-          className="text-justify text-lg font-montserrat prose tiptap line-clamp-[16] mb-2"
+          className="text-justify text-lg font-montserrat font-light prose tiptap mb-2"
           dangerouslySetInnerHTML={{ __html: post.content ?? '' }}
         />
         <LoginPrompt />
@@ -56,7 +56,7 @@ const PostContent = ({ post, accessLevel }: { post: IPostData; accessLevel: stri
     return (
       <div>
         <p
-          className="text-justify text-lg font-montserrat prose tiptap line-clamp-[16] mb-2"
+          className="text-justify text-lg font-montserrat font-light prose tiptap line-clamp-[16] mb-2"
           dangerouslySetInnerHTML={{ __html: post.content ?? '' }}
         />
         <UpgradePrompt />
@@ -66,7 +66,7 @@ const PostContent = ({ post, accessLevel }: { post: IPostData; accessLevel: stri
 
   return (
     <p
-      className="text-justify text-lg font-montserrat prose tiptap"
+      className="text-justify text-lg font-montserrat font-light prose tiptap"
       dangerouslySetInnerHTML={{ __html: post.content ?? '' }}
     />
   );
