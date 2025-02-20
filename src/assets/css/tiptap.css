@@ -10,8 +10,8 @@ is-editor-empty {
 }
 
 .tiptap {
-  font-size: 20px;
-  line-height: 2rem;
+  font-size: 16px;
+  line-height: 1.7rem;
   max-width: 100% !important;
 
   h1,
@@ -81,7 +81,7 @@ is-editor-empty {
     font-size: 1.2em;
     padding-left: 1.75em;
     padding-right: 1.75em;
-  } 
+  }
 }
 
 .tiptap blockquote {

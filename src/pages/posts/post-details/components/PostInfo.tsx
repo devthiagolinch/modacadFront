@@ -89,13 +89,14 @@ export const PostInfo: FC<IPostInfoProps> = ({ post }) => {
           <div className="hidden lg:block">{renderAuthors()}</div>
         </div>
       </div>
-      <div className="container mx-auto max-w-[800px] relative lg:px-4">
-        <div className="absolute inset-8 border border-[#f1ece8]"></div>
-        <img
-          src={post.feature_image ?? ''}
-          alt=""
-          className={`w-full object-cover ${post.type === 'pilula' ? 'aspect-square' : 'aspect-video'}`}
-        />
+      <div className="px-0 lg:px-4">
+        <div className="container mx-auto max-w-[800px] relative before:absolute before:inset-4 before:border before:border-[#f1ece8] before:content-['']">
+          <img
+            src={post.feature_image ?? ''}
+            alt=""
+            className={`w-full object-cover ${post.type === 'pilula' ? 'aspect-square' : 'aspect-video'}`}
+          />
+        </div>
       </div>
       <div
         className="mt-2 container max-w-[800px] mx-auto px-4 flex justify-center flex-wrap"
