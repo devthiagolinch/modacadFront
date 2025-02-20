@@ -147,28 +147,20 @@ export function Home() {
       )}
       {/* Sobre a Telma */}
       <MySection title="QUEM É TELMA BARCELLOS?" invisibleBottomBorder disableInternalPadding featuredTitle>
-        <div className="grid grid-cols-12 gap-4">
-          <div className="col-span-12 lg:col-span-4">
-            <img src={imagemTelma} alt="" className="aspect-square h-full object-cover" />
+        <div className="grid grid-cols-12 gap-0 lg:gap-4">
+          <div className="col-span-12 lg:col-span-5">
+            <img src={imagemTelma} alt="" className="h-full w-full object-cover" />
           </div>
-          <div className="col-span-12 lg:col-span-8 flex justify-center flex-col gap-4 font-montserrat font-light text-1xl p-2 md:p-8">
-            <h3 className="font-butler text-4xl">Quem é Telma Barcellos?</h3>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vitae varius velit. Integer risus ligula,
-              varius at varius lobortis, vestibulum ac eros. In justo tellus, mollis ac quam eget, ornare laoreet elit.
-              Suspendisse potenti. Aenean augue lectus, fringilla sed scelerisque nec, elementum at nisi. Ut porttitor
-              fringilla turpis a elementum. Sed consequat sapien et augue posuere, vestibulum interdum velit venenatis.
-              Vivamus id mauris euismod, iaculis felis vitae, imperdiet neque.
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vitae varius velit. Integer risus ligula,
-              varius at varius lobortis, vestibulum ac eros. In justo tellus, mollis ac quam eget, ornare laoreet elit.
-              Suspendisse potenti. Aenean augue lectus, fringilla sed scelerisque nec, elementum at nisi. Ut porttitor
-              fringilla turpis a elementum. Sed consequat sapien et augue posuere, vestibulum interdum velit venenatis.
-              Vivamus id mauris euismod, iaculis felis vitae, imperdiet neque.
+          <div className="col-span-12 lg:col-span-7 flex justify-center flex-col gap-4 font-montserrat font-light text-1xl px-4 py-8 md:p-8">
+            <p className="text-base md:text-2xl/[2.5rem] mb-4">
+              Telma acredita no poder transformador da moda para gerar oportunidades e crescimento sustentável. Seu
+              trabalho potencializa a produtividade e o sucesso nas vendas de negócios de moda de todos os portes,
+              tornando o acesso à qualificação mais democrático. Além disso, busca fortalecer a identidade cultural
+              brasileira na moda, promovendo a valorização das raízes e consolidando a representatividade do país no
+              cenário global.
             </p>
             <div>
-              <button className="border border-gray-950 px-4 py-2 font-medium highlight-link">Saber mais</button>
+              <button className="border border-gray-950 px-4 py-4 font-medium highlight-link">Saber mais</button>
             </div>
           </div>
         </div>
