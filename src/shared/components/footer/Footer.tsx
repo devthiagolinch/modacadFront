@@ -27,16 +27,16 @@ export const Footer: FC<IFooterProps> = ({ showPlans = false, showContact = true
         </MySection>
       )}
       <MySection disableInternalPadding>
-        <div className="container mx-auto font-montserrat py-8 px-4 flex justify-between items-center">
-          <p className="font-montserrat font-medium">Copyright 2024 Modacad</p>
-          <div className="flex space-x-4">
-            <Link to="/termos-e-condicoes" className="text-gray-600 hover:text-gray-900">
-              Termos e Condições
-            </Link>
+        <div className="container mx-auto font-montserrat py-8 px-4 flex justify-between items-center flex-col md:flex-row">
+          <div className="flex flex-col md:flex-row gap-0 md:gap-4">
             <Link to="/politica-de-privacidade" className="text-gray-600 hover:text-gray-900">
               Política de Privacidade
             </Link>
+            <Link to="/termos-e-condicoes" className="text-gray-600 hover:text-gray-900">
+              Termos e Condições
+            </Link>
           </div>
+          <p className="font-montserrat font-medium">Copyright 2024 Modacad</p>
         </div>
       </MySection>
     </div>

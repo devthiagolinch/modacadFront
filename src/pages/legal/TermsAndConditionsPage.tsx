@@ -159,8 +159,8 @@ export const TermsAndConditionsPage = () => {
             moldes estão disponíveis em diferentes tabelas de medidas com todos os tamanhos. Além disso, um mesmo modelo
             pode ser oferecido em diferentes opções de volume, de comprimento e\ou outros parâmetros para você escolher
             de forma personalizada o que melhor atende a sua linha de produtos e seu perfil de cliente. Confira:{' '}
-            <a href="https://appmodacad.com.br" className="text-blue-500 hover:underline">
-              appmodacad.com.br
+            <a href="https://app.modacad.com.br" className="text-blue-500 hover:underline">
+              app.modacad.com.br
             </a>
           </p>
         </section>

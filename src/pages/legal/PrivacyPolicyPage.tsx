@@ -7,7 +7,7 @@ export const PrivacyPolicyPage = () => {
       <PublicHeader />
       <div className="max-w-4xl mx-auto p-6 text-gray-700 font-montserrat">
         <header className="text-center mb-8">
-          <h1 className="text-xl text-gray-600 mt-2">AVISO DE PRIVACIDADE E COOKIES</h1>
+          <h1 className="text-xl text-gray-600 mt-2">POLÍTICA DE PRIVACIDADE E COOKIES</h1>
         </header>
 
         {/* Introduction */}
