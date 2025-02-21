@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Footer } from '../../shared/components/footer/Footer';
+import { Footer } from '../../shared/components/footer/footer';
 
 import { PublicHeader } from '../../shared/components/header/public-header/PublicHeader';
 import { IPlanData, PlansService } from '../../shared/api/plans/PlansService';
@@ -83,8 +83,10 @@ export const PlansPage = () => {
           <div className="md:flex md:flex-col py-[30px] border-t-[1px] border-zinc-950 md:w-[100%]">
             <h1 className="font-butler_ultra_light text-[30px]">Quais são as formas de pagamento?</h1>
             <p className="text-[20px] font-regular">
-              Trabalhamos com as soluções de pagamento Mercado Pago, permitindo que você pague com cartão de crédito com
-              a segurança e conforto.
+              Aceitamos pagamentos por meio do Mercado Pago, garantindo segurança e praticidade. Para os planos mensais,
+              o pagamento deve ser feito exclusivamente via cartão de crédito. Já para o plano anual, oferecemos mais
+              flexibilidade, permitindo o pagamento por cartão de crédito, PIX ou boleto, além de outras formas
+              disponíveis no Mercado Pago.
             </p>
           </div>
         </div>
