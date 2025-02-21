@@ -19,6 +19,7 @@ import { PageTeam } from '../pages/admin/team/PageTeam';
 import { PageCategoryPost } from '../pages/posts/page-category-post/PageCategoryPost';
 import { PublishedPosts } from '../pages/posts/textos/PublishedPosts';
 import { PostDetails } from '../pages/posts/post-details/PostDetails';
+import { PrivacyPolicyPage, TermsAndConditionsPage } from '../pages/legal';
 
 export const AppRoutes = () => {
   const location = useLocation();
@@ -87,6 +88,9 @@ export const AppRoutes = () => {
       </Route>
 
       <Route path="/admin/login" element={<AdminLogin />} />
+
+      <Route path="/politica-de-privacidade" element={<PrivacyPolicyPage />} />
+      <Route path="/termos-e-condicoes" element={<TermsAndConditionsPage />} />
 
       {/* Página em Branco (Para teste ou outro propósito) */}
       <Route path="/blank" element={<BlankPage />} />

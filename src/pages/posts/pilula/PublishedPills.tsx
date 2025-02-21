@@ -1,4 +1,4 @@
-import { Footer } from '../../../shared/components/footer';
+import { Footer } from '../../../shared/components/footer/Footer';
 import { useEffect, useState } from 'react';
 import { IPostData, PostsService } from '../../../shared/api/posts/PostsService';
 import { PublicHeader } from '../../../shared/components/header/public-header/PublicHeader';

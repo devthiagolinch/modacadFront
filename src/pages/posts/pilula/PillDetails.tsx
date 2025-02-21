@@ -1,4 +1,4 @@
-import { Footer } from '../../../shared/components/footer';
+import { Footer } from '../../../shared/components/footer/Footer';
 
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
