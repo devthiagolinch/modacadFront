@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { PublicHeader } from '../../../shared/components/header/public-header/PublicHeader';
 import { IPostData, PostsService } from '../../../shared/api/posts/PostsService';
-import { Footer } from '../../../shared/components/footer';
+import { Footer } from '../../../shared/components/footer/Footer';
 import { useParams } from 'react-router-dom';
 import { PostGrid } from '../../../shared/components/posts/view-formats/PostGrid';
 import { ISubjectData, SubjectsService } from '../../../shared/api/subjects/SubjectsService';

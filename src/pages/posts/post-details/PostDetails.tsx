@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { PublicHeader } from '../../../shared/components/header/public-header/PublicHeader';
 import { IPostData, PostsService } from '../../../shared/api/posts/PostsService';
-import { Footer } from '../../../shared/components/footer';
+import { Footer } from '../../../shared/components/footer/Footer';
 import { useUser } from '../../../shared/contexts';
 import { PostInfo } from './components/PostInfo';
 import { checkPostAccess } from '../../../shared/utils/permissionsUtils';

@@ -4,7 +4,7 @@ import '../../../assets/css/tiptap.css';
 
 import { IPostData, PostsService } from '../../../shared/api/posts/PostsService';
 
-import { Footer } from '../../../shared/components/footer';
+import { Footer } from '../../../shared/components/footer/Footer';
 import { PostDeskTopHeader } from './components/PostDesktopHeader';
 import { PostMobileHeader } from './components/PostMobileHeader';
 
@@ -36,7 +36,6 @@ export function PostDetails() {
       window.instgrm.Embeds.process();
     }
   }, [post?.content]); // Reexecuta quando o conteúdo mudar
-  
 
   return (
     <div className="mx-auto h-screen">
