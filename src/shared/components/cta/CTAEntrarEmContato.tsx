@@ -4,7 +4,10 @@ import setaCurvaIcon from '../../../assets/icons/seta-curva.svg';
 
 export const CTAEntrarEmContato = () => {
   return (
-    <div className="container mx-auto font-montserrat px-4 py-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div
+      className="container mx-auto font-montserrat px-4 py-16 grid grid-cols-1 md:grid-cols-3 gap-8"
+      id="fale-conosco"
+    >
       <div className="flex flex-col justify-center items-center md:items-start">
         <p className="text-6xl md:text-7xl font-butler font-light">
           Quer falar
