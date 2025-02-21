@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Footer } from '../../shared/components/footer/footer';
+import { Footer } from '../../shared/components/footer/Footer';
 
 import { PublicHeader } from '../../shared/components/header/public-header/PublicHeader';
 import { IPlanData, PlansService } from '../../shared/api/plans/PlansService';

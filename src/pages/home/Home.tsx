@@ -8,7 +8,7 @@ import { FeaturedPost } from '../../shared/components/posts/featured/FeaturedPos
 import { IPostData, PostsService } from '../../shared/api/posts/PostsService';
 import { MySection } from '../../shared/components/ui/my-section/MySection';
 import { CTAPlans } from '../../shared/components/cta/CTAPlans';
-import { Footer } from '../../shared/components/footer/footer';
+import { Footer } from '../../shared/components/footer/Footer';
 import { useScreenSize } from '../../shared/hook/useScreenSize';
 
 import bannerDesktop from '../../assets/imgs/hero/telma-foto-topo-3-corte.jpg';
