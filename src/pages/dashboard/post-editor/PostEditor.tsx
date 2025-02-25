@@ -169,7 +169,7 @@ export const PostEditor = () => {
         window.instgrm?.Embeds?.process();
       }, 1000);
     }
-  }, [post.content]);
+  }, [editor, post.admins]);
   
   const insertInstagramEmbed = () => {
     const url = window.prompt("Cole a URL do Instagram");
