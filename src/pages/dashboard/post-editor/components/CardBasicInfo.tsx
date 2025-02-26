@@ -20,6 +20,7 @@ interface CardDTO {
   title: string | '';
   feature_image: string | null;
   content: string | '';
+  image_caption: string | '';
 }
 
 interface FormData {
@@ -57,7 +58,7 @@ const defaultPost: IPostDataRequest = {
   canonicalUrl: '',
 };
 
-export const CardBasicInfo: React.FC<CardDTO> = ({ title, feature_image, content }) => {
+export const CardBasicInfo: React.FC<CardDTO> = ({ title, feature_image, content, image_caption }) => {
   const navigate = useNavigate();
   const [notification, setNotification] = useState('');
 
@@ -133,7 +134,7 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ title, feature_image, content
             frontmatter: meta.frontmatter ?? '',
             feature_image_alt: meta.feature_image_alt ?? '',
             email_only: meta.email_only ?? '',
-            feature_image_caption: meta.feature_image_caption ?? '',
+            feature_image_caption: image_caption,
             canonicalUrl: canonicalUrl,
             published_at: response.published_at,
           });
@@ -152,8 +153,9 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ title, feature_image, content
       title: title || prev.title,
       feature_image: feature_image || prev.feature_image,
       content: content || prev.content,
+      feature_image_caption: image_caption || prev.feature_image_caption,
     }));
-  }, [title, feature_image, content]);
+  }, [title, feature_image, content, image_caption]);
 
   useEffect(() => {
     SubjectsService.getAll().then((response) => {
@@ -377,6 +379,7 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ title, feature_image, content
         post.status = 'published';
         setNotification('Post publicado com sucesso!');
       }
+      console.log(post)
       PostsService.updateById(postId, post).then((response) => {
         if (response instanceof Error) {
           console.error(response.message);
@@ -424,7 +427,8 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ title, feature_image, content
               displayFormat="DD/MM/YYYY"
               value={post.published_at ? { startDate: post.published_at, endDate: post.published_at } : null} // Envia como intervalo de datas
               onChange={handleDateChange}
-              inputClassName="p-2 w-full border-[1px] border-gray-200 focus:outline-none focus:border-[#dcdf1e]"
+              inputClassName="p-2 w-full border-2 border-gray-200 focus:outline-none focus:border-[#dcdf1e]"
+              popoverDirection='down'
             />
           </div>
 

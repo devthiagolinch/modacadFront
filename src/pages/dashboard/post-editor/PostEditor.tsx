@@ -126,6 +126,8 @@ export const PostEditor = () => {
         if (response instanceof Error) {
           console.error(response.message);
         } else {
+          
+          const meta = Array.isArray(response.meta) && response.meta.length > 0 ? response.meta[0] : {};
           setPost({
             title: response.title,
             description: response.description,
@@ -142,19 +144,19 @@ export const PostEditor = () => {
             canonicalUrl: response.canonicalUrl,
             tags: response.tags.map((tag) => tag),
             subjects: response.subjects.map((subject) => subject),
-            og_image: response.meta?.og_image ?? '',
-            og_title: response.meta?.og_title ?? '',
-            og_description: response.meta?.og_description ?? '',
-            twitter_image: response.meta?.twitter_image ?? '',
-            twitter_title: response.meta?.twitter_title ?? '',
-            twitter_description: response.meta?.twitter_description ?? '',
-            meta_title: response.meta?.meta_title ?? '',
-            meta_description: response.meta?.meta_description ?? '',
-            email_subject: response.meta?.email_subject ?? '',
-            frontmatter: response.meta?.frontmatter ?? '',
-            feature_image_alt: response.meta?.feature_image_alt ?? '',
-            email_only: response.meta?.email_only ?? '',
-            feature_image_caption: response.meta?.feature_image_caption ?? '',
+            og_image: meta?.og_image ?? '',
+            og_title: meta?.og_title ?? '',
+            og_description: meta?.og_description ?? '',
+            twitter_image: meta?.twitter_image ?? '',
+            twitter_title: meta?.twitter_title ?? '',
+            twitter_description: meta?.twitter_description ?? '',
+            meta_title: meta?.meta_title ?? '',
+            meta_description: meta?.meta_description ?? '',
+            email_subject: meta?.email_subject ?? '',
+            frontmatter: meta?.frontmatter ?? '',
+            feature_image_alt: meta?.feature_image_alt ?? '',
+            email_only: meta?.email_only ?? '',
+            feature_image_caption: meta?.feature_image_caption ?? '',
           });
           setFeatureImageUrl(response.feature_image);
         }
@@ -317,6 +319,20 @@ export const PostEditor = () => {
               <img src={featureImageUrl} alt="Imagem destacada" className="mt-4 object-contain w-screen h-[400px]" />
             )}
           </div>
+
+          <div className='mb-6'>
+
+          <input
+              type="text"
+              name="feature_image_caption"
+              value={post.feature_image_caption}
+              onChange={handleInputChange}
+              placeholder="Créditos da imagem"
+              className="border p-2 w-full text-center font-montserrat font-medium focus-visible:border-[#dcdf1e] focus:outline-none text-xl"
+            />
+
+          </div>
+
           {/* Campo para título */}
           <div className="mb-6">
             <input
@@ -325,7 +341,7 @@ export const PostEditor = () => {
               value={post.title}
               onChange={handleInputChange}
               placeholder="Título"
-              className="border p-2 w-full font-montserrat font-medium focus-visible:border-[#dcdf1e] focus:outline-none text-4xl"
+              className="border p-2 w-full text-center font-montserrat font-medium focus-visible:border-[#dcdf1e] focus:outline-none text-4xl"
             />
           </div>
 
@@ -451,7 +467,7 @@ export const PostEditor = () => {
         </div>
         {openCard && (
           <div className="col-span-4 fixed top-0 right-0 w-1/4 h-full bg-white shadow-lg p-4 overflow-auto">
-            <CardBasicInfo title={post.title} feature_image={post.feature_image} content={post.content} />
+            <CardBasicInfo title={post.title} feature_image={post.feature_image} content={post.content} image_caption={post.feature_image_caption} />
           </div>
         )}
       </div>
