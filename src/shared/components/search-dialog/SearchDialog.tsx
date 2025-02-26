@@ -17,10 +17,12 @@ export const SearchDialog: FC<ISearchDialogProps> = ({ isOpen, toggleDialog }) =
   const [searchTerm, setSearchTerm] = useState('');
   const [results, setResults] = useState<ISearchResult[]>([]);
   const [loading, setLoading] = useState(false);
+  const [hasSearched, setHasSearched] = useState(false);
 
   const handleSearch = async () => {
     setResults([])
     setLoading(true);results
+    setHasSearched(true); 
     
     const response = await PostsService.searchPost({
       term: searchTerm,
@@ -106,7 +108,7 @@ export const SearchDialog: FC<ISearchDialogProps> = ({ isOpen, toggleDialog }) =
               </div> */}
           </div>
           ) : (
-            !loading && <p className="text-gray-500">Nenhum resultado encontrado.</p>
+            hasSearched && !loading && <p className="text-gray-500">Nenhum resultado encontrado.</p>
           )}
         </div>
       </div>
