@@ -15,7 +15,7 @@ export const PublicHeader = () => {
   const toggleDialog = () => setIsOpenSearch((prev) => !prev);
 
   return (
-    <div className="flex lg:items-center w-[100%] h-24 border-b-[1px] border-l-[1px] border-r-[1px] border-[#202020] bg-[#f1ece8] shadow-read">
+    <div className="flex lg:items-center w-full h-24 border-b-[1px] border-l-[1px] border-r-[1px] border-[#202020] bg-[#f1ece8] shadow-read fixed top-0 left-0 z-10">
       <div className="flex w-screen justify-between ">
         {/* Logo */}
         <div className="flex-1 justify-center items-center flex px-2">
