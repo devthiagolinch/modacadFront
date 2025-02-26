@@ -15,11 +15,11 @@ export const PublicHeader = () => {
   const toggleDialog = () => setIsOpenSearch((prev) => !prev);
 
   return (
-    <div className="flex lg:items-center w-[100%] h-[90px] border-b-[1px] border-l-[1px] border-r-[1px] border-[#202020] bg-[#f1ece8] shadow-read">
+    <div className="flex lg:items-center w-[100%] h-24 border-b-[1px] border-l-[1px] border-r-[1px] border-[#202020] bg-[#f1ece8] shadow-read">
       <div className="flex w-screen justify-between ">
         {/* Logo */}
         <div className="flex-1 justify-center items-center flex px-2">
-          <Link to={'/'} className="h-[60px] lg:h-auto">
+          <Link to={'/'} className="h-14 lg:h-auto">
             <img src={LogoDesktop} className="hidden lg:block h-full" alt="Logo Desktop" />
             <img src={LogoMobile} className="block lg:hidden h-full" alt="Logo Mobile" />
           </Link>
@@ -27,7 +27,7 @@ export const PublicHeader = () => {
         {/* Menu */}
         <nav className="flex font-medium font-montserrat ">
           <button
-            className="font-medium text-sm border border-r-0 border-b-0 border-t-0 border-zinc-950 w-50 h-20 px-6 py-[30px] hover:bg-[#dcdf1e]"
+            className="font-medium text-sm border flex items-center justify-center border-r-0 border-b-0 border-t-0 border-zinc-950 w-24 h-24 px-6 py-8 hover:bg-[#dcdf1e]"
             onClick={toggleDialog}
           >
             <svg
@@ -36,7 +36,7 @@ export const PublicHeader = () => {
               viewBox="0 0 24 24"
               strokeWidth="1.5"
               stroke="currentColor"
-              className="size-5"
+              className="size-6"
             >
               <path
                 strokeLinecap="round"
@@ -46,7 +46,7 @@ export const PublicHeader = () => {
             </svg>
           </button>
           <button
-            className="font-medium text-sm border border-r-0 border-b-0 border-t-0 border-zinc-950 w-50 h-20 px-6 py-7 hover:bg-[#dcdf1e]"
+            className="font-medium text-sm border border-r-0 border-b-0 border-t-0 border-zinc-950 w-24 h-24 px-6 py-7 hover:bg-[#dcdf1e] flex items-center justify-center"
             onClick={toggleDrawer}
           >
             <svg
@@ -55,7 +55,7 @@ export const PublicHeader = () => {
               viewBox="0 0 24 24"
               strokeWidth="1.5"
               stroke="currentColor"
-              className="size-6"
+              className="size-7"
             >
               <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M12 17.25h8.25" />
             </svg>
