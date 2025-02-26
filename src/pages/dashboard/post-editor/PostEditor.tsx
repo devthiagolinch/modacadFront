@@ -128,6 +128,14 @@ export const PostEditor = () => {
         } else {
           
           const meta = Array.isArray(response.meta) && response.meta.length > 0 ? response.meta[0] : {};
+
+  
+          const stripHtml = (html: string) => {
+            const tmp = document.createElement("div");
+            tmp.innerHTML = html;
+            return tmp.textContent || tmp.innerText || "";
+          };
+
           setPost({
             title: response.title,
             description: response.description,
@@ -156,7 +164,7 @@ export const PostEditor = () => {
             frontmatter: meta?.frontmatter ?? '',
             feature_image_alt: meta?.feature_image_alt ?? '',
             email_only: meta?.email_only ?? '',
-            feature_image_caption: meta?.feature_image_caption ?? '',
+            feature_image_caption: meta?.feature_image_caption ? stripHtml(meta.feature_image_caption) : '', // Remove as tags HTML
           });
           setFeatureImageUrl(response.feature_image);
         }
