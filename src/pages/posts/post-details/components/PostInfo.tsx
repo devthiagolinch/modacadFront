@@ -71,7 +71,7 @@ export const PostInfo: FC<IPostInfoProps> = ({ post }) => {
 
   return (
     <div>
-      <div className="relative my-8">
+      <div className="relative mb-8 mt-32">
         {/* Assuntos */}
         <div className="hidden lg:block absolute top-1/2 left-4 transform -translate-y-1/2">
           <div className="transform -rotate-90 flex flex-col gap-0">

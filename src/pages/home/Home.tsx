@@ -63,7 +63,7 @@ export function Home() {
       {/* Banner da página inicial */}
       <div
         style={{ backgroundImage: `url(${isTablet ? bannerMobile : bannerDesktop})` }}
-        className="relative py-8 bg-contain bg-right-bottom bg-no-repeat z-[-1] min-h-[80vh] flex items-center"
+        className="relative py-8 bg-contain bg-right-bottom bg-no-repeat z-[-1] min-h-[80vh] flex items-center mt-16"
       >
         <div className="grid grid-cols-12">
           <div className="relative col-span-2 md:col-span-1 flex items-center justify-center hidden md:flex">

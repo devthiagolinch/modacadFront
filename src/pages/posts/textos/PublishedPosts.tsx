@@ -58,7 +58,7 @@ export function PublishedPosts() {
     <div>
       <PublicHeader />
 
-      <div className="flex items-center px-4 my-8 container mx-auto gap-4">
+      <div className="flex items-center px-4 mb-8 mt-32 container mx-auto gap-4">
         <h1 className="font-butler font-light text-2xl md:text-6xl">Textos publicados</h1>
         <div className="flex grow h-0 border-t border-[#202020]"></div>
       </div>

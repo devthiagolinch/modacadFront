@@ -50,7 +50,7 @@ export const PlansPage = () => {
     <div>
       <PublicHeader />
 
-      <div className="flex flex-col justify-center align-center container mx-auto px-4 my-12">
+      <div className="flex flex-col justify-center align-center container mx-auto px-4 mb-12 mt-32">
         <h1 className="font-butler text-7xl -mb-3 md:-mb-0">Planos de Leitura</h1>
         <span className="text-3xl text-gray-950 font-montserrat font-light mt-2">Plano básico gratuito</span>
       </div>
