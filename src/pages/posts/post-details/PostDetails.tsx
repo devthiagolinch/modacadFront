@@ -13,9 +13,12 @@ const LoginPrompt = () => {
   const { openDialog } = useAuthDialog();
 
   return (
-    <div className="p-4 bg-gray-200 text-center rounded">
-      <p>Para ver o conteúdo completo, faça login.</p>
-      <button className="bg-blue-500 text-white px-4 py-2 rounded mt-2" onClick={() => openDialog('login')}>
+    <div className="p-4 text-center font-montserrat font-light mt-8 text-lg">
+      <p>Para continuar a ler, faça login.</p>
+      <button
+        className="border border-gray-950 px-8 py-4 mt-2 highlight-link font-medium"
+        onClick={() => openDialog('login')}
+      >
         Entrar
       </button>
     </div>
@@ -30,10 +33,13 @@ const UpgradePrompt = () => {
   };
 
   return (
-    <div className="p-4 bg-yellow-200 text-center rounded">
-      <p>Este conteúdo é exclusivo para assinantes. Faça upgrade para acessar tudo.</p>
-      <button className="bg-green-500 text-white px-4 py-2 rounded mt-2" onClick={handleNavigateToPlans}>
-        Assinar agora
+    <div className="p-4 text-center font-montserrat font-light mt-8 text-lg">
+      <p>Texto exclusivo comunidadeModacad</p>
+      <button
+        className="border border-gray-950 px-8 py-4 mt-2 highlight-link font-medium"
+        onClick={handleNavigateToPlans}
+      >
+        Conheça os Planos de leitura
       </button>
     </div>
   );
@@ -43,11 +49,14 @@ const PostContent = ({ post, accessLevel }: { post: IPostData; accessLevel: stri
   if (accessLevel === 'login') {
     return (
       <div>
-        <p
-          className="text-justify text-lg font-montserrat font-light prose tiptap line-clamp-[16] mb-2"
-          dangerouslySetInnerHTML={{ __html: post.content ?? '' }}
-        />
+        <div className="relative before:absolute before:bottom-0 before:left-0 before:w-full before:h-16 before:bg-gradient-to-t before:from-[#f1ece8] before:to-transparent">
+          <p
+            className="text-justify text-lg font-montserrat font-light prose tiptap line-clamp-[16] mb-2"
+            dangerouslySetInnerHTML={{ __html: post.content ?? '' }}
+          />
+        </div>
         <LoginPrompt />
+        <UpgradePrompt />
       </div>
     );
   }
@@ -55,10 +64,12 @@ const PostContent = ({ post, accessLevel }: { post: IPostData; accessLevel: stri
   if (accessLevel === 'upgrade') {
     return (
       <div>
-        <p
-          className="text-justify text-lg font-montserrat font-light prose tiptap line-clamp-[16] mb-2"
-          dangerouslySetInnerHTML={{ __html: post.content ?? '' }}
-        />
+        <div className="relative before:absolute before:bottom-0 before:left-0 before:w-full before:h-16 before:bg-gradient-to-t before:from-[#f1ece8] before:to-transparent">
+          <p
+            className="text-justify text-lg font-montserrat font-light prose tiptap line-clamp-[16] mb-2"
+            dangerouslySetInnerHTML={{ __html: post.content ?? '' }}
+          />
+        </div>
         <UpgradePrompt />
       </div>
     );
@@ -101,7 +112,6 @@ export const PostDetails = () => {
     }
   }, [post?.content]); // Reexecuta quando o conteúdo mudar
   const accessLevel = checkPostAccess(user, post?.visibility ?? 'pro');
-  console.log(accessLevel);
 
   return (
     <div className="mx-auto h-screen">

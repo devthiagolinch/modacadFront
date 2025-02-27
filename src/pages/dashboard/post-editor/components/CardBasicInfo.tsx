@@ -379,7 +379,6 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ title, feature_image, content
         post.status = 'published';
         setNotification('Post publicado com sucesso!');
       }
-      console.log(post)
       PostsService.updateById(postId, post).then((response) => {
         if (response instanceof Error) {
           console.error(response.message);
@@ -428,7 +427,7 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ title, feature_image, content
               value={post.published_at ? { startDate: post.published_at, endDate: post.published_at } : null} // Envia como intervalo de datas
               onChange={handleDateChange}
               inputClassName="p-2 w-full border-2 border-gray-200 focus:outline-none focus:border-[#dcdf1e]"
-              popoverDirection='down'
+              popoverDirection="down"
             />
           </div>
 
