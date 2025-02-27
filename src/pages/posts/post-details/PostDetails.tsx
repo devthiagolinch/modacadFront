@@ -44,7 +44,7 @@ const PostContent = ({ post, accessLevel }: { post: IPostData; accessLevel: stri
     return (
       <div>
         <p
-          className="text-justify text-lg font-montserrat font-light prose tiptap mb-2"
+          className="text-justify text-lg font-montserrat font-light prose tiptap line-clamp-[16] mb-2"
           dangerouslySetInnerHTML={{ __html: post.content ?? '' }}
         />
         <LoginPrompt />
@@ -101,6 +101,7 @@ export const PostDetails = () => {
     }
   }, [post?.content]); // Reexecuta quando o conteúdo mudar
   const accessLevel = checkPostAccess(user, post?.visibility ?? 'pro');
+  console.log(accessLevel);
 
   return (
     <div className="mx-auto h-screen">
