@@ -74,11 +74,11 @@ export const PageCategoryPost = () => {
         <div className="grid grid-cols-12 gap-4">
           <div className="col-span-12 md:col-span-7">
             <h2 className="font-light text-3xl md:text-4xl mb-4">blogModacad</h2>
-            <PostGrid posts={textos} columns={{ xs: 1 }} />
+            <PostGrid posts={textos} />
           </div>
           <div className="col-span-12 md:col-span-5">
             <h2 className="font-light text-3xl md:text-4xl mb-4">pílulasModacad</h2>
-            <PostGrid posts={pilulas} columns={{ xs: 2 }} />
+            <PostGrid posts={pilulas} columns={{ lg: 2 }} />
           </div>
         </div>
         <div className="lg:mb-[80px] lg:mt-[60px] mt-[25px] mb-[50px] justify-center items-center flex">
