@@ -45,8 +45,6 @@ export const PostGrid: FC<IPostGridProps> = ({ posts, columns = {} }) => {
     .filter(Boolean)
     .join(' ');
 
-  console.log(gridClass);
-
   return (
     <div className={gridClass}>
       {posts.map((post) => (

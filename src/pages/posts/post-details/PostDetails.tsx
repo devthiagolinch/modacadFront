@@ -112,7 +112,6 @@ export const PostDetails = () => {
     }
   }, [post?.content]); // Reexecuta quando o conteúdo mudar
   const accessLevel = checkPostAccess(user, post?.visibility ?? 'pro');
-  console.log(accessLevel);
 
   return (
     <div className="mx-auto h-screen">
