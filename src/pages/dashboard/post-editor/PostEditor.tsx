@@ -19,6 +19,7 @@ import { FaBold, FaItalic, FaLink, FaList, FaQuoteLeft } from 'react-icons/fa';
 import Placeholder from '@tiptap/extension-placeholder';
 import { CardBasicInfo } from './components/CardBasicInfo';
 import { InstagramEmbed } from '../../../shared/components/tiptap extensions/instagram/instagramEmbed';
+import { CardEditor } from './components/CardEditor';
 
 const defaultPost: IPostDataRequest = {
   title: '',
@@ -126,14 +127,12 @@ export const PostEditor = () => {
         if (response instanceof Error) {
           console.error(response.message);
         } else {
-          
           const meta = Array.isArray(response.meta) && response.meta.length > 0 ? response.meta[0] : {};
 
-  
           const stripHtml = (html: string) => {
-            const tmp = document.createElement("div");
+            const tmp = document.createElement('div');
             tmp.innerHTML = html;
-            return tmp.textContent || tmp.innerText || "";
+            return tmp.textContent || tmp.innerText || '';
           };
 
           setPost({
@@ -180,24 +179,24 @@ export const PostEditor = () => {
       }, 1000);
     }
   }, [editor, post.admins]);
-  
+
   const insertInstagramEmbed = () => {
-    const url = window.prompt("Cole a URL do Instagram");
-  
-    if (url && editor && url.includes("instagram.com")) {
+    const url = window.prompt('Cole a URL do Instagram');
+
+    if (url && editor && url.includes('instagram.com')) {
       editor
         .chain()
         .focus()
         .insertContent({
-          type: "instagramEmbed",
+          type: 'instagramEmbed',
           attrs: { url },
         })
         .run();
     } else {
-      alert("URL inválida.");
+      alert('URL inválida.');
     }
   };
-  
+
   const setLink = useCallback(() => {
     if (!editor?.getAttributes('link').href) {
       editor?.chain().focus().extendMarkRange('link').unsetLink().run();
@@ -328,9 +327,8 @@ export const PostEditor = () => {
             )}
           </div>
 
-          <div className='mb-6'>
-
-          <input
+          <div className="mb-6">
+            <input
               type="text"
               name="feature_image_caption"
               value={post.feature_image_caption}
@@ -338,7 +336,6 @@ export const PostEditor = () => {
               placeholder="Créditos da imagem"
               className="border p-2 w-full text-center font-montserrat font-medium focus-visible:border-[#dcdf1e] focus:outline-none text-xl"
             />
-
           </div>
 
           {/* Campo para título */}
@@ -410,9 +407,7 @@ export const PostEditor = () => {
                   accept="image/*"
                   onChange={handleImageUpload}
                 />
-                <button onClick={insertInstagramEmbed}>
-                  Post Instagram
-                </button>
+                <button onClick={insertInstagramEmbed}>Post Instagram</button>
               </div>
             </FloatingMenu>
           )}
@@ -473,11 +468,7 @@ export const PostEditor = () => {
             />
           </div>
         </div>
-        {openCard && (
-          <div className="col-span-4 fixed top-0 right-0 w-1/4 h-full bg-white shadow-lg p-4 overflow-auto">
-            <CardBasicInfo title={post.title} feature_image={post.feature_image} content={post.content} image_caption={post.feature_image_caption} />
-          </div>
-        )}
+        {openCard && <CardEditor post={post} />}
       </div>
     </LayoutDashboard>
   );
