@@ -772,7 +772,7 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ title, feature_image, content
 
           {/* Editor(a) */}
           <div className="mb-6">
-            <label className="block text-sm font-montserrat font-medium text-gray-700 mb-2">Edtor(a)</label>
+            <label className="block text-sm font-montserrat font-medium text-gray-700 mb-2">Editor(a)</label>
             {post.admins.length > 0 && (
               <div className="mt-2 flex flex-wrap">
                 {post.editors.map((admin, index) => (
@@ -806,7 +806,7 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ title, feature_image, content
                   ? post.editors.length > 1
                     ? `${post.editors[0].name} + ${post.editors.length - 1}`
                     : post.editors[0].name
-                  : 'Selecione os autores'}
+                  : 'Selecione os editores'}
               </MenuButton>
               <MenuItems
                 className="absolute mt-2 w-full shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50"
@@ -851,7 +851,9 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ title, feature_image, content
 
           {/* Curdador(a) */}
           <div className="mb-6">
-            <label className="block text-sm font-montserrat font-medium text-gray-700 mb-2">Curador(a)</label>
+            <label className="block text-sm font-montserrat font-medium text-gray-700 mb-2">
+              Curador(a) de imagens
+            </label>
             {post.curadors.length > 0 && (
               <div className="mt-2 flex flex-wrap">
                 {post.curadors.map((admin, index) => (
@@ -885,7 +887,7 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ title, feature_image, content
                   ? post.curadors.length > 1
                     ? `${post.curadors[0].name} + ${post.curadors.length - 1}`
                     : post.curadors[0].name
-                  : 'Selecione os autores'}
+                  : 'Selecione os curadores'}
               </MenuButton>
               <MenuItems
                 className="absolute mt-2 w-full shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50"
