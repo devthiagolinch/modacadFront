@@ -5,6 +5,7 @@ import { CardBasicInfo } from './CardBasicInfo';
 import { CardMetaGoogle } from './CardMetaGoogle';
 import { CardMetaOG } from './CardMetaOG';
 import { CardTagInfo } from './CardTagInfo';
+import { CardActions } from './CardActions';
 
 interface ICardEditorProps {
   post: IPostDataRequest;
@@ -12,7 +13,7 @@ interface ICardEditorProps {
   postId?: string;
 }
 
-export const CardEditor: React.FC<ICardEditorProps> = ({ post, setPost }) => {
+export const CardEditor: React.FC<ICardEditorProps> = ({ post, setPost, postId }) => {
   return (
     <div className="col-span-4 fixed top-0 right-0 w-1/4 h-full bg-white shadow-lg p-4 overflow-auto pt-16">
       <AccordionItem title="Informações básicas" open>
@@ -27,6 +28,9 @@ export const CardEditor: React.FC<ICardEditorProps> = ({ post, setPost }) => {
       <AccordionItem title="Tags">
         <CardTagInfo onClose={() => {}} onUpdated={() => {}} selectedTag={null} />
       </AccordionItem>
+      <div className="mt-4">
+        <CardActions post={post} postId={postId} />
+      </div>
     </div>
   );
 };

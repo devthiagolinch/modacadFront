@@ -1,16 +1,13 @@
-import Datepicker from 'react-tailwindcss-datepicker';
+import { useEffect, useState } from 'react';
 
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
+import Datepicker from 'react-tailwindcss-datepicker';
 
-import { FaRegSave, FaRegTrashAlt } from 'react-icons/fa';
-import { FaEye } from 'react-icons/fa';
-import { IPostDataRequest, PostsService } from '../../../../shared/api/posts/PostsService';
-import { useEffect, useState } from 'react';
-import { ITagData, TagsService } from '../../../../shared/api/tags/TagsService';
-import { ISubjectData, SubjectsService } from '../../../../shared/api/subjects/SubjectsService';
 import { TPostsType, TPostsVisibility, types, visibilities } from '../../../../shared/services/postOptions';
+import { ISubjectData, SubjectsService } from '../../../../shared/api/subjects/SubjectsService';
+import { IPostDataRequest } from '../../../../shared/api/posts/PostsService';
 import { IUserData, UsersService } from '../../../../shared/api/users/UserServices';
-import { useNavigate } from 'react-router-dom';
+import { ITagData, TagsService } from '../../../../shared/api/tags/TagsService';
 import { CardTagInfo } from './CardTagInfo';
 
 interface ICardBasicInfoProps {
@@ -20,11 +17,7 @@ interface ICardBasicInfoProps {
 }
 
 export const CardBasicInfo: React.FC<ICardBasicInfoProps> = ({ post, setPost, postId }) => {
-  const navigate = useNavigate();
-  const [notification, setNotification] = useState('');
-
-  const [isCardBasicVisible, setCardBasicVisible] = useState(true);
-  const [isCardTagVisibe, setCardTagVisibe] = useState(false);
+  const [isCardTagVisible, setCardTagVisible] = useState(false);
 
   const [tagsOptions, setTagsOptions] = useState<ITagData[]>([]);
   const [_tags, setTags] = useState<ITagData[]>([]);
@@ -36,8 +29,7 @@ export const CardBasicInfo: React.FC<ICardBasicInfoProps> = ({ post, setPost, po
 
   const toggleCardTagVisibility = () => {
     fetchTags();
-    setCardTagVisibe((prev) => !prev);
-    setCardBasicVisible((prev) => !prev);
+    setCardTagVisible((prev) => !prev);
     window.scrollTo(0, 0);
   };
 
@@ -91,15 +83,6 @@ export const CardBasicInfo: React.FC<ICardBasicInfoProps> = ({ post, setPost, po
       ...prevPost,
       published_at: selectedDate,
     }));
-  };
-
-  const handleDeletePost = async () => {
-    if (!postId) {
-      console.error('postId não encontrado');
-      return;
-    }
-    await PostsService.deletePost(postId);
-    navigate('/dashboard/pilula');
   };
 
   // Tags
@@ -215,73 +198,23 @@ export const CardBasicInfo: React.FC<ICardBasicInfoProps> = ({ post, setPost, po
 
   const handleCuradorSelect = (newUser: IUserData) => {
     setPost((prevPost) => {
-      let updatedCuradors: IUserData[] = [];
-      updatedCuradors = [...prevPost.curadors];
+      let updatedCurators: IUserData[] = [];
+      updatedCurators = [...prevPost.curadors];
 
-      const isSelected = updatedCuradors.some((admin) => admin.id === newUser.id);
+      const isSelected = updatedCurators.some((admin) => admin.id === newUser.id);
       if (isSelected) {
-        updatedCuradors = updatedCuradors.filter((admin) => admin.id !== newUser.id);
+        updatedCurators = updatedCurators.filter((admin) => admin.id !== newUser.id);
       } else {
-        updatedCuradors.push(newUser);
+        updatedCurators.push(newUser);
       }
 
-      return { ...prevPost, curadors: updatedCuradors };
+      return { ...prevPost, curadors: updatedCurators };
     });
-  };
-
-  const handleSave = () => {
-    if (postId && postId !== 'novo') {
-      PostsService.updateById(postId, post).then((response) => {
-        if (response instanceof Error) {
-          console.error(response.message);
-        }
-      });
-    } else {
-      post.status = 'draft';
-      PostsService.create(post).then((response) => {
-        if (response instanceof Error) {
-          console.error(response.message);
-        }
-      });
-    }
-    setNotification('Post salvo com sucesso!');
-  };
-
-  const handleSubmit = () => {
-    const adjustedPost = { ...post };
-
-    if (adjustedPost.canonicalUrl?.startsWith('https://blog.modacad.com.br/')) {
-      // Remover o prefixo para enviar apenas o slug
-      adjustedPost.canonicalUrl = adjustedPost.canonicalUrl.replace('https://blog.modacad.com.br/', '');
-    }
-
-    if (postId && postId !== 'novo') {
-      if (post.status === 'published') {
-        post.status = 'draft';
-
-        setNotification('Post despublicado com sucesso!');
-      } else {
-        post.status = 'published';
-        setNotification('Post publicado com sucesso!');
-      }
-      PostsService.updateById(postId, post).then((response) => {
-        if (response instanceof Error) {
-          console.error(response.message);
-        }
-      });
-    } else {
-      post.status = 'published';
-      PostsService.create(post).then((response) => {
-        if (response instanceof Error) {
-          console.error(response.message);
-        }
-      });
-    }
   };
 
   return (
     <div className="col-span-4">
-      <div style={{ display: isCardBasicVisible ? 'block' : 'none' }}>
+      <div>
         {/* Informações da Postagem */}
         <div className="bg-white shadow-md p-6">
           <div className="flex gap-2 justify-between items-center mb-6">
@@ -814,46 +747,13 @@ export const CardBasicInfo: React.FC<ICardBasicInfoProps> = ({ post, setPost, po
               </MenuItems>
             </Menu>
           </div>
-
-          <div>
-            {/* Botão de Publicar */}
-            <div className="mb-6 flex gap-4 justify-center">
-              <button className="px-4 py-2 text-zinc-500 hover:bg-[#dcdf1e] w-auto" onClick={handleSave}>
-                <FaRegSave size={32} />
-              </button>
-              <button
-                className="px-4 py-2 text-zinc-500 hover:bg-[#dcdf1e] w-auto"
-                onClick={() => window.open(`/posts/${postId}`, '_blank')}
-              >
-                <FaEye size={32} />
-              </button>
-              <button
-                className="px-4 py-2 border-[1px] font-montserrat font-light text-zinc-900 border-zinc-500 hi w-full highlight-link"
-                onClick={handleSubmit}
-              >
-                {post.status === 'published' ? 'Despublicar' : 'Publicar'}
-              </button>
-            </div>
-
-            <div>
-              <button
-                className="border border-red-900 w-full h-12 text-red-800 flex justify-center items-center gap-2"
-                onClick={handleDeletePost}
-              >
-                <FaRegTrashAlt size={22} />
-                EXCLUIR POST
-              </button>
-            </div>
-          </div>
         </div>
       </div>
 
       {/** CARD PARA ATUALIZAR TAG */}
-      <div style={{ display: isCardTagVisibe ? 'block' : 'none' }}>
+      <div style={{ display: isCardTagVisible ? 'block' : 'none' }}>
         <CardTagInfo onUpdated={onUpdateTag} selectedTag={selectedTag} onClose={() => toggleCardTagVisibility()} />
       </div>
-
-      {notification && <div className="notification">{notification}</div>}
     </div>
   );
 };
