@@ -10,65 +10,19 @@ import { ITagData, TagsService } from '../../../../shared/api/tags/TagsService';
 import { ISubjectData, SubjectsService } from '../../../../shared/api/subjects/SubjectsService';
 import { TPostsType, TPostsVisibility, types, visibilities } from '../../../../shared/services/postOptions';
 import { IUserData, UsersService } from '../../../../shared/api/users/UserServices';
-import { useForm } from 'react-hook-form';
-import { FacebookPreview } from './snnipets/FaceSnnipetPreviewl';
-import GoogleSnnipet from './snnipets/GoogleSnnipetsPreview';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { CardTagInfo } from './CardTagInfo';
 
-interface CardDTO {
-  title: string | '';
-  feature_image: string | null;
-  content: string | '';
-  image_caption: string | '';
+interface ICardBasicInfoProps {
+  post: IPostDataRequest;
+  setPost: React.Dispatch<React.SetStateAction<IPostDataRequest>>;
+  postId?: string;
 }
 
-interface FormData {
-  meta_description: string;
-}
-
-const defaultPost: IPostDataRequest = {
-  title: '',
-  description: '',
-  feature_image: null,
-  type: 'texto',
-  content: '',
-  status: 'draft',
-  images: null,
-  published_at: null,
-  visibility: 'pro',
-  admins: [],
-  editors: [],
-  curadors: [],
-  tags: [],
-  subjects: [],
-  og_image: '',
-  og_title: '',
-  og_description: '',
-  twitter_image: '',
-  twitter_title: '',
-  twitter_description: '',
-  meta_title: '',
-  meta_description: '',
-  email_subject: '',
-  frontmatter: '',
-  feature_image_alt: '',
-  feature_image_caption: '',
-  email_only: '',
-  canonicalUrl: '',
-};
-
-export const CardBasicInfo: React.FC<CardDTO> = ({ title, feature_image, content, image_caption }) => {
+export const CardBasicInfo: React.FC<ICardBasicInfoProps> = ({ post, setPost, postId }) => {
   const navigate = useNavigate();
   const [notification, setNotification] = useState('');
 
-  const { postId } = useParams<{ postId: string }>();
-  const [post, setPost] = useState<IPostDataRequest>(defaultPost);
-
-  const { register } = useForm<FormData>();
-
-  const [isCardVisible, setIsCardVisible] = useState(false);
-  const [isCardFaceVisible, setIsCardFaceVisible] = useState(false);
   const [isCardBasicVisible, setCardBasicVisible] = useState(true);
   const [isCardTagVisibe, setCardTagVisibe] = useState(false);
 
@@ -80,82 +34,12 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ title, feature_image, content
 
   const [usersOptions, setUsersOptions] = useState<IUserData[]>([]);
 
-  const toggleCardVisibility = () => {
-    setIsCardVisible((prev) => !prev);
-    setCardBasicVisible((prev) => !prev);
-    window.scrollTo(0, 0);
-  };
-
-  const toggleCardFaceVisibility = () => {
-    setIsCardFaceVisible((prev) => !prev);
-    setCardBasicVisible((prev) => !prev);
-    window.scrollTo(0, 0);
-  };
-
   const toggleCardTagVisibility = () => {
     fetchTags();
     setCardTagVisibe((prev) => !prev);
     setCardBasicVisible((prev) => !prev);
     window.scrollTo(0, 0);
   };
-
-  useEffect(() => {
-    if (postId && postId !== 'novo') {
-      PostsService.getById(postId).then((response) => {
-        if (response instanceof Error) {
-          console.error(response.message);
-        } else {
-          const meta = Array.isArray(response.meta) && response.meta.length > 0 ? response.meta[0] : {};
-          const canonicalUrl = response.canonicalUrl?.replace('https://blog.modacad.com.br/', '') || '';
-
-          setPost({
-            title: title,
-            description: response.description,
-            feature_image: feature_image,
-            type: response.type,
-            content: content,
-            status: response.status,
-            images: response.images ? response.images.join(',') : null,
-            visibility: response.visibility,
-            admins: response.admins.map((admin) => admin),
-            editors: response.editors.map((editor) => editor),
-            curadors: response.curadors.map((curador) => curador),
-            tags: response.tags.map((tag) => tag),
-            subjects: response.subjects.map((subject) => subject),
-            og_image: meta?.og_image ?? '',
-            og_title: meta?.og_title ?? '',
-            og_description: meta?.og_description ?? '',
-            twitter_image: meta.twitter_image ?? '',
-            twitter_title: meta.twitter_title ?? '',
-            twitter_description: meta.twitter_description ?? '',
-            meta_title: meta.meta_title ?? '',
-            meta_description: meta.meta_description ?? '',
-            email_subject: meta.email_subject ?? '',
-            frontmatter: meta.frontmatter ?? '',
-            feature_image_alt: meta.feature_image_alt ?? '',
-            email_only: meta.email_only ?? '',
-            feature_image_caption: image_caption,
-            canonicalUrl: canonicalUrl,
-            published_at: response.published_at,
-          });
-        }
-      });
-    } else {
-      setPost(defaultPost);
-      post.og_image = feature_image;
-    }
-  }, [postId]);
-
-  // Preserve o estado atual ao carregar novos dados
-  useEffect(() => {
-    setPost((prev) => ({
-      ...prev,
-      title: title || prev.title,
-      feature_image: feature_image || prev.feature_image,
-      content: content || prev.content,
-      feature_image_caption: image_caption || prev.feature_image_caption,
-    }));
-  }, [title, feature_image, content, image_caption]);
 
   useEffect(() => {
     SubjectsService.getAll().then((response) => {
@@ -202,7 +86,8 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ title, feature_image, content
       // Caso seja uma data única ou null
       selectedDate = value as Date | null;
     }
-    setPost((prevPost) => ({
+
+    setPost((prevPost: IPostDataRequest) => ({
       ...prevPost,
       published_at: selectedDate,
     }));
@@ -931,166 +816,35 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ title, feature_image, content
           </div>
 
           <div>
-            <button className="w-full border border-zinc-400 mb-5 h-10 highlight-link" onClick={toggleCardVisibility}>
-              MetaDados Google
-            </button>
+            {/* Botão de Publicar */}
+            <div className="mb-6 flex gap-4 justify-center">
+              <button className="px-4 py-2 text-zinc-500 hover:bg-[#dcdf1e] w-auto" onClick={handleSave}>
+                <FaRegSave size={32} />
+              </button>
+              <button
+                className="px-4 py-2 text-zinc-500 hover:bg-[#dcdf1e] w-auto"
+                onClick={() => window.open(`/posts/${postId}`, '_blank')}
+              >
+                <FaEye size={32} />
+              </button>
+              <button
+                className="px-4 py-2 border-[1px] font-montserrat font-light text-zinc-900 border-zinc-500 hi w-full highlight-link"
+                onClick={handleSubmit}
+              >
+                {post.status === 'published' ? 'Despublicar' : 'Publicar'}
+              </button>
+            </div>
 
-            <button
-              className="w-full border border-zinc-400 mb-5 h-10 highlight-link"
-              onClick={toggleCardFaceVisibility}
-            >
-              MetaDados OG
-            </button>
+            <div>
+              <button
+                className="border border-red-900 w-full h-12 text-red-800 flex justify-center items-center gap-2"
+                onClick={handleDeletePost}
+              >
+                <FaRegTrashAlt size={22} />
+                EXCLUIR POST
+              </button>
+            </div>
           </div>
-
-          {/* Botão de Publicar */}
-          <div className="mb-6 flex gap-4 justify-center">
-            <button className="px-4 py-2 text-zinc-500 hover:bg-[#dcdf1e] w-auto" onClick={handleSave}>
-              <FaRegSave size={32} />
-            </button>
-            <button
-              className="px-4 py-2 text-zinc-500 hover:bg-[#dcdf1e] w-auto"
-              onClick={() => window.open(`/posts/${postId}`, '_blank')}
-            >
-              <FaEye size={32} />
-            </button>
-            <button
-              className="px-4 py-2 border-[1px] font-montserrat font-light text-zinc-900 border-zinc-500 hi w-full highlight-link"
-              onClick={handleSubmit}
-            >
-              {post.status === 'published' ? 'Despublicar' : 'Publicar'}
-            </button>
-          </div>
-
-          <div>
-            <button
-              className="border border-red-900 w-full h-12 text-red-800 flex justify-center items-center gap-2"
-              onClick={handleDeletePost}
-            >
-              <FaRegTrashAlt size={22} />
-              EXCLUIR POST
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/** CARD META DADOS GOOGLE */}
-      <div className="col-span-4" style={{ display: isCardVisible ? 'block' : 'none' }}>
-        {/* Informações da Postagem */}
-        <div className="bg-white shadow-md">
-          <h1 className="text-2xl font-montserrat font-light mb-6">Meta Dados Google</h1>
-
-          {/** Campo para URL da publicação */}
-          <div className="mb-6">
-            <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2">
-              {' '}
-              Meta Title{' '}
-              <span className="font-montserrat font-medium text-zinc-400">
-                ({post.meta_title?.length || 0}/60)
-              </span>{' '}
-            </label>
-            <input
-              type="text"
-              name="meta_title"
-              value={post?.meta_title}
-              onChange={handleInputChange}
-              maxLength={60}
-              className=" border p-2 w-full font-montserrat font-light focus-visible:border-[#dcdf1e] focus:outline-none"
-            />
-          </div>
-
-          {/* Campo para descrição */}
-          <div className="mb-6">
-            <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2">
-              Meta descrição
-              <span className="font-montserrat font-medium text-zinc-400">
-                ({post.meta_description?.length || 0}/145)
-              </span>
-            </label>
-            <textarea
-              {...register('meta_description')}
-              id="meta_description"
-              name="meta_description"
-              value={post.meta_description}
-              onChange={handleInputChange}
-              placeholder="Resumo de 145 caracteres"
-              maxLength={145}
-              className="border p-2 w-full font-montserrat font-light focus-visible:border-[#dcdf1e] focus:outline-none min-h-[190px]" // Define um número de linhas padrão
-            />
-          </div>
-
-          <GoogleSnnipet
-            title={post.meta_title}
-            url={canonicalUrl}
-            description={post.meta_description}
-            publish_date={post.published_at}
-          />
-
-          <button
-            className="px-4 py-2 border-[1px] font-montserrat font-light text-zinc-900 border-zinc-500 hover:bg-gradient-to-t 
-                          from-[#dcdf1e] to-[#dcdf1e] bg-[length:90%_.90em] bg-no-repeat bg-[position:50%_75%] w-full"
-            onClick={toggleCardVisibility}
-          >
-            Prontinho
-          </button>
-        </div>
-      </div>
-
-      {/** CARD META DADOS OG */}
-      <div className="col-span-4" style={{ display: isCardFaceVisible ? 'block' : 'none' }}>
-        {/* Informações da Postagem */}
-        <div className="bg-white shadow-md">
-          <h1 className="text-2xl font-montserrat font-light mb-6">Meta Dados Face Instagram</h1>
-
-          {/** Campo para URL da publicação */}
-          <div className="mb-6">
-            <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2">
-              {' '}
-              Meta Title{' '}
-              <span className="font-montserrat font-medium text-zinc-400">({post.og_title?.length || 0}/60)</span>{' '}
-            </label>
-            <input
-              type="text"
-              name="og_title"
-              value={post?.og_title}
-              onChange={handleInputChange}
-              className=" border p-2 w-full font-montserrat font-light focus-visible:border-[#dcdf1e] focus:outline-none"
-              maxLength={60}
-            />
-          </div>
-
-          {/* Campo para descrição */}
-          <div className="mb-6">
-            <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2">
-              Meta descrição
-              <span className="font-montserrat font-medium text-zinc-400">
-                ({post.og_description?.length || 0}/120)
-              </span>
-            </label>
-            <textarea
-              name="og_description"
-              value={post.og_description || ''}
-              onChange={handleInputChange}
-              placeholder="Resumo de 120 caracteres"
-              maxLength={120}
-              className="border p-2 w-full font-montserrat font-light focus-visible:border-[#dcdf1e] focus:outline-none min-h-[190px]" // Define um número de linhas padrão
-            />
-          </div>
-
-          <FacebookPreview
-            imageUrl={post.feature_image}
-            url={canonicalUrl}
-            title={post.og_title}
-            description={post.og_description}
-          />
-
-          <button
-            className="px-4 py-2 border-[1px] font-montserrat font-light text-zinc-900 border-zinc-500 hover:bg-gradient-to-t 
-                                from-[#dcdf1e] to-[#dcdf1e] bg-[length:90%_.90em] bg-no-repeat bg-[position:50%_75%] w-full"
-            onClick={toggleCardFaceVisibility}
-          >
-            Prontinho
-          </button>
         </div>
       </div>
 

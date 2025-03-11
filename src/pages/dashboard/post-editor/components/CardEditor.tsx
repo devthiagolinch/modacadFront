@@ -8,13 +8,15 @@ import { CardTagInfo } from './CardTagInfo';
 
 interface ICardEditorProps {
   post: IPostDataRequest;
+  setPost: React.Dispatch<React.SetStateAction<IPostDataRequest>>;
+  postId?: string;
 }
 
-export const CardEditor: React.FC<ICardEditorProps> = ({ post }) => {
+export const CardEditor: React.FC<ICardEditorProps> = ({ post, setPost }) => {
   return (
     <div className="col-span-4 fixed top-0 right-0 w-1/4 h-full bg-white shadow-lg p-4 overflow-auto pt-16">
       <AccordionItem title="Informações básicas" open>
-        <CardBasicInfo title="Testando" feature_image="" content="" image_caption="" />
+        <CardBasicInfo post={post} setPost={setPost} />
       </AccordionItem>
       <AccordionItem title="Meta Google">
         <CardMetaGoogle isVisible={true} props={post} />

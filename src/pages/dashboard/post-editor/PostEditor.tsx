@@ -17,7 +17,6 @@ import { IPostDataRequest, PostsService } from '../../../shared/api/posts/PostsS
 import { LayoutDashboard } from '../../../shared/layouts';
 import { FaBold, FaItalic, FaLink, FaList, FaQuoteLeft } from 'react-icons/fa';
 import Placeholder from '@tiptap/extension-placeholder';
-import { CardBasicInfo } from './components/CardBasicInfo';
 import { InstagramEmbed } from '../../../shared/components/tiptap extensions/instagram/instagramEmbed';
 import { CardEditor } from './components/CardEditor';
 
@@ -468,7 +467,7 @@ export const PostEditor = () => {
             />
           </div>
         </div>
-        {openCard && <CardEditor post={post} />}
+        {openCard && <CardEditor post={post} setPost={setPost} postId={postId} />}
       </div>
     </LayoutDashboard>
   );

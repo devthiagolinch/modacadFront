@@ -1,10 +1,16 @@
 import { IPostDataRequest, PostsService } from '../../../../shared/api/posts/PostsService';
 import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
+import GoogleSnnipet from './snnipets/GoogleSnnipetsPreview';
 
 interface CardDTO {
   isVisible: boolean; // Propriedade para controlar a visibilidade
   props: IPostDataRequest;
+}
+
+interface FormData {
+  meta_description: string;
 }
 
 const defaultPost: IPostDataRequest = {
@@ -40,6 +46,8 @@ const defaultPost: IPostDataRequest = {
 
 export const CardMetaGoogle: React.FC<CardDTO> = ({ isVisible, props }) => {
   const { postId } = useParams<{ postId: string }>();
+  const { register } = useForm<FormData>();
+
   const [post, setPost] = useState<IPostDataRequest>(defaultPost);
   const [isCardVisible, setIsCardVisible] = useState(isVisible);
 
@@ -103,37 +111,56 @@ export const CardMetaGoogle: React.FC<CardDTO> = ({ isVisible, props }) => {
   return (
     <div className="col-span-4" style={{ display: isCardVisible ? 'block' : 'none' }}>
       {/* Informações da Postagem */}
-      <div className="bg-white shadow-md p-6">
+      <div className="bg-white shadow-md">
         <h1 className="text-2xl font-montserrat font-light mb-6">Meta Dados Google</h1>
 
         {/** Campo para URL da publicação */}
         <div className="mb-6">
-          <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2"> Meta Title </label>
+          <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2">
+            {' '}
+            Meta Title{' '}
+            <span className="font-montserrat font-medium text-zinc-400">({post.meta_title?.length || 0}/60)</span>{' '}
+          </label>
           <input
             type="text"
             name="meta_title"
             value={post?.meta_title}
             onChange={handleInputChange}
+            maxLength={60}
             className=" border p-2 w-full font-montserrat font-light focus-visible:border-[#dcdf1e] focus:outline-none"
           />
         </div>
 
         {/* Campo para descrição */}
         <div className="mb-6">
-          <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2">Meta descrição</label>
+          <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2">
+            Meta descrição
+            <span className="font-montserrat font-medium text-zinc-400">
+              ({post.meta_description?.length || 0}/145)
+            </span>
+          </label>
           <textarea
+            {...register('meta_description')}
+            id="meta_description"
             name="meta_description"
-            value={post.meta_description || ''}
+            value={post.meta_description}
             onChange={handleInputChange}
-            placeholder="Resumo de 300 caracteres"
-            maxLength={300}
+            placeholder="Resumo de 145 caracteres"
+            maxLength={145}
             className="border p-2 w-full font-montserrat font-light focus-visible:border-[#dcdf1e] focus:outline-none min-h-[190px]" // Define um número de linhas padrão
           />
         </div>
 
+        <GoogleSnnipet
+          title={post.meta_title}
+          url={post.canonicalUrl}
+          description={post.meta_description}
+          publish_date={post.published_at}
+        />
+
         <button
           className="px-4 py-2 border-[1px] font-montserrat font-light text-zinc-900 border-zinc-500 hover:bg-gradient-to-t 
-                      from-[#dcdf1e] to-[#dcdf1e] bg-[length:90%_.90em] bg-no-repeat bg-[position:50%_75%] w-full"
+                              from-[#dcdf1e] to-[#dcdf1e] bg-[length:90%_.90em] bg-no-repeat bg-[position:50%_75%] w-full"
           onClick={toggleCardVisibility}
         >
           Prontinho
