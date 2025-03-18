@@ -86,6 +86,10 @@ export const CreateMember: React.FC<ICreateMemberProps> = ({ user, onCreated }) 
         name: user.name,
         image: null,
       });
+
+      if (user.avatar) {
+        setImagePreview(user.avatar);
+      }
     }
   }, [reset, user]);
 
@@ -126,10 +130,10 @@ export const CreateMember: React.FC<ICreateMemberProps> = ({ user, onCreated }) 
                 className={`p-4 border-2 border-dashed rounded-md cursor-pointer min-h-[200px] flex items-center justify-between ${isDragActive ? 'border-blue-500' : 'border-gray-300'} hover:border-blue-500`}
               >
                 <input {...getInputProps()} />
-                {imagePreview && field.value ? (
+                {imagePreview ? (
                   <div className="flex items-center gap-2">
-                    <img src={imagePreview} alt="Preview" className="w-20 h-20 rounded-full object-cover" />
-                    <p>{field.value.name}</p>
+                    <img src={imagePreview} alt="Preview" className="w-32 h-32 rounded-full object-cover" />
+                    {field.value && <p>{field.value.name}</p>}
                   </div>
                 ) : (
                   <p className="text-gray-500">Arraste uma imagem aqui ou clique para selecionar</p>
