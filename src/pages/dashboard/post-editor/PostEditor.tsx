@@ -16,12 +16,13 @@ import Placeholder from '@tiptap/extension-placeholder';
 
 import { InstagramEmbed } from '../../../shared/components/tiptap extensions/instagram/instagramEmbed';
 import { IPostDataRequest, PostsService } from '../../../shared/api/posts/PostsService';
-import { LayoutDashboard } from '../../../shared/layouts';
-import { CardEditor } from './components/CardEditor';
 import { transformPostResponse } from '../../../shared/utils/postUtils';
+import { LayoutDashboard } from '../../../shared/layouts';
+import useDebounce from '../../../shared/hook/useDebounce';
+import { CardEditor } from './components/CardEditor';
 
 const defaultPost: IPostDataRequest = {
-  title: '',
+  title: 'Insira o título',
   description: '',
   feature_image: null,
   type: 'texto',
@@ -60,6 +61,12 @@ export const PostEditor = () => {
   const [uploading, setUploading] = useState(false);
 
   const [openCard, setOpenCard] = useState(false);
+
+  const debouncedPostContent = useDebounce(post.content, 1000);
+  useEffect(() => {
+    if (post.content === '') return;
+    console.log('conteúdo salvo com sucesso');
+  }, [debouncedPostContent]);
 
   const editor = useEditor({
     extensions: [
@@ -112,14 +119,13 @@ export const PostEditor = () => {
         return match;
       });
       setPost((prev) => ({ ...prev, content: fixedHtml }));
-      console.log('O conteúdo foi atualizado');
     },
   });
 
   useEffect(() => {
     const interval = setInterval(() => {
-      console.log('Log a cada 5 segundos');
-    }, 5000);
+      console.log('Log a cada 30 segundos');
+    }, 30000);
 
     return () => clearInterval(interval);
   }, []);
