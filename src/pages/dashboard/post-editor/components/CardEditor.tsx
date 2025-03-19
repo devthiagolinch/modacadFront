@@ -4,7 +4,6 @@ import { AccordionItem } from '../../../../shared/components/ui/accordion/Accord
 import { CardBasicInfo } from './CardBasicInfo';
 import { CardMetaGoogle } from './CardMetaGoogle';
 import { CardMetaOG } from './CardMetaOG';
-import { CardTagInfo } from './CardTagInfo';
 import { CardActions } from './CardActions';
 
 interface ICardEditorProps {
@@ -24,9 +23,6 @@ export const CardEditor: React.FC<ICardEditorProps> = ({ post, setPost, postId }
       </AccordionItem>
       <AccordionItem title="Meta OG">
         <CardMetaOG isVisible={true} props={post} onChange={() => {}} />
-      </AccordionItem>
-      <AccordionItem title="Tags">
-        <CardTagInfo onClose={() => {}} onUpdated={() => {}} selectedTag={null} />
       </AccordionItem>
       <div className="mt-4">
         <CardActions post={post} postId={postId} />
