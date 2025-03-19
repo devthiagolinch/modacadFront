@@ -2,7 +2,7 @@ import { IPostDataRequest } from '../../../../shared/api/posts/PostsService';
 import { useForm } from 'react-hook-form';
 import GoogleSnnipet from './snnipets/GoogleSnnipetsPreview';
 
-interface CardDTO {
+interface ICardMetaGoogleProps {
   post: IPostDataRequest;
   setPost: React.Dispatch<React.SetStateAction<IPostDataRequest>>;
 }
@@ -11,7 +11,7 @@ interface FormData {
   meta_description: string;
 }
 
-export const CardMetaGoogle: React.FC<CardDTO> = ({ post, setPost }) => {
+export const CardMetaGoogle: React.FC<ICardMetaGoogleProps> = ({ post, setPost }) => {
   const { register } = useForm<FormData>();
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

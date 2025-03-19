@@ -22,7 +22,7 @@ export const CardEditor: React.FC<ICardEditorProps> = ({ post, setPost, postId }
         <CardMetaGoogle post={post} setPost={setPost} />
       </AccordionItem>
       <AccordionItem title="Meta OG">
-        <CardMetaOG isVisible={true} props={post} onChange={() => {}} />
+        <CardMetaOG post={post} setPost={setPost} />
       </AccordionItem>
       <div className="mt-4">
         <CardActions post={post} postId={postId} />
