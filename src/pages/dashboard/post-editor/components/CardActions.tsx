@@ -1,7 +1,8 @@
-import { FaEye, FaRegSave, FaRegTrashAlt } from 'react-icons/fa';
-import { IPostDataRequest, PostsService } from '../../../../shared/api/posts/PostsService';
-import { useNavigate } from 'react-router-dom';
 import { Tooltip } from '../../../../shared/components/ui/tooltip/Tooltip';
+import { FaEye, FaRegSave, FaRegTrashAlt } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+
+import { IPostDataRequest, PostsService } from '../../../../shared/api/posts/PostsService';
 
 interface ICardActionProps {
   post: IPostDataRequest;

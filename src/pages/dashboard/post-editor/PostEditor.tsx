@@ -90,11 +90,11 @@ export const PostEditor = () => {
       Placeholder.configure({
         placeholder: ({ node }) => {
           if (node.type.name === 'heading') {
-            return 'Insira o título aqui...'; // Placeholder para título
+            return 'Insira o título aqui...';
           }
-          return 'Escreva o conteúdo do post aqui...'; // Placeholder para o conteúdo principal
+          return 'Escreva o conteúdo do post aqui...';
         },
-        emptyEditorClass: 'is-editor-empty', // Classe CSS para o editor vazio
+        emptyEditorClass: 'is-editor-empty',
       }),
     ],
     editorProps: {
@@ -102,23 +102,27 @@ export const PostEditor = () => {
         class: 'prose-2xl focus:outline-none w-full min-h-screen-2 font-monteserrat text-[12px]',
       },
     },
-
     content: post.content,
     onUpdate: ({ editor }) => {
       const jsonContent = editor.getHTML();
-      // Verifica e corrige qualquer tag <blockquote> errada
       const fixedHtml = jsonContent.replace(/<blockquote.*?>(.*?)<\/blockquote>/g, (match, content) => {
-        // Se encontrar um link do Instagram, converta de volta para embed
         if (content.includes('instagram.com')) {
           return `<blockquote class="instagram-media">${content}</blockquote>`;
         }
         return match;
       });
-
       setPost((prev) => ({ ...prev, content: fixedHtml }));
-      // setPost((prev) => ({ ...prev, content: jsonContent }));
+      console.log('O conteúdo foi atualizado');
     },
   });
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      console.log('Log a cada 5 segundos');
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     if (postId && postId !== 'novo') {
