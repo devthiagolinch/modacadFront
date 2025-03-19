@@ -2,7 +2,7 @@ import '../../../assets/css/tiptap.css';
 
 import { useCallback, useEffect, useState } from 'react';
 
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { FaBold, FaItalic, FaLink, FaList, FaQuoteLeft } from 'react-icons/fa';
 import { FiDownload } from 'react-icons/fi';
 import { FaImage } from 'react-icons/fa6';
@@ -53,6 +53,7 @@ const defaultPost: IPostDataRequest = {
 };
 
 export const PostEditor = () => {
+  const navigate = useNavigate();
   const { postId } = useParams<{ postId: string }>();
 
   const [post, setPost] = useState(defaultPost);
@@ -62,11 +63,31 @@ export const PostEditor = () => {
 
   const [openCard, setOpenCard] = useState(false);
 
-  const debouncedPostContent = useDebounce(post.content, 1000);
+  const debouncedPostContent = useDebounce(post, 1000);
+
   useEffect(() => {
     if (post.content === '') return;
-    console.log('conteúdo salvo com sucesso');
+    handleSavePost();
   }, [debouncedPostContent]);
+
+  const handleSavePost = () => {
+    if (postId && postId !== 'novo') {
+      PostsService.updateById(postId, post).then((response) => {
+        if (response instanceof Error) {
+          console.error(response.message);
+          return;
+        }
+      });
+    } else {
+      PostsService.create(post).then((response) => {
+        if (response instanceof Error) {
+          console.error(response.message);
+          return;
+        }
+        navigate(`/posts/${response}/editar`);
+      });
+    }
+  };
 
   const editor = useEditor({
     extensions: [
@@ -121,14 +142,6 @@ export const PostEditor = () => {
       setPost((prev) => ({ ...prev, content: fixedHtml }));
     },
   });
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      console.log('Log a cada 30 segundos');
-    }, 30000);
-
-    return () => clearInterval(interval);
-  }, []);
 
   useEffect(() => {
     if (postId && postId !== 'novo') {
