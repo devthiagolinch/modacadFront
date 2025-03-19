@@ -19,7 +19,7 @@ export const CardEditor: React.FC<ICardEditorProps> = ({ post, setPost, postId }
         <CardBasicInfo post={post} setPost={setPost} />
       </AccordionItem>
       <AccordionItem title="Meta Google">
-        <CardMetaGoogle isVisible={true} props={post} />
+        <CardMetaGoogle post={post} setPost={setPost} />
       </AccordionItem>
       <AccordionItem title="Meta OG">
         <CardMetaOG isVisible={true} props={post} onChange={() => {}} />
