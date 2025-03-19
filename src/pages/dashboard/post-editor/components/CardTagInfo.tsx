@@ -6,7 +6,11 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { ITagData, TagsService } from '../../../../shared/api/tags/TagsService';
 
-interface IFormCreateTag extends Pick<ITagData, 'name' | 'slug' | 'description' | 'meta_title' | 'meta_description' | 'og_title' | 'og_description'> {}
+interface IFormCreateTag
+  extends Pick<
+    ITagData,
+    'name' | 'slug' | 'description' | 'meta_title' | 'meta_description' | 'og_title' | 'og_description'
+  > {}
 
 const createTagSchema: yup.ObjectSchema<IFormCreateTag> = yup.object({
   name: yup.string().required(),
@@ -16,7 +20,7 @@ const createTagSchema: yup.ObjectSchema<IFormCreateTag> = yup.object({
   meta_description: yup.string().nullable(),
   og_title: yup.string().nullable(),
   og_description: yup.string().nullable(),
-  og_image: yup.string().nullable()
+  og_image: yup.string().nullable(),
 });
 
 interface ICreateTagProps {
@@ -33,7 +37,7 @@ const initialTag = {
   meta_description: '',
   og_title: '',
   og_description: '',
-  og_image: ''
+  og_image: '',
 };
 
 type TMessage = { type: 'success' | 'danger'; text: string };
@@ -44,7 +48,6 @@ export const CardTagInfo: React.FC<ICreateTagProps> = ({ onUpdated, selectedTag,
   const [message, setMessage] = useState<TMessage>({ type: 'success', text: '' });
 
   const { handleSubmit, register, reset, watch } = useForm<IFormCreateTag>({ resolver: yupResolver(createTagSchema) });
-  
 
   const onSubmit: SubmitHandler<IFormCreateTag> = async (data) => {
     // Se houver tag selecionada, atualiza. Senão, cria uma nova
@@ -64,7 +67,7 @@ export const CardTagInfo: React.FC<ICreateTagProps> = ({ onUpdated, selectedTag,
         });
         setImageFacebook(null);
         onUpdated();
-        onClose()
+        onClose();
       });
     }
   };
@@ -86,7 +89,7 @@ export const CardTagInfo: React.FC<ICreateTagProps> = ({ onUpdated, selectedTag,
 
   useEffect(() => {
     if (selectedTag) {
-      setSlug(selectedTag.slug)
+      setSlug(selectedTag.slug);
       reset(selectedTag);
     } else {
       reset(initialTag);
@@ -237,20 +240,23 @@ export const CardTagInfo: React.FC<ICreateTagProps> = ({ onUpdated, selectedTag,
           )}
         </div>
       </div>
-        <div className="flex flex-wrap gap-7 justify-center h-auto mt-5">
-            {/* {message.text && <Alert color={message.type}>{message.text}</Alert>} */}
-            <button
-                className="px-4 py-2 border-[1px] font-montserrat font-light text-zinc-900 border-zinc-500 hover:bg-gradient-to-t 
+      <div className="flex flex-wrap gap-7 justify-center h-auto mt-5">
+        {/* {message.text && <Alert color={message.type}>{message.text}</Alert>} */}
+        <button
+          className="px-4 py-2 border-[1px] font-montserrat font-light text-zinc-900 border-zinc-500 hover:bg-gradient-to-t 
                         from-[#dcdf1e] to-[#dcdf1e] bg-[length:90%_.90em] bg-no-repeat bg-[position:50%_75%] min-w-56"
-                type="submit"
-            >
-                Prontinho
-            </button>
-            <button className="text-red-500 border border-red-500 font-medium hover:bg-red-500 hover:text-white px-4 py-2" type="button" onClick={handleDelete}>
-                EXCLUIR
-            </button>
-          
-        </div>
+          type="submit"
+        >
+          Prontinho
+        </button>
+        <button
+          className="text-red-500 border border-red-500 font-medium hover:bg-red-500 hover:text-white px-4 py-2"
+          type="button"
+          onClick={handleDelete}
+        >
+          EXCLUIR
+        </button>
+      </div>
     </form>
   );
 };

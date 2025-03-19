@@ -8,7 +8,9 @@ import { ISubjectData, SubjectsService } from '../../../../shared/api/subjects/S
 import { IPostDataRequest } from '../../../../shared/api/posts/PostsService';
 import { IUserData, UsersService } from '../../../../shared/api/users/UserServices';
 import { ITagData, TagsService } from '../../../../shared/api/tags/TagsService';
+import { Dialog } from '../../../../shared/components/ui/dialog/Dialog';
 import { CardTagInfo } from './CardTagInfo';
+import { toggleItemInArray } from '../../../../shared/utils/arrayUtils';
 
 interface ICardBasicInfoProps {
   post: IPostDataRequest;
@@ -17,20 +19,19 @@ interface ICardBasicInfoProps {
 }
 
 export const CardBasicInfo: React.FC<ICardBasicInfoProps> = ({ post, setPost, postId }) => {
-  const [isCardTagVisible, setCardTagVisible] = useState(false);
-
-  const [tagsOptions, setTagsOptions] = useState<ITagData[]>([]);
-  const [_tags, setTags] = useState<ITagData[]>([]);
+  const [isEditTagDialogOpen, setIsEditTagDialogOpen] = useState(false);
   const [selectedTag, setSelectedTag] = useState<ITagData | null>(null);
 
+  const [tagsOptions, setTagsOptions] = useState<ITagData[]>([]);
   const [subjectsOptions, setSubjectsOptions] = useState<ISubjectData[]>([]);
-
   const [usersOptions, setUsersOptions] = useState<IUserData[]>([]);
 
-  const toggleCardTagVisibility = () => {
-    fetchTags();
-    setCardTagVisible((prev) => !prev);
-    window.scrollTo(0, 0);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredTags, setFilteredTags] = useState<ITagData[]>(tagsOptions);
+
+  const handleEditTag = (tag: ITagData) => {
+    setSelectedTag(tag);
+    setIsEditTagDialogOpen(true);
   };
 
   useEffect(() => {
@@ -48,13 +49,18 @@ export const CardBasicInfo: React.FC<ICardBasicInfoProps> = ({ post, setPost, po
     );
   }, []);
 
-  // Canonical URL
-  let canonicalUrl;
-  if (post.canonicalUrl) {
-    canonicalUrl = post.canonicalUrl.includes('https://blog.modacad.com.br/')
-      ? post.canonicalUrl.split('https://blog.modacad.com.br/', 2).pop()
+  const getCanonicalUrl = () => {
+    if (!post.canonicalUrl) return '';
+
+    return post.canonicalUrl.startsWith('https://blog.modacad.com.br/')
+      ? post.canonicalUrl.replace('https://blog.modacad.com.br/', '')
       : post.canonicalUrl;
-  }
+  };
+
+  const onCloseDialog = () => {
+    setIsEditTagDialogOpen(false);
+    setSelectedTag(null);
+  };
 
   const handleDateChange = (value: Date | null | { startDate: Date | null; endDate: Date | null }) => {
     let selectedDate;
@@ -73,43 +79,13 @@ export const CardBasicInfo: React.FC<ICardBasicInfoProps> = ({ post, setPost, po
     }));
   };
 
-  // Tags
-  const fetchTags = () => {
-    TagsService.getAll().then((response) => {
-      if (response instanceof Error) {
-        console.error(response);
-        return;
-      }
-      setTags(response); // Atualiza a lista global de tags
-
-      // Atualiza as tags associadas ao post
-      setPost((prevPost) => ({
-        ...prevPost,
-        tags: response.filter((tag) => prevPost.tags.some((postTag) => postTag.id === tag.id)),
-      }));
-    });
-  };
-
-  // Função chamada após a atualização da tag
-  const onUpdateTag = () => {
-    setSelectedTag(null); // Reseta a tag selecionada
-  };
-
   const handleChangeTags = (newTag: ITagData) => {
-    setPost((prevPost) => {
-      let updatedTags: ITagData[] = [];
-      updatedTags = [...prevPost.tags];
-
-      const isSelected = updatedTags.includes(newTag);
-      isSelected ? (updatedTags = updatedTags.filter((tag) => tag !== newTag)) : updatedTags.push(newTag);
-
-      return { ...prevPost, tags: updatedTags };
-    });
+    setPost((prevPost) => ({
+      ...prevPost,
+      tags: toggleItemInArray(prevPost.tags, newTag),
+    }));
     setSearchTerm('');
   };
-
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filteredTags, setFilteredTags] = useState<ITagData[]>(tagsOptions);
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value.toLowerCase();
@@ -135,69 +111,31 @@ export const CardBasicInfo: React.FC<ICardBasicInfoProps> = ({ post, setPost, po
   };
 
   const handleSubjectSelect = (newSubject: ISubjectData) => {
-    setPost((prevPost) => {
-      let updatedSubjects: ISubjectData[] = [];
-      updatedSubjects = [...prevPost.subjects];
-
-      const isSelected = updatedSubjects.some((s) => s.id === newSubject.id);
-      if (isSelected) {
-        updatedSubjects = updatedSubjects.filter((subject) => subject.id !== newSubject.id);
-      } else {
-        if (post.subjects.length < 3) {
-          updatedSubjects.push(newSubject);
-        }
-      }
-
-      return { ...prevPost, subjects: updatedSubjects };
-    });
+    setPost((prevPost) => ({
+      ...prevPost,
+      subjects: toggleItemInArray(prevPost.subjects, newSubject, 'id', 3), // Limite de 3 subjects
+    }));
   };
 
   const handleUserSelect = (newUser: IUserData) => {
-    setPost((prevPost) => {
-      let updatedAdmins: IUserData[] = [];
-      updatedAdmins = [...prevPost.admins];
-
-      const isSelected = updatedAdmins.some((admin) => admin.id === newUser.id);
-      if (isSelected) {
-        updatedAdmins = updatedAdmins.filter((admin) => admin.id !== newUser.id);
-      } else {
-        updatedAdmins.push(newUser);
-      }
-
-      return { ...prevPost, admins: updatedAdmins };
-    });
+    setPost((prevPost) => ({
+      ...prevPost,
+      admins: toggleItemInArray(prevPost.admins, newUser, 'id'),
+    }));
   };
 
   const handleEditorSelect = (newUser: IUserData) => {
-    setPost((prevPost) => {
-      let updatedEditors: IUserData[] = [];
-      updatedEditors = [...prevPost.editors];
-
-      const isSelected = updatedEditors.some((admin) => admin.id === newUser.id);
-      if (isSelected) {
-        updatedEditors = updatedEditors.filter((admin) => admin.id !== newUser.id);
-      } else {
-        updatedEditors.push(newUser);
-      }
-
-      return { ...prevPost, editors: updatedEditors };
-    });
+    setPost((prevPost) => ({
+      ...prevPost,
+      editors: toggleItemInArray(prevPost.editors, newUser, 'id'),
+    }));
   };
 
   const handleCuradorSelect = (newUser: IUserData) => {
-    setPost((prevPost) => {
-      let updatedCurators: IUserData[] = [];
-      updatedCurators = [...prevPost.curadors];
-
-      const isSelected = updatedCurators.some((admin) => admin.id === newUser.id);
-      if (isSelected) {
-        updatedCurators = updatedCurators.filter((admin) => admin.id !== newUser.id);
-      } else {
-        updatedCurators.push(newUser);
-      }
-
-      return { ...prevPost, curadors: updatedCurators };
-    });
+    setPost((prevPost) => ({
+      ...prevPost,
+      curadors: toggleItemInArray(prevPost.curadors, newUser, 'id'),
+    }));
   };
 
   return (
@@ -215,11 +153,13 @@ export const CardBasicInfo: React.FC<ICardBasicInfoProps> = ({ post, setPost, po
             <input
               type="text"
               name="canonicalUrl"
-              value={canonicalUrl}
+              value={getCanonicalUrl()}
               onChange={handleInputChange}
               className=" border p-2 w-full font-montserrat font-light focus-visible:border-[#dcdf1e] focus:outline-none"
             />
-            <span className="text-sm text-zinc-500 font-light font-montserrat">blog.modacad.com.br/{canonicalUrl}</span>
+            <span className="text-sm text-zinc-500 font-light font-montserrat">
+              blog.modacad.com.br/{getCanonicalUrl()}
+            </span>
           </div>
 
           <div className="flex flex-col items-start space-y-2 mb-6">
@@ -263,7 +203,7 @@ export const CardBasicInfo: React.FC<ICardBasicInfoProps> = ({ post, setPost, po
                     onClick={() => {
                       setSelectedTag(tag);
                     }}
-                    onDoubleClick={toggleCardTagVisibility}
+                    onDoubleClick={() => handleEditTag(tag)}
                     key={index}
                     className="inline-block bg-[#dcdf1e] text-black font-light font-montserrat px-3 py-1 mr-2 mb-2 cursor-pointer text-xs break-all flex items-center"
                   >
@@ -655,7 +595,7 @@ export const CardBasicInfo: React.FC<ICardBasicInfoProps> = ({ post, setPost, po
             </Menu>
           </div>
 
-          {/* Curdador(a) */}
+          {/* Curador(a) */}
           <div className="mb-6">
             <label className="block text-sm font-montserrat font-medium text-gray-700 mb-2">
               Curador(a) de imagens
@@ -738,10 +678,10 @@ export const CardBasicInfo: React.FC<ICardBasicInfoProps> = ({ post, setPost, po
         </div>
       </div>
 
-      {/** CARD PARA ATUALIZAR TAG */}
-      <div style={{ display: isCardTagVisible ? 'block' : 'none' }}>
-        <CardTagInfo onUpdated={onUpdateTag} selectedTag={selectedTag} onClose={() => toggleCardTagVisibility()} />
-      </div>
+      {/* Dialog para atualizar tag */}
+      <Dialog isOpen={isEditTagDialogOpen} onClose={onCloseDialog}>
+        <CardTagInfo onClose={onCloseDialog} onUpdated={onCloseDialog} selectedTag={selectedTag} />
+      </Dialog>
     </div>
   );
 };
