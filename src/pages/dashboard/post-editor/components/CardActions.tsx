@@ -56,7 +56,7 @@ export const CardActions: React.FC<ICardActionProps> = ({ post, postId }) => {
     }
   };
 
-  const handleDeletePost = async () => {
+  const handleDelete = async () => {
     if (!postId) {
       console.error('postId não encontrado');
       return;
@@ -89,7 +89,7 @@ export const CardActions: React.FC<ICardActionProps> = ({ post, postId }) => {
       <div>
         <button
           className="border border-red-900 w-full h-12 text-red-800 flex justify-center items-center gap-2"
-          onClick={handleDeletePost}
+          onClick={handleDelete}
         >
           <FaRegTrashAlt size={22} />
           EXCLUIR POST
