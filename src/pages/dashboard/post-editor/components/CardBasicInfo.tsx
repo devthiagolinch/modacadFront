@@ -34,31 +34,19 @@ export const CardBasicInfo: React.FC<ICardBasicInfoProps> = ({ post, setPost, po
   };
 
   useEffect(() => {
-    SubjectsService.getAll().then((response) => {
-      if (response instanceof Error) {
-        console.error(response.message);
-      } else {
-        setSubjectsOptions(response);
+    Promise.all([TagsService.getAll(), SubjectsService.getAll(), UsersService.getAllStaff()]).then(
+      ([tags, subjects, users]) => {
+        if (tags instanceof Error || subjects instanceof Error || users instanceof Error) {
+          console.error('Error fetching data');
+          return;
+        }
+        setTagsOptions(tags);
+        setFilteredTags(tags.slice(0, 30));
+        setSubjectsOptions(subjects);
+        setUsersOptions(users.staffs);
       }
-    });
-
-    TagsService.getAll().then((response) => {
-      if (response instanceof Error) {
-        console.error(response.message);
-      } else {
-        setTagsOptions(response);
-        setFilteredTags(response.slice(0, 30));
-      }
-    });
-
-    UsersService.getAllStaff().then((response) => {
-      if (response instanceof Error) {
-        console.error(response.message);
-        return;
-      }
-      setUsersOptions(response.staffs);
-    });
-  }, [setSelectedTag]);
+    );
+  }, []);
 
   // Canonical URL
   let canonicalUrl;
