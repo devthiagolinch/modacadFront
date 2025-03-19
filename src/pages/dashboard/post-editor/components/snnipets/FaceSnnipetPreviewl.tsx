@@ -12,7 +12,6 @@ export const FacebookPreview: React.FC<FacebookPreviewProps> = ({ imageUrl, url,
     <span className="text-sm">Facebook preview</span>
     {/* Imagem de destaque */}
     <div className="h-48 w-full bg-cover bg-center" style={{ backgroundImage: `url(${imageUrl})` }}></div>
-
     {/* Conteúdo */}
     <div className="bg-slate-100 p-4">
       <p className="text-xs text-gray-500 uppercase">blog.modacad.com.br/{url}</p>
