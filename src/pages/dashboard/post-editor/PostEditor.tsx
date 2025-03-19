@@ -1,24 +1,24 @@
-import { useCallback, useEffect, useState } from 'react';
-
 import '../../../assets/css/tiptap.css';
 
+import { useCallback, useEffect, useState } from 'react';
+
 import { useParams } from 'react-router-dom';
+import { FaBold, FaItalic, FaLink, FaList, FaQuoteLeft } from 'react-icons/fa';
+import { FiDownload } from 'react-icons/fi';
+import { FaImage } from 'react-icons/fa6';
 
 import { BubbleMenu, EditorContent, FloatingMenu, useEditor } from '@tiptap/react';
-import StarterKit from '@tiptap/starter-kit';
-import Link from '@tiptap/extension-link';
 import TextStyle from '@tiptap/extension-text-style';
+import StarterKit from '@tiptap/starter-kit';
 import Image from '@tiptap/extension-image';
+import Link from '@tiptap/extension-link';
+import Placeholder from '@tiptap/extension-placeholder';
 
-import { FaImage } from 'react-icons/fa6';
-import { FiDownload } from 'react-icons/fi';
-
+import { InstagramEmbed } from '../../../shared/components/tiptap extensions/instagram/instagramEmbed';
 import { IPostDataRequest, PostsService } from '../../../shared/api/posts/PostsService';
 import { LayoutDashboard } from '../../../shared/layouts';
-import { FaBold, FaItalic, FaLink, FaList, FaQuoteLeft } from 'react-icons/fa';
-import Placeholder from '@tiptap/extension-placeholder';
-import { InstagramEmbed } from '../../../shared/components/tiptap extensions/instagram/instagramEmbed';
 import { CardEditor } from './components/CardEditor';
+import { transformPostResponse } from '../../../shared/utils/postUtils';
 
 const defaultPost: IPostDataRequest = {
   title: '',
@@ -125,47 +125,11 @@ export const PostEditor = () => {
       PostsService.getById(postId).then((response) => {
         if (response instanceof Error) {
           console.error(response.message);
-        } else {
-          const meta = Array.isArray(response.meta) && response.meta.length > 0 ? response.meta[0] : {};
-
-          const stripHtml = (html: string) => {
-            const tmp = document.createElement('div');
-            tmp.innerHTML = html;
-            return tmp.textContent || tmp.innerText || '';
-          };
-
-          setPost({
-            title: response.title,
-            description: response.description,
-            feature_image: response.feature_image,
-            type: response.type,
-            content: response.content,
-            status: response.status,
-            images: response.images ? response.images.join(',') : null,
-            visibility: response.visibility,
-            admins: response.admins.map((admin) => admin),
-            editors: response.editors.map((editor) => editor),
-            curadors: response.curadors.map((curador) => curador),
-            published_at: response.published_at,
-            canonicalUrl: response.canonicalUrl,
-            tags: response.tags.map((tag) => tag),
-            subjects: response.subjects.map((subject) => subject),
-            og_image: meta?.og_image ?? '',
-            og_title: meta?.og_title ?? '',
-            og_description: meta?.og_description ?? '',
-            twitter_image: meta?.twitter_image ?? '',
-            twitter_title: meta?.twitter_title ?? '',
-            twitter_description: meta?.twitter_description ?? '',
-            meta_title: meta?.meta_title ?? '',
-            meta_description: meta?.meta_description ?? '',
-            email_subject: meta?.email_subject ?? '',
-            frontmatter: meta?.frontmatter ?? '',
-            feature_image_alt: meta?.feature_image_alt ?? '',
-            email_only: meta?.email_only ?? '',
-            feature_image_caption: meta?.feature_image_caption ? stripHtml(meta.feature_image_caption) : '', // Remove as tags HTML
-          });
-          setFeatureImageUrl(response.feature_image);
+          return;
         }
+        const transformedPost = transformPostResponse(response);
+        setPost(transformedPost);
+        setFeatureImageUrl(response.feature_image);
       });
     }
   }, [postId, editor]);
