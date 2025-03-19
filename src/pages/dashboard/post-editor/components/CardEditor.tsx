@@ -15,6 +15,9 @@ interface ICardEditorProps {
 export const CardEditor: React.FC<ICardEditorProps> = ({ post, setPost, postId }) => {
   return (
     <div className="col-span-4 fixed top-0 right-0 w-1/4 h-full bg-white shadow-lg p-4 overflow-auto pt-16">
+      <div>
+        <CardActions post={post} postId={postId} />
+      </div>
       <AccordionItem title="Informações básicas" open>
         <CardBasicInfo post={post} setPost={setPost} />
       </AccordionItem>
@@ -24,9 +27,6 @@ export const CardEditor: React.FC<ICardEditorProps> = ({ post, setPost, postId }
       <AccordionItem title="Meta OG">
         <CardMetaOG post={post} setPost={setPost} />
       </AccordionItem>
-      <div className="mt-4">
-        <CardActions post={post} postId={postId} />
-      </div>
     </div>
   );
 };

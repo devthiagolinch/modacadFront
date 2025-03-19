@@ -1,6 +1,7 @@
 import { FaEye, FaRegSave, FaRegTrashAlt } from 'react-icons/fa';
 import { IPostDataRequest, PostsService } from '../../../../shared/api/posts/PostsService';
 import { useNavigate } from 'react-router-dom';
+import { Tooltip } from '../../../../shared/components/ui/tooltip/Tooltip';
 
 interface ICardActionProps {
   post: IPostDataRequest;
@@ -66,33 +67,32 @@ export const CardActions: React.FC<ICardActionProps> = ({ post, postId }) => {
   };
 
   return (
-    <div>
-      {/* Botão de Publicar */}
-      <div className="mb-6 flex gap-4 justify-center">
-        <button className="px-4 py-2 text-zinc-500 hover:bg-[#dcdf1e] w-auto" onClick={handleSave}>
-          <FaRegSave size={32} />
-        </button>
-        <button
-          className="px-4 py-2 text-zinc-500 hover:bg-[#dcdf1e] w-auto"
-          onClick={() => window.open(`/posts/${postId}`, '_blank')}
-        >
-          <FaEye size={32} />
-        </button>
+    <div className="p-4">
+      <div className="mb-6 flex gap-4 justify-between flex-wrap">
+        <Tooltip label="Salvar">
+          <button className="px-4 py-2 text-zinc-500 hover:bg-[#dcdf1e] w-auto" onClick={handleSave}>
+            <FaRegSave size={32} />
+          </button>
+        </Tooltip>
+        <Tooltip label="Visualizar">
+          <a href={`/posts/${postId}`} target="_blank">
+            <button className="px-4 py-2 text-zinc-500 hover:bg-[#dcdf1e] w-auto">
+              <FaEye size={32} />
+            </button>
+          </a>
+        </Tooltip>
+        <Tooltip label="Excluir">
+          <button className="px-4 py-2 text-zinc-500 hover:bg-red-800 hover:text-white w-auto" onClick={handleDelete}>
+            <FaRegTrashAlt size={32} />
+          </button>
+        </Tooltip>
+      </div>
+      <div>
         <button
           className="px-4 py-2 border-[1px] font-montserrat font-light text-zinc-900 border-zinc-500 hi w-full highlight-link"
           onClick={handleSubmit}
         >
           {post.status === 'published' ? 'Despublicar' : 'Publicar'}
-        </button>
-      </div>
-
-      <div>
-        <button
-          className="border border-red-900 w-full h-12 text-red-800 flex justify-center items-center gap-2"
-          onClick={handleDelete}
-        >
-          <FaRegTrashAlt size={22} />
-          EXCLUIR POST
         </button>
       </div>
     </div>
