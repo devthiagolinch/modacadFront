@@ -147,9 +147,9 @@ const deletePost = async (postId: string): Promise<void | Error> => {
   }
 };
 
-const create = async (post: IPostDataRequest): Promise<IPostData | Error> => {
+const create = async (post: IPostDataRequest): Promise<string | Error> => {
   try {
-    const { data } = await api.post<IPostData>('/post', post);
+    const { data } = await api.post<string>('/post', post);
 
     return data;
   } catch (error) {

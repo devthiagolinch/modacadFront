@@ -23,7 +23,9 @@ export const CardActions: React.FC<ICardActionProps> = ({ post, postId }) => {
       PostsService.create(post).then((response) => {
         if (response instanceof Error) {
           console.error(response.message);
+          return;
         }
+        navigate(`/posts/${response}/editar`);
       });
     }
   };
