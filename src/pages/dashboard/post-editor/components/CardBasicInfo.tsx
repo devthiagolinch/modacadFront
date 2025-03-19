@@ -15,10 +15,9 @@ import { toggleItemInArray } from '../../../../shared/utils/arrayUtils';
 interface ICardBasicInfoProps {
   post: IPostDataRequest;
   setPost: React.Dispatch<React.SetStateAction<IPostDataRequest>>;
-  postId?: string;
 }
 
-export const CardBasicInfo: React.FC<ICardBasicInfoProps> = ({ post, setPost, postId }) => {
+export const CardBasicInfo: React.FC<ICardBasicInfoProps> = ({ post, setPost }) => {
   const [isEditTagDialogOpen, setIsEditTagDialogOpen] = useState(false);
   const [selectedTag, setSelectedTag] = useState<ITagData | null>(null);
 
@@ -141,7 +140,6 @@ export const CardBasicInfo: React.FC<ICardBasicInfoProps> = ({ post, setPost, po
   return (
     <div>
       <div className="font-montserrat font-light">
-        <h2 className="text-2xl mb-4">{postId ? 'Edição' : 'Criação'}</h2>
         {/** URL */}
         <div className="mb-6">
           <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2"> URL da publicação</label>

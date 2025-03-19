@@ -19,7 +19,9 @@ export const AccordionItem: React.FC<IAccordionItemProps> = ({ title, children, 
         <span className="font-medium">{title}</span>
         {isOpen ? <FaChevronUp size={20} /> : <FaChevronDown size={20} />}
       </button>
-      <div className={`transition-all overflow-hidden ${isOpen ? 'opacity-100' : 'max-h-0 opacity-0'}`}>{children}</div>
+      <div className={`px-4 transition-all overflow-hidden ${isOpen ? 'opacity-100' : 'max-h-0 opacity-0'}`}>
+        {children}
+      </div>
     </div>
   );
 };
