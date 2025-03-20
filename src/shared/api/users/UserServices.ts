@@ -78,6 +78,7 @@ const inviteMember = async (email: string, role: string): Promise<void | Error> 
 type bodyUpdate = {
   name: string;
   email: string;
+  avatar: string | null;
 };
 const updateById = async (id: string, body: bodyUpdate): Promise<void | Error> => {
   try {

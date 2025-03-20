@@ -4,11 +4,12 @@ import { useDropzone } from 'react-dropzone';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { UsersService } from '../../../../shared/api/users/UserServices';
 import * as yup from 'yup';
+import { PostsService } from '../../../../shared/api/posts/PostsService';
 
 interface IFormCreateMember {
   email: string;
   name: string;
-  image: File | null;
+  avatar: File | null;
 }
 
 export interface IUserPayload {
@@ -26,7 +27,7 @@ interface ICreateMemberProps {
 const initialFormValues: IFormCreateMember = {
   email: '',
   name: '',
-  image: null,
+  avatar: null,
 };
 
 export const CreateMember: React.FC<ICreateMemberProps> = ({ user, onCreated }) => {
@@ -35,7 +36,7 @@ export const CreateMember: React.FC<ICreateMemberProps> = ({ user, onCreated }) 
   const createMemberSchema: yup.ObjectSchema<IFormCreateMember> = yup.object({
     email: yup.string().email().required(),
     name: yup.string().required(),
-    image: yup.mixed<File>().nullable().defined(),
+    avatar: yup.mixed<File>().nullable().defined(),
   });
 
   const { handleSubmit, register, setValue, control, reset } = useForm<IFormCreateMember>({
@@ -45,7 +46,7 @@ export const CreateMember: React.FC<ICreateMemberProps> = ({ user, onCreated }) 
 
   const onSubmit: SubmitHandler<IFormCreateMember> = async (data) => {
     if (user) {
-      UsersService.updateById(user.id, { name: data.name, email: data.email }).then((response) => {
+      UsersService.updateById(user.id, { name: data.name, email: data.email, avatar: imagePreview }).then((response) => {
         if (response instanceof Error) {
           console.error(response);
           return;
@@ -68,11 +69,25 @@ export const CreateMember: React.FC<ICreateMemberProps> = ({ user, onCreated }) 
     }
   };
 
+  const handleImageUpload = async (file: File) => {
+    try {
+      // Envia a imagem para a API e recebe a URL
+      const result = await PostsService.uploadImage(file);
+  
+      // Atualiza o estado com a URL da imagem
+      setImagePreview(result.toString());
+    } catch (error) {
+      console.error('Erro ao fazer upload da imagem:', error);
+    }
+  };
+  
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: (acceptedFiles) => {
       if (acceptedFiles.length > 0) {
         const file = acceptedFiles[0];
-        setValue('image', file);
+        setValue('avatar', file);
+        // const result = await PostsService.uploadImage(file);
         setImagePreview(URL.createObjectURL(file));
       }
     },
@@ -84,12 +99,14 @@ export const CreateMember: React.FC<ICreateMemberProps> = ({ user, onCreated }) 
       reset({
         email: user.email,
         name: user.name,
-        image: null,
+        avatar: null,
       });
 
       if (user.avatar) {
         setImagePreview(user.avatar);
-      }
+      } else {
+        setImagePreview(null);
+      }	
     }
   }, [reset, user]);
 
@@ -121,7 +138,7 @@ export const CreateMember: React.FC<ICreateMemberProps> = ({ user, onCreated }) 
       </div>
       <div className="mt-2">
         <Controller
-          name="image"
+          name="avatar"
           control={control}
           render={({ field }) => (
             <div>
@@ -144,7 +161,7 @@ export const CreateMember: React.FC<ICreateMemberProps> = ({ user, onCreated }) 
                   <button
                     type="button"
                     onClick={() => {
-                      setValue('image', null);
+                      setValue('avatar', null);
                       setImagePreview(null);
                     }}
                     className="text-red-500 mt-2"
