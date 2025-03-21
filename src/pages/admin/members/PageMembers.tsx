@@ -4,6 +4,7 @@ import { IUserData, UsersService } from '../../../shared/api/users/UserServices'
 import { getRoleClass } from '../../../shared/hook/getRoleClass';
 import { DropdownMenu } from '../../../shared/components/ui/dropdown-menu/DropdownMenu';
 import { useSearchParams } from 'react-router-dom';
+import { roles, TUsersRole } from '../../../shared/services/userOptions';
 
 export const PageMembers = () => {
   const [members, setMembers] = useState<IUserData[]>([]);
@@ -22,7 +23,9 @@ export const PageMembers = () => {
     const fetchMembers = async () => {
       UsersService.getAll({ 
         page: Number(searchParams.get('page')) || 1,
-        order: searchParams.get('order') as 'asc' | 'desc'}).then((response) => {
+        order: searchParams.get('order') as 'asc' | 'desc',
+        role: searchParams.get('role') as TUsersRole,
+      }).then((response) => {
         if (response instanceof Error) {
           console.error(response);
           return;
@@ -46,6 +49,18 @@ export const PageMembers = () => {
     { name: 'Mais recentes', key: 'desc' },
     { name: 'Mais antigos', key: 'asc' },
   ];
+
+  const rolesOptions = Object.entries(roles)
+  .filter(([key]) => ['membro', 'assinante', 'noAssinante'].includes(key))
+  .map(([key, value]) => ({
+    name: value.name,
+    key: key as TUsersRole,
+  }));
+
+  const handleRoleChange = (key: string) => {
+    updateRoleChange(key as TUsersRole);
+  };
+  
   function handleOrderChange(key: string): void {
     updateOrderParam(key as 'asc' | 'desc');
   }
@@ -62,14 +77,24 @@ export const PageMembers = () => {
     setSearchParams(newSearchParams);
   };
 
+  const updateRoleChange = (role: TUsersRole) => {
+      const newSearchParams = new URLSearchParams(searchParams.toString());
+      if (newSearchParams.get('role') === role) {
+        newSearchParams.delete('role');
+      } else {
+        newSearchParams.set('role', role);
+      }
+      setSearchParams(newSearchParams);
+    };
+
   return (
     <LayoutDashboard>
       <div className="flex justify-between">
         <div className="flex gap-2 items-center">
-          <button className="bg-bgBtn text-white font-medium px-4 py-2">EXPORTAR</button>
+          <button className="bg-bgBtn text-white font-medium px-4 py-2 opacity-50 cursor-not-allowed">EXPORTAR</button>
           {/* Filtros */}
                 <div className="flex gap-2 my-4">
-                  {/* <DropdownMenu textButton="Plano" items={statusesOptions} onSelect={handleStatusChange} /> */}
+                  <DropdownMenu textButton="Membresia" items={rolesOptions} onSelect={handleRoleChange} />
                   <DropdownMenu textButton="Ordenação" items={orderOptions} onSelect={handleOrderChange} />
                 </div>
         </div>
