@@ -106,6 +106,7 @@ export type TProfile = {
   email: string;
   name: string;
   role: string;
+  avatar: string | null;
 };
 
 const getProfile = async () => {

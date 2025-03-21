@@ -46,6 +46,7 @@ export const MyProfilePage = () => {
   });
 
   const onSubmit: SubmitHandler<IFormMember> = async (data) => {
+    console.log(data);
     UsersService.updateProfile(data);
   };
 
@@ -55,7 +56,10 @@ export const MyProfilePage = () => {
         console.error(response);
         return;
       }
-      reset(response);
+      reset({
+        ...initialFormValues,
+        ...response,
+      });
       setProfile(response);
     });
   }, []);
@@ -109,12 +113,16 @@ export const MyProfilePage = () => {
               <div>
                 <div
                   {...getRootProps()}
-                  className={`p-4 border-2 border-dashed rounded-md cursor-pointer min-h-[200px] flex items-center justify-between ${isDragActive ? 'border-blue-500' : 'border-gray-300'} hover:border-blue-500`}
+                  className={`p-4 border-2 border-dashed rounded-md cursor-pointer min-h-[200px] flex items-center justify-between ${isDragActive ? 'border-primary' : 'border-gray-300'} hover:border-primary`}
                 >
                   <input {...getInputProps()} />
-                  {imagePreview && field.value ? (
+                  {(imagePreview || profile?.avatar) && field.value ? (
                     <div className="flex items-center gap-2">
-                      <img src={imagePreview} alt="Preview" className="w-20 h-20 rounded-full object-cover" />
+                      <img
+                        src={imagePreview || profile?.avatar || ''}
+                        alt="Preview"
+                        className="w-20 h-20 rounded-full object-cover"
+                      />
                       <p>{field.value.name}</p>
                     </div>
                   ) : (
@@ -138,6 +146,9 @@ export const MyProfilePage = () => {
               </div>
             )}
           />
+        </div>
+        <div className="mt-2">
+          <button className="px-8 py-4 text-gray-950 border border-gray-950 hover:bg-primary">Salvar</button>
         </div>
       </form>
     </LayoutDashboard>
