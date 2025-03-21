@@ -3,6 +3,8 @@ import { FaEye, FaRegSave, FaRegTrashAlt } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
 import { IPostDataRequest, PostsService } from '../../../../shared/api/posts/PostsService';
+import { ConfirmationModal, TActionTypePost } from '../../../../shared/components/confirmation-modal/ConfirmationModal';
+import { useState } from 'react';
 
 interface ICardActionProps {
   post: IPostDataRequest;
@@ -11,6 +13,29 @@ interface ICardActionProps {
 
 export const CardActions: React.FC<ICardActionProps> = ({ post, postId }) => {
   const navigate = useNavigate();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [actionType, setActionType] = useState<TActionTypePost | null>(null);
+
+  const handleAction = (type: TActionTypePost) => {
+    setActionType(type);
+    setIsModalOpen(true);
+  };
+
+  const handleConfirmAction = () => {
+    switch (actionType) {
+      case 'delete':
+        handleDelete();
+        break;
+      case 'publish':
+      case 'unpublish':
+        handleSubmit();
+        break;
+      default:
+        break;
+    }
+    setIsModalOpen(false);
+  };
 
   const handleSave = () => {
     if (postId && postId !== 'novo') {
@@ -78,7 +103,10 @@ export const CardActions: React.FC<ICardActionProps> = ({ post, postId }) => {
           </a>
         </Tooltip>
         <Tooltip label="Excluir">
-          <button className="px-4 py-2 text-zinc-500 hover:bg-red-800 hover:text-white w-auto" onClick={handleDelete}>
+          <button
+            className="px-4 py-2 text-zinc-500 hover:bg-red-800 hover:text-white w-auto"
+            onClick={() => handleAction('delete')}
+          >
             <FaRegTrashAlt size={32} />
           </button>
         </Tooltip>
@@ -86,11 +114,18 @@ export const CardActions: React.FC<ICardActionProps> = ({ post, postId }) => {
       <div>
         <button
           className="px-4 py-2 border-[1px] font-montserrat font-light text-zinc-900 border-zinc-500 hi w-full highlight-link"
-          onClick={handleSubmit}
+          onClick={() => handleAction(post.status === 'published' ? 'unpublish' : 'publish')}
         >
           {post.status === 'published' ? 'Despublicar' : 'Publicar'}
         </button>
       </div>
+      <ConfirmationModal
+        actionType={actionType}
+        isOpen={isModalOpen}
+        postTitle={post.title}
+        onClose={() => setIsModalOpen(false)}
+        onConfirm={handleConfirmAction}
+      />
     </div>
   );
 };
