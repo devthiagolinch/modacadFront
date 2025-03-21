@@ -27,7 +27,9 @@ export const InviteNewMember = () => {
     resolver: yupResolver(inviteSchema),
   });
 
-  const rolesOptions = Object.entries(roles).map(([key, value]) => ({
+  const rolesOptions = Object.entries(roles)
+  .filter(([key]) => ['administrador', 'autor', 'editor', 'curador'].includes(key))
+  .map(([key, value]) => ({
     name: value.name,
     key: key as TUsersRole,
   }));
