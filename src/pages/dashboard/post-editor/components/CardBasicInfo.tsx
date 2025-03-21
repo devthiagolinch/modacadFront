@@ -406,9 +406,9 @@ export const CardBasicInfo: React.FC<ICardBasicInfoProps> = ({ post, setPost }) 
             </MenuItems>
           </Menu>
         </div>
-        {/* Autor */}
+        {/* Autoras */}
         <div className="mb-6">
-          <label className="block text-sm font-montserrat font-medium text-gray-700 mb-2">Autor(a)</label>
+          <label className="block text-sm font-montserrat font-medium text-gray-700 mb-2">Autoras</label>
           {post.admins.length > 0 && (
             <div className="mt-2 flex flex-wrap">
               {post.admins.map((admin, index) => (
@@ -480,9 +480,9 @@ export const CardBasicInfo: React.FC<ICardBasicInfoProps> = ({ post, setPost }) 
             </MenuItems>
           </Menu>
         </div>
-        {/* Editor(a) */}
+        {/* Editoras */}
         <div className="mb-6">
-          <label className="block text-sm font-montserrat font-medium text-gray-700 mb-2">Editor(a)</label>
+          <label className="block text-sm font-montserrat font-medium text-gray-700 mb-2">Editoras</label>
           {post.admins.length > 0 && (
             <div className="mt-2 flex flex-wrap">
               {post.editors.map((admin, index) => (
@@ -553,9 +553,9 @@ export const CardBasicInfo: React.FC<ICardBasicInfoProps> = ({ post, setPost }) 
             </MenuItems>
           </Menu>
         </div>
-        {/* Curador(a) */}
+        {/* Curadoras */}
         <div className="mb-6">
-          <label className="block text-sm font-montserrat font-medium text-gray-700 mb-2">Curador(a) de imagens</label>
+          <label className="block text-sm font-montserrat font-medium text-gray-700 mb-2">Curadoras de imagens</label>
           {post.curadors.length > 0 && (
             <div className="mt-2 flex flex-wrap">
               {post.curadors.map((admin, index) => (
