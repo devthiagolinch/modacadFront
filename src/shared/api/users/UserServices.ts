@@ -25,7 +25,7 @@ type TGetAllParams = {
   status?: EUsersStatus;
   plan?: TUsersPlan;
   page?: number;
-  order?: string | "desc"
+  order?: string | 'desc';
 };
 const getAll = async ({ role, status, plan, page, order }: TGetAllParams): Promise<TGetAllResult | Error> => {
   try {
@@ -118,6 +118,11 @@ const getProfile = async () => {
   }
 };
 
+const updateProfile = async (body: bodyUpdate) => {
+  console.log('atualizou');
+  console.log(body);
+};
+
 export const UsersService = {
   getAll,
   getAllStaff,
@@ -125,4 +130,5 @@ export const UsersService = {
   updateById,
   deleteById,
   getProfile,
+  updateProfile,
 };
