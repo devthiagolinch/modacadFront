@@ -4,12 +4,11 @@ import { useDropzone } from 'react-dropzone';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { UsersService } from '../../../../shared/api/users/UserServices';
 import * as yup from 'yup';
-import { PostsService } from '../../../../shared/api/posts/PostsService';
 
 interface IFormCreateMember {
   email: string;
   name: string;
-  avatar: File | null;
+  image: File | null;
 }
 
 export interface IUserPayload {
@@ -27,7 +26,7 @@ interface ICreateMemberProps {
 const initialFormValues: IFormCreateMember = {
   email: '',
   name: '',
-  avatar: null,
+  image: null,
 };
 
 export const CreateMember: React.FC<ICreateMemberProps> = ({ user, onCreated }) => {
@@ -36,7 +35,7 @@ export const CreateMember: React.FC<ICreateMemberProps> = ({ user, onCreated }) 
   const createMemberSchema: yup.ObjectSchema<IFormCreateMember> = yup.object({
     email: yup.string().email().required(),
     name: yup.string().required(),
-    avatar: yup.mixed<File>().nullable().defined(),
+    image: yup.mixed<File>().nullable().defined(),
   });
 
   const { handleSubmit, register, setValue, control, reset } = useForm<IFormCreateMember>({
@@ -44,15 +43,30 @@ export const CreateMember: React.FC<ICreateMemberProps> = ({ user, onCreated }) 
     defaultValues: initialFormValues,
   });
 
-  const onSubmit: SubmitHandler<IFormCreateMember> = async (data) => {
+  const onSubmit: SubmitHandler<IFormCreateMember> = async (data) => {    
     if (user) {
-      UsersService.updateById(user.id, { name: data.name, email: data.email, avatar: imagePreview }).then((response) => {
+      UsersService.updateById(user.id, { name: data.name, email: data.email }).then((response) => {
         if (response instanceof Error) {
           console.error(response);
           return;
         }
+      });
+
+      onCreated();
+      reset(initialFormValues);
+      setImagePreview(null);
+    };
+
+    if(data.image) {
+      UsersService.updateAvatar(data.image).then((response) => {
+        if (response instanceof Error) {
+          console.error(response);
+          return;
+        };
+        
         onCreated();
         reset(initialFormValues);
+        setImagePreview(null);
       });
     }
   };
@@ -68,30 +82,17 @@ export const CreateMember: React.FC<ICreateMemberProps> = ({ user, onCreated }) 
       });
     }
   };
-
-  const handleImageUpload = async (file: File) => {
-    try {
-      // Envia a imagem para a API e recebe a URL
-      const result = await PostsService.uploadImage(file);
-  
-      // Atualiza o estado com a URL da imagem
-      setImagePreview(result.toString());
-    } catch (error) {
-      console.error('Erro ao fazer upload da imagem:', error);
-    }
-  };
   
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: (acceptedFiles) => {
       if (acceptedFiles.length > 0) {
         const file = acceptedFiles[0];
-        setValue('avatar', file);
-        // const result = await PostsService.uploadImage(file);
+        setValue('image', file);
         setImagePreview(URL.createObjectURL(file));
       }
     },
-    maxSize: 50 * 1024 * 1024,
+    maxSize: 5 * 1024 * 1024
   });
 
   useEffect(() => {
@@ -99,7 +100,7 @@ export const CreateMember: React.FC<ICreateMemberProps> = ({ user, onCreated }) 
       reset({
         email: user.email,
         name: user.name,
-        avatar: null,
+        image: null,
       });
 
       if (user.avatar) {
@@ -138,7 +139,7 @@ export const CreateMember: React.FC<ICreateMemberProps> = ({ user, onCreated }) 
       </div>
       <div className="mt-2">
         <Controller
-          name="avatar"
+          name="image"
           control={control}
           render={({ field }) => (
             <div>
@@ -161,7 +162,7 @@ export const CreateMember: React.FC<ICreateMemberProps> = ({ user, onCreated }) 
                   <button
                     type="button"
                     onClick={() => {
-                      setValue('avatar', null);
+                      setValue('image', null);
                       setImagePreview(null);
                     }}
                     className="text-red-500 mt-2"

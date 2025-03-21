@@ -23,7 +23,6 @@ export const PageTeam = () => {
   }, []);
 
   const onCreated = () => {
-    setSelectedUser(null);
     fetchUsers();
   };
 

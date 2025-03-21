@@ -79,8 +79,8 @@ const inviteMember = async (email: string, role: string): Promise<void | Error> 
 type bodyUpdate = {
   name: string;
   email: string;
-  avatar: string | null;
 };
+
 const updateById = async (id: string, body: bodyUpdate): Promise<void | Error> => {
   try {
     await api.put(`/admins/${id}`, body);
@@ -89,6 +89,22 @@ const updateById = async (id: string, body: bodyUpdate): Promise<void | Error> =
     return new Error(errorMessage);
   }
 };
+
+const updateAvatar = async (avatar: File): Promise<void | Error> => {
+  try {
+    const formData = new FormData();
+    formData.append('avatar', avatar);
+
+    await api.patch('/admins/avatar', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido ao deletar registro';
+    return new Error(errorMessage);
+  }
+}
 
 const deleteById = async (id: string): Promise<void | Error> => {
   try {
@@ -124,6 +140,7 @@ export const UsersService = {
   getAllStaff,
   inviteMember,
   updateById,
+  updateAvatar,
   deleteById,
   getProfile,
 };
