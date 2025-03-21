@@ -25,10 +25,11 @@ type TGetAllParams = {
   status?: EUsersStatus;
   plan?: TUsersPlan;
   page?: number;
+  order?: string | "desc"
 };
-const getAll = async ({ role, status, plan, page }: TGetAllParams): Promise<TGetAllResult | Error> => {
+const getAll = async ({ role, status, plan, page, order }: TGetAllParams): Promise<TGetAllResult | Error> => {
   try {
-    const urlRelativa = `/admins/users?role=${role ?? ''}&status=${status ?? ''}&plan=${plan ?? ''}&page=${page ?? 1}`;
+    const urlRelativa = `/admins/users?role=${role ?? ''}&status=${status ?? ''}&plan=${plan ?? ''}&page=${page ?? 1}&order=${order ?? 'desc'}`;
     const { data } = await api.get<TGetAllResult>(urlRelativa);
 
     if (data) {

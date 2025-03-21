@@ -1,196 +1,67 @@
-import Datepicker from 'react-tailwindcss-datepicker';
+import { useEffect, useState } from 'react';
 
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
+import Datepicker from 'react-tailwindcss-datepicker';
 
-import { FaRegSave, FaRegTrashAlt } from 'react-icons/fa';
-import { FaEye } from 'react-icons/fa';
-import { IPostDataRequest, PostsService } from '../../../../shared/api/posts/PostsService';
-import { useEffect, useState } from 'react';
-import { ITagData, TagsService } from '../../../../shared/api/tags/TagsService';
-import { ISubjectData, SubjectsService } from '../../../../shared/api/subjects/SubjectsService';
 import { TPostsType, TPostsVisibility, types, visibilities } from '../../../../shared/services/postOptions';
+import { ISubjectData, SubjectsService } from '../../../../shared/api/subjects/SubjectsService';
+import { IPostDataRequest } from '../../../../shared/api/posts/PostsService';
 import { IUserData, UsersService } from '../../../../shared/api/users/UserServices';
-import { useForm } from 'react-hook-form';
-import { FacebookPreview } from './snnipets/FaceSnnipetPreviewl';
-import GoogleSnnipet from './snnipets/GoogleSnnipetsPreview';
-import { useNavigate, useParams } from 'react-router-dom';
+import { ITagData, TagsService } from '../../../../shared/api/tags/TagsService';
+import { Dialog } from '../../../../shared/components/ui/dialog/Dialog';
 import { CardTagInfo } from './CardTagInfo';
+import { toggleItemInArray } from '../../../../shared/utils/arrayUtils';
 
-interface CardDTO {
-  title: string | '';
-  feature_image: string | null;
-  content: string | '';
-  image_caption: string | '';
+interface ICardBasicInfoProps {
+  post: IPostDataRequest;
+  setPost: React.Dispatch<React.SetStateAction<IPostDataRequest>>;
 }
 
-interface FormData {
-  meta_description: string;
-}
-
-const defaultPost: IPostDataRequest = {
-  title: '',
-  description: '',
-  feature_image: null,
-  type: 'texto',
-  content: '',
-  status: 'draft',
-  images: null,
-  published_at: null,
-  visibility: 'pro',
-  admins: [],
-  editors: [],
-  curadors: [],
-  tags: [],
-  subjects: [],
-  og_image: '',
-  og_title: '',
-  og_description: '',
-  twitter_image: '',
-  twitter_title: '',
-  twitter_description: '',
-  meta_title: '',
-  meta_description: '',
-  email_subject: '',
-  frontmatter: '',
-  feature_image_alt: '',
-  feature_image_caption: '',
-  email_only: '',
-  canonicalUrl: '',
-};
-
-export const CardBasicInfo: React.FC<CardDTO> = ({ title, feature_image, content, image_caption }) => {
-  const navigate = useNavigate();
-  const [notification, setNotification] = useState('');
-
-  const { postId } = useParams<{ postId: string }>();
-  const [post, setPost] = useState<IPostDataRequest>(defaultPost);
-
-  const { register } = useForm<FormData>();
-
-  const [isCardVisible, setIsCardVisible] = useState(false);
-  const [isCardFaceVisible, setIsCardFaceVisible] = useState(false);
-  const [isCardBasicVisible, setCardBasicVisible] = useState(true);
-  const [isCardTagVisibe, setCardTagVisibe] = useState(false);
-
-  const [tagsOptions, setTagsOptions] = useState<ITagData[]>([]);
-  const [_tags, setTags] = useState<ITagData[]>([]);
+export const CardBasicInfo: React.FC<ICardBasicInfoProps> = ({ post, setPost }) => {
+  const [isEditTagDialogOpen, setIsEditTagDialogOpen] = useState(false);
   const [selectedTag, setSelectedTag] = useState<ITagData | null>(null);
 
+  const [tagsOptions, setTagsOptions] = useState<ITagData[]>([]);
   const [subjectsOptions, setSubjectsOptions] = useState<ISubjectData[]>([]);
-
   const [usersOptions, setUsersOptions] = useState<IUserData[]>([]);
 
-  const toggleCardVisibility = () => {
-    setIsCardVisible((prev) => !prev);
-    setCardBasicVisible((prev) => !prev);
-    window.scrollTo(0, 0);
-  };
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredTags, setFilteredTags] = useState<ITagData[]>(tagsOptions);
 
-  const toggleCardFaceVisibility = () => {
-    setIsCardFaceVisible((prev) => !prev);
-    setCardBasicVisible((prev) => !prev);
-    window.scrollTo(0, 0);
-  };
-
-  const toggleCardTagVisibility = () => {
-    fetchTags();
-    setCardTagVisibe((prev) => !prev);
-    setCardBasicVisible((prev) => !prev);
-    window.scrollTo(0, 0);
+  const handleEditTag = (tag: ITagData) => {
+    setSelectedTag(tag);
+    setIsEditTagDialogOpen(true);
   };
 
   useEffect(() => {
-    if (postId && postId !== 'novo') {
-      PostsService.getById(postId).then((response) => {
-        if (response instanceof Error) {
-          console.error(response.message);
-        } else {
-          const meta = Array.isArray(response.meta) && response.meta.length > 0 ? response.meta[0] : {};
-          const canonicalUrl = response.canonicalUrl?.replace('https://blog.modacad.com.br/', '') || '';
-
-          setPost({
-            title: title,
-            description: response.description,
-            feature_image: feature_image,
-            type: response.type,
-            content: content,
-            status: response.status,
-            images: response.images ? response.images.join(',') : null,
-            visibility: response.visibility,
-            admins: response.admins.map((admin) => admin),
-            editors: response.editors.map((editor) => editor),
-            curadors: response.curadors.map((curador) => curador),
-            tags: response.tags.map((tag) => tag),
-            subjects: response.subjects.map((subject) => subject),
-            og_image: meta?.og_image ?? '',
-            og_title: meta?.og_title ?? '',
-            og_description: meta?.og_description ?? '',
-            twitter_image: meta.twitter_image ?? '',
-            twitter_title: meta.twitter_title ?? '',
-            twitter_description: meta.twitter_description ?? '',
-            meta_title: meta.meta_title ?? '',
-            meta_description: meta.meta_description ?? '',
-            email_subject: meta.email_subject ?? '',
-            frontmatter: meta.frontmatter ?? '',
-            feature_image_alt: meta.feature_image_alt ?? '',
-            email_only: meta.email_only ?? '',
-            feature_image_caption: image_caption,
-            canonicalUrl: canonicalUrl,
-            published_at: response.published_at,
-          });
+    Promise.all([TagsService.getAll(), SubjectsService.getAll(), UsersService.getAllStaff()]).then(
+      ([tags, subjects, users]) => {
+        if (tags instanceof Error || subjects instanceof Error || users instanceof Error) {
+          console.error('Error fetching data');
+          return;
         }
-      });
-    } else {
-      setPost(defaultPost);
-      post.og_image = feature_image;
+        setTagsOptions(tags);
+        setFilteredTags(tags.slice(0, 30));
+        setSubjectsOptions(subjects);
+        setUsersOptions(users.staffs);
+      }
+    );
+  }, []);
+
+  const getCanonicalUrl = () => {
+    if (!post.canonicalUrl) return '';
+
+    if (post.canonicalUrl.startsWith('https://blog.modacad.com.br/')) {
+      return post.canonicalUrl.replace('https://blog.modacad.com.br/', '');
     }
-  }, [postId]);
 
-  // Preserve o estado atual ao carregar novos dados
-  useEffect(() => {
-    setPost((prev) => ({
-      ...prev,
-      title: title || prev.title,
-      feature_image: feature_image || prev.feature_image,
-      content: content || prev.content,
-      feature_image_caption: image_caption || prev.feature_image_caption,
-    }));
-  }, [title, feature_image, content, image_caption]);
+    return post.canonicalUrl;
+  };
 
-  useEffect(() => {
-    SubjectsService.getAll().then((response) => {
-      if (response instanceof Error) {
-        console.error(response.message);
-      } else {
-        setSubjectsOptions(response);
-      }
-    });
-
-    TagsService.getAll().then((response) => {
-      if (response instanceof Error) {
-        console.error(response.message);
-      } else {
-        setTagsOptions(response);
-        setFilteredTags(response.slice(0, 30));
-      }
-    });
-
-    UsersService.getAllStaff().then((response) => {
-      if (response instanceof Error) {
-        console.error(response.message);
-        return;
-      }
-      setUsersOptions(response.staffs);
-    });
-  }, [setSelectedTag]);
-
-  // Canonical URL
-  let canonicalUrl;
-  if (post.canonicalUrl) {
-    canonicalUrl = post.canonicalUrl.includes('https://blog.modacad.com.br/')
-      ? post.canonicalUrl.split('https://blog.modacad.com.br/', 2).pop()
-      : post.canonicalUrl;
-  }
+  const onCloseDialog = () => {
+    setIsEditTagDialogOpen(false);
+    setSelectedTag(null);
+  };
 
   const handleDateChange = (value: Date | null | { startDate: Date | null; endDate: Date | null }) => {
     let selectedDate;
@@ -202,58 +73,20 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ title, feature_image, content
       // Caso seja uma data única ou null
       selectedDate = value as Date | null;
     }
-    setPost((prevPost) => ({
+
+    setPost((prevPost: IPostDataRequest) => ({
       ...prevPost,
       published_at: selectedDate,
     }));
   };
 
-  const handleDeletePost = async () => {
-    if (!postId) {
-      console.error('postId não encontrado');
-      return;
-    }
-    await PostsService.deletePost(postId);
-    navigate('/dashboard/pilula');
-  };
-
-  // Tags
-  const fetchTags = () => {
-    TagsService.getAll().then((response) => {
-      if (response instanceof Error) {
-        console.error(response);
-        return;
-      }
-      setTags(response); // Atualiza a lista global de tags
-
-      // Atualiza as tags associadas ao post
-      setPost((prevPost) => ({
-        ...prevPost,
-        tags: response.filter((tag) => prevPost.tags.some((postTag) => postTag.id === tag.id)),
-      }));
-    });
-  };
-
-  // Função chamada após a atualização da tag
-  const onUpdateTag = () => {
-    setSelectedTag(null); // Reseta a tag selecionada
-  };
-
   const handleChangeTags = (newTag: ITagData) => {
-    setPost((prevPost) => {
-      let updatedTags: ITagData[] = [];
-      updatedTags = [...prevPost.tags];
-
-      const isSelected = updatedTags.includes(newTag);
-      isSelected ? (updatedTags = updatedTags.filter((tag) => tag !== newTag)) : updatedTags.push(newTag);
-
-      return { ...prevPost, tags: updatedTags };
-    });
+    setPost((prevPost) => ({
+      ...prevPost,
+      tags: toggleItemInArray(prevPost.tags, newTag),
+    }));
     setSearchTerm('');
   };
-
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filteredTags, setFilteredTags] = useState<ITagData[]>(tagsOptions);
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value.toLowerCase();
@@ -279,344 +112,142 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ title, feature_image, content
   };
 
   const handleSubjectSelect = (newSubject: ISubjectData) => {
-    setPost((prevPost) => {
-      let updatedSubjects: ISubjectData[] = [];
-      updatedSubjects = [...prevPost.subjects];
-
-      const isSelected = updatedSubjects.some((s) => s.id === newSubject.id);
-      if (isSelected) {
-        updatedSubjects = updatedSubjects.filter((subject) => subject.id !== newSubject.id);
-      } else {
-        if (post.subjects.length < 3) {
-          updatedSubjects.push(newSubject);
-        }
-      }
-
-      return { ...prevPost, subjects: updatedSubjects };
-    });
+    setPost((prevPost) => ({
+      ...prevPost,
+      subjects: toggleItemInArray(prevPost.subjects, newSubject, 'id', 3), // Limite de 3 subjects
+    }));
   };
 
   const handleUserSelect = (newUser: IUserData) => {
-    setPost((prevPost) => {
-      let updatedAdmins: IUserData[] = [];
-      updatedAdmins = [...prevPost.admins];
-
-      const isSelected = updatedAdmins.some((admin) => admin.id === newUser.id);
-      if (isSelected) {
-        updatedAdmins = updatedAdmins.filter((admin) => admin.id !== newUser.id);
-      } else {
-        updatedAdmins.push(newUser);
-      }
-
-      return { ...prevPost, admins: updatedAdmins };
-    });
+    setPost((prevPost) => ({
+      ...prevPost,
+      admins: toggleItemInArray(prevPost.admins, newUser, 'id'),
+    }));
   };
 
   const handleEditorSelect = (newUser: IUserData) => {
-    setPost((prevPost) => {
-      let updatedEditors: IUserData[] = [];
-      updatedEditors = [...prevPost.editors];
-
-      const isSelected = updatedEditors.some((admin) => admin.id === newUser.id);
-      if (isSelected) {
-        updatedEditors = updatedEditors.filter((admin) => admin.id !== newUser.id);
-      } else {
-        updatedEditors.push(newUser);
-      }
-
-      return { ...prevPost, editors: updatedEditors };
-    });
+    setPost((prevPost) => ({
+      ...prevPost,
+      editors: toggleItemInArray(prevPost.editors, newUser, 'id'),
+    }));
   };
 
   const handleCuradorSelect = (newUser: IUserData) => {
-    setPost((prevPost) => {
-      let updatedCuradors: IUserData[] = [];
-      updatedCuradors = [...prevPost.curadors];
-
-      const isSelected = updatedCuradors.some((admin) => admin.id === newUser.id);
-      if (isSelected) {
-        updatedCuradors = updatedCuradors.filter((admin) => admin.id !== newUser.id);
-      } else {
-        updatedCuradors.push(newUser);
-      }
-
-      return { ...prevPost, curadors: updatedCuradors };
-    });
-  };
-
-  const handleSave = () => {
-    if (postId && postId !== 'novo') {
-      PostsService.updateById(postId, post).then((response) => {
-        if (response instanceof Error) {
-          console.error(response.message);
-        }
-      });
-    } else {
-      post.status = 'draft';
-      PostsService.create(post).then((response) => {
-        if (response instanceof Error) {
-          console.error(response.message);
-        }
-      });
-    }
-    setNotification('Post salvo com sucesso!');
-  };
-
-  const handleSubmit = () => {
-    const adjustedPost = { ...post };
-
-    if (adjustedPost.canonicalUrl?.startsWith('https://blog.modacad.com.br/')) {
-      // Remover o prefixo para enviar apenas o slug
-      adjustedPost.canonicalUrl = adjustedPost.canonicalUrl.replace('https://blog.modacad.com.br/', '');
-    }
-
-    if (postId && postId !== 'novo') {
-      if (post.status === 'published') {
-        post.status = 'draft';
-
-        setNotification('Post despublicado com sucesso!');
-      } else {
-        post.status = 'published';
-        setNotification('Post publicado com sucesso!');
-      }
-      PostsService.updateById(postId, post).then((response) => {
-        if (response instanceof Error) {
-          console.error(response.message);
-        }
-      });
-    } else {
-      post.status = 'published';
-      PostsService.create(post).then((response) => {
-        if (response instanceof Error) {
-          console.error(response.message);
-        }
-      });
-    }
+    setPost((prevPost) => ({
+      ...prevPost,
+      curadors: toggleItemInArray(prevPost.curadors, newUser, 'id'),
+    }));
   };
 
   return (
-    <div className="col-span-4">
-      <div style={{ display: isCardBasicVisible ? 'block' : 'none' }}>
-        {/* Informações da Postagem */}
-        <div className="bg-white shadow-md p-6">
-          <div className="flex gap-2 justify-between items-center mb-6">
-            <h1 className="text-2xl font-montserrat font-light">{postId ? 'Edição' : 'Criação'}</h1>
-          </div>
-
-          {/** Campo para URL da publicação */}
-          <div className="mb-6">
-            <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2"> URL da publicação</label>
-            <input
-              type="text"
-              name="canonicalUrl"
-              value={canonicalUrl}
-              onChange={handleInputChange}
-              className=" border p-2 w-full font-montserrat font-light focus-visible:border-[#dcdf1e] focus:outline-none"
-            />
-            <span className="text-sm text-zinc-500 font-light font-montserrat">blog.modacad.com.br/{canonicalUrl}</span>
-          </div>
-
-          <div className="flex flex-col items-start space-y-2 mb-6">
-            <label htmlFor="publish-date" className="text-sm font-medium text-gray-700">
-              Data de Publicação
-            </label>
-            <Datepicker
-              asSingle={true}
-              primaryColor={'yellow'}
-              displayFormat="DD/MM/YYYY"
-              value={post.published_at ? { startDate: post.published_at, endDate: post.published_at } : null} // Envia como intervalo de datas
-              onChange={handleDateChange}
-              inputClassName="p-2 w-full border-2 border-gray-200 focus:outline-none focus:border-[#dcdf1e]"
-              popoverDirection="down"
-            />
-          </div>
-
-          {/* Campo para descrição */}
-          <div className="mb-6">
-            <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2">
-              Descrição
-              <span className="font-montserrat font-medium text-zinc-400">({post.description?.length || 0}/300)</span>
-            </label>
-            <textarea
-              name="description"
-              value={post.description || ''}
-              onChange={handleInputChange}
-              placeholder="Resumo de 300 caracteres"
-              maxLength={300}
-              className="border p-2 w-full font-montserrat font-light focus-visible:border-[#dcdf1e] focus:outline-none min-h-[190px]" // Define um número de linhas padrão
-            />
-          </div>
-
-          {/* Tags */}
-          <div className="mb-6">
-            <label className="block text-sm font-montserrat font-medium text-gray-700 mb-2">Tags</label>
-            {post.tags.length > 0 && (
-              <div className="mt-2 flex flex-wrap">
-                {post.tags.map((tag, index) => (
-                  <span
-                    onClick={() => {
-                      setSelectedTag(tag);
-                    }}
-                    onDoubleClick={toggleCardTagVisibility}
-                    key={index}
-                    className="inline-block bg-[#dcdf1e] text-black font-light font-montserrat px-3 py-1 mr-2 mb-2 cursor-pointer text-xs break-all flex items-center"
+    <div>
+      <div className="font-montserrat font-light">
+        {/** URL */}
+        <div className="mb-6">
+          <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2"> URL da publicação</label>
+          <input
+            type="text"
+            name="canonicalUrl"
+            value={getCanonicalUrl()}
+            onChange={handleInputChange}
+            className=" border p-2 w-full font-montserrat font-light focus-visible:border-[#dcdf1e] focus:outline-none"
+          />
+          <span className="text-sm text-zinc-500 font-light font-montserrat">
+            blog.modacad.com.br/{getCanonicalUrl()}
+          </span>
+        </div>
+        {/* Data de publicação */}
+        <div className="flex flex-col items-start space-y-2 mb-6">
+          <label htmlFor="publish-date" className="text-sm font-medium text-gray-700">
+            Data de Publicação
+          </label>
+          <Datepicker
+            asSingle={true}
+            primaryColor={'yellow'}
+            displayFormat="DD/MM/YYYY"
+            value={post.published_at ? { startDate: post.published_at, endDate: post.published_at } : null} // Envia como intervalo de datas
+            onChange={handleDateChange}
+            inputClassName="p-2 w-full border-2 border-gray-200 focus:outline-none focus:border-[#dcdf1e] disabled:opacity-50 disabled:cursor-not-allowed"
+            popoverDirection="down"
+            disabled={true}
+          />
+        </div>
+        {/* Descrição */}
+        <div className="mb-6">
+          <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2">
+            Descrição
+            <span className="font-montserrat font-medium text-zinc-400">({post.description?.length || 0}/300)</span>
+          </label>
+          <textarea
+            name="description"
+            value={post.description || ''}
+            onChange={handleInputChange}
+            placeholder="Resumo de 300 caracteres"
+            maxLength={300}
+            className="border p-2 w-full font-montserrat font-light focus-visible:border-[#dcdf1e] focus:outline-none min-h-[190px]" // Define um número de linhas padrão
+          />
+        </div>
+        {/* Tags */}
+        <div className="mb-6">
+          <label className="block text-sm font-montserrat font-medium text-gray-700 mb-2">Tags</label>
+          {post.tags.length > 0 && (
+            <div className="mt-2 flex flex-wrap">
+              {post.tags.map((tag, index) => (
+                <span
+                  onClick={() => {
+                    setSelectedTag(tag);
+                  }}
+                  onDoubleClick={() => handleEditTag(tag)}
+                  key={index}
+                  className="inline-block bg-[#dcdf1e] text-black font-light font-montserrat px-3 py-1 mr-2 mb-2 cursor-pointer text-xs break-all flex items-center"
+                >
+                  {tag.name}
+                  <svg
+                    onClick={() => handleChangeTags(tag)}
+                    className="ml-2 min-w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    {tag.name}
-                    <svg
-                      onClick={() => handleChangeTags(tag)}
-                      className="ml-2 min-w-4 h-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M6 18L18 6M6 6l12 12"
-                      ></path>
-                    </svg>
-                  </span>
-                ))}
-              </div>
-            )}
-            <Menu as="div" className="relative inline-block text-left w-full">
-              <MenuButton className="inline-flex justify-between w-full border shadow-sm px-4 py-2 text-sm font-light font-montserrat bg-white">
-                Pesquisar Tags
-              </MenuButton>
-              <MenuItems
-                className="absolute mt-2 w-full shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50"
-                style={{
-                  maxHeight: '300px',
-                  overflowY: 'auto',
-                }}
-              >
-                <div className="py-1">
-                  <div className="px-4 py-2">
-                    <input
-                      type="text"
-                      className="w-full p-2 border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
-                      value={searchTerm}
-                      onChange={handleSearch}
-                      placeholder="Pesquise tags"
-                    />
-                  </div>
-                  {filteredTags.length > 0
-                    ? filteredTags.map((tag) => (
-                        <MenuItem key={tag.id}>
-                          {({ active }) => (
-                            <button
-                              className={`${active ? 'bg-gray-100' : ''} block px-4 py-2 text-sm w-full text-left flex items-center`}
-                              onClick={() => handleChangeTags(tag)}
-                            >
-                              {post.tags.some((selectedTag) => selectedTag.id === tag.id) && (
-                                <svg
-                                  className="w-4 h-4 mr-2 text-blue-500"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="M5 13l4 4L19 7"
-                                  />
-                                </svg>
-                              )}
-                              {tag.name}
-                            </button>
-                          )}
-                        </MenuItem>
-                      ))
-                    : filteredTags.map((tag) => (
-                        <MenuItem key={tag.id}>
-                          {({ active }) => (
-                            <button
-                              className={`${active ? 'bg-gray-100' : ''} block px-4 py-2 text-sm w-full text-left flex items-center`}
-                              onClick={() => handleChangeTags(tag)}
-                            >
-                              {post.tags.some((selectedTag) => selectedTag.id === tag.id) && (
-                                <svg
-                                  className="w-4 h-4 mr-2 text-blue-500"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="M5 13l4 4L19 7"
-                                  />
-                                </svg>
-                              )}
-                              {tag.name}
-                            </button>
-                          )}
-                        </MenuItem>
-                      ))}
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+                  </svg>
+                </span>
+              ))}
+            </div>
+          )}
+          <Menu as="div" className="relative inline-block text-left w-full">
+            <MenuButton className="inline-flex justify-between w-full border shadow-sm px-4 py-2 text-sm font-light font-montserrat bg-white">
+              Pesquisar Tags
+            </MenuButton>
+            <MenuItems
+              className="absolute mt-2 w-full shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50"
+              style={{
+                maxHeight: '300px',
+                overflowY: 'auto',
+              }}
+            >
+              <div className="py-1">
+                <div className="px-4 py-2">
+                  <input
+                    type="text"
+                    className="w-full p-2 border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
+                    value={searchTerm}
+                    onChange={handleSearch}
+                    placeholder="Pesquise tags"
+                  />
                 </div>
-              </MenuItems>
-            </Menu>
-          </div>
-
-          {/* Assuntos */}
-          <div className="mb-6">
-            <label className="block text-sm font-montserrat font-medium text-gray-700 mb-2">Assuntos</label>
-            {post.subjects.length > 0 && (
-              <div className="mt-2 flex flex-wrap">
-                {post.subjects.map((subject, index) => (
-                  <span
-                    key={index}
-                    className="inline-block bg-[#dcdf1e] text-black font-montserrat font-light px-3 py-1 mr-2 mb-2 cursor-pointer text-xs flex items-center"
-                  >
-                    {subject.name}
-                    <svg
-                      onClick={() => handleSubjectSelect(subject)}
-                      className="ml-2 min-w-4 h-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M6 18L18 6M6 6l12 12"
-                      ></path>
-                    </svg>
-                  </span>
-                ))}
-              </div>
-            )}
-            <Menu as="div" className="relative inline-block text-left w-full">
-              <MenuButton className="inline-flex justify-between w-full border shadow-sm px-4 py-2 text-sm font-montserrat font-light bg-white">
-                Selecionar Assuntos
-              </MenuButton>
-              <MenuItems
-                className="absolute mt-2 w-full shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50"
-                style={{
-                  maxHeight: '300px',
-                  overflowY: 'auto',
-                }}
-              >
-                <div className="py-1">
-                  {subjectsOptions.length > 0 ? (
-                    subjectsOptions.map((subject) => (
-                      <MenuItem key={subject.id}>
+                {filteredTags.length > 0
+                  ? filteredTags.map((tag) => (
+                      <MenuItem key={tag.id}>
                         {({ active }) => (
                           <button
                             className={`${active ? 'bg-gray-100' : ''} block px-4 py-2 text-sm w-full text-left flex items-center`}
-                            onClick={() => handleSubjectSelect(subject)}
+                            onClick={() => handleChangeTags(tag)}
                           >
-                            {post.subjects.some((s) => s.id === subject.id) && (
+                            {post.tags.some((selectedTag) => selectedTag.id === tag.id) && (
                               <svg
-                                className="w-4 h-4 ml-2 text-blue-500"
+                                className="w-4 h-4 mr-2 text-blue-500"
                                 fill="none"
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"
@@ -625,479 +256,382 @@ export const CardBasicInfo: React.FC<CardDTO> = ({ title, feature_image, content
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                               </svg>
                             )}
-                            {subject.name}
+                            {tag.name}
                           </button>
                         )}
                       </MenuItem>
                     ))
-                  ) : (
-                    <div className="px-4 py-2 text-sm text-gray-500">Nenhum assunto encontrado</div>
-                  )}
-                </div>
-              </MenuItems>
-            </Menu>
-          </div>
-
-          {/* Visibilidade */}
-          <div className="mb-6">
-            <label className="block text-sm font-montserrat font-medium text-gray-700 mb-2">Visibilidade</label>
-            <Menu as="div" className="relative inline-block text-left w-full">
-              <MenuButton className="inline-flex justify-between w-full border shadow-sm px-4 py-2 text-sm font-montserrat font-light bg-white">
-                {visibilities[post.visibility].name}
-              </MenuButton>
-              <MenuItems className="absolute mt-2 w-full shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
-                <div className="py-1">
-                  {Object.keys(visibilities).map((visibility) => (
-                    <MenuItem key={visibility}>
+                  : filteredTags.map((tag) => (
+                      <MenuItem key={tag.id}>
+                        {({ active }) => (
+                          <button
+                            className={`${active ? 'bg-gray-100' : ''} block px-4 py-2 text-sm w-full text-left flex items-center`}
+                            onClick={() => handleChangeTags(tag)}
+                          >
+                            {post.tags.some((selectedTag) => selectedTag.id === tag.id) && (
+                              <svg
+                                className="w-4 h-4 mr-2 text-blue-500"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                              </svg>
+                            )}
+                            {tag.name}
+                          </button>
+                        )}
+                      </MenuItem>
+                    ))}
+              </div>
+            </MenuItems>
+          </Menu>
+        </div>
+        {/* Assuntos */}
+        <div className="mb-6">
+          <label className="block text-sm font-montserrat font-medium text-gray-700 mb-2">Assuntos</label>
+          {post.subjects.length > 0 && (
+            <div className="mt-2 flex flex-wrap">
+              {post.subjects.map((subject, index) => (
+                <span
+                  key={index}
+                  className="inline-block bg-[#dcdf1e] text-black font-montserrat font-light px-3 py-1 mr-2 mb-2 cursor-pointer text-xs flex items-center"
+                >
+                  {subject.name}
+                  <svg
+                    onClick={() => handleSubjectSelect(subject)}
+                    className="ml-2 min-w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+                  </svg>
+                </span>
+              ))}
+            </div>
+          )}
+          <Menu as="div" className="relative inline-block text-left w-full">
+            <MenuButton className="inline-flex justify-between w-full border shadow-sm px-4 py-2 text-sm font-montserrat font-light bg-white">
+              Selecionar Assuntos
+            </MenuButton>
+            <MenuItems
+              className="absolute mt-2 w-full shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50"
+              style={{
+                maxHeight: '300px',
+                overflowY: 'auto',
+              }}
+            >
+              <div className="py-1">
+                {subjectsOptions.length > 0 ? (
+                  subjectsOptions.map((subject) => (
+                    <MenuItem key={subject.id}>
                       {({ active }) => (
                         <button
-                          className={`${active ? 'bg-gray-100' : ''} block px-4 py-2 text-sm font-montserrat font-light w-full text-left`}
-                          onClick={() => handleChangeVisibility(visibility as TPostsVisibility)}
+                          className={`${active ? 'bg-gray-100' : ''} block px-4 py-2 text-sm w-full text-left flex items-center`}
+                          onClick={() => handleSubjectSelect(subject)}
                         >
-                          {visibilities[visibility as TPostsVisibility].name}
+                          {post.subjects.some((s) => s.id === subject.id) && (
+                            <svg
+                              className="w-4 h-4 ml-2 text-blue-500"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                          )}
+                          {subject.name}
                         </button>
                       )}
                     </MenuItem>
-                  ))}
-                </div>
-              </MenuItems>
-            </Menu>
-          </div>
-
-          {/* Tipo */}
-          <div className="mb-6">
-            <label className="block text-sm font-montserrat font-medium text-gray-700 mb-2">Tipo</label>
-            <Menu as="div" className="relative inline-block text-left w-full">
-              <MenuButton className="inline-flex justify-between w-full border shadow-sm px-4 py-2 text-sm font-montserrat font-light bg-white">
-                {types[post.type]}
-              </MenuButton>
-              <MenuItems className="absolute mt-2 w-full shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
-                <div className="py-1">
-                  {Object.keys(types).map((type) => (
-                    <MenuItem key={type}>
+                  ))
+                ) : (
+                  <div className="px-4 py-2 text-sm text-gray-500">Nenhum assunto encontrado</div>
+                )}
+              </div>
+            </MenuItems>
+          </Menu>
+        </div>
+        {/* Visibilidade */}
+        <div className="mb-6">
+          <label className="block text-sm font-montserrat font-medium text-gray-700 mb-2">Visibilidade</label>
+          <Menu as="div" className="relative inline-block text-left w-full">
+            <MenuButton className="inline-flex justify-between w-full border shadow-sm px-4 py-2 text-sm font-montserrat font-light bg-white">
+              {visibilities[post.visibility].name}
+            </MenuButton>
+            <MenuItems className="absolute mt-2 w-full shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
+              <div className="py-1">
+                {Object.keys(visibilities).map((visibility) => (
+                  <MenuItem key={visibility}>
+                    {({ active }) => (
+                      <button
+                        className={`${active ? 'bg-gray-100' : ''} block px-4 py-2 text-sm font-montserrat font-light w-full text-left`}
+                        onClick={() => handleChangeVisibility(visibility as TPostsVisibility)}
+                      >
+                        {visibilities[visibility as TPostsVisibility].name}
+                      </button>
+                    )}
+                  </MenuItem>
+                ))}
+              </div>
+            </MenuItems>
+          </Menu>
+        </div>
+        {/* Tipo */}
+        <div className="mb-6">
+          <label className="block text-sm font-montserrat font-medium text-gray-700 mb-2">Tipo</label>
+          <Menu as="div" className="relative inline-block text-left w-full">
+            <MenuButton className="inline-flex justify-between w-full border shadow-sm px-4 py-2 text-sm font-montserrat font-light bg-white">
+              {types[post.type]}
+            </MenuButton>
+            <MenuItems className="absolute mt-2 w-full shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
+              <div className="py-1">
+                {Object.keys(types).map((type) => (
+                  <MenuItem key={type}>
+                    {({ active }) => (
+                      <button
+                        className={`${active ? 'bg-gray-100' : ''} block px-4 py-2 text-sm font-montserrat font-light w-full text-left`}
+                        onClick={() => handleChangeType(type as TPostsType)}
+                      >
+                        {types[type as TPostsType]}
+                      </button>
+                    )}
+                  </MenuItem>
+                ))}
+              </div>
+            </MenuItems>
+          </Menu>
+        </div>
+        {/* Autor */}
+        <div className="mb-6">
+          <label className="block text-sm font-montserrat font-medium text-gray-700 mb-2">Autor(a)</label>
+          {post.admins.length > 0 && (
+            <div className="mt-2 flex flex-wrap">
+              {post.admins.map((admin, index) => (
+                <span
+                  onClick={() => handleUserSelect(admin)}
+                  key={index}
+                  className="inline-block bg-[#dcdf1e] text-black font-montserrat font-light px-3 py-1 mr-2 mb-2 cursor-pointer text-xs flex items-center"
+                >
+                  {admin.name}
+                  <svg
+                    className="ml-2 w-3 h-3"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+                  </svg>
+                </span>
+              ))}
+            </div>
+          )}
+          <Menu as="div" className="relative inline-block text-left w-full">
+            <MenuButton className="inline-flex justify-between w-full border shadow-sm px-4 py-2 text-sm font-light font-montserrat bg-white">
+              {post.admins.length > 0
+                ? post.admins.length > 1
+                  ? `${post.admins[0].name} + ${post.admins.length - 1}`
+                  : post.admins[0].name
+                : 'Selecione os autores'}
+            </MenuButton>
+            <MenuItems
+              className="absolute mt-2 w-full shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50"
+              style={{
+                maxHeight: '300px',
+                overflowY: 'auto',
+              }}
+            >
+              <div className="py-1">
+                {usersOptions.length > 0 ? (
+                  usersOptions.map((user) => (
+                    <MenuItem key={user.id}>
                       {({ active }) => (
                         <button
-                          className={`${active ? 'bg-gray-100' : ''} block px-4 py-2 text-sm font-montserrat font-light w-full text-left`}
-                          onClick={() => handleChangeType(type as TPostsType)}
+                          onClick={() => handleUserSelect(user)}
+                          className={`${active ? 'bg-gray-100' : ''} block px-4 py-2 text-sm w-full text-left flex items-center`}
                         >
-                          {types[type as TPostsType]}
+                          <img src={user.avatar ?? ''} alt={user.name} className="w-6 h-6 mr-2 rounded-full" />
+                          {user.name}
+                          {post.admins.some((admin) => admin.id === user.id) && (
+                            <svg
+                              className="w-4 h-4 ml-2 text-blue-500"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                              xmlns="http://www.w3.org/2000/svg"
+                              onClick={() => handleUserSelect(user)}
+                            >
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                          )}
                         </button>
                       )}
                     </MenuItem>
-                  ))}
-                </div>
-              </MenuItems>
-            </Menu>
-          </div>
-
-          {/* Autor */}
-          <div className="mb-6">
-            <label className="block text-sm font-montserrat font-medium text-gray-700 mb-2">Autor(a)</label>
-            {post.admins.length > 0 && (
-              <div className="mt-2 flex flex-wrap">
-                {post.admins.map((admin, index) => (
-                  <span
-                    onClick={() => handleUserSelect(admin)}
-                    key={index}
-                    className="inline-block bg-[#dcdf1e] text-black font-montserrat font-light px-3 py-1 mr-2 mb-2 cursor-pointer text-xs flex items-center"
-                  >
-                    {admin.name}
-                    <svg
-                      className="ml-2 w-3 h-3"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M6 18L18 6M6 6l12 12"
-                      ></path>
-                    </svg>
-                  </span>
-                ))}
+                  ))
+                ) : (
+                  <div className="px-4 py-2 text-sm text-gray-500">Nenhum autor encontrado</div>
+                )}
               </div>
-            )}
-            <Menu as="div" className="relative inline-block text-left w-full">
-              <MenuButton className="inline-flex justify-between w-full border shadow-sm px-4 py-2 text-sm font-light font-montserrat bg-white">
-                {post.admins.length > 0
-                  ? post.admins.length > 1
-                    ? `${post.admins[0].name} + ${post.admins.length - 1}`
-                    : post.admins[0].name
-                  : 'Selecione os autores'}
-              </MenuButton>
-              <MenuItems
-                className="absolute mt-2 w-full shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50"
-                style={{
-                  maxHeight: '300px',
-                  overflowY: 'auto',
-                }}
-              >
-                <div className="py-1">
-                  {usersOptions.length > 0 ? (
-                    usersOptions.map((user) => (
-                      <MenuItem key={user.id}>
-                        {({ active }) => (
-                          <button
-                            onClick={() => handleUserSelect(user)}
-                            className={`${active ? 'bg-gray-100' : ''} block px-4 py-2 text-sm w-full text-left flex items-center`}
-                          >
-                            <img src={user.avatar ?? ''} alt={user.name} className="w-6 h-6 mr-2 rounded-full" />
-                            {user.name}
-                            {post.admins.some((admin) => admin.id === user.id) && (
-                              <svg
-                                className="w-4 h-4 ml-2 text-blue-500"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg"
-                                onClick={() => handleUserSelect(user)}
-                              >
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
-                              </svg>
-                            )}
-                          </button>
-                        )}
-                      </MenuItem>
-                    ))
-                  ) : (
-                    <div className="px-4 py-2 text-sm text-gray-500">Nenhum autor encontrado</div>
-                  )}
-                </div>
-              </MenuItems>
-            </Menu>
-          </div>
-
-          {/* Editor(a) */}
-          <div className="mb-6">
-            <label className="block text-sm font-montserrat font-medium text-gray-700 mb-2">Edtor(a)</label>
-            {post.admins.length > 0 && (
-              <div className="mt-2 flex flex-wrap">
-                {post.editors.map((admin, index) => (
-                  <span
-                    onClick={() => handleEditorSelect(admin)}
-                    key={index}
-                    className="inline-block bg-[#dcdf1e] text-black font-montserrat font-light px-3 py-1 mr-2 mb-2 cursor-pointer text-xs flex items-center"
+            </MenuItems>
+          </Menu>
+        </div>
+        {/* Editor(a) */}
+        <div className="mb-6">
+          <label className="block text-sm font-montserrat font-medium text-gray-700 mb-2">Editor(a)</label>
+          {post.admins.length > 0 && (
+            <div className="mt-2 flex flex-wrap">
+              {post.editors.map((admin, index) => (
+                <span
+                  onClick={() => handleEditorSelect(admin)}
+                  key={index}
+                  className="inline-block bg-[#dcdf1e] text-black font-montserrat font-light px-3 py-1 mr-2 mb-2 cursor-pointer text-xs flex items-center"
+                >
+                  {admin.name}
+                  <svg
+                    className="ml-2 w-3 h-3"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    {admin.name}
-                    <svg
-                      className="ml-2 w-3 h-3"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M6 18L18 6M6 6l12 12"
-                      ></path>
-                    </svg>
-                  </span>
-                ))}
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+                  </svg>
+                </span>
+              ))}
+            </div>
+          )}
+          <Menu as="div" className="relative inline-block text-left w-full">
+            <MenuButton className="inline-flex justify-between w-full border shadow-sm px-4 py-2 text-sm font-light font-montserrat bg-white">
+              {post.editors.length > 0
+                ? post.editors.length > 1
+                  ? `${post.editors[0].name} + ${post.editors.length - 1}`
+                  : post.editors[0].name
+                : 'Selecione os editores'}
+            </MenuButton>
+            <MenuItems
+              className="absolute mt-2 w-full shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50"
+              style={{
+                maxHeight: '300px',
+                overflowY: 'auto',
+              }}
+            >
+              <div className="py-1">
+                {usersOptions.length > 0 ? (
+                  usersOptions.map((user) => (
+                    <MenuItem key={user.id}>
+                      {({ active }) => (
+                        <button
+                          className={`${active ? 'bg-gray-100' : ''} block px-4 py-2 text-sm w-full text-left flex items-center`}
+                          onClick={() => handleEditorSelect(user)}
+                        >
+                          <img src={user.avatar ?? ''} alt={user.name} className="w-6 h-6 mr-2 rounded-full" />
+                          {user.name}
+                          {post.editors.some((admin) => admin.id === user.id) && (
+                            <svg
+                              className="w-4 h-4 ml-2 text-blue-500"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                          )}
+                        </button>
+                      )}
+                    </MenuItem>
+                  ))
+                ) : (
+                  <div className="px-4 py-2 text-sm text-gray-500">Nenhum autor encontrado</div>
+                )}
               </div>
-            )}
-            <Menu as="div" className="relative inline-block text-left w-full">
-              <MenuButton className="inline-flex justify-between w-full border shadow-sm px-4 py-2 text-sm font-light font-montserrat bg-white">
-                {post.editors.length > 0
-                  ? post.editors.length > 1
-                    ? `${post.editors[0].name} + ${post.editors.length - 1}`
-                    : post.editors[0].name
-                  : 'Selecione os autores'}
-              </MenuButton>
-              <MenuItems
-                className="absolute mt-2 w-full shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50"
-                style={{
-                  maxHeight: '300px',
-                  overflowY: 'auto',
-                }}
-              >
-                <div className="py-1">
-                  {usersOptions.length > 0 ? (
-                    usersOptions.map((user) => (
-                      <MenuItem key={user.id}>
-                        {({ active }) => (
-                          <button
-                            className={`${active ? 'bg-gray-100' : ''} block px-4 py-2 text-sm w-full text-left flex items-center`}
-                            onClick={() => handleEditorSelect(user)}
-                          >
-                            <img src={user.avatar ?? ''} alt={user.name} className="w-6 h-6 mr-2 rounded-full" />
-                            {user.name}
-                            {post.editors.some((admin) => admin.id === user.id) && (
-                              <svg
-                                className="w-4 h-4 ml-2 text-blue-500"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
-                              </svg>
-                            )}
-                          </button>
-                        )}
-                      </MenuItem>
-                    ))
-                  ) : (
-                    <div className="px-4 py-2 text-sm text-gray-500">Nenhum autor encontrado</div>
-                  )}
-                </div>
-              </MenuItems>
-            </Menu>
-          </div>
-
-          {/* Curdador(a) */}
-          <div className="mb-6">
-            <label className="block text-sm font-montserrat font-medium text-gray-700 mb-2">Curador(a)</label>
-            {post.curadors.length > 0 && (
-              <div className="mt-2 flex flex-wrap">
-                {post.curadors.map((admin, index) => (
-                  <span
-                    onClick={() => handleCuradorSelect(admin)}
-                    key={index}
-                    className="inline-block bg-[#dcdf1e] text-black font-montserrat font-light px-3 py-1 mr-2 mb-2 cursor-pointer text-xs flex items-center"
+            </MenuItems>
+          </Menu>
+        </div>
+        {/* Curador(a) */}
+        <div className="mb-6">
+          <label className="block text-sm font-montserrat font-medium text-gray-700 mb-2">Curador(a) de imagens</label>
+          {post.curadors.length > 0 && (
+            <div className="mt-2 flex flex-wrap">
+              {post.curadors.map((admin, index) => (
+                <span
+                  onClick={() => handleCuradorSelect(admin)}
+                  key={index}
+                  className="inline-block bg-[#dcdf1e] text-black font-montserrat font-light px-3 py-1 mr-2 mb-2 cursor-pointer text-xs flex items-center"
+                >
+                  {admin.name}
+                  <svg
+                    className="ml-2 w-3 h-3"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    {admin.name}
-                    <svg
-                      className="ml-2 w-3 h-3"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M6 18L18 6M6 6l12 12"
-                      ></path>
-                    </svg>
-                  </span>
-                ))}
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+                  </svg>
+                </span>
+              ))}
+            </div>
+          )}
+          <Menu as="div" className="relative inline-block text-left w-full">
+            <MenuButton className="inline-flex justify-between w-full border shadow-sm px-4 py-2 text-sm font-light font-montserrat bg-white">
+              {post.curadors.length > 0
+                ? post.curadors.length > 1
+                  ? `${post.curadors[0].name} + ${post.curadors.length - 1}`
+                  : post.curadors[0].name
+                : 'Selecione os curadores'}
+            </MenuButton>
+            <MenuItems
+              className="absolute mt-2 w-full shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50"
+              style={{
+                maxHeight: '300px',
+                overflowY: 'auto',
+              }}
+            >
+              <div className="py-1">
+                {usersOptions.length > 0 ? (
+                  usersOptions.map((user) => (
+                    <MenuItem key={user.id}>
+                      {({ active }) => (
+                        <button
+                          className={`${active ? 'bg-gray-100' : ''} block px-4 py-2 text-sm w-full text-left flex items-center`}
+                          onClick={() => handleCuradorSelect(user)}
+                        >
+                          <img src={user.avatar ?? ''} alt={user.name} className="w-6 h-6 mr-2 rounded-full" />
+                          {user.name}
+                          {post.curadors.some((admin) => admin.id === user.id) && (
+                            <svg
+                              className="w-4 h-4 ml-2 text-blue-500"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                          )}
+                        </button>
+                      )}
+                    </MenuItem>
+                  ))
+                ) : (
+                  <div className="px-4 py-2 text-sm text-gray-500">Nenhum autor encontrado</div>
+                )}
               </div>
-            )}
-            <Menu as="div" className="relative inline-block text-left w-full">
-              <MenuButton className="inline-flex justify-between w-full border shadow-sm px-4 py-2 text-sm font-light font-montserrat bg-white">
-                {post.curadors.length > 0
-                  ? post.curadors.length > 1
-                    ? `${post.curadors[0].name} + ${post.curadors.length - 1}`
-                    : post.curadors[0].name
-                  : 'Selecione os autores'}
-              </MenuButton>
-              <MenuItems
-                className="absolute mt-2 w-full shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50"
-                style={{
-                  maxHeight: '300px',
-                  overflowY: 'auto',
-                }}
-              >
-                <div className="py-1">
-                  {usersOptions.length > 0 ? (
-                    usersOptions.map((user) => (
-                      <MenuItem key={user.id}>
-                        {({ active }) => (
-                          <button
-                            className={`${active ? 'bg-gray-100' : ''} block px-4 py-2 text-sm w-full text-left flex items-center`}
-                            onClick={() => handleCuradorSelect(user)}
-                          >
-                            <img src={user.avatar ?? ''} alt={user.name} className="w-6 h-6 mr-2 rounded-full" />
-                            {user.name}
-                            {post.curadors.some((admin) => admin.id === user.id) && (
-                              <svg
-                                className="w-4 h-4 ml-2 text-blue-500"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
-                              </svg>
-                            )}
-                          </button>
-                        )}
-                      </MenuItem>
-                    ))
-                  ) : (
-                    <div className="px-4 py-2 text-sm text-gray-500">Nenhum autor encontrado</div>
-                  )}
-                </div>
-              </MenuItems>
-            </Menu>
-          </div>
-
-          <div>
-            <button className="w-full border border-zinc-400 mb-5 h-10 highlight-link" onClick={toggleCardVisibility}>
-              MetaDados Google
-            </button>
-
-            <button
-              className="w-full border border-zinc-400 mb-5 h-10 highlight-link"
-              onClick={toggleCardFaceVisibility}
-            >
-              MetaDados OG
-            </button>
-          </div>
-
-          {/* Botão de Publicar */}
-          <div className="mb-6 flex gap-4 justify-center">
-            <button className="px-4 py-2 text-zinc-500 hover:bg-[#dcdf1e] w-auto" onClick={handleSave}>
-              <FaRegSave size={32} />
-            </button>
-            <button
-              className="px-4 py-2 text-zinc-500 hover:bg-[#dcdf1e] w-auto"
-              onClick={() => window.open(`/posts/${postId}`, '_blank')}
-            >
-              <FaEye size={32} />
-            </button>
-            <button
-              className="px-4 py-2 border-[1px] font-montserrat font-light text-zinc-900 border-zinc-500 hi w-full highlight-link"
-              onClick={handleSubmit}
-            >
-              {post.status === 'published' ? 'Despublicar' : 'Publicar'}
-            </button>
-          </div>
-
-          <div>
-            <button
-              className="border border-red-900 w-full h-12 text-red-800 flex justify-center items-center gap-2"
-              onClick={handleDeletePost}
-            >
-              <FaRegTrashAlt size={22} />
-              EXCLUIR POST
-            </button>
-          </div>
+            </MenuItems>
+          </Menu>
         </div>
       </div>
 
-      {/** CARD META DADOS GOOGLE */}
-      <div className="col-span-4" style={{ display: isCardVisible ? 'block' : 'none' }}>
-        {/* Informações da Postagem */}
-        <div className="bg-white shadow-md">
-          <h1 className="text-2xl font-montserrat font-light mb-6">Meta Dados Google</h1>
-
-          {/** Campo para URL da publicação */}
-          <div className="mb-6">
-            <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2">
-              {' '}
-              Meta Title{' '}
-              <span className="font-montserrat font-medium text-zinc-400">
-                ({post.meta_title?.length || 0}/60)
-              </span>{' '}
-            </label>
-            <input
-              type="text"
-              name="meta_title"
-              value={post?.meta_title}
-              onChange={handleInputChange}
-              maxLength={60}
-              className=" border p-2 w-full font-montserrat font-light focus-visible:border-[#dcdf1e] focus:outline-none"
-            />
-          </div>
-
-          {/* Campo para descrição */}
-          <div className="mb-6">
-            <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2">
-              Meta descrição
-              <span className="font-montserrat font-medium text-zinc-400">
-                ({post.meta_description?.length || 0}/145)
-              </span>
-            </label>
-            <textarea
-              {...register('meta_description')}
-              id="meta_description"
-              name="meta_description"
-              value={post.meta_description}
-              onChange={handleInputChange}
-              placeholder="Resumo de 145 caracteres"
-              maxLength={145}
-              className="border p-2 w-full font-montserrat font-light focus-visible:border-[#dcdf1e] focus:outline-none min-h-[190px]" // Define um número de linhas padrão
-            />
-          </div>
-
-          <GoogleSnnipet
-            title={post.meta_title}
-            url={canonicalUrl}
-            description={post.meta_description}
-            publish_date={post.published_at}
-          />
-
-          <button
-            className="px-4 py-2 border-[1px] font-montserrat font-light text-zinc-900 border-zinc-500 hover:bg-gradient-to-t 
-                          from-[#dcdf1e] to-[#dcdf1e] bg-[length:90%_.90em] bg-no-repeat bg-[position:50%_75%] w-full"
-            onClick={toggleCardVisibility}
-          >
-            Prontinho
-          </button>
-        </div>
-      </div>
-
-      {/** CARD META DADOS OG */}
-      <div className="col-span-4" style={{ display: isCardFaceVisible ? 'block' : 'none' }}>
-        {/* Informações da Postagem */}
-        <div className="bg-white shadow-md">
-          <h1 className="text-2xl font-montserrat font-light mb-6">Meta Dados Face Instagram</h1>
-
-          {/** Campo para URL da publicação */}
-          <div className="mb-6">
-            <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2">
-              {' '}
-              Meta Title{' '}
-              <span className="font-montserrat font-medium text-zinc-400">({post.og_title?.length || 0}/60)</span>{' '}
-            </label>
-            <input
-              type="text"
-              name="og_title"
-              value={post?.og_title}
-              onChange={handleInputChange}
-              className=" border p-2 w-full font-montserrat font-light focus-visible:border-[#dcdf1e] focus:outline-none"
-              maxLength={60}
-            />
-          </div>
-
-          {/* Campo para descrição */}
-          <div className="mb-6">
-            <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2">
-              Meta descrição
-              <span className="font-montserrat font-medium text-zinc-400">
-                ({post.og_description?.length || 0}/120)
-              </span>
-            </label>
-            <textarea
-              name="og_description"
-              value={post.og_description || ''}
-              onChange={handleInputChange}
-              placeholder="Resumo de 120 caracteres"
-              maxLength={120}
-              className="border p-2 w-full font-montserrat font-light focus-visible:border-[#dcdf1e] focus:outline-none min-h-[190px]" // Define um número de linhas padrão
-            />
-          </div>
-
-          <FacebookPreview
-            imageUrl={post.feature_image}
-            url={canonicalUrl}
-            title={post.og_title}
-            description={post.og_description}
-          />
-
-          <button
-            className="px-4 py-2 border-[1px] font-montserrat font-light text-zinc-900 border-zinc-500 hover:bg-gradient-to-t 
-                                from-[#dcdf1e] to-[#dcdf1e] bg-[length:90%_.90em] bg-no-repeat bg-[position:50%_75%] w-full"
-            onClick={toggleCardFaceVisibility}
-          >
-            Prontinho
-          </button>
-        </div>
-      </div>
-
-      {/** CARD PARA ATUALIZAR TAG */}
-      <div style={{ display: isCardTagVisibe ? 'block' : 'none' }}>
-        <CardTagInfo onUpdated={onUpdateTag} selectedTag={selectedTag} onClose={() => toggleCardTagVisibility()} />
-      </div>
-
-      {notification && <div className="notification">{notification}</div>}
+      {/* Dialog para atualizar tag */}
+      <Dialog isOpen={isEditTagDialogOpen} onClose={onCloseDialog}>
+        <CardTagInfo onClose={onCloseDialog} onUpdated={onCloseDialog} selectedTag={selectedTag} />
+      </Dialog>
     </div>
   );
 };
