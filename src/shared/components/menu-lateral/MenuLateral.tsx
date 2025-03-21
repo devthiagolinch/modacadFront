@@ -12,7 +12,7 @@ const rolePermissions: Record<TRoleStaff, string[]> = {
 };
 
 const getAccumulatedPermissions = (role: TRoleStaff): string[] => {
-  const rolesOrder: TRoleStaff[] = ['autor', 'curador', 'editor', 'administrador']; // Ordem crescente de permissões
+  const rolesOrder: TRoleStaff[] = ['autor', 'curador', 'editor', 'administrador'];
   const roleIndex = rolesOrder.indexOf(role);
 
   return rolesOrder.slice(0, roleIndex + 1).flatMap((r) => rolePermissions[r]);
