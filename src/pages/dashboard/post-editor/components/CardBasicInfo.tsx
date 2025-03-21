@@ -174,17 +174,26 @@ export const CardBasicInfo: React.FC<ICardBasicInfoProps> = ({ post, setPost }) 
         </div>
         {/* Descrição */}
         <div className="mb-6">
-          <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2">
+          <label
+            className={`block text-sm font-medium font-montserrat mb-2 ${post.description?.length > 300 ? 'text-red-500' : 'text-gray-700'} `}
+          >
             Descrição
-            <span className="font-montserrat font-medium text-zinc-400">({post.description?.length || 0}/300)</span>
+            <span
+              className={`font-montserrat font-medium ${post.description?.length > 300 ? 'text-red-500' : 'text-gray-700'}`}
+            >
+              ({post.description?.length || 0}/300)
+            </span>
           </label>
           <textarea
             name="description"
             value={post.description || ''}
             onChange={handleInputChange}
             placeholder="Resumo de 300 caracteres"
-            maxLength={300}
-            className="border p-2 w-full font-montserrat font-light focus-visible:border-[#dcdf1e] focus:outline-none min-h-[190px]" // Define um número de linhas padrão
+            className={`border p-2 w-full font-montserrat font-light focus:outline-none min-h-[190px] ${
+              post.description.length > 300
+                ? 'border-red-500 focus:border-red-500 focus-visible:red-500'
+                : 'focus:border-[#dcdf1e] focus-visible:border-[#dcdf1e]'
+            }`}
           />
         </div>
         {/* Tags */}
