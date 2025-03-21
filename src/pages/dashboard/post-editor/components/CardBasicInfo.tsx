@@ -51,9 +51,11 @@ export const CardBasicInfo: React.FC<ICardBasicInfoProps> = ({ post, setPost }) 
   const getCanonicalUrl = () => {
     if (!post.canonicalUrl) return '';
 
-    return post.canonicalUrl.startsWith('https://blog.modacad.com.br/')
-      ? post.canonicalUrl.replace('https://blog.modacad.com.br/', '')
-      : post.canonicalUrl;
+    if (post.canonicalUrl.startsWith('https://blog.modacad.com.br/')) {
+      return post.canonicalUrl.replace('https://blog.modacad.com.br/', '');
+    }
+
+    return post.canonicalUrl;
   };
 
   const onCloseDialog = () => {

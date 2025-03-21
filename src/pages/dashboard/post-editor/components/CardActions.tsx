@@ -32,13 +32,6 @@ export const CardActions: React.FC<ICardActionProps> = ({ post, postId }) => {
   };
 
   const handleSubmit = () => {
-    const adjustedPost = { ...post };
-
-    if (adjustedPost.canonicalUrl?.startsWith('https://blog.modacad.com.br/')) {
-      // Remover o prefixo para enviar apenas o slug
-      adjustedPost.canonicalUrl = adjustedPost.canonicalUrl.replace('https://blog.modacad.com.br/', '');
-    }
-
     if (postId && postId !== 'novo') {
       if (post.status === 'published') {
         post.status = 'draft';
