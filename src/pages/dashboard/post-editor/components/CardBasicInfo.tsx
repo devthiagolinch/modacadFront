@@ -165,8 +165,9 @@ export const CardBasicInfo: React.FC<ICardBasicInfoProps> = ({ post, setPost }) 
             displayFormat="DD/MM/YYYY"
             value={post.published_at ? { startDate: post.published_at, endDate: post.published_at } : null} // Envia como intervalo de datas
             onChange={handleDateChange}
-            inputClassName="p-2 w-full border-2 border-gray-200 focus:outline-none focus:border-[#dcdf1e]"
+            inputClassName="p-2 w-full border-2 border-gray-200 focus:outline-none focus:border-[#dcdf1e] disabled:opacity-50 disabled:cursor-not-allowed"
             popoverDirection="down"
+            disabled={true}
           />
         </div>
         {/* Descrição */}
