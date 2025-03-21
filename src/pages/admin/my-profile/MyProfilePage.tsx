@@ -3,9 +3,9 @@ import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
 import { LayoutDashboard } from '../../../shared/layouts';
-import { UsersService } from '../../../shared/api/users/UserServices';
+import { TProfile, UsersService } from '../../../shared/api/users/UserServices';
 import { useDropzone } from 'react-dropzone';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface IFormMember {
   email: string;
@@ -27,8 +27,9 @@ const formMemberSchema: yup.ObjectSchema<IFormMember> = yup.object({
 
 export const MyProfilePage = () => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [profile, setProfile] = useState<TProfile | null>(null);
 
-  const { handleSubmit, register, setValue, control } = useForm<IFormMember>({
+  const { handleSubmit, register, setValue, control, reset } = useForm<IFormMember>({
     resolver: yupResolver(formMemberSchema),
     defaultValues: initialFormValues,
   });
@@ -47,6 +48,17 @@ export const MyProfilePage = () => {
   const onSubmit: SubmitHandler<IFormMember> = async (data) => {
     UsersService.updateProfile(data);
   };
+
+  useEffect(() => {
+    UsersService.getProfile().then((response) => {
+      if (response instanceof Error) {
+        console.error(response);
+        return;
+      }
+      reset(response);
+      setProfile(response);
+    });
+  }, []);
 
   return (
     <LayoutDashboard>
@@ -76,6 +88,20 @@ export const MyProfilePage = () => {
           />
         </div>
         <div className="mt-2">
+          <label htmlFor="role-create" className="block mb-2 text-sm font-medium text-gray-900">
+            papel
+          </label>
+          <input
+            type="text"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 disabled:opacity-50 cursor-not-allowed"
+            id="role-create"
+            required
+            disabled
+            value={profile?.role}
+          />
+        </div>
+        <div className="mt-2">
+          <label className="block mb-2 text-sm font-medium text-gray-900">avatar</label>
           <Controller
             name="image"
             control={control}

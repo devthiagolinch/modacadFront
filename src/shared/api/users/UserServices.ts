@@ -98,11 +98,14 @@ const deleteById = async (id: string): Promise<void | Error> => {
   }
 };
 
-type TProfile = {
+export type TProfile = {
   id: string;
   plans: {
     id: string;
   } | null;
+  email: string;
+  name: string;
+  role: string;
 };
 
 const getProfile = async () => {
