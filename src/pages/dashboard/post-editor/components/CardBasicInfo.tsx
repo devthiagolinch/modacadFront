@@ -174,17 +174,26 @@ export const CardBasicInfo: React.FC<ICardBasicInfoProps> = ({ post, setPost }) 
         </div>
         {/* Descrição */}
         <div className="mb-6">
-          <label className="block text-sm font-medium font-montserrat text-gray-700 mb-2">
+          <label
+            className={`block text-sm font-medium font-montserrat mb-2 ${post.description?.length > 300 ? 'text-red-500' : 'text-gray-700'} `}
+          >
             Descrição
-            <span className="font-montserrat font-medium text-zinc-400">({post.description?.length || 0}/300)</span>
+            <span
+              className={`font-montserrat font-medium ${post.description?.length > 300 ? 'text-red-500' : 'text-gray-700'}`}
+            >
+              ({post.description?.length || 0}/300)
+            </span>
           </label>
           <textarea
             name="description"
             value={post.description || ''}
             onChange={handleInputChange}
             placeholder="Resumo de 300 caracteres"
-            maxLength={300}
-            className="border p-2 w-full font-montserrat font-light focus-visible:border-[#dcdf1e] focus:outline-none min-h-[190px]" // Define um número de linhas padrão
+            className={`border p-2 w-full font-montserrat font-light focus:outline-none min-h-[190px] ${
+              post.description.length > 300
+                ? 'border-red-500 focus:border-red-500 focus-visible:red-500'
+                : 'focus:border-[#dcdf1e] focus-visible:border-[#dcdf1e]'
+            }`}
           />
         </div>
         {/* Tags */}
@@ -406,9 +415,9 @@ export const CardBasicInfo: React.FC<ICardBasicInfoProps> = ({ post, setPost }) 
             </MenuItems>
           </Menu>
         </div>
-        {/* Autor */}
+        {/* Autoras */}
         <div className="mb-6">
-          <label className="block text-sm font-montserrat font-medium text-gray-700 mb-2">Autor(a)</label>
+          <label className="block text-sm font-montserrat font-medium text-gray-700 mb-2">Autoras</label>
           {post.admins.length > 0 && (
             <div className="mt-2 flex flex-wrap">
               {post.admins.map((admin, index) => (
@@ -480,9 +489,9 @@ export const CardBasicInfo: React.FC<ICardBasicInfoProps> = ({ post, setPost }) 
             </MenuItems>
           </Menu>
         </div>
-        {/* Editor(a) */}
+        {/* Editoras */}
         <div className="mb-6">
-          <label className="block text-sm font-montserrat font-medium text-gray-700 mb-2">Editor(a)</label>
+          <label className="block text-sm font-montserrat font-medium text-gray-700 mb-2">Editoras</label>
           {post.admins.length > 0 && (
             <div className="mt-2 flex flex-wrap">
               {post.editors.map((admin, index) => (
@@ -553,9 +562,9 @@ export const CardBasicInfo: React.FC<ICardBasicInfoProps> = ({ post, setPost }) 
             </MenuItems>
           </Menu>
         </div>
-        {/* Curador(a) */}
+        {/* Curadoras */}
         <div className="mb-6">
-          <label className="block text-sm font-montserrat font-medium text-gray-700 mb-2">Curador(a) de imagens</label>
+          <label className="block text-sm font-montserrat font-medium text-gray-700 mb-2">Curadoras de imagens</label>
           {post.curadors.length > 0 && (
             <div className="mt-2 flex flex-wrap">
               {post.curadors.map((admin, index) => (
