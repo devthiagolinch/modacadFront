@@ -1,27 +1,28 @@
-import { useCallback, useEffect, useState } from 'react';
-
 import '../../../assets/css/tiptap.css';
 
-import { useParams } from 'react-router-dom';
+import { useCallback, useEffect, useState } from 'react';
+
+import { useNavigate, useParams } from 'react-router-dom';
+import { FaBold, FaItalic, FaLink, FaList, FaQuoteLeft } from 'react-icons/fa';
+import { FiDownload } from 'react-icons/fi';
+import { FaImage } from 'react-icons/fa6';
 
 import { BubbleMenu, EditorContent, FloatingMenu, useEditor } from '@tiptap/react';
-import StarterKit from '@tiptap/starter-kit';
-import Link from '@tiptap/extension-link';
 import TextStyle from '@tiptap/extension-text-style';
+import StarterKit from '@tiptap/starter-kit';
 import Image from '@tiptap/extension-image';
-
-import { FaImage } from 'react-icons/fa6';
-import { FiDownload } from 'react-icons/fi';
-
-import { IPostDataRequest, PostsService } from '../../../shared/api/posts/PostsService';
-import { LayoutDashboard } from '../../../shared/layouts';
-import { FaBold, FaItalic, FaLink, FaList, FaQuoteLeft } from 'react-icons/fa';
+import Link from '@tiptap/extension-link';
 import Placeholder from '@tiptap/extension-placeholder';
-import { CardBasicInfo } from './components/CardBasicInfo';
+
 import { InstagramEmbed } from '../../../shared/components/tiptap extensions/instagram/instagramEmbed';
+import { IPostDataRequest, PostsService } from '../../../shared/api/posts/PostsService';
+import { transformPostResponse } from '../../../shared/utils/postUtils';
+import { LayoutDashboard } from '../../../shared/layouts';
+import useDebounce from '../../../shared/hook/useDebounce';
+import { CardEditor } from './components/CardEditor';
 
 const defaultPost: IPostDataRequest = {
-  title: '',
+  title: 'Insira o título',
   description: '',
   feature_image: null,
   type: 'texto',
@@ -52,6 +53,7 @@ const defaultPost: IPostDataRequest = {
 };
 
 export const PostEditor = () => {
+  const navigate = useNavigate();
   const { postId } = useParams<{ postId: string }>();
 
   const [post, setPost] = useState(defaultPost);
@@ -60,6 +62,32 @@ export const PostEditor = () => {
   const [uploading, setUploading] = useState(false);
 
   const [openCard, setOpenCard] = useState(false);
+
+  const debouncedPostContent = useDebounce(post, 1000);
+
+  useEffect(() => {
+    if (post.content === '') return;
+    handleSavePost();
+  }, [debouncedPostContent]);
+
+  const handleSavePost = () => {
+    if (postId && postId !== 'novo') {
+      PostsService.updateById(postId, post).then((response) => {
+        if (response instanceof Error) {
+          console.error(response.message);
+          return;
+        }
+      });
+    } else {
+      PostsService.create(post).then((response) => {
+        if (response instanceof Error) {
+          console.error(response.message);
+          return;
+        }
+        navigate(`/posts/${response}/editar`);
+      });
+    }
+  };
 
   const editor = useEditor({
     extensions: [
@@ -90,11 +118,11 @@ export const PostEditor = () => {
       Placeholder.configure({
         placeholder: ({ node }) => {
           if (node.type.name === 'heading') {
-            return 'Insira o título aqui...'; // Placeholder para título
+            return 'Insira o título aqui...';
           }
-          return 'Escreva o conteúdo do post aqui...'; // Placeholder para o conteúdo principal
+          return 'Escreva o conteúdo do post aqui...';
         },
-        emptyEditorClass: 'is-editor-empty', // Classe CSS para o editor vazio
+        emptyEditorClass: 'is-editor-empty',
       }),
     ],
     editorProps: {
@@ -102,21 +130,16 @@ export const PostEditor = () => {
         class: 'prose-2xl focus:outline-none w-full min-h-screen-2 font-monteserrat text-[12px]',
       },
     },
-
     content: post.content,
     onUpdate: ({ editor }) => {
       const jsonContent = editor.getHTML();
-      // Verifica e corrige qualquer tag <blockquote> errada
       const fixedHtml = jsonContent.replace(/<blockquote.*?>(.*?)<\/blockquote>/g, (match, content) => {
-        // Se encontrar um link do Instagram, converta de volta para embed
         if (content.includes('instagram.com')) {
           return `<blockquote class="instagram-media">${content}</blockquote>`;
         }
         return match;
       });
-
       setPost((prev) => ({ ...prev, content: fixedHtml }));
-      // setPost((prev) => ({ ...prev, content: jsonContent }));
     },
   });
 
@@ -125,49 +148,11 @@ export const PostEditor = () => {
       PostsService.getById(postId).then((response) => {
         if (response instanceof Error) {
           console.error(response.message);
-        } else {
-          
-          const meta = Array.isArray(response.meta) && response.meta.length > 0 ? response.meta[0] : {};
-
-  
-          const stripHtml = (html: string) => {
-            const tmp = document.createElement("div");
-            tmp.innerHTML = html;
-            return tmp.textContent || tmp.innerText || "";
-          };
-
-          setPost({
-            title: response.title,
-            description: response.description,
-            feature_image: response.feature_image,
-            type: response.type,
-            content: response.content,
-            status: response.status,
-            images: response.images ? response.images.join(',') : null,
-            visibility: response.visibility,
-            admins: response.admins.map((admin) => admin),
-            editors: response.editors.map((editor) => editor),
-            curadors: response.curadors.map((curador) => curador),
-            published_at: response.published_at,
-            canonicalUrl: response.canonicalUrl,
-            tags: response.tags.map((tag) => tag),
-            subjects: response.subjects.map((subject) => subject),
-            og_image: meta?.og_image ?? '',
-            og_title: meta?.og_title ?? '',
-            og_description: meta?.og_description ?? '',
-            twitter_image: meta?.twitter_image ?? '',
-            twitter_title: meta?.twitter_title ?? '',
-            twitter_description: meta?.twitter_description ?? '',
-            meta_title: meta?.meta_title ?? '',
-            meta_description: meta?.meta_description ?? '',
-            email_subject: meta?.email_subject ?? '',
-            frontmatter: meta?.frontmatter ?? '',
-            feature_image_alt: meta?.feature_image_alt ?? '',
-            email_only: meta?.email_only ?? '',
-            feature_image_caption: meta?.feature_image_caption ? stripHtml(meta.feature_image_caption) : '', // Remove as tags HTML
-          });
-          setFeatureImageUrl(response.feature_image);
+          return;
         }
+        const transformedPost = transformPostResponse(response);
+        setPost(transformedPost);
+        setFeatureImageUrl(response.feature_image);
       });
     }
   }, [postId, editor]);
@@ -180,24 +165,24 @@ export const PostEditor = () => {
       }, 1000);
     }
   }, [editor, post.admins]);
-  
+
   const insertInstagramEmbed = () => {
-    const url = window.prompt("Cole a URL do Instagram");
-  
-    if (url && editor && url.includes("instagram.com")) {
+    const url = window.prompt('Cole a URL do Instagram');
+
+    if (url && editor && url.includes('instagram.com')) {
       editor
         .chain()
         .focus()
         .insertContent({
-          type: "instagramEmbed",
+          type: 'instagramEmbed',
           attrs: { url },
         })
         .run();
     } else {
-      alert("URL inválida.");
+      alert('URL inválida.');
     }
   };
-  
+
   const setLink = useCallback(() => {
     if (!editor?.getAttributes('link').href) {
       editor?.chain().focus().extendMarkRange('link').unsetLink().run();
@@ -328,9 +313,8 @@ export const PostEditor = () => {
             )}
           </div>
 
-          <div className='mb-6'>
-
-          <input
+          <div className="mb-6">
+            <input
               type="text"
               name="feature_image_caption"
               value={post.feature_image_caption}
@@ -338,7 +322,6 @@ export const PostEditor = () => {
               placeholder="Créditos da imagem"
               className="border p-2 w-full text-center font-montserrat font-medium focus-visible:border-[#dcdf1e] focus:outline-none text-xl"
             />
-
           </div>
 
           {/* Campo para título */}
@@ -410,9 +393,7 @@ export const PostEditor = () => {
                   accept="image/*"
                   onChange={handleImageUpload}
                 />
-                <button onClick={insertInstagramEmbed}>
-                  Post Instagram
-                </button>
+                <button onClick={insertInstagramEmbed}>Post Instagram</button>
               </div>
             </FloatingMenu>
           )}
@@ -473,11 +454,7 @@ export const PostEditor = () => {
             />
           </div>
         </div>
-        {openCard && (
-          <div className="col-span-4 fixed top-0 right-0 w-1/4 h-full bg-white shadow-lg p-4 overflow-auto">
-            <CardBasicInfo title={post.title} feature_image={post.feature_image} content={post.content} image_caption={post.feature_image_caption} />
-          </div>
-        )}
+        {openCard && <CardEditor post={post} setPost={setPost} postId={postId} />}
       </div>
     </LayoutDashboard>
   );
