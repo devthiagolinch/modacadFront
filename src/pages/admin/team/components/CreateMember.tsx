@@ -43,27 +43,21 @@ export const CreateMember: React.FC<ICreateMemberProps> = ({ user, onCreated }) 
     defaultValues: initialFormValues,
   });
 
-  const onSubmit: SubmitHandler<IFormCreateMember> = async (data) => {    
+  const onSubmit: SubmitHandler<IFormCreateMember> = async (data) => {
     if (user) {
       UsersService.updateById(user.id, { name: data.name, email: data.email }).then((response) => {
         if (response instanceof Error) {
           console.error(response);
           return;
         }
-      });
-
-      onCreated();
-      reset(initialFormValues);
-      setImagePreview(null);
-    };
-
-    if(data.image) {
-      UsersService.updateAvatar(data.image).then((response) => {
-        if (response instanceof Error) {
-          console.error(response);
-          return;
-        };
-        
+        if(data.image) {
+          UsersService.updateAvatar(data.image).then((response) => {
+            if (response instanceof Error) {
+              console.error(response);
+              return;
+            };
+          });
+        }
         onCreated();
         reset(initialFormValues);
         setImagePreview(null);
@@ -82,7 +76,6 @@ export const CreateMember: React.FC<ICreateMemberProps> = ({ user, onCreated }) 
       });
     }
   };
-  
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: (acceptedFiles) => {
@@ -92,7 +85,7 @@ export const CreateMember: React.FC<ICreateMemberProps> = ({ user, onCreated }) 
         setImagePreview(URL.createObjectURL(file));
       }
     },
-    maxSize: 5 * 1024 * 1024
+    maxSize: 50 * 1024 * 1024,
   });
 
   useEffect(() => {
@@ -150,8 +143,7 @@ export const CreateMember: React.FC<ICreateMemberProps> = ({ user, onCreated }) 
                 <input {...getInputProps()} />
                 {imagePreview ? (
                   <div className="flex items-center gap-2">
-                    <img src={imagePreview} alt="Preview" className="w-32 h-32 rounded-full object-cover" />
-                    {field.value && <p>{field.value.name}</p>}
+                    <img src={imagePreview} alt="Preview" className="w-40 h-40 rounded-full object-cover" />
                   </div>
                 ) : (
                   <p className="text-gray-500">Arraste uma imagem aqui ou clique para selecionar</p>

@@ -19,12 +19,22 @@ export const PageTeam = () => {
   };
 
   useEffect(() => {
-    fetchUsers();
+    UsersService.getAllStaff().then((response) => {
+      if (response instanceof Error) {
+        console.error(response);
+        return;
+      }
+      setMembers(response.staffs);
+    })
   }, []);
 
   const onCreated = () => {
     fetchUsers();
   };
+
+  useEffect(() => {
+    fetchUsers();
+  }, [onCreated]);
 
   return (
     <LayoutDashboard>
