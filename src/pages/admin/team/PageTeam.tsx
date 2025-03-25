@@ -6,9 +6,12 @@ import { InviteNewMember } from './components/InviteNewMember';
 
 export const PageTeam = () => {
   const [members, setMembers] = useState<IUserData[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+
   const [selectedUser, setSelectedUser] = useState<IUserPayload | null>(null);
 
   const fetchUsers = () => {
+    setIsLoading(true);
     UsersService.getAllStaff().then((response) => {
       if (response instanceof Error) {
         console.error(response);
@@ -19,22 +22,13 @@ export const PageTeam = () => {
   };
 
   useEffect(() => {
-    UsersService.getAllStaff().then((response) => {
-      if (response instanceof Error) {
-        console.error(response);
-        return;
-      }
-      setMembers(response.staffs);
-    })
+    fetchUsers();
+    setIsLoading(false);
   }, []);
 
   const onCreated = () => {
     fetchUsers();
   };
-
-  useEffect(() => {
-    fetchUsers();
-  }, [onCreated]);
 
   return (
     <LayoutDashboard>
@@ -43,7 +37,11 @@ export const PageTeam = () => {
       <div className="grid grid-cols-2 gap-4">
         <div>
           <div className="overflow-x-auto">
-            <table className="min-w-full border-collapse border border-gray-300 bg-white">
+            {isLoading ? (
+              <div className="flex justify-center items-center">
+                <div className="loader">Carregando...</div>
+              </div>) :(
+              <table className="min-w-full border-collapse border border-gray-300 bg-white">
               <tbody>
                 {members.map((member) => (
                   <tr key={member.id}>
@@ -53,7 +51,9 @@ export const PageTeam = () => {
                   </tr>
                 ))}
               </tbody>
-            </table>
+              </table>
+            )}
+           
           </div>
         </div>
         <CreateMember user={selectedUser} onCreated={onCreated} />
