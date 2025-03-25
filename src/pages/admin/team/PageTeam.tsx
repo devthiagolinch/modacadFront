@@ -28,6 +28,7 @@ export const PageTeam = () => {
 
   const onCreated = () => {
     fetchUsers();
+    setIsLoading(false);
   };
 
   return (

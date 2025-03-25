@@ -178,7 +178,7 @@ export const CreateMember: React.FC<ICreateMemberProps> = ({ user, onCreated }) 
         />
       </div>*/}
       <div className="flex items-center gap-2 mt-4">
-        <img src={imagePreview || ''} alt="Sem imagem de perfil" className="w-40 h-40 rounded-full object-cover" />
+        <img src={imagePreview || ''} className="w-40 h-40 rounded-full object-cover" />
       </div>
       {user && (
         <div className="mt-4 flex gap-2">
