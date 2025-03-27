@@ -90,15 +90,6 @@ const updateStaffById = async (id: string, body: bodyUpdate): Promise<void | Err
   }
 };
 
-const updateById = async (body: bodyUpdate): Promise<void | Error> => {
-  try {
-    await api.put(`/admins/profile/`, body);
-  } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido ao atualizar registro';
-    return new Error(errorMessage);
-  }
-};
-
 const updateAvatar = async (avatar: File): Promise<void | Error> => {
   try {
     const formData = new FormData();
@@ -149,15 +140,18 @@ const getProfile = async () => {
 };
 
 const updateProfile = async (body: bodyUpdate) => {
-  console.log('atualizou');
-  console.log(body);
+  try {
+    await api.put(`/admins/profile/`, body);
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido ao atualizar registro';
+    return new Error(errorMessage);
+  }
 };
 
 export const UsersService = {
   getAll,
   getAllStaff,
   inviteMember,
-  updateById,
   updateAvatar,
   updateStaffById,
   deleteById,

@@ -45,12 +45,7 @@ export const MyProfilePage = () => {
     maxSize: 50 * 1024 * 1024,
   });
 
-  const onSubmit: SubmitHandler<IFormMember> = async (data) => {
-    console.log(data);
-    UsersService.updateProfile(data);
-  };
-
-  useEffect(() => {
+  const fetchProfile = async () => {
     UsersService.getProfile().then((response) => {
       if (response instanceof Error) {
         console.error(response);
@@ -62,6 +57,20 @@ export const MyProfilePage = () => {
       });
       setProfile(response);
     });
+  }
+
+  const onSubmit: SubmitHandler<IFormMember> = async (data) => {
+    console.log(data);
+    UsersService.updateProfile({ name: data.name, email: data.email });
+    if(data.image) {
+      UsersService.updateAvatar(data.image);
+    }
+
+    fetchProfile();
+  };
+
+  useEffect(() => {
+    fetchProfile();
   }, []);
 
   return (
@@ -116,14 +125,13 @@ export const MyProfilePage = () => {
                   className={`p-4 border-2 border-dashed rounded-md cursor-pointer min-h-[200px] flex items-center justify-between ${isDragActive ? 'border-primary' : 'border-gray-300'} hover:border-primary`}
                 >
                   <input {...getInputProps()} />
-                  {(imagePreview || profile?.avatar) && field.value ? (
+                  {(imagePreview || profile?.avatar) ? (
                     <div className="flex items-center gap-2">
                       <img
                         src={imagePreview || profile?.avatar || ''}
                         alt="Preview"
-                        className="w-20 h-20 rounded-full object-cover"
+                        className="w-40 h-40 rounded-full object-cover"
                       />
-                      <p>{field.value.name}</p>
                     </div>
                   ) : (
                     <p className="text-gray-500">Arraste uma imagem aqui ou clique para selecionar</p>
