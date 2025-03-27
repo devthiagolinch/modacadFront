@@ -3,11 +3,13 @@ import '../../../assets/css/tiptap.css';
 import { useCallback, useEffect, useState } from 'react';
 
 import { useNavigate, useParams } from 'react-router-dom';
-import { FaBold, FaItalic, FaLink, FaList, FaQuoteLeft } from 'react-icons/fa';
+import { FaBold, FaItalic, FaLink, FaList, FaQuoteLeft, FaYoutube } from 'react-icons/fa';
+import { RiInstagramFill } from "react-icons/ri";
 import { FiDownload } from 'react-icons/fi';
 import { FaImage } from 'react-icons/fa6';
 
 import { BubbleMenu, EditorContent, FloatingMenu, useEditor } from '@tiptap/react';
+import Youtube from '@tiptap/extension-youtube';
 import TextStyle from '@tiptap/extension-text-style';
 import StarterKit from '@tiptap/starter-kit';
 import Image from '@tiptap/extension-image';
@@ -101,6 +103,11 @@ export const PostEditor = () => {
         autolink: true,
         defaultProtocol: 'https',
       }),
+      Youtube.configure({
+        controls: false,
+        nocookie: true,
+        allowFullscreen: false,
+      }),
       TextStyle.extend({
         addAttributes() {
           return {
@@ -182,6 +189,16 @@ export const PostEditor = () => {
       alert('URL inválida.');
     }
   };
+
+  const addYoutubeVideo = () => {
+    const url = prompt('Enter YouTube URL');
+
+    if (url) {
+      editor?.commands.setYoutubeVideo({
+        src: url,
+      });
+    }
+  }
 
   const setLink = useCallback(() => {
     if (!editor?.getAttributes('link').href) {
@@ -393,7 +410,9 @@ export const PostEditor = () => {
                   accept="image/*"
                   onChange={handleImageUpload}
                 />
-                <button onClick={insertInstagramEmbed}>Post Instagram</button>
+                <button onClick={insertInstagramEmbed}><RiInstagramFill size={20} aria-label='Instagram' /></button>
+                <button id="add" onClick={addYoutubeVideo}><FaYoutube size={22} />
+                </button>
               </div>
             </FloatingMenu>
           )}
