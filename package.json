@@ -26,6 +26,7 @@
     "@tiptap/extension-table-header": "^2.5.9",
     "@tiptap/extension-table-row": "^2.5.9",
     "@tiptap/extension-text-style": "^2.9.1",
+    "@tiptap/extension-youtube": "^2.11.5",
     "@tiptap/html": "^2.11.3",
     "@tiptap/pm": "^2.5.8",
     "@tiptap/react": "^2.5.8",
@@ -76,5 +77,6 @@
     "tailwindcss-inner-border": "^0.2.0",
     "typescript": "^5.2.2",
     "vite": "^5.2.0"
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

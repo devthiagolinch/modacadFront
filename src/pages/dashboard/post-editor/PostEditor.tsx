@@ -8,6 +8,7 @@ import { FiDownload } from 'react-icons/fi';
 import { FaImage } from 'react-icons/fa6';
 
 import { BubbleMenu, EditorContent, FloatingMenu, useEditor } from '@tiptap/react';
+import Youtube from '@tiptap/extension-youtube'
 import TextStyle from '@tiptap/extension-text-style';
 import StarterKit from '@tiptap/starter-kit';
 import Image from '@tiptap/extension-image';
@@ -101,6 +102,11 @@ export const PostEditor = () => {
         autolink: true,
         defaultProtocol: 'https',
       }),
+      Youtube.configure({
+        controls: false,
+        nocookie: true,
+        allowFullscreen: false,
+      }),
       TextStyle.extend({
         addAttributes() {
           return {
@@ -182,6 +188,16 @@ export const PostEditor = () => {
       alert('URL inválida.');
     }
   };
+
+  const addYoutubeVideo = () => {
+    const url = prompt('Enter YouTube URL');
+
+    if (url) {
+      editor?.commands.setYoutubeVideo({
+        src: url,
+      });
+    }
+  }
 
   const setLink = useCallback(() => {
     if (!editor?.getAttributes('link').href) {
@@ -394,6 +410,7 @@ export const PostEditor = () => {
                   onChange={handleImageUpload}
                 />
                 <button onClick={insertInstagramEmbed}>Post Instagram</button>
+                <button id="add" onClick={addYoutubeVideo}>Add YouTube video</button>
               </div>
             </FloatingMenu>
           )}
