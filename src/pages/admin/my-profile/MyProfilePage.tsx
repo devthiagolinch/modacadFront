@@ -99,7 +99,7 @@ export const MyProfilePage = () => {
       });
       setProfile(response);
     });
-  }, []);
+  });
 
   return (
     <LayoutDashboard>

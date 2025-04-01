@@ -1,7 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import React, { useEffect, useState } from 'react';
-import { useDropzone } from 'react-dropzone';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { UsersService } from '../../../../shared/api/users/UserServices';
 import * as yup from 'yup';
 
@@ -38,37 +37,56 @@ export const CreateMember: React.FC<ICreateMemberProps> = ({ user, onCreated }) 
     image: yup.mixed<File>().nullable().defined(),
   });
 
-  const { handleSubmit, register, setValue, control, reset } = useForm<IFormCreateMember>({
+  const { handleSubmit, register, reset } = useForm<IFormCreateMember>({
     resolver: yupResolver(createMemberSchema),
     defaultValues: initialFormValues,
   });
 
   const onSubmit: SubmitHandler<IFormCreateMember> = async (data) => {
-    if (user) {
-      UsersService.updateById(user.id, { name: data.name, email: data.email }).then((response) => {
+    try {
+      if (user) {
+        const response = await UsersService.updateStaffById(user.id, { name: data.name, email: data.email });
         if (response instanceof Error) {
           console.error(response);
           return;
         }
+  
+        if (data.image) {
+          const avatarResponse = await UsersService.updateAvatar(data.image);
+          if (avatarResponse instanceof Error) {
+            console.error(avatarResponse);
+            return;
+          }
+        }
+  
         onCreated();
         reset(initialFormValues);
-      });
+        setImagePreview(null);
+      }
+    } catch (error) {
+      console.error('Erro ao atualizar o membro:', error);
     }
   };
 
   const handleDelete = async () => {
     if (user) {
-      UsersService.deleteById(user.id).then((response) => {
+      const confirmDelete = window.confirm('Tem certeza que deseja excluir este membro?');
+      if (!confirmDelete) return;
+
+      try {
+        const response = await UsersService.deleteById(user.id);
         if (response instanceof Error) {
           console.error(response);
           return;
         }
         onCreated();
-      });
+      } catch (error) {
+        console.error('Erro ao excluir o membro:', error);
+      }
     }
   };
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+  {/*const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: (acceptedFiles) => {
       if (acceptedFiles.length > 0) {
         const file = acceptedFiles[0];
@@ -77,7 +95,7 @@ export const CreateMember: React.FC<ICreateMemberProps> = ({ user, onCreated }) 
       }
     },
     maxSize: 50 * 1024 * 1024,
-  });
+  }); */}
 
   useEffect(() => {
     if (user) {
@@ -86,6 +104,12 @@ export const CreateMember: React.FC<ICreateMemberProps> = ({ user, onCreated }) 
         name: user.name,
         image: null,
       });
+
+      if (user.avatar) {
+        setImagePreview(user.avatar);
+      } else {
+        setImagePreview(null);
+      }	
     }
   }, [reset, user]);
 
@@ -115,7 +139,7 @@ export const CreateMember: React.FC<ICreateMemberProps> = ({ user, onCreated }) 
           required
         />
       </div>
-      <div className="mt-2">
+      {/*<div className="mt-2">
         <Controller
           name="image"
           control={control}
@@ -123,13 +147,13 @@ export const CreateMember: React.FC<ICreateMemberProps> = ({ user, onCreated }) 
             <div>
               <div
                 {...getRootProps()}
+                aria-label="Área para upload de imagem"
                 className={`p-4 border-2 border-dashed rounded-md cursor-pointer min-h-[200px] flex items-center justify-between ${isDragActive ? 'border-blue-500' : 'border-gray-300'} hover:border-blue-500`}
               >
                 <input {...getInputProps()} />
-                {imagePreview && field.value ? (
+                {imagePreview ? (
                   <div className="flex items-center gap-2">
-                    <img src={imagePreview} alt="Preview" className="w-20 h-20 rounded-full object-cover" />
-                    <p>{field.value.name}</p>
+                    <img src={imagePreview} alt="Preview" className="w-40 h-40 rounded-full object-cover" />
                   </div>
                 ) : (
                   <p className="text-gray-500">Arraste uma imagem aqui ou clique para selecionar</p>
@@ -152,6 +176,9 @@ export const CreateMember: React.FC<ICreateMemberProps> = ({ user, onCreated }) 
             </div>
           )}
         />
+      </div>*/}
+      <div className="flex items-center gap-2 mt-4">
+        <img src={imagePreview || ''} className="w-40 h-40 rounded-full object-cover" />
       </div>
       {user && (
         <div className="mt-4 flex gap-2">
