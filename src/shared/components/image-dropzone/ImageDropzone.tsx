@@ -53,11 +53,11 @@ export const ImageDropzone: React.FC<IImageDropzoneProps> = ({ onChange, value, 
     <div className={`${className} space-y-2`}>
       {value?.preview ? (
         <div className="relative group">
-          <img src={value.preview} alt="Preview" className="w-full h-48 object-cover rounded-lg" />
+          <img src={value.preview} alt="Preview" className="w-48 aspect-square object-cover rounded-lg" />
           <button
             type="button"
             onClick={removeImage}
-            className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+            className="absolute top-2 left-2 bg-red-500 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
           >
             <FiX size={16} />
           </button>
