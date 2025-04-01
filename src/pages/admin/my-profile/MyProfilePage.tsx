@@ -1,16 +1,16 @@
+import { useEffect, useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
-import { LayoutDashboard } from '../../../shared/layouts';
+import { ImageDropzone, TImageFile } from '../../../shared/components/image-dropzone/ImageDropzone';
 import { TProfile, UsersService } from '../../../shared/api/users/UserServices';
-import { useDropzone } from 'react-dropzone';
-import { useEffect, useState } from 'react';
+import { LayoutDashboard } from '../../../shared/layouts';
 
 interface IFormMember {
   email: string;
   name: string;
-  image: File | null;
+  image: TImageFile;
 }
 
 const initialFormValues: IFormMember = {
@@ -19,35 +19,72 @@ const initialFormValues: IFormMember = {
   image: null,
 };
 
-const formMemberSchema: yup.ObjectSchema<IFormMember> = yup.object({
-  email: yup.string().email().required(),
-  name: yup.string().required(),
-  image: yup.mixed<File>().nullable().defined(),
-});
+const formMemberSchema: yup.ObjectSchema<IFormMember> = yup.object().shape({
+  email: yup.string().email('Informe um e-mail válido').required('E-mail é obrigatório'),
+  name: yup.string().required('Nome é obrigatório'),
+  image: yup
+    .mixed()
+    .test('is-valid-type', 'Apenas imagens são permitidas (JPEG, PNG, GIF)', (value) => {
+      if (!value) return true; // campo não obrigatório
+
+      // Verifica se é um objeto com propriedade file (nosso TImageFile)
+      if (typeof value === 'object' && value !== null && 'file' in value) {
+        return (
+          typeof value.file === 'object' &&
+          value.file !== null &&
+          'type' in value.file &&
+          ['image/jpeg', 'image/png', 'image/gif'].includes((value.file as File).type)
+        );
+      }
+
+      // Ou se é diretamente um File (caso não esteja usando nosso tipo)
+      if (value instanceof File) {
+        return ['image/jpeg', 'image/png', 'image/gif'].includes(value.type);
+      }
+
+      return false;
+    })
+    .test('is-valid-size', 'Imagem muito grande (máx. 5MB)', (value) => {
+      if (!value) return true;
+
+      if (typeof value === 'object' && value !== null && 'file' in value) {
+        return (value.file as File).size <= 5 * 1024 * 1024; // 5MB
+      }
+
+      if (value instanceof File) {
+        return value.size <= 5 * 1024 * 1024;
+      }
+
+      return false;
+    })
+    .nullable()
+    .default(null),
+}) as yup.ObjectSchema<IFormMember>;
 
 export const MyProfilePage = () => {
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [profile, setProfile] = useState<TProfile | null>(null);
 
-  const { handleSubmit, register, setValue, control, reset } = useForm<IFormMember>({
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+    reset,
+  } = useForm<IFormMember>({
     resolver: yupResolver(formMemberSchema),
     defaultValues: initialFormValues,
   });
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop: (acceptedFiles) => {
-      if (acceptedFiles.length > 0) {
-        const file = acceptedFiles[0];
-        setValue('image', file);
-        setImagePreview(URL.createObjectURL(file));
-      }
-    },
-    maxSize: 50 * 1024 * 1024,
-  });
+  const handleImageChange = (fileInfo: TImageFile) => {
+    setValue('image', fileInfo, { shouldValidate: true });
+  };
+
+  const currentImage = watch('image');
 
   const onSubmit: SubmitHandler<IFormMember> = async (data) => {
     console.log(data);
-    UsersService.updateProfile(data);
+    // UsersService.updateProfile(data);
   };
 
   useEffect(() => {
@@ -106,45 +143,18 @@ export const MyProfilePage = () => {
         </div>
         <div className="mt-2">
           <label className="block mb-2 text-sm font-medium text-gray-900">avatar</label>
-          <Controller
-            name="image"
-            control={control}
-            render={({ field }) => (
-              <div>
-                <div
-                  {...getRootProps()}
-                  className={`p-4 border-2 border-dashed rounded-md cursor-pointer min-h-[200px] flex items-center justify-between ${isDragActive ? 'border-primary' : 'border-gray-300'} hover:border-primary`}
-                >
-                  <input {...getInputProps()} />
-                  {(imagePreview || profile?.avatar) && field.value ? (
-                    <div className="flex items-center gap-2">
-                      <img
-                        src={imagePreview || profile?.avatar || ''}
-                        alt="Preview"
-                        className="w-20 h-20 rounded-full object-cover"
-                      />
-                      <p>{field.value.name}</p>
-                    </div>
-                  ) : (
-                    <p className="text-gray-500">Arraste uma imagem aqui ou clique para selecionar</p>
-                  )}
-                </div>
-                <div>
-                  {field.value && (
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setValue('image', null);
-                        setImagePreview(null);
-                      }}
-                      className="text-red-500 mt-2"
-                    >
-                      Remover imagem
-                    </button>
-                  )}
-                </div>
-              </div>
-            )}
+          <ImageDropzone
+            onChange={handleImageChange}
+            value={
+              currentImage
+                ? {
+                    ...currentImage,
+                    preview: currentImage.preview || profile?.avatar || '',
+                  }
+                : null
+            }
+            error={errors.image?.message ? { message: errors.image.message } : undefined}
+            className="mt-1"
           />
         </div>
         <div className="mt-2">
