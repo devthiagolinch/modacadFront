@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
 import { ImageDropzone, TImageFile } from '../../../shared/components/image-dropzone/ImageDropzone';
-import { TProfile, UsersService } from '../../../shared/api/users/UserServices';
+import { UsersService } from '../../../shared/api/users/UserServices';
 import { LayoutDashboard } from '../../../shared/layouts';
 
 interface IFormMember {
@@ -47,7 +47,7 @@ const formMemberSchema: yup.ObjectSchema<IFormMember> = yup.object().shape({
     .test('is-valid-size', 'Imagem muito grande (máx. 5MB)', (value) => {
       if (!value) return true;
 
-      if (typeof value === 'object' && value !== null && 'file' in value) {
+      if (typeof value === 'object' && value !== null && 'file' in value && 'size' in value) {
         return (value.file as File).size <= 5 * 1024 * 1024; // 5MB
       }
 
@@ -62,7 +62,7 @@ const formMemberSchema: yup.ObjectSchema<IFormMember> = yup.object().shape({
 }) as yup.ObjectSchema<IFormMember>;
 
 export const MyProfilePage = () => {
-  const [profile, setProfile] = useState<TProfile>();
+  const [userRole, setUserRole] = useState('');
   const [isLoading, setIsLoading] = useState(true);
 
   const {
@@ -110,7 +110,7 @@ export const MyProfilePage = () => {
             : null,
         });
 
-        setProfile(response);
+        setUserRole(response.role);
       } finally {
         setIsLoading(false);
       }
@@ -158,20 +158,14 @@ export const MyProfilePage = () => {
             id="role-create"
             required
             disabled
-            value={profile?.role ?? ''}
+            value={userRole}
           />
         </div>
         <div className="mt-2">
           <label className="block mb-2 text-sm font-medium text-gray-900">avatar</label>
           <ImageDropzone
             onChange={handleImageChange}
-            value={
-              currentImage
-                ? currentImage
-                : profile?.avatar
-                  ? { preview: profile.avatar, file: null as unknown as File }
-                  : null
-            }
+            value={currentImage}
             error={errors.image?.message ? { message: errors.image.message } : undefined}
             className="mt-1"
           />
