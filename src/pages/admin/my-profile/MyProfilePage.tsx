@@ -62,7 +62,8 @@ const formMemberSchema: yup.ObjectSchema<IFormMember> = yup.object().shape({
 }) as yup.ObjectSchema<IFormMember>;
 
 export const MyProfilePage = () => {
-  const [profile, setProfile] = useState<TProfile | null>(null);
+  const [profile, setProfile] = useState<TProfile>();
+  const [isLoading, setIsLoading] = useState(true);
 
   const {
     register,
@@ -74,6 +75,7 @@ export const MyProfilePage = () => {
   } = useForm<IFormMember>({
     resolver: yupResolver(formMemberSchema),
     defaultValues: initialFormValues,
+    mode: 'onBlur',
   });
 
   const handleImageChange = (fileInfo: TImageFile) => {
@@ -88,17 +90,33 @@ export const MyProfilePage = () => {
   };
 
   useEffect(() => {
-    UsersService.getProfile().then((response) => {
-      if (response instanceof Error) {
-        console.error(response);
-        return;
+    const loadProfile = async () => {
+      setIsLoading(true);
+      try {
+        const response = await UsersService.getProfile();
+        if (response instanceof Error) {
+          console.error(response);
+          return;
+        }
+
+        reset({
+          email: response.email || '',
+          name: response.name || '',
+          image: response.avatar
+            ? {
+                preview: response.avatar,
+                file: null as unknown as File,
+              }
+            : null,
+        });
+
+        setProfile(response);
+      } finally {
+        setIsLoading(false);
       }
-      reset({
-        ...initialFormValues,
-        ...response,
-      });
-      setProfile(response);
-    });
+    };
+
+    loadProfile();
   }, []);
 
   return (
@@ -114,6 +132,7 @@ export const MyProfilePage = () => {
             id="email-create"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
+            disabled={isLoading}
           />
         </div>
         <div className="mt-2">
@@ -126,6 +145,7 @@ export const MyProfilePage = () => {
             id="name-create"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
+            disabled={isLoading}
           />
         </div>
         <div className="mt-2">
@@ -138,7 +158,7 @@ export const MyProfilePage = () => {
             id="role-create"
             required
             disabled
-            value={profile?.role}
+            value={profile?.role ?? ''}
           />
         </div>
         <div className="mt-2">
@@ -147,11 +167,10 @@ export const MyProfilePage = () => {
             onChange={handleImageChange}
             value={
               currentImage
-                ? {
-                    ...currentImage,
-                    preview: currentImage.preview || profile?.avatar || '',
-                  }
-                : null
+                ? currentImage
+                : profile?.avatar
+                  ? { preview: profile.avatar, file: null as unknown as File }
+                  : null
             }
             error={errors.image?.message ? { message: errors.image.message } : undefined}
             className="mt-1"
