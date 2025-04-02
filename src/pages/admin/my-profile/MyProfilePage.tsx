@@ -49,8 +49,31 @@ export const MyProfilePage = () => {
   const currentImage = watch('image');
 
   const onSubmit: SubmitHandler<IFormMember> = async (data) => {
-    console.log(data);
-    // UsersService.updateProfile(data);
+    setIsLoading(true);
+
+    try {
+      // Atualizar dados básicos
+      const profileResponse = await UsersService.updateProfile({
+        email: data.email,
+        name: data.name,
+      });
+      if (profileResponse instanceof Error) throw profileResponse;
+
+      // Lógica de imagem
+      if (data.image?.file) {
+        // Novo upload
+        const avatarResponse = await UsersService.updateAvatar(data.image.file);
+        if (avatarResponse instanceof Error) throw avatarResponse;
+
+        // Atualizar preview local
+        setValue('image', {
+          preview: URL.createObjectURL(data.image.file),
+          file: data.image.file,
+        });
+      }
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
