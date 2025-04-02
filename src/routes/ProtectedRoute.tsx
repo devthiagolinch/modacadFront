@@ -2,8 +2,8 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { useUser } from '../shared/contexts';
 
-type TRole = 'administrador' | 'editor' | 'curador' | 'autor';
-const teamRoles: TRole[] = ['administrador', 'editor', 'curador', 'autor'];
+export type TRoleStaff = 'administrador' | 'editor' | 'curador' | 'autor';
+const teamRoles: TRoleStaff[] = ['administrador', 'editor', 'curador', 'autor'];
 
 interface IProtectedRouteProps {
   children: React.ReactNode;
@@ -29,7 +29,7 @@ export const ProtectedRoute: React.FC<IProtectedRouteProps> = ({
   }
 
   // Verifica se o usuário tem um papel válido, se necessário
-  if (restrictToTeamRoles && !teamRoles.includes(user.role as TRole)) {
+  if (restrictToTeamRoles && !teamRoles.includes(user.role as TRoleStaff)) {
     return <Navigate to={redirectTo} />;
   }
 

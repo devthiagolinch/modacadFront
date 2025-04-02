@@ -1,27 +1,65 @@
 import { Link } from 'react-router-dom';
 
 import logo from '../../../assets/svg/icon_rounded_bg_red.svg';
+import { useUser } from '../../../shared/contexts';
+import { TRoleStaff } from 'src/routes/ProtectedRoute';
 
-const primaryLinks = [
+const rolePermissions: Record<TRoleStaff, string[]> = {
+  autor: ['posts', 'pílulas', 'ver site', 'meu perfil'],
+  curador: [],
+  editor: [],
+  administrador: ['tags', 'assuntos', 'membros', 'planos', 'equipe'],
+};
+
+const getAccumulatedPermissions = (role: TRoleStaff): string[] => {
+  const rolesOrder: TRoleStaff[] = ['autor', 'curador', 'editor', 'administrador'];
+  const roleIndex = rolesOrder.indexOf(role);
+
+  return rolesOrder.slice(0, roleIndex + 1).flatMap((r) => rolePermissions[r]);
+};
+
+interface ILink {
+  name: string;
+  path: string;
+  disabled?: boolean;
+}
+
+const primaryLinks: ILink[] = [
   { name: 'posts', path: '/dashboard/texto' },
   { name: 'pílulas', path: '/dashboard/pilula' },
   { name: 'tags', path: '/admin/tags' },
   { name: 'assuntos', path: '/admin/assuntos' },
-  { name: 'footer', path: '/admin/footer', disabled: true },
 ];
 
-const secondaryLinks = [
+const secondaryLinks: ILink[] = [
+  { name: 'meu perfil', path: '/admin/meu-perfil' },
   { name: 'membros', path: '/admin/membros' },
   { name: 'planos', path: '/admin/planos' },
-  { name: 'autores', path: '/admin/autores', disabled: true },
   { name: 'equipe', path: '/admin/equipe' },
-  { name: 'chat', path: '/admin/chat', disabled: true },
-  { name: 'live', path: '/admin/live', disabled: true },
-  { name: 'reunião', path: '/admin/reuniao', disabled: true },
-  { name: 'Ver site', path: '/' },
+  { name: 'ver site', path: '/' },
 ];
 
 export const MenuLateral = () => {
+  const { user } = useUser();
+
+  const role = user?.role as TRoleStaff;
+
+  const accumulatedPermissions = getAccumulatedPermissions(role);
+
+  const isLinkAllowed = (linkName: string) => {
+    return accumulatedPermissions.includes(linkName);
+  };
+
+  const mappedPrimaryLinks = primaryLinks.map((link) => ({
+    ...link,
+    disabled: !isLinkAllowed(link.name),
+  }));
+
+  const mappedSecondaryLinks = secondaryLinks.map((link) => ({
+    ...link,
+    disabled: !isLinkAllowed(link.name),
+  }));
+
   return (
     <div className="h-full w-full flex flex-col border-r border-gray-950 font-montserrat text-2xl p-4 justify-between">
       {/* Logo */}
@@ -33,11 +71,11 @@ export const MenuLateral = () => {
       </div>
       {/* Primary Links */}
       <nav>
-        {primaryLinks.map((link) => (
+        {mappedPrimaryLinks.map((link) => (
           <Link
             key={link.name}
             to={link.disabled ? '#' : link.path}
-            className={`flex items-center highlight-link mt-4 ${link.disabled ? 'opacity-30 cursor-not-allowed' : ''}`}
+            className={`flex items-center mt-4 ${link.disabled ? 'opacity-30 cursor-not-allowed' : 'highlight-link'}`}
             onClick={(e) => link.disabled && e.preventDefault()}
           >
             {link.name}
@@ -46,11 +84,11 @@ export const MenuLateral = () => {
       </nav>
       {/* Secondary Links */}
       <nav>
-        {secondaryLinks.map((link) => (
+        {mappedSecondaryLinks.map((link) => (
           <Link
             key={link.name}
             to={link.disabled ? '#' : link.path}
-            className={`flex items-center highlight-link mt-4 ${link.disabled ? 'opacity-30 cursor-not-allowed' : ''}`}
+            className={`flex items-center mt-4 ${link.disabled ? 'opacity-30 cursor-not-allowed' : 'highlight-link'}`}
             onClick={(e) => link.disabled && e.preventDefault()}
           >
             {link.name}

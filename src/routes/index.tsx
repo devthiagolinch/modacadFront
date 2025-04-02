@@ -20,6 +20,7 @@ import { PageCategoryPost } from '../pages/posts/page-category-post/PageCategory
 import { PublishedPosts } from '../pages/posts/textos/PublishedPosts';
 import { PostDetails } from '../pages/posts/post-details/PostDetails';
 import { PrivacyPolicyPage, TermsAndConditionsPage } from '../pages/legal';
+import { MyProfilePage } from '../pages/admin';
 
 export const AppRoutes = () => {
   const location = useLocation();
@@ -85,6 +86,7 @@ export const AppRoutes = () => {
         <Route path="assuntos" element={<PageSubjects />} />
         <Route path="planos" element={<PagePlans />} />
         <Route path="equipe" element={<PageTeam />} />
+        <Route path="meu-perfil" element={<MyProfilePage />} />
       </Route>
 
       <Route path="/admin/login" element={<AdminLogin />} />

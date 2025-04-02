@@ -25,7 +25,7 @@ type TGetAllParams = {
   status?: EUsersStatus;
   plan?: TUsersPlan;
   page?: number;
-  order?: string | "desc"
+  order?: string | 'desc';
 };
 const getAll = async ({ role, status, plan, page, order }: TGetAllParams): Promise<TGetAllResult | Error> => {
   try {
@@ -90,31 +90,6 @@ const updateStaffById = async (id: string, body: bodyUpdate): Promise<void | Err
   }
 };
 
-const updateById = async (body: bodyUpdate): Promise<void | Error> => {
-  try {
-    await api.put(`/admins/profile/`, body);
-  } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido ao atualizar registro';
-    return new Error(errorMessage);
-  }
-};
-
-const updateAvatar = async (avatar: File): Promise<void | Error> => {
-  try {
-    const formData = new FormData();
-    formData.append('avatar', avatar);
-
-    await api.patch('/admins/profile/avatar', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
-  } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido ao deletar registro';
-    return new Error(errorMessage);
-  }
-}
-
 const deleteById = async (id: string): Promise<void | Error> => {
   try {
     await api.delete(`/admins/delete/${id}`);
@@ -124,11 +99,15 @@ const deleteById = async (id: string): Promise<void | Error> => {
   }
 };
 
-type TProfile = {
+export type TProfile = {
   id: string;
   plans: {
     id: string;
   } | null;
+  email: string;
+  name: string;
+  role: string;
+  avatar: string | null;
 };
 
 const getProfile = async () => {
@@ -144,13 +123,38 @@ const getProfile = async () => {
   }
 };
 
+const updateProfile = async (body: bodyUpdate) => {
+  try {
+    await api.put(`/admins/profile/`, body);
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido ao atualizar registro';
+    return new Error(errorMessage);
+  }
+};
+
+const updateAvatar = async (File: File): Promise<void | Error> => {
+  try {
+    const formData = new FormData();
+    formData.append('avatar', File);
+
+    await api.patch('/admins/profile/avatar', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido ao atualizar registro';
+    return new Error(errorMessage);
+  }
+};
+
 export const UsersService = {
   getAll,
   getAllStaff,
   inviteMember,
-  updateById,
   updateAvatar,
   updateStaffById,
   deleteById,
   getProfile,
+  updateProfile,
 };
