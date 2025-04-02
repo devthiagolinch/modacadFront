@@ -22,43 +22,7 @@ const initialFormValues: IFormMember = {
 const formMemberSchema: yup.ObjectSchema<IFormMember> = yup.object().shape({
   email: yup.string().email('Informe um e-mail válido').required('E-mail é obrigatório'),
   name: yup.string().required('Nome é obrigatório'),
-  image: yup
-    .mixed()
-    .test('is-valid-type', 'Apenas imagens são permitidas (JPEG, PNG, GIF)', (value) => {
-      if (!value) return true; // campo não obrigatório
-
-      // Verifica se é um objeto com propriedade file (nosso TImageFile)
-      if (typeof value === 'object' && value !== null && 'file' in value) {
-        return (
-          typeof value.file === 'object' &&
-          value.file !== null &&
-          'type' in value.file &&
-          ['image/jpeg', 'image/png', 'image/gif'].includes((value.file as File).type)
-        );
-      }
-
-      // Ou se é diretamente um File (caso não esteja usando nosso tipo)
-      if (value instanceof File) {
-        return ['image/jpeg', 'image/png', 'image/gif'].includes(value.type);
-      }
-
-      return false;
-    })
-    .test('is-valid-size', 'Imagem muito grande (máx. 5MB)', (value) => {
-      if (!value) return true;
-
-      if (typeof value === 'object' && value !== null && 'file' in value && 'size' in value) {
-        return (value.file as File).size <= 5 * 1024 * 1024; // 5MB
-      }
-
-      if (value instanceof File) {
-        return value.size <= 5 * 1024 * 1024;
-      }
-
-      return false;
-    })
-    .nullable()
-    .default(null),
+  image: yup.mixed().nullable().default(null),
 }) as yup.ObjectSchema<IFormMember>;
 
 export const MyProfilePage = () => {
