@@ -3,6 +3,7 @@ import { PostsService } from '../../../shared/api/posts/PostsService';
 import { Link } from 'react-router-dom';
 
 interface ISearchDialogProps {
+  isDashboard: boolean
   isOpen: boolean;
   toggleDialog: () => void;
 }
@@ -13,7 +14,7 @@ interface ISearchResult {
   type: string;
 }
 
-export const SearchDialog: FC<ISearchDialogProps> = ({ isOpen, toggleDialog }) => {
+export const SearchDialog: FC<ISearchDialogProps> = ({ isDashboard, isOpen, toggleDialog }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [results, setResults] = useState<ISearchResult[]>([]);
   const [loading, setLoading] = useState(false);
@@ -84,7 +85,12 @@ export const SearchDialog: FC<ISearchDialogProps> = ({ isOpen, toggleDialog }) =
               <div className='flex-grow md:h-auto mt-4 font-montserrat font-medium overflow-y-auto overflow-x-hidden'>
                 <ul className="divide-y divide-gray-200 flex flex-col">
                   {results.map((item) => (
-                    <Link key={item.id} className="py-2 highlight-link" to={item.type === 'texto' ? `/posts/${item.id}` : `/pilulas/${item.id}`}
+                    isDashboard ?
+                    <Link key={item.id} className="py-2 highlight-link" to={`/posts/${item.id}/editar`}>
+                      <p className="font-medium">{item.title}</p>
+                    </Link> :
+
+                    <Link key={item.id} className="py-2 highlight-link" to={item.type === 'texto' ? `/posts/${item.id}` : `/pilulas/${item.id}`} 
                       onClick={toggleDialog}
                     >
                       <p className="font-medium">{item.title}</p>

@@ -63,7 +63,7 @@ export const PublicHeader = () => {
         </nav>
       </div>
       <DrawerLateral isOpen={isOpen} toggleDrawer={toggleDrawer} />
-      <SearchDialog isOpen={isOpenSearch} toggleDialog={toggleDialog} />
+      <SearchDialog isOpen={isOpenSearch} toggleDialog={toggleDialog} isDashboard={false} />
     </div>
   );
 };
