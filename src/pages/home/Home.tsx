@@ -160,7 +160,7 @@ export function Home() {
               cenário global.
             </p>
             <div>
-              <button className="border border-gray-950 px-4 py-4 font-medium highlight-link">Saber mais</button>
+              <Link to={'/posts/telma-barcellos'} className="border border-gray-950 px-4 py-4 font-medium highlight-link">Saber mais</Link>
             </div>
           </div>
         </div>

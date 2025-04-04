@@ -6,8 +6,9 @@ import { IPostData, PostsService } from '../../shared/api/posts/PostsService';
 import { statuses, TPostsStatus, TPostsType, TPostsVisibility, visibilities } from '../../shared/services/postOptions';
 import { DropdownMenu } from '../../shared/components/ui/dropdown-menu/DropdownMenu';
 import { Link } from 'react-router-dom';
-import { FaPlusCircle, FaSearch } from 'react-icons/fa';
+import { FaPlusCircle } from 'react-icons/fa';
 import { SearchDialog } from '../../shared/components/search-dialog/SearchDialog';
+import {SearchPosts} from './component/searchPosts';
 
 export const Dashboard: React.FC = () => {
   const [isOpenSearch, setIsOpenSearch] = useState(false);
@@ -17,6 +18,7 @@ export const Dashboard: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [rows, setRows] = useState<IPostData[]>([]);
+
   const [totalPages, setTotalPages] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -115,12 +117,13 @@ export const Dashboard: React.FC = () => {
     <LayoutDashboard>
       {/* Filtros */}
       <div className="flex gap-2 my-4">
-        <button type="submit" onClick={toggleDialog} className='bg-white flex items-center justify-center px-4 w-auto highlight-link'>
-          <FaSearch />
-        </button>
         <DropdownMenu textButton="Status" items={statusesOptions} onSelect={handleStatusChange} />
         <DropdownMenu textButton="Ordenação" items={orderOptions} onSelect={handleOrderChange} />
         <DropdownMenu textButton="Visibilidade" items={visibilitiesOptions} onSelect={handleVisibilityChange} />
+
+        <div className="flex-1 max-w-md">
+        <SearchPosts />
+      </div>
       </div>
       {/* Título */}
       <div className="my-4 border border-gray-200 p-4 bg-white flex gap-4">

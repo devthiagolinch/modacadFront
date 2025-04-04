@@ -230,6 +230,22 @@ const searchPost = async ({ term, page, limit }: TPostSearch): Promise<IPostSear
   }
 };
 
+const searchPostTitle = async ({ term, page, limit }: TPostSearch): Promise<IPostSearchResponse | Error> => {
+  try {
+    const urlRelativa = `/posts/search/term?title=${term ?? ''}`;
+    const { data } = await api.post<IPostSearchResponse>(urlRelativa);
+
+    if (data) {
+      return data;
+    } else {
+      return new Error('Erro ao listar os registros');
+    }
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido ao listar os registros';
+    return new Error(errorMessage);
+  }
+}
+
 const getMostReadPosts = async () => {
   try {
     const { data } = await api.get<IPostResponse>('/post/list/mais-lidos');
@@ -252,5 +268,6 @@ export const PostsService = {
   uploadImage,
   lastPost,
   searchPost,
+  searchPostTitle,
   getMostReadPosts,
 };
