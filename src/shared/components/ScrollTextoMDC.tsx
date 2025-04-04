@@ -56,7 +56,7 @@ export const ScrollTextoMCD: React.FC<TextScrollInterface> = ({ title }) => {
         >
           {posts?.map((post) => (
             <SwiperSlide key={post.id}>
-              <Link to={`/posts/${post.id}`}>
+              <Link to={`/posts/${post.canonicalUrl}`}>
                 <TextoMocadCard post={post} />
               </Link>
             </SwiperSlide>

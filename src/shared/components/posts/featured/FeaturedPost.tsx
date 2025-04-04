@@ -12,7 +12,7 @@ interface IFeaturedPost {
 
 export const FeaturedPost: React.FC<IFeaturedPost> = ({ post }) => {
   return (
-    <Link to={`/${post.type === 'texto' ? 'posts' : 'pilulas'}/${post.id}`}>
+    <Link to={`/${post.type === 'texto' ? 'posts' : 'pilulas'}/${post.canonicalUrl}`}>
       <div className="grid grid-cols-1 md:grid-cols-12 font-montserrat gap-4">
         <div className="px-4 py-8 flex flex-col justify-center gap-4 order-1 md:order-[-1] col-span-5">
           <div className="flex flex-col gap-0">
