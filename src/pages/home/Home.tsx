@@ -57,6 +57,8 @@ export function Home() {
     });
   }, []);
 
+  console.log(lastPost?.canonicalUrl);
+
   return (
     <div className="mx-auto h-screen relative">
       <PublicHeader />
@@ -99,7 +101,7 @@ export function Home() {
       {lastPost && (
         <MySection
           title="Último Texto"
-          titleLink={`/posts/${lastPost.id}`}
+          titleLink={`/posts/${lastPost.canonicalUrl}`}
           featuredTitle={isSmallScreen}
           invisibleBottomBorder
           disableInternalPadding

@@ -49,7 +49,7 @@ export const SwiperPosts: React.FC<ISwiperPosts> = ({ posts, slidesPerView = 2, 
         >
           {posts.map((post) => (
             <SwiperSlide key={post.id} style={{ height: 'auto' }}>
-              <Link to={`/${post.type === 'texto' ? 'posts' : 'pilulas'}/${post.id}`}>
+              <Link to={`/${post.type === 'texto' ? 'posts' : 'pilulas'}/${post.canonicalUrl}`}>
                 <SwiperSlidePost post={post} />
               </Link>
             </SwiperSlide>
