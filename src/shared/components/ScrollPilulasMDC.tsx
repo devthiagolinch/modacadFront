@@ -49,7 +49,7 @@ export function ScrollPilulaMCD({ title }: TextScrollInterface) {
         >
           {posts.map((post) => (
             <SwiperSlide key={post.id}>
-              <Link to={`/pilulas/${post.id}`}>
+              <Link to={`/pilulas/${post.canonicalUrl}`}>
                 <PilulaModacadCard post={post} />
               </Link>
             </SwiperSlide>

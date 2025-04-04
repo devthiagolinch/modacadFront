@@ -6,9 +6,13 @@ import { IPostData, PostsService } from '../../shared/api/posts/PostsService';
 import { statuses, TPostsStatus, TPostsType, TPostsVisibility, visibilities } from '../../shared/services/postOptions';
 import { DropdownMenu } from '../../shared/components/ui/dropdown-menu/DropdownMenu';
 import { Link } from 'react-router-dom';
-import { FaPlusCircle } from 'react-icons/fa';
+import { FaPlusCircle, FaSearch } from 'react-icons/fa';
+import { SearchDialog } from '../../shared/components/search-dialog/SearchDialog';
 
 export const Dashboard: React.FC = () => {
+  const [isOpenSearch, setIsOpenSearch] = useState(false);
+  const toggleDialog = () => setIsOpenSearch((prev) => !prev);
+
   const { type } = useParams<{ type: TPostsType }>();
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -111,6 +115,9 @@ export const Dashboard: React.FC = () => {
     <LayoutDashboard>
       {/* Filtros */}
       <div className="flex gap-2 my-4">
+        <button type="submit" onClick={toggleDialog} className='bg-white flex items-center justify-center px-4 w-auto highlight-link'>
+          <FaSearch />
+        </button>
         <DropdownMenu textButton="Status" items={statusesOptions} onSelect={handleStatusChange} />
         <DropdownMenu textButton="Ordenação" items={orderOptions} onSelect={handleOrderChange} />
         <DropdownMenu textButton="Visibilidade" items={visibilitiesOptions} onSelect={handleVisibilityChange} />
@@ -181,6 +188,7 @@ export const Dashboard: React.FC = () => {
           </div>
         </>
       )}
+      <SearchDialog isOpen={isOpenSearch} toggleDialog={toggleDialog} isDashboard={true} />
     </LayoutDashboard>
   );
 };
