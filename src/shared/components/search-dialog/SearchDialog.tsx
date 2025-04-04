@@ -27,8 +27,6 @@ export const SearchDialog: FC<ISearchDialogProps> = ({ isDashboard, isOpen, togg
     
     const response = await PostsService.searchPost({
       term: searchTerm,
-
-      // nao consegui lidar com paginacao aqui @jeuchaves, acabei deixando com limite alto, se puder de dar um help. TNKS
       limit: 50,
       page: 1,
     });
