@@ -232,8 +232,8 @@ const searchPost = async ({ term, page, limit }: TPostSearch): Promise<IPostSear
 
 const searchPostTitle = async ({ term, page, limit }: TPostSearch): Promise<IPostSearchResponse | Error> => {
   try {
-    const urlRelativa = `/posts/search/term?title=${term ?? ''}`;
-    const { data } = await api.post<IPostSearchResponse>(urlRelativa);
+    const urlRelativa = `/post/search/term?title=${term ?? ''}`;
+    const { data } = await api.get<IPostSearchResponse>(urlRelativa);
 
     if (data) {
       return data;
