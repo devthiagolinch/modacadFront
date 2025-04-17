@@ -1,46 +1,44 @@
 import { IUserLogin } from '../contexts';
 import { TPostsVisibility } from '../services/postOptions';
 
-/**
- * PAPÉIS ADMINISTRATIVOS
- * administrador
- * editor
- * curador
- * autor
- *
- * PAPÉIS DE ACESSO
- * membro
- * assinante
- * ex-assinante
- */
+type TUserRole = 'unauthenticated' | 'member' | 'subscriber' | 'staff';
+export type TAccessResult = 'full' | 'restricted' | 'login' | 'upgrade' | 'exclusive';
 
-/**
- * VISIBILIDADES
- * public
- * pro
- * basic
- */
+export const checkPostAccess = (user: IUserLogin | null, postVisibility: TPostsVisibility): TAccessResult => {
+  // Determina o papel do usuário
+  const userRole: TUserRole = determineUserRole(user);
 
-const teamRoles = ['administrador', 'editor', 'curador', 'autor'];
+  // Staff tem acesso total a tudo
+  if (userRole === 'staff') return 'full';
 
-export const checkPostAccess = (user: IUserLogin | null, postVisibility: TPostsVisibility) => {
-  // Se o usuário não estiver logado
-  if (!user) {
-    if (postVisibility === 'public') return 'full';
-    else return 'login';
+  // Conteúdo público é acessível a todos
+  if (postVisibility === 'public') return 'full';
+
+  // Conteúdo básico requer pelo menos autenticação
+  if (postVisibility === 'basic') {
+    return userRole !== 'unauthenticated' ? 'full' : 'login';
   }
 
-  // Se o usuário for membro da equipe
-  if (teamRoles.includes(user.role)) return 'full';
-
-  // Se o usuário for membro
-  if (user.role === 'membro' || user.role === 'ex-assinante') {
-    if (postVisibility !== 'pro') return 'full';
-    else return 'upgrade';
+  // Conteúdo pro requer assinante ativo
+  if (postVisibility === 'pro') {
+    if (userRole === 'unauthenticated') return 'exclusive';
+    return userRole === 'subscriber' ? 'full' : 'upgrade';
   }
-
-  // Se o usuário for assinante
-  if (user.role === 'assinante') return 'full';
 
   return 'restricted';
+};
+
+const determineUserRole = (user: IUserLogin | null): TUserRole => {
+  if (!user) return 'unauthenticated';
+
+  // Verifica se é staff (equipe)
+  const teamRoles = ['administrador', 'editor', 'curador', 'autor'];
+  if (teamRoles.includes(user.role)) return 'staff';
+
+  switch (user.role) {
+    case 'assinante':
+      return 'subscriber';
+    default:
+      return 'member';
+  }
 };
