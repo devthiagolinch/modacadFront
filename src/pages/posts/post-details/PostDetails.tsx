@@ -162,7 +162,6 @@ export const PostDetails = () => {
     <div className="mx-auto h-screen">
       <PublicHeader />
       {post && <PostInfo post={post} />}
-      <p>{post?.visibility}</p>
       <div className="container mx-auto max-w-[800px] my-5 px-4">
         {post ? <PostContent post={post} accessLevel={accessLevel} /> : <p>Carregando...</p>}
       </div>
