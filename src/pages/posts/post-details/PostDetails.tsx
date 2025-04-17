@@ -6,7 +6,7 @@ import { IPostData, PostsService } from '../../../shared/api/posts/PostsService'
 import { Footer } from '../../../shared/components/footer/Footer';
 import { useUser } from '../../../shared/contexts';
 import { PostInfo } from './components/PostInfo';
-import { checkPostAccess } from '../../../shared/utils/permissionsUtils';
+import { checkPostAccess, TAccessResult } from '../../../shared/utils/permissionsUtils';
 import { useAuthDialog } from '../../../shared/contexts/AuthDialogContext';
 
 const LoginPrompt = () => {
@@ -45,42 +45,87 @@ const UpgradePrompt = () => {
   );
 };
 
-const PostContent = ({ post, accessLevel }: { post: IPostData; accessLevel: string }) => {
-  if (accessLevel === 'login') {
-    return (
-      <div>
-        <div className="relative before:absolute before:bottom-0 before:left-0 before:w-full before:h-16 before:bg-gradient-to-t before:from-[#f1ece8] before:to-transparent">
-          <p
-            className="text-justify text-lg font-montserrat font-light prose tiptap line-clamp-[16] mb-2"
-            dangerouslySetInnerHTML={{ __html: post.content ?? '' }}
-          />
-        </div>
-        <LoginPrompt />
-        <UpgradePrompt />
-      </div>
-    );
-  }
+const ExclusivePrompt = () => {
+  const navigate = useNavigate();
+  const { openDialog } = useAuthDialog();
 
-  if (accessLevel === 'upgrade') {
-    return (
-      <div>
-        <div className="relative before:absolute before:bottom-0 before:left-0 before:w-full before:h-16 before:bg-gradient-to-t before:from-[#f1ece8] before:to-transparent">
-          <p
-            className="text-justify text-lg font-montserrat font-light prose tiptap line-clamp-[16] mb-2"
-            dangerouslySetInnerHTML={{ __html: post.content ?? '' }}
-          />
-        </div>
-        <UpgradePrompt />
-      </div>
-    );
-  }
+  const handleNavigateToPlans = () => {
+    navigate('/planos');
+  };
 
   return (
-    <p
-      className="text-justify text-lg font-montserrat font-light prose tiptap"
-      dangerouslySetInnerHTML={{ __html: post.content ?? '' }}
-    />
+    <div className="p-4 text-center font-montserrat font-light mt-8 text-lg">
+      <p>Texto exclusivo comunidadeModacad</p>
+      <button
+        className="border border-gray-950 px-8 py-4 mt-2 highlight-link font-medium"
+        onClick={handleNavigateToPlans}
+      >
+        Conheça os Planos de leitura
+      </button>
+      <button onClick={() => openDialog('login')} className="mt-2 text-gray-600 text-sm block w-full">
+        Ou <span className="font-bold text-blue-500">faça login</span> se já for da comunidade modacad
+      </button>
+    </div>
   );
+};
+
+const PostContent = ({ post, accessLevel }: { post: IPostData; accessLevel: TAccessResult }) => {
+  switch (accessLevel) {
+    case 'login':
+      return (
+        <div>
+          <div className="relative before:absolute before:bottom-0 before:left-0 before:w-full before:h-16 before:bg-gradient-to-t before:from-[#f1ece8] before:to-transparent">
+            <p
+              className="text-justify text-lg font-montserrat font-light prose tiptap line-clamp-[16] mb-2"
+              dangerouslySetInnerHTML={{ __html: post.content ?? '' }}
+            />
+          </div>
+          <LoginPrompt />
+        </div>
+      );
+    case 'upgrade':
+      return (
+        <div>
+          <div className="relative before:absolute before:bottom-0 before:left-0 before:w-full before:h-16 before:bg-gradient-to-t before:from-[#f1ece8] before:to-transparent">
+            <p
+              className="text-justify text-lg font-montserrat font-light prose tiptap line-clamp-[16] mb-2"
+              dangerouslySetInnerHTML={{ __html: post.content ?? '' }}
+            />
+          </div>
+          <UpgradePrompt />
+        </div>
+      );
+    case 'exclusive':
+      return (
+        <div>
+          <div className="relative before:absolute before:bottom-0 before:left-0 before:w-full before:h-16 before:bg-gradient-to-t before:from-[#f1ece8] before:to-transparent">
+            <p
+              className="text-justify text-lg font-montserrat font-light prose tiptap line-clamp-[16] mb-2"
+              dangerouslySetInnerHTML={{ __html: post.content ?? '' }}
+            />
+          </div>
+          <ExclusivePrompt />
+        </div>
+      );
+    case 'full':
+      return (
+        <p
+          className="text-justify text-lg font-montserrat font-light prose tiptap"
+          dangerouslySetInnerHTML={{ __html: post.content ?? '' }}
+        />
+      );
+    default:
+      return (
+        <div>
+          <div className="relative before:absolute before:bottom-0 before:left-0 before:w-full before:h-16 before:bg-gradient-to-t before:from-[#f1ece8] before:to-transparent">
+            <p
+              className="text-justify text-lg font-montserrat font-light prose tiptap line-clamp-[16] mb-2"
+              dangerouslySetInnerHTML={{ __html: post.content ?? '' }}
+            />
+          </div>
+        </div>
+      );
+  }
 };
 
 export const PostDetails = () => {
