@@ -23,6 +23,7 @@ export function Home() {
   const [posts, setPosts] = useState<IPostData[]>([]);
   const [mostReadPosts, setMostReadPosts] = useState<IPostData[]>([]);
   const [pilulas, setPilulas] = useState<IPostData[]>([]);
+  const [institucionalPosts, setInstitucionalPosts] = useState<IPostData[]>([]);
 
   // Busca os dados da API
   useEffect(() => {
@@ -54,6 +55,18 @@ export function Home() {
         return;
       }
       setMostReadPosts(response.posts);
+    });
+    PostsService.getAll({
+      subject: '1c83eada-dac0-463b-92e1-40e01b0d8738',
+      status: 'published',
+      order: 'asc',
+      type: 'texto',
+    }).then((response) => {
+      if (response instanceof Error) {
+        console.error(response.message);
+        return;
+      }
+      setInstitucionalPosts(response.posts);
     });
   }, []);
 
@@ -147,6 +160,21 @@ export function Home() {
           <SwiperPosts posts={pilulas} slidesPerView={isSmallScreen ? 1.25 : 4} redirectSeeMore="/pilulas" />
         </MySection>
       )}
+      {/* Institucionais */}
+      {institucionalPosts.length > 0 && (
+        <MySection
+          title="MOLDES MODACAD"
+          titleLink="/categorias/1c83eada-dac0-463b-92e1-40e01b0d8738"
+          disableInternalPadding
+          invisibleBottomBorder
+        >
+          <SwiperPosts
+            posts={institucionalPosts}
+            slidesPerView={isSmallScreen ? 1.25 : 4}
+            redirectSeeMore="/categorias/1c83eada-dac0-463b-92e1-40e01b0d8738"
+          />
+        </MySection>
+      )}
       {/* Sobre a Telma */}
       <MySection title="QUEM É TELMA BARCELLOS?" invisibleBottomBorder disableInternalPadding featuredTitle>
         <div className="grid grid-cols-12 gap-0 lg:gap-4">
@@ -162,7 +190,12 @@ export function Home() {
               cenário global.
             </p>
             <div>
-              <Link to={"/posts/telma-barcellos"} className="border border-gray-950 px-4 py-4 font-medium highlight-link">Saber mais</Link>
+              <Link
+                to={'/posts/telma-barcellos'}
+                className="border border-gray-950 px-4 py-4 font-medium highlight-link"
+              >
+                Saber mais
+              </Link>
             </div>
           </div>
         </div>
