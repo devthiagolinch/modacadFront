@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useCallback, useEffect, useRef, useState } from 'react';
 import { PostsService } from '../../../shared/api/posts/PostsService';
 import { Link } from 'react-router-dom';
 
@@ -19,16 +19,17 @@ export const SearchDialog: FC<ISearchDialogProps> = ({ isDashboard, isOpen, togg
   const [results, setResults] = useState<ISearchResult[]>([]);
   const [loading, setLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const observerRef = useRef<HTMLDivElement | null>(null);
 
-  const handleSearch = async () => {
-    setResults([])
-    setLoading(true);results
+  const handleSearch = async (page = 1) => {
+    setLoading(true);
     setHasSearched(true); 
     
     const response = await PostsService.searchPost({
       term: searchTerm,
       limit: 50,
-      page: 1,
+      page,
     });
 
     if (response instanceof Error) {
@@ -37,10 +38,43 @@ export const SearchDialog: FC<ISearchDialogProps> = ({ isDashboard, isOpen, togg
       return;
     }
 
-    setResults((prevPosts) => [...(prevPosts || []), ...response.posts]); // Concatena os novos posts
-
+    setResults((prevPosts) => (page === 1 ? response.posts : [...prevPosts, ...response.posts]));
     setLoading(false);
   };
+
+  const loadMoreResults = useCallback(() => {
+    if (!loading) {
+      setCurrentPage((prevPage) => prevPage + 1);
+    }
+  }, [loading]);
+
+  useEffect(() => {
+    if (currentPage > 1) {
+      handleSearch(currentPage);
+    }
+  }, [currentPage]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          loadMoreResults();
+        }
+      },
+      { threshold: 1.0 }
+    );
+
+    const currentObserverRef = observerRef.current;
+    if (currentObserverRef) {
+      observer.observe(currentObserverRef);
+    }
+
+    return () => {
+      if (currentObserverRef) {
+        observer.unobserve(currentObserverRef);
+      }
+    };
+  }, [loadMoreResults]);
 
 
   return isOpen ? (
@@ -61,7 +95,8 @@ export const SearchDialog: FC<ISearchDialogProps> = ({ isDashboard, isOpen, togg
             onChange={(e) => setSearchTerm(e.target.value)}      
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
-                handleSearch(); // Executa a pesquisa quando "Enter" for pressionado
+                setCurrentPage(1);
+                handleSearch(1); 
               }
             }}          
             className="w-full border border-gray-300 p-2 focus:outline-none focus:ring focus:ring-blue-300"
@@ -70,7 +105,10 @@ export const SearchDialog: FC<ISearchDialogProps> = ({ isDashboard, isOpen, togg
 
         <button
           className="w-full text-gray-950 border border-gray-950 p-2 highlight-link"
-          onClick={handleSearch}
+          onClick={() => {
+            setCurrentPage(1);
+            handleSearch(1);
+          }}
           disabled={loading}
         >
           {loading ? 'Buscando...' : 'Buscar'}
@@ -96,20 +134,7 @@ export const SearchDialog: FC<ISearchDialogProps> = ({ isDashboard, isOpen, togg
                   ))}
                 </ul>
               </div>
-              
-              {/* <div className="mt-3 justify-center items-center flex">
-                <button
-                  className="min-h-auto w-3/5 p-2 px-[25px]
-                          border-[1px] border-[#202020]
-                          font-montserrat_medium text-base
-                          flex flex-col justify-center items-center
-                          bg-gradient-to-t from-[#dcdf1e] to-[#dcdf1e] bg-[length:90%_.90em] bg-no-repeat bg-[position:calc(90%_-_var(--p,0%))_900%]  hover:bg-[position:50%_75%]"
-                  onClick={handleLoadMore}
-                >
-                  {' '}
-                  MAIS
-                </button>
-              </div> */}
+              <div ref={observerRef} className="h-4"></div>
           </div>
           ) : (
             hasSearched && !loading && <p className="text-gray-500">Nenhum resultado encontrado.</p>
