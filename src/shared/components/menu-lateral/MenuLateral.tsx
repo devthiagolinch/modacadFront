@@ -5,7 +5,7 @@ import { useUser } from '../../../shared/contexts';
 import { TRoleStaff } from 'src/routes/ProtectedRoute';
 
 const rolePermissions: Record<TRoleStaff, string[]> = {
-  autor: ['posts', 'pílulas', 'ver site', 'meu perfil'],
+  autor: ['posts', 'pílulas', 'institucional', 'ver site', 'meu perfil'],
   curador: [],
   editor: [],
   administrador: ['tags', 'assuntos', 'membros', 'planos', 'equipe'],
@@ -27,6 +27,7 @@ interface ILink {
 const primaryLinks: ILink[] = [
   { name: 'posts', path: '/dashboard/texto' },
   { name: 'pílulas', path: '/dashboard/pilula' },
+  { name: 'institucional', path: '/dashboard/texto?subject=1c83eada-dac0-463b-92e1-40e01b0d8738' },
   { name: 'tags', path: '/admin/tags' },
   { name: 'assuntos', path: '/admin/assuntos' },
 ];
