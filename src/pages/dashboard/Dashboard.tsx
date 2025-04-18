@@ -7,12 +7,9 @@ import { statuses, TPostsStatus, TPostsType, TPostsVisibility, visibilities } fr
 import { DropdownMenu } from '../../shared/components/ui/dropdown-menu/DropdownMenu';
 import { Link } from 'react-router-dom';
 import { FaPlusCircle } from 'react-icons/fa';
-import { SearchDialog } from '../../shared/components/search-dialog/SearchDialog';
-import {SearchPosts} from './component/searchPosts';
+import { SearchPosts } from './component/searchPosts';
 
 export const Dashboard: React.FC = () => {
-  const [isOpenSearch, setIsOpenSearch] = useState(false);
-  const toggleDialog = () => setIsOpenSearch((prev) => !prev);
 
   const { type } = useParams<{ type: TPostsType }>();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -28,6 +25,7 @@ export const Dashboard: React.FC = () => {
       const data = await PostsService.getAll({
         type: type || 'texto',
         status: searchParams.get('status') as TPostsStatus || 'published',
+        subject: searchParams.get('subject') || '',
         visibility: searchParams.get('visibility') as TPostsVisibility,
         order: searchParams.get('order') as 'asc' | 'desc',
         page: Number(searchParams.get('page')) || 1,
@@ -191,7 +189,6 @@ export const Dashboard: React.FC = () => {
           </div>
         </>
       )}
-      <SearchDialog isOpen={isOpenSearch} toggleDialog={toggleDialog} isDashboard={true} />
     </LayoutDashboard>
   );
 };
